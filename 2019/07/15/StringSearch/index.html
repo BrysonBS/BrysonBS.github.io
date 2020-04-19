@@ -1,0 +1,1519 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="子字符串查找, java,web">
+    <meta name="description" content="子字符串查找
+给定一段长度为n的文本txt和一个长度为m的pattern模式串,在文本中找到和该模式匹配的字串
+
+1.BruteForce算法(暴力子字符串查找算法)/**
+ * 暴力子字符串查找: 
+ * 时间复杂度: 一般情况1.1N ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>子字符串查找 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">子字符串查找</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                <span class="chip bg-color">字符串</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-07-15
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-07-15
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="子字符串查找"><a href="#子字符串查找" class="headerlink" title="子字符串查找"></a>子字符串查找</h3><blockquote>
+<p>给定一段长度为n的文本txt和一个长度为m的pattern模式串,在文本中找到和该模式匹配的字串</p>
+</blockquote>
+<h4 id="1-BruteForce算法-暴力子字符串查找算法"><a href="#1-BruteForce算法-暴力子字符串查找算法" class="headerlink" title="1.BruteForce算法(暴力子字符串查找算法)"></a>1.BruteForce算法(暴力子字符串查找算法)</h4><pre><code>/**
+ * 暴力子字符串查找: 
+ * 时间复杂度: 一般情况1.1N 最坏情况:MN
+ * 概述:模式串与文本对齐开始查找匹配,失配时,模式串向后移动一位,重新开始查找匹配
+ */
+public class BruteForce {
+    //方案一
+    public static int search(String pattern,String txt){
+        int m = pattern.length();
+        int n = txt.length();
+        for(int i=0;i&lt;=n-m;++i){
+            int j;
+            for(j=0;j&lt;m;++j)
+                if(txt.charAt(i+j) != pattern.charAt(j)) break; //失配
+            if(j == m) return i;
+        }
+        return -1;
+    }
+    //方案二
+    public static int searchB(String pattern,String txt){
+        int m = pattern.length();
+        int n = txt.length();
+        int i = 0,j = 0;
+        for(;i&lt;n &amp;&amp; j&lt;m;++i){
+            if(txt.charAt(i) == pattern.charAt(j)) j++;
+            else{ //失配
+                i -= j;
+                j = 0;
+            }
+        }
+        if(j == m) return i-j;
+        return -1;
+    }
+}</code></pre><h4 id="2-KMP算法"><a href="#2-KMP算法" class="headerlink" title="2.KMP算法"></a>2.KMP算法</h4><h5 id="2-1-基于DFA的KMP算法"><a href="#2-1-基于DFA的KMP算法" class="headerlink" title="2.1.基于DFA的KMP算法"></a>2.1.基于DFA的KMP算法</h5><pre><code>/**
+ * Knuth-Morris-Pratt 子字符串查找算法
+ * 时间复杂度: 一般情况1.1N 最坏情况:2N
+ * 概述: 通过构造DFA方式实现,关键理解DFA的含义
+ * 特点: 与next数组方式不同(另见本章)时,失配时不会停留在再较当前失配字符,会一直前进不断比较下一个字符
+ *       dfa[i][j]中i为输入字符(将要与模式串比较的字符),j为当前状态(0~pattern.length()-1),值为比较后进入的下一个状态
+ * 关键点: 状态也表示最大公共前后缀长度!,遇到失配时需要将模式串移动使公共前后缀对齐,继续比较下一个字符
+ */
+public class KMP {
+    private String pattern; //模式串
+    private int[][] dfa;    //限定有限状态自动机,dfa[i][j]中i为将输入的字符,j为当前状态,值为将会进入的下一个状态
+    private int R; //字符编码表长度
+    public KMP(String pattern){
+        this.R = 256;
+        setPattern(pattern);
+    }
+    public KMP(String pattern,int R){
+        this.R = R;
+        setPattern(pattern);
+    }
+    public KMP setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        int m = pattern.length();
+        dfa = new int[R][m];
+        dfa[pattern.charAt(0)][0] = 1; // dfa[i][0] = 0,当匹配时进入下一个状态1
+        for(int k=0,j=1;j&lt;m;++j){
+            for(int c=0;c&lt;R;++c)
+                dfa[c][j] = dfa[c][k]; //失配时,k状态记录了到上一个字符为止匹配的最大公共前后缀长度,重新对齐后,输入当前字符匹配
+            dfa[pattern.charAt(j)][j] = j+1; //匹配时状态+1
+            k = dfa[pattern.charAt(j)][k]; //更新状态,即当前匹配的最大公共前后缀长度(关键)
+        }
+        return this;
+    }
+    public int search(String txt){
+        if(txt == null || "".equals(txt)) throw new RuntimeException("匹配字符串txt不能为空");
+        int m = pattern.length();
+        int n = txt.length();
+        int i = 0, j = 0;
+        for(;i&lt;n &amp;&amp; j&lt;m;++i)
+            j = dfa[txt.charAt(i)][j]; //失配时对齐到当前字符的最大公共前后缀,继续比较下一个字符(索引刚好=长度)
+        if(j == m) return i-m;
+        return -1;
+    }
+}</code></pre><h5 id="2-2-基于next数组的KMP算法"><a href="#2-2-基于next数组的KMP算法" class="headerlink" title="2.2.基于next数组的KMP算法"></a>2.2.基于next数组的KMP算法</h5><pre><code>/**
+ * Knuth-Morris-Pratt 子字符串查找算法
+ * 时间复杂度: 线性  一般情况1.1N 最坏情况:3N
+ * 概述: 通过next数组(此处维护了最大公共前后缀长度)方式实现
+ * next数组求解: 递推关系,假设next[i] = k,值表示pattern中0-i子字符串最大公共前后缀长度为k,当next[i+1]失配时
+ *      求解next[i+1],将next[i]的最大公共前后缀与其对齐,比较i+1字符位置是否相同,即pattern[k] == pattern[i+1]
+ *      如果相同则next[i+1] = k+1,否则将前k个字符的最大公共前后缀长度next[k]与其对齐,继续比较i+1字符即pattern[next[k]] == pattern[i+1]
+ *      如果相同则next[i+1] = next[k]+1;以此类推,一直查找,如果当k=0时还没找到,则,next[i+1] = 0;
+ */
+public class KMPSearch {
+    private int[] next; //维护了最大公共前后缀长度
+    private String pattern; //模式串
+    public KMPSearch(String pattern) {
+        setPattern(pattern);
+    }
+    public KMPSearch setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        next = new int[pattern.length()];
+        next[0] = 0;
+        for(int i = 1,k = 0; i &lt; pattern.length();++i){
+            while(k &gt; 0 &amp;&amp; pattern.charAt(i) != pattern.charAt(k))
+                k = next[k-1]; //失配时,将0~k子字符串的最大公共前后缀与其对齐,继续与i字符比较
+            if(pattern.charAt(i) == pattern.charAt(k)) ++k; //匹配成功时最大公共前后缀+1
+            next[i] = k; //更新当前的最大公共前后缀
+        }
+        return this;
+    }
+    public int search(String txt){
+        if(txt == null || "".equals(txt)) throw new RuntimeException("匹配字符串txt不能为空");
+        int m = pattern.length();
+        int n = txt.length();
+        int i = 0,j = 0;
+        for(;i&lt;n&amp;&amp;j&lt;m;++i){
+            if(txt.charAt(i) == pattern.charAt(j)) ++j;
+            else{//失配时,对齐最大公共前后缀,继续比较当前字符,会停留
+                if(j == 0) continue;
+                --i;
+                j = next[j-1];
+            }
+        }
+        if(j == m) return i-m;
+        return -1;
+    }
+}</code></pre><h4 id="3-BoyerMoore算法"><a href="#3-BoyerMoore算法" class="headerlink" title="3.BoyerMoore算法"></a>3.BoyerMoore算法</h4><h5 id="3-1-仅基于坏字符规则的BoyerMoore算法"><a href="#3-1-仅基于坏字符规则的BoyerMoore算法" class="headerlink" title="3.1.仅基于坏字符规则的BoyerMoore算法"></a>3.1.仅基于坏字符规则的BoyerMoore算法</h5><pre><code>/**
+ * BoyerMoore 子字符串查找算法
+ * 时间复杂度: 亚线性 一般情况N/M 最坏情况MN
+ * 概述: 此处仅仅使用了坏字符规则,好后缀+坏字符规则另见本章
+ *        整体从左向右,与模式串比较时,(模式串结束位置)从右向左(模式串开始位置)比较
+ *       失配时,寻找模式串最右边与其相同的字符对齐(如果导致倒退就模式串向后移动一位),没找到则是模式串开始位置与下一个字符对齐,继续从右向左匹配,
+ */
+public class BoyerMoore {
+    private String pattern;
+    private int R;
+    private int[] right;
+    public BoyerMoore(String pattern) {
+        this.R = 256;
+        setPattern(pattern);
+    }
+    public BoyerMoore(String pattern,int R) {
+        this.R = R;
+        setPattern(pattern);
+    }
+    public BoyerMoore setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        //坏字符规则
+        right = new int[R]; //键为任意字符,值为当前字符在模式串中出现的最大索引
+        for(int c=0;c&lt;R;++c) //默认没找到为-1
+            right[c] = -1;
+        for(int i=0;i&lt;pattern.length();++i)
+            right[pattern.charAt(i)] = i; //在模式串中出现的字符更新最大索引
+        return this;
+    }
+    public int search(String txt){
+        int m = pattern.length();
+        int n = txt.length();
+        int skip;
+        for(int i=0;i&lt;=n-m;i += skip){
+            int j;
+            for(j=m-1;j&gt;=0 &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);--j);
+            if(j&lt;0) return i;
+            else skip = Math.max(j-right[txt.charAt(i+j)],1); //如果导致倒退,就向后移动一位
+        }
+        return -1;
+    }
+}</code></pre><h5 id="3-2-基于坏字符与好后缀的BoyerMoore算法"><a href="#3-2-基于坏字符与好后缀的BoyerMoore算法" class="headerlink" title="3.2.基于坏字符与好后缀的BoyerMoore算法"></a>3.2.基于坏字符与好后缀的BoyerMoore算法</h5><pre><code>/**
+ * BoyerMoore 子字符串查找算法
+ * 时间复杂度: 亚线性  一般情况: N/M
+ * 概述: 失配时,选取坏字符与好后缀规则中最大的跳跃距离进行模式串移动
+ * 坏字符: 失配字符出现在模式串中的最大索引位置,下次比较对齐该字符重新进行比较
+ * 好后缀: 记录模式串中与当前匹配的后缀相同的,或者模式串开始位置与该后缀部分相同的,
+ *         则失配时对齐该相同部分,继续重新开始匹配
+ */
+public class BoyerMooreSearch {
+    private String pattern;
+    private int R;
+    private int[] bad;    //bad character坏字符(值保存在模式串中找到的最大索引)
+    private int[] good;   //good suffix好后缀(值为下次比较模式串应该跳跃的距离)
+
+    public BoyerMooreSearch(String pattern) {
+        R = 256;
+        setPattern(pattern);
+    }
+    public BoyerMooreSearch(String pattern,int R){
+        this.R = R;
+        setPattern(pattern);
+    }
+    public BoyerMooreSearch setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        int m = pattern.length();
+        //坏字符(此处记录出现的最大索引)
+        bad = new int[R];
+        for(int i=0;i&lt;R;++i)
+            bad[i] = -1;
+        for(int i=0;i&lt;m;++i)
+            bad[pattern.charAt(i)] = i;
+        //好后缀
+        good = new int[m];
+        int[] suffix  = getSuffix();
+        //case1: 不存在和好后缀匹配的字符串
+        Arrays.fill(good,m);
+        //case2: 模式串开头部分匹配
+        int j=0;
+        for(int i=m-2;i&gt;=0;--i){
+            if(suffix[i] == i+1){
+                for(;j&lt;m-1-i;++j)
+                    if(good[j] == m) good[j] = m-1-i;
+            }
+        }
+        //case3: 存在与好后缀完全匹配的字符串
+        for(int i=0;i&lt;=m-2;++i)
+            good[m-1-suffix[i]] = m-1-i;
+
+        return this;
+    }
+    //计算后缀数组(暴力查找: 所有后缀情况全部查询一遍)
+    private int[] getSuffix_old(){
+        int m = pattern.length();
+        int[] suffix  = new int[m];
+        suffix[m-1] = m;
+        for(int i= m-2;i&gt;=0;--i){
+            int j = i;
+            while(j&gt;=0 &amp;&amp; pattern.charAt(j) == pattern.charAt(m-1-i+j)) --j;
+            suffix[i] = i-j;
+        }
+        return suffix;
+    }
+    //计算后缀数组,稍微改进
+    private int[] getSuffix(){
+        int m = pattern.length();
+        int[] suffix = new int[m];
+        suffix[m-1] = m;
+        int j = m-1,prei=0;
+        for(int i=m-2;i&gt;=0;--i){
+            if(i&gt;j &amp;&amp; suffix[m-1-prei+i] &lt; i-j) //与前面计算过的的后缀相同,无需计算,直接赋值为以前计算过的好后缀
+                suffix[i] = suffix[m-1-prei+i];
+            else {
+                if(i&lt;j) j = i;
+                while (j &gt;= 0 &amp;&amp; pattern.charAt(j) == pattern.charAt(m - 1 - i + j)) --j;
+                suffix[i] = i - j;
+                prei = i;
+            }
+        }
+        return suffix;
+    }
+    //BM算法查找字串
+    public int search(String txt){
+        int m = pattern.length();
+        int n = txt.length();
+        int skip;
+        for(int i=0;i&lt;=n-m;i+=skip){
+            int j;
+            for(j=m-1;j&gt;=0 &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);--j);
+            if(j&lt;0) return i;
+            else skip = Math.max(j-bad[txt.charAt(i+j)],good[j]); //取坏字符与好后缀中跳跃最大距离的
+        }
+        return -1;
+    }
+}</code></pre><h4 id="4-RabinKarp算法-指纹子字符串搜索算法"><a href="#4-RabinKarp算法-指纹子字符串搜索算法" class="headerlink" title="4.RabinKarp算法(指纹子字符串搜索算法)"></a>4.RabinKarp算法(指纹子字符串搜索算法)</h4><pre><code>/**
+ * Rabin-Karp 指纹字符串查找算法
+ * 时间复杂度: 线性 7N
+ * 概述: 按照暴力匹配的策略,但是比较的是与模式串相同长度的整个子串的hash值
+ *       一个长度为m的字符串可以看做一个R进制m位数
+ * 关键: 通过已经计算出当前子串的hash值快速计算下一个将要比较的字串的hash值
+ *       如: 3123 第一次使用霍纳法则算出312的hash值,下次需要计算123的hash值,则为(312-300)*10+3的hash值
+ *       然后使用同余定理对该式求解hash值(即余数)
+ */
+public class RabinKarp {
+    private String pattern; //模式串
+    private long patternHash; //模式串hash值
+    private int m; //模式串长度
+    private long q; //一个大质数
+    private int R; //基数(字符集数),一个长度为m的字符串可以看做R进制m位数
+    private long RM; //R^(m-1) % q(即第m-1位数除以q的余数)
+
+    public RabinKarp(String pattern) {
+        this.R = 256;
+        setPattern(pattern);
+    }
+    public RabinKarp(String pattern, int R) {
+        this.R = R;
+        setPattern(pattern);
+    }
+    public RabinKarp setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        this.m = pattern.length();
+        this.q = longRandomPrime(); //31位质数,q足够大时,几乎没有hash冲突,可以不再进行hash冲突验证
+        //预计算RM的值
+        RM = 1;
+        for(int i=1;i&lt;m;++i)
+            RM = (RM*R)%q;
+        patternHash = hash(pattern,m);
+        return this;
+    }
+    //Horner Rule(霍纳法则): 计算字符串[0...m-1]的hash值
+    private long hash(String key,int m){
+        long h = 0;
+        for(int i=0;i&lt;m;++i)
+            h = (R*h + key.charAt(i))%q;
+        return h;
+    }
+    //随机生成一个31位的质数
+    private long longRandomPrime(){
+        return BigInteger.probablePrime(31,new Random()).longValue();
+    }
+    /**
+     * 正确性验证: 可能存在hash冲突
+     * 1.蒙特卡罗算法: 采样越多，越逼近最优解
+     *   策略: q的取值越大,hash冲突的可能性越小,使用非常大的q值时几乎不可能发生hash冲突,在实际应用中寻找匹配是可靠的
+     * 2.拉斯维加斯算法: 采样越多，越有可能找到最优解
+     *   策略: 对RK算法找到的匹配字串再进行验证
+     */
+    //拉斯维加斯算法验证正确性
+    private boolean check(String txt,int i){
+        for(int j=0;j&lt;m;++j)
+            if(pattern.charAt(j) != txt.charAt(i+j))
+                return false;
+        return true;
+    }
+
+    /**
+     * 同余定理
+     * (A*B) mod m = ((A mod m) * (B mod m)) mod m
+     * (A+B) mod m = ((A mod m) + (B mod m)) mod m
+     * (A-B) mod m = ((A mod m) - (B mod m)+ m) mod m
+     */
+    public int search(String txt){
+        int n = txt.length();
+        if(n &lt; m) return -1;
+        long txtHash = hash(txt,m);
+        if(txtHash == patternHash &amp;&amp; check(txt,0))
+            return 0;
+        for(int i = m;i&lt;n;++i){
+            //同余定理,Horner Rule(霍纳法则)
+            //(A-B) mod m = ((A mod m) - (B mod m)+ m) mod m
+            txtHash = (txtHash - RM * txt.charAt(i - m) % q + q) % q;
+            txtHash = (txtHash * R + txt.charAt(i)) % q;
+            int offset = i-m+1;
+            if(txtHash == patternHash &amp;&amp; check(txt,offset)) //可以不验证,Q值足够大: 蒙特卡罗算法
+                return offset;
+        }
+        return -1;
+    }
+}</code></pre><h4 id="5-Sunday算法"><a href="#5-Sunday算法" class="headerlink" title="5.Sunday算法"></a>5.Sunday算法</h4><pre><code>/**
+ * Sunday算法
+ * 概述: 与BM算法思路相似,只是从左向右进行比较,匹配随机字符串最快
+ * 时间复杂度: o(n)-o(n*m)
+ * 思路: 将文本与字符串对齐从左向右比较,失配时,找到文本中与模式串对齐的末尾的下一个字符,
+ *       同时找到该字符出现在模式串中最大索引位置,然后将该字符与模式串中相同的那个最大索引字符对齐,继续比较
+ */
+public class Sunday {
+    private String pattern; //模式串
+    private int R;          //字符表长度
+    private int[] right;    //维护字符在模式串中出现的最大索引
+
+    public Sunday(String pattern) {
+        this.R = 256;
+        setPattern(pattern);
+    }
+    public Sunday(String pattern, int R) {
+        this.R = R;
+        setPattern(pattern);
+    }
+    public Sunday setPattern(String pattern){
+        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
+        this.pattern = pattern;
+        //记录字符在模式串中出现的最大索引
+        right = new int[R];
+        Arrays.fill(right,-1);
+        for(int i=0;i&lt;pattern.length();++i)
+            right[pattern.charAt(i)] = i;
+        return this;
+    }
+    public int search(String txt){
+        int m = pattern.length();
+        int n = txt.length();
+        int skip;
+        for(int i=0;i&lt;=n-m;i+=skip){
+            int j;
+            for(j=0;j&lt;m &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);++j);
+            if(j == m) return i; //完全匹配
+            else skip = m - right[txt.charAt(i+m)]; //失配时,模式串移动距离,与模式串匹配字符越多,移动距离越小
+        }
+        return -1;
+    }
+}</code></pre><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com/2019/07/15/StringSearch/">http://yoursite.com/2019/07/15/StringSearch/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://yoursite.com" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                    <span class="chip bg-color">字符串</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2019-07-15T18-47-27',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/07/16/NFA/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="正则表达式">
+                        
+                        <span class="card-title">正则表达式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            正则表达式
+对于任意正则表达式都存在一个与之对应的非确定有限状态自动机(NFA),反之亦然
+
+1.正则匹配/**
+ * 正则表达式的模式匹配
+ * 概述: 每个正则表达式都对应一个NFA,反之亦然
+ * 思路: 将正则表达式转换为有向图(仅
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-07-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/06/24/Trie/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="单词查找树">
+                        
+                        <span class="card-title">单词查找树</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            单词查找树
+利用字符串的性质构建比通用的查找算法更有效的查找算法
+
+1.R向单词查找树/**
+ * R向单词查找树
+ * 概述: 1.每个节点都含有R个连接,对应着每个可能出现的字符
+ *       2.字符和键隐式的保存在数据结构中
+ 
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-06-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="1124719830"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="http://yoursite.com" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">109.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>

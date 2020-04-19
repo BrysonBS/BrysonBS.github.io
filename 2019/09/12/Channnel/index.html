@@ -1,0 +1,1442 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="NIO-通道, java,web">
+    <meta name="description" content="通道基础
+基本
+
+顶层的Channel接口,只有两个操作: 检查一个通道是否打开(isOpen())和关闭一个打开的通道(close())public interface Channel{
+  public boolean isOpen()">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>NIO-通道 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">NIO-通道</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/NIO/">
+                                <span class="chip bg-color">NIO</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/NIO/" class="post-category">
+                                NIO
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-09-12
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-03-01
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    5.3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    20 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="通道基础"><a href="#通道基础" class="headerlink" title="通道基础"></a>通道基础</h4><ol>
+<li><p><strong>基本</strong></p>
+<ul>
+<li>顶层的Channel接口,只有两个操作: 检查一个通道是否打开(isOpen())和关闭一个打开的通道(close())<pre><code>public interface Channel{
+  public boolean isOpen();//通道是否开启
+  public void close() throws IOException;//关闭打开的通道
+}</code></pre></li>
+<li>通道是访问I/O服务的导管,I/O可以分为广义的两大类:File I/O与Stream I/O,相应的有两种类型的通道与之对应,FileChannel类和socket通道类:SocketChannel丶ServerSocketChannel丶DatagramChannel(UDP)</li>
+</ul>
+</li>
+<li><p><strong>打开通道</strong></p>
+<pre><code> //socket通道可以直接使用其工厂方法open()打开
+ SocketChannel sc = SocketChannel.open();
+ sc.connect (new InetSocketAddress ("somehost", someport));
+
+ ServerSocketChannel ssc = ServerSocketChannel.open();
+ ssc.socket().bind (new InetSocketAddress (somelocalport));
+
+ DatagramChannel dc = DatagramChannel.open();
+
+ //FileChannel只能通过RandomAccessFile丶FileInputStream丶FileOutputStream获取
+ RandomAccessFile raf = new RandomAccessFile ("somefile", "r");
+ FileChannel fc = raf.getChannel( );
+
+ //Channels工厂类
+  Channels.newChannel(System.in);</code></pre></li>
+<li><p><strong>使用通道</strong></p>
+<ul>
+<li>通道可以是单向的(unidirectional)或者双向的(bidirectional),一个类实现ReadableByteChannel接口或者WritableByteChannel接口其中一个则为单向,全部实现则为双向(可以双向传输数据),</li>
+<li>对于file文件可以在不同的时候以不同的权限打开,FileInputStream对象总是以read-only的权限打开文件,<strong>因此此对象的getChannel()方法虽然实现了两个接口,但是却是只读的</strong>,如果进行write()操作就会抛出异常</li>
+<li>ByteChannel的read()与write()方法使用ByteBuffer对象作为参数,两种方法均返回已传输的字节数,如果缓冲区没有满,则可重新提交给通道从上次中断的地方继续传输,直到缓冲区hasRemaining()方法返回false</li>
+<li>通道可以以阻塞(blocking)或非阻塞(nonblocking)模式运行,非阻塞模式的通道不会让调用线程休眠,请求的操作要么立即完成,要么返回一个未进行任何操作的结果,只有面向流的通道,如sockets和pipes才能使用非阻塞模式<pre><code>//读取接口
+public interface ReadableByteChannel extends Channel{
+  public int read (ByteBuffer dst) throws IOException;
+}
+//写入接口
+public interface WritableByteChannel extends Channel{
+  public int write (ByteBuffer src) throws IOException;
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>关闭通道</strong></p>
+<ul>
+<li>通道不能被重复使用,当通道关闭时,与特定I/O服务的特定连接就会丢失,然后通道将不再连接任何东西</li>
+<li>调用通道的close()方法时,可能会导致在关闭底层I/O服务的过程中线程暂时阻塞(Socket通道关闭花费时间较长),哪怕该通道是非阻塞模式,多线程同时close()时,第一个阻塞,后面会跟着阻塞,直到已关闭,再调用close()不会产生任何操作</li>
+<li>isOpen()方法检测通道的开放状态</li>
+<li>通道引入了一些与关闭和中断有关的新行为,对于一个实现了InterruptibleChannel接口的通道,<strong>如果一个线程在该通道上被阻塞同时被中断,那么该通道将被关闭,被阻塞线程会产生ClosedByInterruptException异常</strong></li>
+<li><strong>一个被设置中断状态(interrupt status)的线程试图访问一个通道时,那么这个通道将立即被关闭,同时抛出ClosedByInterruptException异常</strong></li>
+<li>可中断的通道是可以异步关闭的,当一个通道被关闭时,休眠在该通道上的所有线程都将被唤醒并受到一个AsynchronousCloseException异常,接着通道就被关闭将不再可用</li>
+</ul>
+</li>
+<li><p><strong>Scatter/Gather(分散/聚集)</strong></p>
+<ul>
+<li>Scatter/Gather是一个简单却强大的概念,对于read(ByteBuffer [] dsts),从通道中读取的数据会按顺序分散(scatter)到多个缓冲区;对于write(ByteBuffer [] dsts),多个缓冲区中的数据会按顺序进入通道(gather)<pre><code>public interface ScatteringByteChannel extends ReadableByteChannel{
+  //scatter: 从通道中读取的数据按顺序放入多个缓冲区中
+  public long read (ByteBuffer [] dsts)throws IOException;
+  //offset为数组索引,指明从哪个缓冲区开始,length为要使用的缓冲区数量
+  public long read (ByteBuffer [] dsts, int offset, int length)throws IOException;
+}
+public interface GatheringByteChannel extends WritableByteChannel{
+  //gather: 多个缓冲区中的数据按顺序进入通道中
+  public long write(ByteBuffer[] srcs)throws IOException;
+  public long write(ByteBuffer[] srcs, int offset, int length) throws IOException;
+}</code></pre></li>
+</ul>
+</li>
+</ol>
+<h4 id="文件通道"><a href="#文件通道" class="headerlink" title="文件通道"></a>文件通道</h4><ol>
+<li><p><strong>基本</strong></p>
+<ul>
+<li><p>文件通道总是阻塞式的,FileChannel实例只能通过一个打开的file对象(RandomAccessFile丶FileInputStream丶FileOutputStream)上调用getChannel()方法获取,获取到的对象与file对象访问权限相同</p>
+</li>
+<li><p>FileChannel对象是线程安全的,多个进程可以在同一个实例上并发调用方法而不会引起任何问题,但是有些文件操作是单线程的,会阻塞其他线程</p>
+<pre><code>public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
+  //...部分方法列表
+
+  //从通道的position位置读取字节序列放入dst缓冲区
+  public abstract int read (ByteBuffer dst, long position)
+  //从给定缓冲区向通道从position位置写入字节序列
+  public abstract int write (ByteBuffer src, long position)
+  public abstract long size()//返回此通道文件的当前大小字节
+  public abstract long position()//返回此通道的文件位置
+  public abstract void position (long newPosition)//设置此通道的文件位置
+  public abstract void truncate (long size)//截断: 将此通道文件截断为指定大小
+  //参数metadata表示在方法返回值前文件的元数据(metadate)是否也要同步更新到磁盘
+  public abstract void force (boolean metaData)//强制文件的所有待定修改立即同步到磁盘
+  public final FileLock lock()//获取此通道文件的排它锁
+  //获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁
+  //获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限
+  public abstract FileLock lock (long position, long size, boolean shared)
+  public final FileLock tryLock()//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)
+  //尝试获取此通道给定区域的排它锁
+  public abstract FileLock tryLock (long position, long size, boolean shared)
+  //将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小
+  public abstract MappedByteBuffer map (MapMode mode, long position, long size)
+  public static class MapMode {
+      public static final MapMode READ_ONLY   //只读映射模式
+      public static final MapMode READ_WRITE  //读/写映射模式
+      public static final MapMode PRIVATE     //私有(写时复制)映射模式
+  }
+  //将该通道文件直接传输到给定的可写字节通道,position:起始位置,count:传输最大字节数,target:目标通道
+  public abstract long transferTo (long position, long count, WritableByteChannel target)
+  //从给定的可读字节通道将字节传输到当前通道中,src:源通道,position:起始位置,count:要传输的最大自己数
+  public abstract long transferFrom (ReadableByteChannel src, long position, long count)
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>访问文件</strong></p>
+<ul>
+<li>每个FileChannel都有一个”file position”的概念,这个position值决定文件中从哪一处的数据接下来将被读或写</li>
+<li>truncate()方法会砍掉你所指定的新size值之外的所有数据,同时position会被设置为新size值,因此无论传入size大于或者小于原始大小都会产生副作用</li>
+<li>对于position (long newPosition)方法设置通道的position值,如果设置负值会抛异常,如果设置的值超出文件尾,那么再使用read()方法时会返回一个文件尾,使用write()方法会引起文件增长以容纳写入的字节,并可能出现文件空洞(<strong>文件尾到写入的位置position之间的空间被称为文件空洞</strong>)</li>
+<li><strong>文件空洞</strong>并不占据磁盘空间,直到后续真正写入数据才存入磁盘,在此之前,文件系统会将其解释为0的子串,所以建立文件空洞时速度非常快,没有磁盘I/O</li>
+<li><strong>文件空洞</strong>虽然没有占用磁盘空间,但是文件系统会扣减程序可用磁盘空间数值大小,做到预留,因此基于文件系统的程序会看到文件空洞占据磁盘空间的表象</li>
+<li><strong>文件空洞</strong>可以预先空间占用,如下载10G的内容需要1小时,使用文件空洞占用10G大小,其他程序将无法在此期间使用该空间</li>
+</ul>
+</li>
+<li><p><strong>文件锁定</strong></p>
+<pre><code> public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
+     //...other
+     public final FileLock lock()//获取此通道文件的排它锁
+     //获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁
+     //获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限
+     public abstract FileLock lock (long position, long size, boolean shared)
+     public final FileLock tryLock()//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)
+     //尝试获取此通道给定区域的排它锁
+     public abstract FileLock tryLock (long position, long size, boolean shared)
+ }</code></pre><ul>
+<li>文件锁与文件关联,而不是与通道关联,锁的是外部进程,而不是同一个Java虚拟机上的线程</li>
+<li>锁定区域的范围不一定限制在文件的size以内,可以超出文件尾,因此,我们可以提前把待写入数据的区域锁定,我们也可以锁定一个不包含任何文件内容的区域,以备后续增长需要,相反如果锁定了文件的某块区域,然后文件增长超出了那块区域,那么新增加的文件内容将不受到锁保护<pre><code>//文件锁API
+public abstract class FileLock {
+  public final FileChannel channel()//锁是由哪个锁创建的
+  public final long position()//锁定文件的起始位置
+  public final long size()//锁定文件的大小
+  public final boolean isShared()//是否为共享锁
+  public final boolean overlaps (long position, long size)//锁是否与给定范围重叠
+  public abstract boolean isValid();//锁是否有效
+  public abstract void release( ) throws IOException;//释放锁
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>内存映射文件</strong></p>
+<ul>
+<li>FileChannel上调用map()方法会创建一个由磁盘文件支持的虚拟内存映射,并在那块虚拟内存空间外部封装一个MappedByteBuffer对象</li>
+<li>MappedByteBuffer对象的行为大体类似一个基于内存的缓冲区,只不过该对象的数据元素存储在磁盘上的 一个文件中(文件数据会缓存到内存中)</li>
+<li>get()方法从磁盘文件中获取数据,put()方法会更新磁盘上的文件,并且做出的修改对于该文件的其他阅读者可见</li>
+<li>内存映射机制来访问一个文件会比常规方法读写高效得多,甚至比使用通道的效率都高</li>
+<li>MapMode.PRIVATE表示写时复制模式,通过put()方法所做的修改会导致产生一个私有的数据拷贝并且该拷贝中的数据只有MappedByteBuffer实例可以看到,该过程不会对底层文件做任何修改,一旦缓冲区被施以垃圾回收,那么修改就会丢失,必须以read/wirte权限打开文件才能建立MapMode.PRIVATE映射</li>
+<li>MapMode.PRIVATE模式并不会导致你的缓冲区看不到通过其他方式对文件所做的修改,对文件某个区域的修改再使用MapMode.PRIVATE模式的缓冲区中都能反映出来,除非该缓冲区已经修改了文件上的同一个区域</li>
+<li>MappedByteBuffer对象一旦建立之后就保持有效,直到被垃圾收集为止,没有绑定在创建他们的通道上,关闭相关联的FileChannel不会破坏映射(易导致文件被占用无法及时释放)</li>
+<li>MemoryMappedBuffer直接反映它所关联的磁盘文件,如果映射有效时文件被在结构上(大小)修改,那么缓冲区部分可能无法访问,并抛出未检查异常<pre><code>//MappedByteBuffer创建
+public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
+  // other
+  //将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小
+  public abstract MappedByteBuffer map (MapMode mode, long position,long size)
+  public static class MapMode {
+      public static final MapMode READ_ONLY //只读映射模式
+      public static final MapMode READ_WRITE //读/写映射模式
+      public static final MapMode PRIVATE    //私有(写时复制)映射模式
+  }
+}</code></pre></li>
+<li>当为一个文件建立虚拟内存映射之后,文件数据通常不会因此被从磁盘读取到内存,对于映射缓冲区,虚拟内存系统将根据需要来把文件中相应区块的数据读进来,这个过程是需要时间的,因此可以使用load()提前加载</li>
+<li>load()方法会加载整个文件以使它常驻内存,这样后续的操作基于内存,访问速度将更高</li>
+<li>但是load()方法是一个代价高的操作,因为它会导致大量的页调入,load()方法返回并不能保证文件就会完全常驻内存,由于请求页面调入是动态的,该方法主要作用是提前加载文件进入内存,以便后续的访问速度尽可能快</li>
+<li>对于大多数程序,提前加载文件消耗资源是不划算的,在实际访问时分摊页调入开销才是更好的选择</li>
+<li>应该总是使用MappedByteBuffer.force()而非FileChannel.force()方法,因为通道对象可能不清楚通过映射缓冲区做出的文件的全部更改<pre><code>public abstract class MappedByteBuffer extends ByteBuffer {
+  // other
+  //MappedByteBuffer特别的方法
+  public final MappedByteBuffer load()//加载整个文件使他常驻内存(相当于提前加载)
+  public final boolean isLoaded()//判断被映射的文件是否常驻内存了(不绝对,只是一个暗示)
+  //应使用MappedByteBuffer的force()方法,而非FileChannel的force()方法,
+  //因为通道对象可能不清楚通过映射缓冲区做出的全部更改
+  public final MappedByteBuffer force()//强制将缓冲区更改反映到磁盘上
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Channel-to-Channel传输</strong></p>
+<ul>
+<li>从一个位置将文件数据批量传输到另一个位置,FileChannel类添加了一些优化方法来提高传输过程的效率</li>
+<li>transferTo()和transferFrom()方法允许将一个通道交叉连接到另一个通道,而不需要通过一个中间缓冲区来传递数据,只有FileChannel类有这两个方法</li>
+<li>直接的通道传输不会更新与某个FileChannel关联的position值,会从position位置开始,传输的字节数不超过count参数值,实际传输的字节数会有方法返回</li>
+<li>对于transferTo()方法,如果position+count的值大于文件的size值,传输会在文件尾的位置终止;类似的,对于transferFrom()方法: 如果来源src是另一个FileChannel并且已经到达文件尾,那么传输将提前终止</li>
+<li>Channel-to-Channel传输是可以极其快速的,特别是在底层操作系统提供本地支持的时候,对于大量的数据传输,会是一个巨大的帮助</li>
+</ul>
+</li>
+</ol>
+<h4 id="Socket通道"><a href="#Socket通道" class="headerlink" title="Socket通道"></a>Socket通道</h4><ol>
+<li><p><strong>基本</strong></p>
+<ul>
+<li>全部的socket通道类(DatagramChannel丶SocketChannel和ServerSocketChannel)在被实例化时都会创建一个对等socket对象(java.net类中的Socket丶ServerSocket丶DatagramSocket,它们已经被更新以识别通道),对等的socket可以通过调用socket()方法从一个通道上获取,此外这三个java.net类现在都有getChannel()方法</li>
+<li>虽然每个socket通道(java.nio.channel包中)都有一个关联的java.net.socket对象,却并非所有的socket都有一个关联的通道,如果使用传统方式(直接实例化)创建了一个Socket对象,它就不会有关联的SocketChannel并且它的getChannel()方法将总是返回null</li>
+<li>方法<pre><code>public abstract class SelectableChannel extends AbstractChannel implements Channel {
+  // 部分API列表
+  //设置通道的阻塞模式:阻塞/非阻塞
+  public abstract void configureBlocking (boolean block) throws IOException;
+  public abstract boolean isBlocking( ); //判断通道是那种阻塞模式
+  //防止其他对象修改阻塞模式,只有拥有该对象锁的线程才能修改阻塞模式
+  public abstract Object blockingLock( );
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>ServerSocketChannel</strong></p>
+<ul>
+<li>完整API<pre><code>public abstract class ServerSocketChannel extends AbstractSelectableChannel {
+  /**
+   *工厂方法创建一个新的ServerSocketChannel对象,
+   *返回同一个未绑定的java.net.ServerSocket关联的通道
+   *该对等ServerSocket可以通过ServerSocketChannel对象调用socket()获取
+   *通过对等的socket的bind()方法绑定到一个端口开始监听
+   **/
+  public static ServerSocketChannel open( ) throws IOException
+  //返回对等的Socket对象
+  public abstract ServerSocket socket( );
+  //返回的对象可以在非阻塞模式下运行,非阻塞模式下调用,没有传入链接在等待时,会立即返回null
+  public abstract ServerSocket accept( ) throws IOException;
+  //返回此频道支持操作的操作集
+  public final int validOps( )
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>SocketChannel</strong></p>
+<ul>
+<li>API<pre><code>  public abstract class SocketChannel extends AbstractSelectableChannel implements ByteChannel, ScatteringByteChannel, GatheringByteChannel {
+  //部分API列表
+  //打开链接通道
+  public static SocketChannel open( ) throws IOException
+  //打开链接通道并链接到远程地址(相当于open()+connect(remote))
+  public static SocketChannel open (InetSocketAddress remote) throws IOException
+  //获取与此通道对等的Socket
+  public abstract Socket socket( );
+  //将此通道链接到远程地址
+  public abstract boolean connect (SocketAddress remote) throws IOException;
+  //判断是否正在进行链接操作
+  public abstract boolean isConnectionPending( );
+  //判断是否完成链接操作
+  public abstract boolean finishConnect( ) throws IOException;
+  //判断是否已经完成链接
+  public abstract boolean isConnected( );
+  //确定支持的操作的操作集
+  public final int validOps( )
+}</code></pre></li>
+<li>Socket通道是线程安全的,但是任何时候都只有一个读操作和一个写操作在进行中,sockets是面向流而非包导向的,他们可以保证发送的字节会按照顺序到达但无法承诺维持字节分组,例如某个发送器可能给一个socket写入20字节而接收器调用read()方法却只收到了其中3个字节,剩下的17个字节还在传输中,因此让多个不配合的线程共享某个流socket的同一侧绝非一个好的涉及选择</li>
+<li>connect()和finishConnect()方法是互相同步的,并且只要其中一个操作正在进行,任何读或写方法调用都会阻塞,即使是在非阻塞模式下</li>
+</ul>
+</li>
+<li><p><strong>DatagramSocket</strong></p>
+<ul>
+<li>API<pre><code>public abstract class DatagramChannel extends AbstractSelectableChannel implements ByteChannel, ScatteringByteChannel, GatheringByteChannel {
+  //部分方法列表
+  //打开数据通道
+  public static DatagramChannel open( ) throws IOException
+  //获取与通道等价的socket
+  public abstract DatagramSocket socket( );
+  //指定链接到的地址,除了此地址之外任何其他源地址的数据包都会被忽略
+  public abstract DatagramChannel connect (SocketAddress remote) throws IOException;
+  //判断是否指定连接地址
+  public abstract boolean isConnected( );
+  //取消指定的连接地址
+  public abstract DatagramChannel disconnect( ) throws IOException;
+  //接收数据放入ByteBuffer中,非阻塞模式没有可接受包时会返回null,
+  //包内数据超出byteBuffer范围则会被悄悄丢弃
+  public abstract SocketAddress receive (ByteBuffer dst) throws IOException;
+  //发送数据包,非阻塞模式返回发送字节数或者0,
+  //发送数据包是一个全有全无的行为,如果超出数据包承载能力,就什么都不发送
+  public abstract int send (ByteBuffer src, SocketAddress target)
+  //返回读取字节的数量,非阻塞模式返回值可能为0    
+  public abstract int read (ByteBuffer dst) throws IOException;
+  public abstract int write (ByteBuffer src) throws IOException;
+}</code></pre></li>
+<li>DatagramChannel(数据包通道UDP)不同与流socket(TCP/IP),流socket具有有序而可靠的数据传输特性,但是该协议为了在包导向的互联网基础设施上维护流的语义必然会产生巨大的开销,并且流语义不能适用所有情形,数据包的吞吐量要比流协议高很多</li>
+</ul>
+</li>
+</ol>
+<h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><ol>
+<li><strong>基本</strong><ul>
+<li>API<pre><code>public abstract class Pipe {
+  //打开管道
+  public static Pipe open( ) throws IOException
+  //返回此通道的源通道    
+  public abstract SourceChannel source( );
+  //返回此通道的接收通道
+  public abstract SinkChannel sink( );
+  //Pipe可写端的通道
+  public static abstract class SourceChannel extends AbstractSelectableChannel implements ReadableByteChannel, ScatteringByteChannel
+  //Pipe可读端的通道
+  public static abstract class SinkChannel extends AbstractSelectableChannel implements WritableByteChannel, GatheringByteChannel
+}</code></pre></li>
+<li>Pipe实例是通过调用不带参数的Pipe.open()工厂方法来创建的,Pipe类定义了两个嵌套的通道类来实现管路,Pipe.SourceChannel(管道负责读的一端)和Pipe.SinkChannel(管道负责写的一端),这两个通道实例是在Pipe对象创建的同时被创建的,可以通过在Pipe对象上分别调用source()与sink()方法来获取</li>
+<li>管道所能承载的数据量是依赖实现的,唯一可保证的是写到SinkChannel中的字节都能按照同样的顺序在SourceChannel上重现</li>
+</ul>
+</li>
+</ol>
+<h4 id="通道工具类"><a href="#通道工具类" class="headerlink" title="通道工具类"></a>通道工具类</h4><ul>
+<li>API<pre class="line-numbers language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">Channels</span><span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">//返回一个将从给定的通道读取字节的流</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> InputStream <span class="token function">newInputStream</span><span class="token punctuation">(</span>ReadableByteChannel ch<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个将给定的通道写入字节的流</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> OutputStream <span class="token function">newOutputStream</span><span class="token punctuation">(</span><span class="token keyword">final</span> WritableByteChannel ch<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个给定的输入流读取数据的通道</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> ReadableByteChannel <span class="token function">newChannel</span><span class="token punctuation">(</span><span class="token keyword">final</span> InputStream in<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个将向给定的输出流写入数据的通道</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> WritableByteChannel <span class="token function">newChannel</span><span class="token punctuation">(</span><span class="token keyword">final</span> OutputStream out<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个reader,它将从给定的通道读取字节并依据提供的CharsetDecoder对读取的字节进行解码</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Reader <span class="token function">newReader</span><span class="token punctuation">(</span>ReadableByteChannel ch<span class="token punctuation">,</span> CharsetDecoder dec<span class="token punctuation">,</span> <span class="token keyword">int</span> minBufferCap<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个reader,它将从给定的通道读取字节并依据提供的字符集名称将读取到的字节解码为字符</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Reader <span class="token function">newReader</span><span class="token punctuation">(</span>ReadableByteChannel ch<span class="token punctuation">,</span> String csName<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个writer,它将使用提供的CharsetEncoder对象对字符编码并写到给定的通道中</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Writer <span class="token function">newWriter</span><span class="token punctuation">(</span><span class="token keyword">final</span> WritableByteChannel ch<span class="token punctuation">,</span> <span class="token keyword">final</span> CharsetEncoder enc<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> minBufferCap<span class="token punctuation">)</span>
+      <span class="token comment" spellcheck="true">//返回一个writer,它将依据提供的字符集名称对字符编码并写到给定的通道中</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> Writer <span class="token function">newWriter</span><span class="token punctuation">(</span>WritableByteChannel ch<span class="token punctuation">,</span> String csName<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com/2019/09/12/Channnel/">http://yoursite.com/2019/09/12/Channnel/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://yoursite.com" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/NIO/">
+                                    <span class="chip bg-color">NIO</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2019-09-12T19-55-32',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/02/25/Selector/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="NIO-选择器">
+                        
+                        <span class="card-title">NIO-选择器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            选择器
+基本
+
+选择器(Selector): 选择器类管理着一个被注册的通道集合的信息和他们的就绪状态.通道是和选择器一起被注册的,并且使用选择器来更新通道的就绪状态//选择器维护了一个需要监控的通道集合,一个给定的通道可以被注册到多个选择
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-02-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NIO/" class="post-category">
+                                    NIO
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NIO/">
+                        <span class="chip bg-color">NIO</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/09/10/Buffers/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="NIO-缓冲区">
+                        
+                        <span class="card-title">NIO-缓冲区</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            缓冲区基础
+缓冲区是对基本数据元素数组的封装对象,Buffer类及其专有的子类提供了用于处理数据缓冲区的API
+
+
+缓冲区不是多线程安全的,多线程同时存取时,需要同步
+
+
+属性
+
+Capacity(容量): 缓冲区大小,创建时设定,不能更改
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-09-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/NIO/" class="post-category">
+                                    NIO
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/NIO/">
+                        <span class="chip bg-color">NIO</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="1124719830"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="http://yoursite.com" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">109.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>

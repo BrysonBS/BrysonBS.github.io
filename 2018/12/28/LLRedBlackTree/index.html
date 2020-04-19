@@ -1,0 +1,1509 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="左倾红黑树, java,web">
+    <meta name="description" content="左倾红黑树
+概述: 
+​    通过二叉查找树可以发现,在最坏情况下(变成长链),性能很差,
+​    因此理想的情况下就是构建一个完美平衡的树,然而维护完美平衡需要额外的开销
+​    红黑树在性能和维护平衡之间进行协调
+左倾红黑树特点:">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>左倾红黑树 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">左倾红黑树</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%9F%A5%E6%89%BE/">
+                                <span class="chip bg-color">查找</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2018-12-28
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2018-12-28
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="左倾红黑树"><a href="#左倾红黑树" class="headerlink" title="左倾红黑树"></a>左倾红黑树</h3><blockquote>
+<p>概述: </p>
+<p>​    通过二叉查找树可以发现,在最坏情况下(变成长链),性能很差,</p>
+<p>​    因此理想的情况下就是构建一个完美平衡的树,然而维护完美平衡需要额外的开销</p>
+<p>​    红黑树在性能和维护平衡之间进行协调</p>
+<p>左倾红黑树特点:</p>
+<p>​    2-3树的一种表示,红连接相连的节点为3节点,所有红连接为左倾</p>
+</blockquote>
+<pre><code>/**
+ * 左倾红黑树: 详细请参考&lt;&lt;算法第四版&gt;&gt;
+ * 红黑树的特性:
+ *（1）每个节点或者是黑色，或者是红色。
+ *（2）根节点是黑色。
+ *（3）每个叶子节点（NIL）是黑色。 [注意：这里叶子节点，是指为空(NIL或NULL)的叶子节点！]
+ *（4）如果一个节点是红色的，则它的子节点必须是黑色的。
+ *（5）从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。
+ */
+public class LLRedBlackBST&lt;Key,Value&gt; {
+    private Comparator comparator;
+    private Node root;
+    private boolean RED = true;
+    private boolean BLACK = false;
+    private class Node{
+        private Key key;
+        private Value val;
+        private Node left;
+        private Node right;
+        private int n;
+        private boolean color; //当前节点的颜色
+        public Node(Key key, Value val, int n, boolean color) {
+            this.key = key;
+            this.val = val;
+            this.n = n;
+            this.color = color;
+        }
+    }
+    public LLRedBlackBST(Comparator comparator) {
+        this.comparator = comparator;
+    }
+
+    /**************************************************
+     *  左倾红黑树特有实现(与二叉查找树不同的部分)
+     **************************************************/
+    public void put(Key key,Value val){
+        if(key == null) return;
+        root = put(root,key,val);
+        root.color = BLACK;
+    }
+    /**
+     * 插入
+     * 与二叉查找树相同方式进行插入,然后自底向上进行修复
+     * 如果插入后形成的为3节点则不需要处理,
+     * 如果形成了4节点则需要分解为3个2节点(此时高度会增加1打破平衡),
+     * 为了保证平衡,将其中的根节点传递到上层(与父节点合并为一个3节点或者4节点)(转换颜色即可,红连接相连为同一层)
+     * 以此类推,如果传递后还为4节点继续向上传递,仅当传递到root节点变为4节点时,树高会增加1,此时依然保持平衡
+     */
+    private Node put(Node h,Key key,Value val){
+        if(h == null) return new Node(key,val,1,RED);
+        int cmp = comparator.compare(key,h.key);
+        if(cmp &gt; 0) h.right = put(h.right,key,val);
+        else if(cmp &lt; 0) h.left = put(h.left,key,val);
+        else h.val = val;
+        //查找结束逆着查找路径进行平衡修复
+        return balance(h);
+    }
+    /**
+     * 删除最小值
+     * 对于红节点,可以直接删除一个节点不影响平衡
+     * 因此保证在删除时,查找的当前节点为红节点(3节点或者构造的4节点)
+     */
+    public void deleteMin(){
+        root = deleteMin(root);
+        if(root != null) root.color = BLACK;
+    }
+    private Node deleteMin(Node h){
+        if(h.left == null) return null;
+        //左子节点不是红节点,则需要先转换为红节点
+        if(!isRED(h.left) &amp;&amp; !isRED(h.left.left))
+            h = moveRedLeft(h); //将左节点转换为红节点
+        h.left = deleteMin(h.left);
+        return balance(h);  //删除成功后逆着删除路径修复
+    }
+    /**
+     * 删除最大值
+     * 只需将路径中左倾红连接转为右倾,然后就和删除最小值相同思路处理即可
+     */
+    public void deleteMax(){
+        root = deleteMax(root);
+        if(root != null) root.color = BLACK;
+    }
+    private Node deleteMax(Node h){
+        //将左倾红连接转为右倾
+        if(isRED(h.left)) h = rotateRight(h);
+        if(h.right == null) return null;
+        //当前节点右子节点不为红节点,则须先转为红节点
+        if(!isRED(h.right) &amp;&amp; !isRED(h.right.left))
+            h = moveRedRight(h);
+        h.right = deleteMax(h.right);
+        return balance(h); //删除结束后逆着删除路径修复
+    }
+    /**
+     *删除
+     * 概述: 找到待删除节点N,然后用该节点N的右子树的最小节点替换掉该节点即可
+     * 此时问题就转换为,删除待删除节点N的右子树的最小值,因此和删除最小值相同,
+     * 保证查找时,当前节点为红节点即可
+     */
+    public void delete(Key key){
+        if(key == null || !contains(key)) return;
+        root = delete(root,key);
+        if(root != null) root.color = BLACK;
+    }
+    private Node delete(Node h,Key key){
+        int cmp = comparator.compare(key,h.key);
+        if(cmp &lt; 0){
+            //下一步查询节点不为红节点则先转为红节点
+            if(!isRED(h.left) &amp;&amp; !isRED(h.left.left))
+                h = moveRedLeft(h);
+            h.left = delete(h.left,key);
+        }
+        else{//大于等于时放到一起,因为查找命中时(相等),要删除右子树最小节点
+            //此时要保证右子树根节点为红节点(可能需要向父节点借一个节点,此时命中节点可能被传递
+            //这时还需继续向右查找命中,再进行删除操作)
+            if(isRED(h.left)) {
+                h = rotateRight(h);
+                //右旋后当前节点变化须重新比较
+                cmp = comparator.compare(key,h.key);
+            }
+            if(cmp == 0 &amp;&amp; h.right == null) return null;
+            //下一步查询节点不为红节点则先转为红节点
+            if(!isRED(h.right) &amp;&amp; !isRED(h.right.left)) {
+                h = moveRedRight(h);
+                //转为红节点后当前节点变化,需要重新比较
+                cmp = comparator.compare(key,h.key);
+            }
+            if(cmp == 0){ //命中切右子树根节点为红节点时可以执行删除操作
+                Node x = min(h.right);
+                h.key = x.key;
+                h.val = x.val;
+                h.right = deleteMin(h.right);
+            }
+            else h.right = delete(h.right,key);
+        }
+        return balance(h); //逆着查找路径修复
+    }
+
+    /**************************************************
+     *  核心: 左倾红黑树辅助方法(详细情况参考算法第四版分情况图解)
+     **************************************************/
+    //是否为红节点
+    private boolean isRED(Node x){
+        if(x == null) return false;
+        return x.color == RED;
+    }
+    /**
+     * 修复为左倾红黑树
+     * 1.将右倾红连接转为左倾
+     * 2.将4节点分解为2个2节点和一个红节点(向上传递)
+     */
+    private Node balance(Node h){
+        if(!isRED(h.left) &amp;&amp; isRED(h.right)) h = rotateLeft(h);
+        if(isRED(h.left) &amp;&amp; isRED(h.left.left)) h = rotateRight(h);
+        if(isRED(h.left) &amp;&amp; isRED(h.right)) flipColors(h);
+        h.n = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+    //左旋: 将右倾红连接变为左倾
+    private Node rotateLeft(Node h){
+        Node x = h.right;
+        h.right = x.left;
+        x.left = h;
+        x.color = x.left.color;
+        x.left.color = RED;
+        x.n = h.n;
+        h.n = size(h.left) + size(h.right) + 1;
+        return x;
+    }
+    //右旋: 将左倾红连接变为右倾
+    private Node rotateRight(Node h){
+        Node x = h.left;
+        h.left = x.right;
+        x.right = h;
+        x.color = x.right.color;
+        x.right.color = RED;
+        x.n = h.n;
+        h.n = size(h.left) + size(h.right) + 1;
+        return x;
+    }
+    //改变颜色
+    private void flipColors(Node h){
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+    }
+    /**
+     * 将当前节点的左子节点(left)变为红节点
+     * 1.当前节点的右节点(right)为红时,从右节点借一个组成3节点
+     * 2.否则从当前节点借一个合并左右子节点组成4节点
+     */
+    private Node moveRedLeft(Node h){
+        flipColors(h); //改变颜色(左右子节点+父节点组成4节点)
+        if(isRED(h.right.left)){ //当前节点的右节点为红节点(左倾红连接相连)
+            h.right = rotateRight(h.right);
+            h = rotateLeft(h);
+            flipColors(h);
+        }
+        return h;
+    }
+    //将当前节点的右子节点变为红节点
+    private Node moveRedRight(Node h){
+        flipColors(h);
+        if(isRED(h.left.left)){
+            h = rotateRight(h);
+            flipColors(h);
+        }
+        return h;
+    }
+
+    /**************************************************
+     *  左倾红黑树其他实现(与二叉查找树相同,详情参考二叉查找树)
+     **************************************************/
+    public int size(){ return size(root); }
+    private int size(Node x){
+        if(x == null) return 0;
+        return x.n;
+    }
+    //是否为空
+    public boolean isEmpty(){ return root == null; }
+    public Value get(Key key){
+        if(key == null) return null;
+        return get(root,key);
+    }
+    private Value get(Node x,Key key){
+        while(x != null){
+            int cmp = comparator.compare(key,x.key);
+            if(cmp &gt; 0) x = x.right;
+            else if(cmp &lt; 0) x = x.left;
+            else return x.val;
+        }
+        return null;
+    }
+    public boolean contains(Key key){ return get(key) != null; }
+    public Key min(){
+        if(root == null) return null;
+        return min(root).key;
+    }
+    private Node min(Node x){
+        if(x.left == null) return x;
+        return min(x.left);
+    }
+    public Key max(){
+        if(root == null) return null;
+        return max(root).key;
+    }
+    private Node max(Node x){
+        if(x.right == null) return x;
+        return max(x.right);
+    }
+    public Key floor(Key key){
+        Node t = floor(root,key);
+        if(t == null) return null;
+        return t.key;
+    }
+    private Node floor(Node x,Key key){
+        if(x == null) return null;
+        int cmp = comparator.compare(key,x.key);
+        if(cmp &lt; 0) x = floor(x.left,key);
+        else if(cmp &gt;0) {
+            Node t = floor(x.right, key);
+            if (t != null) x = t;
+        }
+        return x;
+    }
+    public Key ceiling(Key key){
+        Node t = ceiling(root,key);
+        if(t == null) return null;
+        return t.key;
+    }
+    private Node ceiling(Node x,Key key){
+        int cmp = comparator.compare(x.key,key);
+        if(cmp &lt; 0) x = ceiling(x.right,key);
+        else if(cmp &gt; 0){
+            Node t = ceiling(x.left,key);
+            if(t != null) x = t;
+        }
+        return x;
+    }
+    public Key select(int k){
+        if(k &lt; 0 || k &gt;= size()) return null;
+        return select(root,k).key;
+    }
+    private Node select(Node x,int k){
+        int t = size(x.left);
+        if(t &gt; k) return select(x.left,k);
+        else if(t &lt; k) return select(x.right,k-t-1);
+        else return x;
+    }
+    public int rank(Key key){ return rank(root,key); }
+    private int rank(Node x,Key key){
+        if(x == null) return 0;
+        int cmp = comparator.compare(key,x.key);
+        if(cmp &lt; 0) return rank(x.left,key);
+        else if(cmp &gt; 0) return 1 + size(x.left) + rank(x.right,key);
+        else return size(x.left);
+    }
+    public int height(){ return height(root); }
+    private int height(Node x){
+        if(x == null) return 0;
+        return Math.max(height(x.left),height(x.right))+1;
+    }
+    public Iterable&lt;Key&gt; keys(){ return keys(min(),max()); }
+    public Iterable&lt;Key&gt; keys(Key lo,Key hi){
+        if(lo == null &amp;&amp; hi == null) throw new RuntimeException("参数为null");
+        ArrayDeque&lt;Key&gt; queue = new ArrayDeque&lt;&gt;();
+        keys(queue,root,lo,hi);
+        return queue;
+    }
+    private void keys(Queue&lt;Key&gt; queue,Node x,Key lo,Key hi){
+        if(x == null) return;
+        int cmplo = comparator.compare(x.key,lo);
+        int cmphi = comparator.compare(x.key,hi);
+        if(cmplo &gt; 0) keys(queue,x.left,lo,hi);
+        if(cmplo &gt;= 0 &amp;&amp; cmphi &lt;= 0)queue.offer(x.key);
+        if(cmphi &lt; 0) keys(queue,x.right,lo,hi);
+    }
+
+    /**************************************************
+     *  左倾红黑树验证
+     **************************************************/
+    public boolean check(){
+        if(!isBST()) System.out.println("不是二叉树");
+        if(!isSizeConsistent()) System.out.println("n错误");
+        if(!isRankConsistent()) System.out.println("rank或select方法错误");
+        if(!is23()) System.out.println("不是左倾2-3树");
+        if(!isBalanced()) System.out.println("不是平衡树");
+        return isBST() &amp;&amp; isSizeConsistent() &amp;&amp; isRankConsistent() &amp;&amp; is23() &amp;&amp; isBalanced();
+    }
+    //是否为二叉查找树
+    private boolean isBST(){
+        return isBST(root,null,null);
+    }
+    private boolean isBST(Node x,Key min,Key max){
+        if(x == null) return true;
+        if(min != null &amp;&amp; comparator.compare(x.key,min) &lt;= 0) return false;
+        if(max != null &amp;&amp; comparator.compare(x.key,max) &gt;= 0) return false;
+        return isBST(x.left,min,x.key) &amp;&amp; isBST(x.right,x.key,max);
+    }
+    //验证n
+    private boolean isSizeConsistent(){ return isSizeConsistent(root); }
+    private boolean isSizeConsistent(Node x){
+        if(x == null) return true;
+        if(size(x.left) + size(x.right) + 1 != size(x)) return false;
+        return isSizeConsistent(x.left) &amp;&amp; isSizeConsistent(x.right);
+    }
+    private boolean isRankConsistent(){
+        for(int i=0;i&lt;size();++i)
+            if(i != rank(select(i))) return false;
+        for(Key key : keys())
+            if(comparator.compare(select(rank(key)),key) != 0) return false;
+        return true;
+    }
+    //验证红黑树性质4,(左倾)
+    private boolean is23(){ return is23(root); }
+    private boolean is23(Node x){
+        if(x == null) return true;
+        if(isRED(x.right)) return false;
+        if(isRED(x) &amp;&amp; isRED(x.left)) return false;
+        return is23(x.left) &amp;&amp; is23(x.right);
+    }
+    //是否平衡树,检验红黑树性质5
+    private boolean isBalanced(){
+        int black = 0;
+        Node x = root;
+        while(x != null) {
+            if (!isRED(x)) black++;
+            x = x.left;
+        }
+        return isBalanced(root,black);
+    }
+    private boolean isBalanced(Node x,int black){
+        if(x == null) return black == 0;
+        if(!isRED(x)) black--;
+        return isBalanced(x.left,black) &amp;&amp; isBalanced(x.right,black);
+    }
+}</code></pre><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com/2018/12/28/LLRedBlackTree/">http://yoursite.com/2018/12/28/LLRedBlackTree/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://yoursite.com" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%9F%A5%E6%89%BE/">
+                                    <span class="chip bg-color">查找</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2018-12-28T18-33-43',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/01/05/HashST/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="散列表">
+                        
+                        <span class="card-title">散列表</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            散列表
+优点: 插入和查找操作的时间复杂度都是O(1) 
+缺点: 性能的保证来自散列函数的质量,是无序符号表,不支持有序性相关操作,是以空间换取时间的数据结构.
+
+1. 基于拉链法的散列表
+概述: 通过链表方式处理碰撞冲突,将碰撞冲突的键放
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-01-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9F%A5%E6%89%BE/">
+                        <span class="chip bg-color">查找</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2018/12/20/BinarySearchTree/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="二叉查找树">
+                        
+                        <span class="card-title">二叉查找树</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            二叉查找树
+二叉查找树的平均查找速度与树高成正比
+优点: 作为一种有序符号表实现,支持高效的查找丶插入丶删除操作, 平均情况下1.39lgN
+缺点:  在最坏况下(有序数据构建),二叉查找树会退化成链表,此时的变为o(n)级别,(为解决此问
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2018-12-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%9F%A5%E6%89%BE/">
+                        <span class="chip bg-color">查找</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="1124719830"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="http://yoursite.com" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">109.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>

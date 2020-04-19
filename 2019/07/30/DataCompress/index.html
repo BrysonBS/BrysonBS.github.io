@@ -1,0 +1,2240 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="数据压缩, java,web">
+    <meta name="description" content="数据压缩
+在此主要介绍使用Huffman编码压缩和LZW压缩算法
+
+1.Huffman压缩(霍夫曼压缩)1.1.BitBuffer辅助类 - 按bit位处理字节数组/**
+ * BitterBuffer
+ * 按bit位处理字节数组,在此仅">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>数据压缩 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">数据压缩</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                <span class="chip bg-color">字符串</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-07-30
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-10-14
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    34 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><blockquote>
+<p>在此主要介绍使用Huffman编码压缩和LZW压缩算法</p>
+</blockquote>
+<h4 id="1-Huffman压缩-霍夫曼压缩"><a href="#1-Huffman压缩-霍夫曼压缩" class="headerlink" title="1.Huffman压缩(霍夫曼压缩)"></a>1.Huffman压缩(霍夫曼压缩)</h4><h5 id="1-1-BitBuffer辅助类-按bit位处理字节数组"><a href="#1-1-BitBuffer辅助类-按bit位处理字节数组" class="headerlink" title="1.1.BitBuffer辅助类 - 按bit位处理字节数组"></a>1.1.BitBuffer辅助类 - 按bit位处理字节数组</h5><pre><code>/**
+ * BitterBuffer
+ * 按bit位处理字节数组,在此仅实现使用到的方法
+ */
+public class BitBuffer {
+    private long mark = -1;
+    private long position = 0;
+    private long limit;
+    private long capacity;
+
+    private byte[] hb;
+
+    public BitBuffer(int byteCapacity) {
+        this.hb = new byte[byteCapacity];
+        this.limit = (long)byteCapacity &lt;&lt; 3;
+        this.capacity = limit;
+    }
+    private BitBuffer(byte[] array,long bitLength){
+        this.hb = array;
+        this.limit = bitLength;
+        this.capacity = limit;
+    }
+    public static BitBuffer wrap(byte[] array, long bitLength){
+        return new BitBuffer(array,bitLength);
+    }
+
+    //byte转无符号
+    private int toUnsigned(byte value){ return value &lt; 0 ? value &amp; 0xff : value; }
+    //转ByteBuffer
+    public ByteBuffer toByteBuffer(){
+        int length = (int) ((position &amp; 7) == 0 ? position &gt;&gt;&gt; 3 : (position &gt;&gt;&gt; 3) + 1);
+        ByteBuffer byteBuffer = ByteBuffer.wrap(hb,0,length);
+        return byteBuffer;
+    }
+    //获取底层数组
+    public byte[] array(){ return hb; }
+
+    //取出bits位的值返回
+    public long get(int bits){
+        if(position + bits &gt; limit) throw new RuntimeException("超出BitBuffer范围无法取出");
+        if(bits &gt; 64) throw new RuntimeException("单次取出超过64bit位,无法取出");
+        int index = (int) (position &gt;&gt;&gt; 3);
+        int remain = (int)(8 - (position &amp; 7));
+        //更新position
+        position += bits;
+        int num = remain - bits;
+        if(num &gt;= 0) return (toUnsigned(hb[index]) &gt;&gt;&gt; num) &amp; ((1 &lt;&lt; bits) - 1);
+        else{
+            long code = toUnsigned(hb[index]) &amp; ((1 &lt;&lt; remain) - 1);
+            return get(code,-num,index+1);
+        }
+    }
+    private long get(long code,int bits,int index){
+        if(bits &lt;= 8){
+            int num = 8 - bits;
+            int tail = (toUnsigned(hb[index]) &gt;&gt;&gt; num) &amp; ((1 &lt;&lt; bits) - 1);
+            return (code &lt;&lt; bits) | tail;
+        }
+        code = (code &lt;&lt; 8) | toUnsigned(hb[index]);
+        return get(code,bits-8,index+1);
+    }
+
+    //将code的bits位(低位-&gt;高位数bits位)放入
+    public void put(long code,int bits){
+        if(position + bits &gt; limit) throw new RuntimeException("超出BitBuffer范围无法取出");
+        if(bits &gt; 64) throw new RuntimeException("单次放入超过64bit位,无法放入");
+        int index = (int)(position &gt;&gt;&gt; 3);
+        int remain = (int)(8 - (position &amp; 7));
+        //更新position
+        position += bits;
+        int num = remain - bits;
+        if(num &gt;= 0) hb[index] |= code &lt;&lt; num;
+        else{
+            hb[index] |= code &gt;&gt;&gt; -num;
+            put(code,-num,index+1);
+        }
+    }
+    private void put(long code,int bits,int index){
+        if(bits &lt;= 8){
+            hb[index] |= code &lt;&lt; 8-bits;
+            return;
+        }
+        hb[index] |= code &gt;&gt;&gt; (bits-=8);
+        put(code,bits,index+1);
+    }
+    public boolean hasRemaining(){ return position &lt; limit; }
+    //获取当前position值
+    public long position(){ return position; }
+    //设置当前position值
+    public BitBuffer position(long newPosition){
+        if ((newPosition &gt; limit) || (newPosition &lt; 0))
+            throw new IllegalArgumentException();
+        position = newPosition;
+        if (mark &gt; position) mark = -1;
+        return this;
+    }
+    public long remaining(){ return limit-position; }
+}</code></pre><h5 id="1-2-Huffman压缩"><a href="#1-2-Huffman压缩" class="headerlink" title="1.2.Huffman压缩"></a>1.2.Huffman压缩</h5><pre><code>/**
+ * Huffman压缩
+ * 概述: 通过huffman编码来重新表示字符,使得出现频率高的字符编码短,出现少的字符编码长
+ *      整体来说,所需的总的bit位是减少的,但对于字符频率均匀的数据几乎没有压缩效果
+ * 实现: 压缩后头部第1个字节存储压缩后结尾长度(结尾时可能一个字节没占满),
+ *      紧接着4个字节存储压缩后字节长度(对于大文件分批次构建不同huffman树进行压缩,确定长度,可以分批次解压)
+ * 细节: 分别使用bio与nio实现,解压时使用多线程并行优化
+ */
+public class Huffman {
+    private int max = 1 &lt;&lt; 24; //单次最大读取字节数,对nio性能影响大(ByteBuffer大小影响)
+    private int R = 256;//码表范围
+    private int bufferLength = 8192; //写入时缓冲区大小8K
+
+    //huffman节点类
+    private class Node implements Comparable&lt;Node&gt;{
+        private char ch;
+        private int freq;
+        private Node left;
+        private Node right;
+
+        public Node(char ch, int freq, Node left, Node right) {
+            this.ch = ch;
+            this.freq = freq;
+            this.left = left;
+            this.right = right;
+        }
+        public boolean isLeaf(){
+            return left == null &amp;&amp; right == null;
+        }
+        @Override
+        public int compareTo(Node o) { return this.freq - o.freq; }
+    }
+
+    //压缩: 使用bio
+    public void compress(InputStream in, OutputStream out){
+        int length;
+        byte[] buff = null;
+        try{
+            while (true) {
+                //对于大文件分批次构建huffman树进行压缩
+                length = (length = in.available()) &gt; max ? max : length;
+                if(buff == null) buff = new byte[length];
+                length = in.read(buff);
+                if(length == -1 || length == 0) break; //读取结束
+                //统计频率
+                int[] freq = new int[R];
+                for (int i = 0; i &lt; length; ++i)
+                    freq[toUnsigned(buff[i])]++;
+                //创建huffman树
+                Node root = buildTrie(freq);
+                //生成编码表(是用long类型,防止code超过范围)
+                long[] st = new long[R];
+                buildCodeTable(root, st, 0L, 0);
+                //写入huffman树
+                BitBuffer bitBuffer = new BitBuffer(length+(R &lt;&lt; 1));
+                bitBuffer.position(40);//第一个字节标记压缩数据末尾bit数,后面4个字节记录压缩后字节长度
+                writeTrie(root,bitBuffer);
+                //写入压缩数据
+                long mixCode,code;
+                int bit;
+                for(int i = 0;i&lt;length;++i){
+                    mixCode = st[toUnsigned(buff[i])];
+                    bit = (int) (mixCode &amp; 0xff);
+                    code = mixCode &gt;&gt;&gt; 8;
+                    bitBuffer.put(code,bit);
+                }
+                //维护头部5字节
+                long gap = bitBuffer.position() - 40;
+                byte tail = (byte) (gap &amp; 7);
+                //压缩数据长度(不包含头部长度5)
+                int compressLength = (int) (tail == 0 ? gap &gt;&gt;&gt; 3 : (gap &gt;&gt;&gt; 3) + 1);
+                long position = bitBuffer.position();
+                bitBuffer.position(0);
+                bitBuffer.put(tail,8);
+                bitBuffer.put(compressLength &gt;&gt;&gt; 16,16);
+                bitBuffer.put(compressLength,16);
+                //写入压缩数据
+                byte[] buf = bitBuffer.array();
+                int maxLength = (int) ((position &amp; 7) == 0 ? position &gt;&gt;&gt; 3 : (position &gt;&gt;&gt; 3) + 1);
+                //分段写入
+                for(int k = 0;k&lt;maxLength;k+=bufferLength){
+                    if(k + bufferLength &gt; maxLength)
+                        out.write(buf,k,maxLength - k);
+                    else
+                        out.write(buf,k,bufferLength);
+                }
+
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //压缩: 使用nio
+    public void nioCompress(FileInputStream in, FileOutputStream out){
+        long length = 0;
+        int capacity;
+        try (FileChannel channel = in.getChannel();FileChannel outChannel = out.getChannel()) {
+            long size = channel.size();
+            //大文件分段压缩
+            while(length &lt; size){
+                capacity = (int) ((length += max) &lt;= size ? max : size - length + max);
+                MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_ONLY,length-max,capacity);
+                //统计频率
+                int[] freq = new int[R];
+                for (int i = 0; i &lt; capacity; ++i)
+                    freq[toUnsigned(mappedByteBuffer.get())]++;
+                //创建huffman树
+                Node root = buildTrie(freq);
+                //生成编码表(是用long类型,防止编码过长)
+                long[] st = new long[R];
+                buildCodeTable(root, st, 0L, 0);
+                //写入huffman树
+                BitBuffer bitBuffer = new BitBuffer(capacity+(R &lt;&lt; 1));
+                bitBuffer.position(40);//第一个字节标记压缩数据末尾bit数,后面4个字节记录压缩后字节长度
+                writeTrie(root,bitBuffer);
+                //压缩数据放入字节数组
+                long mixCode,code;
+                int bit;
+                mappedByteBuffer.flip();
+                for(int i = 0;i&lt;capacity;++i){
+                    mixCode = st[toUnsigned(mappedByteBuffer.get())];
+                    bit = (int) (mixCode &amp; 0xff);
+                    code = mixCode &gt;&gt;&gt; 8;
+                    bitBuffer.put(code,bit);
+                }
+                //维护头部5字节
+                long gap = bitBuffer.position() - 40;
+                byte tail = (byte) (gap &amp; 7);
+                //压缩数据长度(不包含头部长度5)
+                int compressLength = tail == 0 ? (int)(gap &gt;&gt;&gt; 3) : (int)((gap &gt;&gt;&gt; 3) + 1);
+                long position = bitBuffer.position();
+                bitBuffer.position(0);
+                bitBuffer.put(tail,8);
+                bitBuffer.put(compressLength &gt;&gt;&gt; 16,16);
+                bitBuffer.put(compressLength,16);
+                //写入压缩数据
+                bitBuffer.position(position);
+                ByteBuffer byteBuffer = bitBuffer.toByteBuffer();
+                outChannel.write(byteBuffer);
+            }
+
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    //解压: 使用bio
+    public void expand(InputStream in,OutputStream out){
+        //确定线程数与容量
+        int capacity = Runtime.getRuntime().availableProcessors();
+        LinkedBlockingQueue&lt;Future&lt;ByteBuffer&gt;&gt; blockingQueue = new LinkedBlockingQueue&lt;&gt;(capacity);
+        CountDownLatch latch = new CountDownLatch(1); //闭锁: 作用等待数据写入线程结束再放行
+        //数据写入线程: 负责将解压数据写入
+        Thread thread = new Thread(() -&gt;{
+            try {
+                while(!blockingQueue.isEmpty()) {
+                    Future&lt;ByteBuffer&gt; future = blockingQueue.poll();
+                    ByteBuffer byteBuffer = future.get();
+                    //写入
+                    byte[] buf = byteBuffer.array();
+                    int maxLength = byteBuffer.limit();
+                    //分段写入
+                    for(int k = 0;k&lt;maxLength;k+=bufferLength){
+                        if(k + bufferLength &gt; maxLength)
+                            out.write(buf,k,maxLength - k);
+                        else
+                            out.write(buf,k,bufferLength);
+                    }
+                }
+                latch.countDown();
+            } catch (Exception e) { //异常不做处理
+                e.printStackTrace();
+            }
+        });
+
+        try {
+            //解压线程池: 负责解压数据
+            ExecutorService executor = Executors.newWorkStealingPool(capacity);
+            while(true) {
+                //大文件可能分多段压缩,确定当前段长度
+                byte[] head = new byte[5];
+                int length = in.read(head); //读取头部信息
+                if(length == -1 || length == 0) break;
+                ByteBuffer headByte = ByteBuffer.wrap(head);
+                int tailBit = headByte.get();//获取尾部bit位
+                if (length != 5) throw new RuntimeException("头部信息缺失");
+                length = headByte.getInt();//获取到当前段压缩字节长度
+                byte[] buff = new byte[length]; //读取当前压缩段数据
+                //读取压缩段
+                long len = in.read(buff);
+                if(length == -1 || length == 0) break;
+                if (len != length) throw new RuntimeException("读取压缩信息失败");
+                //解压并写入数据到byte数组: 并行提高效率
+                Future&lt;ByteBuffer&gt; future = executor.submit(()-&gt;{
+                    long bitLength = tailBit == 0 ? len &lt;&lt; 3 : (len &lt;&lt; 3) + tailBit - 8;
+                    BitBuffer bitBuffer = BitBuffer.wrap(buff,bitLength);
+                    //读取huffman树
+                    Node root = readTrie(bitBuffer);
+                    //解压后先写入byte数组
+                    byte[] buf = new byte[max];
+                    int bufIndex = 0;
+                    //特殊处理: root为叶子节点,仅一个节点
+                    if(root.isLeaf()){
+                        long p = bitBuffer.position();
+                        long limit = bitBuffer.limit();
+                        for(;p&lt;limit;p++)
+                            buf[bufIndex++] = (byte)root.ch;
+                        return ByteBuffer.wrap(buf,0,bufIndex);
+                    }
+                    //解码
+                    while(bitBuffer.hasRemaining()){
+                        Node x = root;
+                        //此处每次读取1bit位处理,效率低,多线程并行优化
+                        while(!x.isLeaf() &amp;&amp; bitBuffer.hasRemaining()){
+                            boolean bit = bitBuffer.get(1) == 1;
+                            if(bit) x = x.right;
+                            else x = x.left;
+                        }
+                        buf[bufIndex++] = (byte) x.ch;
+                    }
+                    return ByteBuffer.wrap(buf,0,bufIndex);
+                });
+                blockingQueue.put(future); //将任务放入阻塞队列,put放入速度必定比take处理速度快
+                if(!thread.isAlive()) thread.start(); //启动数据写入线程
+            }
+
+            latch.await();
+        } catch (Exception e) {//异常不做处理
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //解压: 使用nio
+    public void nioExpand(FileInputStream in,FileOutputStream out){
+        //确定线程数与容量
+        int capacity = Runtime.getRuntime().availableProcessors();
+        LinkedBlockingQueue&lt;Future&lt;ByteBuffer&gt;&gt; blockingQueue = new LinkedBlockingQueue&lt;&gt;(capacity);
+        CountDownLatch latch = new CountDownLatch(1); //闭锁: 作用等待数据写入线程结束再放行
+        //数据写入线程: 负责将解压数据写入
+        Thread thread = new Thread(() -&gt;{
+            try {
+                FileChannel outChannel = out.getChannel();
+                while(!blockingQueue.isEmpty()) {
+                    Future&lt;ByteBuffer&gt; future = blockingQueue.poll();
+                    ByteBuffer byteBuffer = future.get();
+                    //写入
+                    outChannel.write(byteBuffer);
+                }
+                latch.countDown();
+            } catch (Exception e) { //异常不做处理
+                e.printStackTrace();
+            }
+        });
+
+
+        try(FileChannel inChannel = in.getChannel()){
+            //解压线程池: 负责解压数据
+            ExecutorService executor = Executors.newWorkStealingPool(capacity);
+            while(true) {
+                //大文件可能分多段压缩,确定当前段长度
+                byte[] head = new byte[5];
+                ByteBuffer headByte = ByteBuffer.wrap(head);
+                int length = inChannel.read(headByte);
+                if(length == -1 || length == 0) break;
+                headByte.flip();
+                int tailBit = headByte.get();//获取尾部bit位
+                if (length != 5) throw new RuntimeException("头部信息缺失");
+                length = headByte.getInt();//获取到当前段压缩字节长度
+                byte[] buff = new byte[length]; //读取当前压缩段数据
+                ByteBuffer dataByte = ByteBuffer.wrap(buff);
+                long len = inChannel.read(dataByte);
+                if(length == -1 || length == 0) break;
+                if (len != length) throw new RuntimeException("读取压缩信息失败");
+
+                //解压并写入数据到byte数组: 并行提高效率
+                Future&lt;ByteBuffer&gt; future = executor.submit(()-&gt;{
+                    long bitLength = tailBit == 0 ? len &lt;&lt; 3 : (len &lt;&lt; 3) + tailBit - 8;
+                    BitBuffer bitBuffer = BitBuffer.wrap(buff,bitLength);
+                    //读取huffman树
+                    Node root = readTrie(bitBuffer);
+                    //解压后先写入byte数组
+                    byte[] buf = new byte[max];
+                    int bufIndex = 0;
+                    //特殊处理: root为叶子节点,仅一个节点
+                    if(root.isLeaf()){
+                        long p = bitBuffer.position();
+                        long limit = bitBuffer.limit();
+                        for(;p&lt;limit;p++)
+                            buf[bufIndex++] = (byte)root.ch;
+                        return ByteBuffer.wrap(buf,0,bufIndex);
+                    }
+                    //解码
+                    while(bitBuffer.hasRemaining()){
+                        Node x = root;
+                        //此处每次读取1bit位处理,效率低,多线程并行优化
+                        while(!x.isLeaf() &amp;&amp; bitBuffer.hasRemaining()){
+                            boolean bit = bitBuffer.get(1) == 1;
+                            if(bit) x = x.right;
+                            else x = x.left;
+                        }
+                        buf[bufIndex++] = (byte)x.ch;
+                    }
+                    return ByteBuffer.wrap(buf,0,bufIndex);
+                });
+                blockingQueue.put(future); //将任务放入阻塞队列,put放入速度比take处理速度快
+                if(!thread.isAlive()) thread.start(); //启动数据写入线程
+            }
+            latch.await();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //压缩: 文件夹/文件
+    public void compress(File inFile,FileOutputStream out){
+        Queue&lt;Map.Entry&lt;Integer,File&gt;&gt; queue = new ArrayDeque&lt;&gt;();
+        Queue&lt;File&gt; fileQueue = new ArrayDeque&lt;&gt;();
+        queue.offer(new AbstractMap.SimpleEntry&lt;&gt;(-1,inFile));
+        //对文件名再编码: 防止同名文件名导致的问题
+        Integer dKey = 0;//文件夹,被3整除
+        Integer fKey = 1;//非空文件,余1
+        Integer eKey = 2;//空文件,余2
+        Integer key; //当前文件对应的编码
+        StringBuilder table = new StringBuilder();
+        StringBuilder paths = new StringBuilder();
+        while(!queue.isEmpty()){
+            Map.Entry&lt;Integer,File&gt; entity = queue.poll();
+            Integer parentKey = entity.getKey();
+            File file = entity.getValue();
+            if(file.isDirectory()){
+                key = dKey;
+                dKey+=3;
+                File[] files = file.listFiles();
+                for(File f : files) queue.offer(new AbstractMap.SimpleEntry&lt;&gt;(key,f));
+            }
+            else {
+                if (file.length() == 0) {//空文件
+                    key = eKey;
+                    eKey += 3;
+                } else {
+                    key = fKey;
+                    fKey += 3;
+                    fileQueue.offer(file);
+                }
+            }
+            paths.append(parentKey);
+            paths.append("/");
+            paths.append(key);
+            paths.append("?");
+
+            table.append(key);
+            table.append(":");
+            table.append(file.getName());
+            table.append("&lt;");
+        }
+
+        table.append("&gt;");
+        table.append(paths);
+
+        try{
+            //记录文件名长度(int值)+文件名
+            byte[] pathsBuff = table.toString().getBytes();
+            int len = pathsBuff.length;
+            byte[] head = new byte[]{(byte)(len &gt;&gt;&gt; 24),(byte)(len &gt;&gt;&gt; 16),(byte)(len &gt;&gt;&gt; 8),(byte)len};
+            out.write(head);
+            out.write(pathsBuff);
+
+            //依次压缩文件
+            while(!fileQueue.isEmpty()){
+                File file = fileQueue.poll();
+                long length = 0;
+                int capacity;
+                try(FileChannel channel = new FileInputStream(file).getChannel()){
+                    long size = channel.size();
+                    //大文件分段压缩
+                    while(length &lt; size){
+                        capacity = (int) ((length += max) &lt;= size ? max : size - length + max);
+                        MappedByteBuffer mappedByteBuffer = channel.map(FileChannel.MapMode.READ_ONLY,length-max,capacity);
+                        //统计频率
+                        int[] freq = new int[R];
+                        for (int i = 0; i &lt; capacity; ++i)
+                            freq[toUnsigned(mappedByteBuffer.get())]++;
+                        //创建huffman树
+                        Node root = buildTrie(freq);
+                        //生成编码表(是用long类型,防止编码过长)
+                        long[] st = new long[R];
+                        buildCodeTable(root, st, 0L, 0);
+                        //写入huffman树
+                        BitBuffer bitBuffer = new BitBuffer(capacity+(R &lt;&lt; 1));
+                        bitBuffer.position(40);//第一个字节标记压缩数据末尾bit数,后面4个字节记录压缩后字节长度
+                        writeTrie(root,bitBuffer);
+                        //压缩数据放入字节数组
+                        long mixCode,code;
+                        int bit;
+                        mappedByteBuffer.flip();
+                        for(int i = 0;i&lt;capacity;++i){
+                            mixCode = st[toUnsigned(mappedByteBuffer.get())];
+                            bit = (int) (mixCode &amp; 0xff);
+                            code = mixCode &gt;&gt;&gt; 8;
+                            bitBuffer.put(code,bit);
+                        }
+                        //维护头部5字节
+                        long gap = bitBuffer.position() - 40;
+                        byte tail = (byte) (gap &amp; 7);
+                        //压缩数据长度(不包含头部长度5)
+                        int compressLength = tail == 0 ? (int)(gap &gt;&gt;&gt; 3) : (int)((gap &gt;&gt;&gt; 3) + 1);
+                        long position = bitBuffer.position();
+                        bitBuffer.position(0);
+                        //若到文件末尾时标记0001
+                        if(length &gt;= size) {
+                            bitBuffer.put(1,4);
+                            bitBuffer.put(tail,4);
+                        }else{
+                            bitBuffer.put(tail,8);
+                        }
+                        bitBuffer.put(compressLength &gt;&gt;&gt; 16,16);
+                        bitBuffer.put(compressLength,16);
+                        //写入压缩数据
+                        byte[] buf = bitBuffer.array();
+                        int maxLength = (int) ((position &amp; 7) == 0 ? position &gt;&gt;&gt; 3 : (position &gt;&gt;&gt; 3) + 1);
+                        //分段写入
+                        for(int k = 0;k&lt;maxLength;k+=bufferLength){
+                            if(k + bufferLength &gt; maxLength)
+                                out.write(buf,k,maxLength - k);
+                            else
+                                out.write(buf,k,bufferLength);
+                        }
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                System.gc();//通知尽快释放MappedByteBuffer
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    //解压: 文件夹/文件
+    public void expand(FileInputStream in,File outFile){
+        try{
+            byte[] headBuff = new byte[4];
+            int len = in.read(headBuff);
+            if(len != 4) throw new RuntimeException("头部信息缺失");
+            ByteBuffer headByte = ByteBuffer.wrap(headBuff);
+            //获取文件名字符串长度
+            int length = headByte.getInt();
+            byte[] pathByte = new byte[length];
+            //读取文件名字符串
+            len = in.read(pathByte);
+            if (len != length) throw new RuntimeException("读取压缩信息失败");
+            String[] arrs = new String(pathByte).split("&gt;");
+            HashMap&lt;Integer,String&gt; hashMap = new HashMap&lt;&gt;(); //值: 文件名
+            Queue&lt;Map.Entry&lt;Integer,File&gt;&gt; dirsQueue = new ArrayDeque&lt;&gt;();//保存文件夹键值
+            //创建对照表
+            for(String e : arrs[0].split("&lt;")){
+                String[] entity = e.split(":");
+                hashMap.put(Integer.parseInt(entity[0]),entity[1]);
+            }
+            //创建文件
+            File f;
+            Integer key = -1;
+            for(String e : arrs[1].split("\\?")){
+                String[] entity = e.split("/");
+                int parentKey = Integer.parseInt(entity[0]);
+                int childKey = Integer.parseInt(entity[1]);
+                int mod = childKey % 3;
+                if(parentKey == -1 &amp;&amp; mod == 0){ //处理文件夹根目录
+                    f = new File(outFile,hashMap.get(childKey));
+                    f.mkdir();
+                    dirsQueue.offer(new AbstractMap.SimpleEntry&lt;&gt;(childKey,f));
+                    outFile = f;
+                    key = childKey;
+                    continue;
+                }
+                Map.Entry&lt;Integer,File&gt; entry = null;
+                while(key != parentKey){
+                    entry = dirsQueue.poll();
+                    key = entry.getKey();
+                }
+                outFile = entry == null ? outFile : entry.getValue();
+                //处理
+                f = new File(outFile,hashMap.get(childKey));
+                if(mod == 0){ //文件夹
+                    f.mkdir();
+                    dirsQueue.offer(new AbstractMap.SimpleEntry&lt;&gt;(childKey,f));
+                }
+                else if(mod == 1){ //文件直接解压
+                    f.createNewFile();
+                    expandFile(in,new FileOutputStream(f));
+                }
+                else f.createNewFile(); //空文件
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    public void expandFile(InputStream in,OutputStream out){
+        //确定线程数与容量
+        int capacity = Runtime.getRuntime().availableProcessors();
+        LinkedBlockingQueue&lt;Future&lt;ByteBuffer&gt;&gt; blockingQueue = new LinkedBlockingQueue&lt;&gt;(capacity);
+        CountDownLatch latch = new CountDownLatch(1); //闭锁: 作用等待数据写入线程结束再放行
+        //数据写入线程: 负责将解压数据写入
+        Thread thread = new Thread(() -&gt;{
+            try {
+                while(!blockingQueue.isEmpty()) {
+                    Future&lt;ByteBuffer&gt; future = blockingQueue.poll();
+                    ByteBuffer byteBuffer = future.get();
+                    //写入
+                    byte[] buf = byteBuffer.array();
+                    int maxLength = byteBuffer.limit();
+                    //分段写入
+                    for(int k = 0;k&lt;maxLength;k+=bufferLength){
+                        if(k + bufferLength &gt; maxLength)
+                            out.write(buf,k,maxLength - k);
+                        else
+                            out.write(buf,k,bufferLength);
+                    }
+                }
+                latch.countDown();
+            } catch (Exception e) { //异常不做处理
+                e.printStackTrace();
+            }
+        });
+
+        try {
+            //解压线程池: 负责解压数据
+            ExecutorService executor = Executors.newWorkStealingPool(capacity);
+            while(true) {
+                //大文件可能分多段压缩,确定当前段长度
+                byte[] head = new byte[5];
+                int length = in.read(head); //读取头部信息
+                if(length == -1 || length == 0) break;
+                ByteBuffer headByte = ByteBuffer.wrap(head);
+
+                int bits = headByte.get();//获取尾部bit位
+                boolean flag = false;
+                if(bits &gt; 7) {
+                    bits &amp;= 0xf;
+                    flag = true;
+                }
+
+                int tailBit = bits;//获取尾部bit位
+                if (length != 5) throw new RuntimeException("头部信息缺失");
+                length = headByte.getInt();//获取到当前段压缩字节长度
+                byte[] buff = new byte[length]; //读取当前压缩段数据
+                //读取压缩段
+                long len = in.read(buff);
+                if(length == -1 || length == 0) break;
+                if (len != length) throw new RuntimeException("读取压缩信息失败");
+
+                //解压并写入数据到byte数组: 并行提高效率
+                Future&lt;ByteBuffer&gt; future = executor.submit(()-&gt;{
+                    long bitLength = tailBit == 0 ? len &lt;&lt; 3 : (len &lt;&lt; 3) + tailBit - 8;
+                    BitBuffer bitBuffer = BitBuffer.wrap(buff,bitLength);
+                    //读取huffman树
+                    Node root = readTrie(bitBuffer);
+                    //解压后先写入byte数组
+                    byte[] buf = new byte[max];
+                    int bufIndex = 0;
+                    //特殊处理: root为叶子节点,仅一个节点
+                    if(root.isLeaf()){
+                        long p = bitBuffer.position();
+                        long limit = bitBuffer.limit();
+                        for(;p&lt;limit;p++)
+                            buf[bufIndex++] = (byte)root.ch;
+                        return ByteBuffer.wrap(buf,0,bufIndex);
+                    }
+                    //解码
+                    while(bitBuffer.hasRemaining()){
+                        Node x = root;
+                        //此处每次读取1bit位处理,效率低,多线程并行优化
+                        while(!x.isLeaf() &amp;&amp; bitBuffer.hasRemaining()){
+                            boolean bit = bitBuffer.get(1) == 1;
+                            if(bit) x = x.right;
+                            else x = x.left;
+                        }
+                        buf[bufIndex++] = (byte) x.ch;
+                    }
+                    return ByteBuffer.wrap(buf,0,bufIndex);
+                });
+                blockingQueue.put(future); //将任务放入阻塞队列,put放入速度必定比take处理速度快
+                if(!thread.isAlive()) thread.start(); //启动数据写入线程
+
+                if(flag) break;
+            }
+
+            latch.await();
+        } catch (Exception e) {//异常不做处理
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //byte转无符号
+    private int toUnsigned(byte value){ return value &lt; 0 ? value &amp; 0xff : value; }
+    //根据统计的频率freq构建huffman树
+    private Node buildTrie(int[] freq){
+        PriorityQueue&lt;Node&gt; pq = new PriorityQueue&lt;&gt;();
+        for(char c=0;c&lt;R;++c)
+            if (freq[c] &gt; 0) pq.offer(new Node(c, freq[c], null, null));
+        while(pq.size() &gt; 1){
+            Node left = pq.poll();
+            Node right = pq.poll();
+            Node parent = new Node('\0',left.freq+right.freq,left,right);
+            pq.offer(parent);
+        }
+        return pq.poll();
+    }
+    //根据huffman树构建huffman码表,st为码表,int值的前3个字节保存码值,最后1个字节保存码值长度
+    private void buildCodeTable(Node x,long[] st,long code,int length){
+        if(!x.isLeaf()){
+            code &lt;&lt;= 1;
+            buildCodeTable(x.left,st,code,length+1);
+            buildCodeTable(x.right,st,code+1,length+1);
+        }
+        else if(length == 0){ //只有一个根节点
+            st[x.ch] = 1&lt;&lt;8|1;
+        }
+        else {
+            if (length &gt; 56) throw new RuntimeException("错误,编码过长超过long[] st无法保存码表");
+            st[x.ch] = code&lt;&lt;8|length; //7个字节(码值)+1个字节(码值长度)
+        }
+    }
+    //将huffman树存储到字节数组中,非叶子节点0,叶子节点1后面紧跟8bit位为叶子节点的码值
+    private void writeTrie(Node x,BitBuffer buff){
+        if(x.isLeaf()){
+            buff.put(1,1);
+            buff.put(x.ch,8);
+            return;
+        }
+        else buff.position(buff.position()+1);
+        writeTrie(x.left,buff);
+        writeTrie(x.right,buff);
+    }
+    //读取头部存储的huffman树并创建(读取到叶子节点会自动递归结束)
+    private Node readTrie(BitBuffer buff){
+        boolean isLeaf = buff.get(1) == 1;
+        if(isLeaf){
+            Node node = new Node((char)buff.get(8),-1,null,null);
+            return node;
+        }
+        else return new Node('\0',-1,readTrie(buff),readTrie(buff));
+    }
+}</code></pre><h4 id="2-LZW算法"><a href="#2-LZW算法" class="headerlink" title="2.LZW算法"></a>2.LZW算法</h4><blockquote>
+<p>使用到的三向单词查找树(仅保留用到的方法)-<strong>稍作改动直接处理字节数组</strong></p>
+</blockquote>
+<pre><code>/**
+ * 稍作改动的三向字符串查找树
+ * 概述: 稍作改动可以直接处理字符数组
+ */
+public class TST&lt;V&gt; {
+    private Node&lt;V&gt; root;//根节点
+    private class Node&lt;V&gt;{  //节点
+        private char c; //字符
+        private Node&lt;V&gt; left; //左连接 &lt;c
+        private Node&lt;V&gt; mid;  //中连接 =c
+        private Node&lt;V&gt; right;//右连接 &gt;c
+        private V value;    //保存键值
+    }
+
+    //获取: 键-buff[begin,end]组成的字符串
+    public V get(byte[] buff,int begin,int end){
+        Node x = get(root,buff,begin,end);
+        if(x != null) return (V)x.value;
+        if(x == null) System.out.println("x为null" + begin + ":" + end);
+        return null;
+    }
+    private Node get(Node x,byte[] buff,int begin,int end){
+        if(buff == null || buff.length == 0 || begin &gt; end) return null;
+        if(x == null) {
+            System.out.println("x.为null" + begin+":"+end);
+            return null;
+        }
+        char c = toUnsigned(buff[begin]);
+        if(x.c &gt; c) return get(x.left,buff,begin,end);
+        else if(x.c &lt; c) return get(x.right,buff,begin,end);
+        else if(begin &lt; end) return get(x.mid,buff,begin+1,end);
+        else {
+            if(x.value == null) System.out.println("begin:"+ begin+" end:"+end);
+            return x;
+        }
+    }
+    //插入: 键-byte数组buff[begin,end]组成的字符串,值-value
+    public void put(byte[] buff,int begin,int end,V value){
+        if(buff == null || buff.length == 0 || begin &gt; end) return;
+        root = put(root,buff,begin,end,value);
+    }
+    private Node put(Node x,byte[] buff,int begin,int end,V value){
+        char c = toUnsigned(buff[begin]);
+        if(x == null){
+            x = new Node();
+            x.c = c;
+        }
+        if(x.c &gt; c) x.left = put(x.left,buff,begin,end,value);
+        else if(x.c &lt; c) x.right = put(x.right,buff,begin,end,value);
+        else if(begin &lt; end) x.mid = put(x.mid,buff,begin+1,end,value);
+        else x.value = value;
+        return x;
+    }
+    //获取最长前缀并所在byte数组的索引
+    public int longestPrefixof(byte[] buff,int begin,int end){
+        if(buff == null || buff.length == 0 || begin &gt; end) return -1;
+        int index = 0;
+        Node x = root;
+        while(x != null &amp;&amp; begin &lt;= end){
+            char c = toUnsigned(buff[begin]);
+            if(x.c &gt; c) x = x.left;
+            else if(x.c &lt; c) x = x.right;
+            else{
+                if(x.value != null) index = begin;
+                begin++;
+                x = x.mid;
+            }
+        }
+        return index;
+    }
+
+    //插入
+    public void put(String key, V value){
+        if(key == null || key.length() == 0) return;
+        root = put(root,key,value,0);
+    }
+    /**插入: 与获取思路相同,只是遇到空节点创建新节点,到末尾时保存键值*/
+    private Node put(Node x,String key,V value,int d){
+        char c = key.charAt(d);
+        if(x == null) { //没有节点就创建
+            x = new Node();
+            x.c = c;
+        }
+        if(x.c &gt; c) x.left = put(x.left,key,value,d);
+        else if(x.c &lt; c) x.right = put(x.right,key,value,d);
+        else if(d &lt; key.length()-1) x.mid = put(x.mid,key,value,d+1);
+        else x.value = value;   //末尾时保存键值
+        return x;
+    }
+
+    //byte转无符号
+    private char toUnsigned(byte value){ return (char)(value &lt; 0 ? value &amp; 0xff : value); }
+}</code></pre><h5 id="2-1-LZW算法-12位定长bit位编码"><a href="#2-1-LZW算法-12位定长bit位编码" class="headerlink" title="2.1.LZW算法-12位定长bit位编码"></a>2.1.LZW算法-12位定长bit位编码</h5><pre><code>/**
+ * LZW算法
+ * 概述: gif格式用到此算法思想,适合有大量重复值的数据,如果重复数据很少,反而会有反效果
+ * 实现: 1.使用定长的12bit位码表,码表满时,停止扩展,不适合大文件
+ *      2.JDK1.7+之后substring方法性能下降,在此直接处理字节数组,不再像算法4中转为字符串处理
+ *      3.因为要处理字节数组,因此对三向字符串查找树稍作更改,直接处理字符
+ */
+public class LZW {
+    private int buffLength = 8192;
+    private int R = 256;
+    private int W = 12;
+    private int L = 1 &lt;&lt; W;
+    /** 压缩 **/
+    public void compress(InputStream in, OutputStream out){
+        try {
+            byte[] buff = new byte[in.available()];
+            int length = in.read(buff);
+            //基础表
+            TST&lt;Integer&gt; st = new TST&lt;&gt;(); //稍作更改的三向单词查找树(直接处理字节数组)
+            for(int i=0;i&lt;R;++i)
+                st.put(""+(char)i,i);
+            int code = R+1;
+            BitBuffer bitBuffer = new BitBuffer(length &lt;&lt; 1);
+            //压缩
+            for(int i=0;i&lt;length;){
+                //获取最长前缀索引
+                int index = st.longestPrefixof(buff,i,length-1);
+                //压缩后写入缓冲区
+                Integer value = st.get(buff,i,index);
+                bitBuffer.put(value,W);
+                //扩展表
+                if(index &lt; length-1 &amp;&amp; code &lt; L) //W位表满之后就不再扩展
+                    st.put(buff,i,index+1,code++);
+                i = index + 1;
+            }
+            long position = bitBuffer.position();
+            int len = (int)((position &amp; 7 ) == 0 ? position &gt;&gt;&gt; 3 : (position &gt;&gt;&gt; 3) + 1);
+            byte[] buf = bitBuffer.array();
+            //分段写入
+            for(int k = 0;k&lt;len;k+=buffLength){
+                if(k + buffLength &gt; len)
+                    out.write(buf,k,len - k);
+                else
+                    out.write(buf,k,buffLength);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    /** 解压 **/
+    public void expand(InputStream in,OutputStream out){
+        try {
+            byte[] buff = new byte[in.available()];
+            int length = in.read(buff);
+            String[] st = new String[L]; //确定码表长度,直接使用定长数组存储解码表
+            int i;
+            //基础表
+            for(i=0;i&lt;R;++i)
+                st[i] = ""+(char)i;
+            st[i++] = "";
+            BitBuffer bitBuffer = BitBuffer.wrap(buff,length &lt;&lt; 3);
+            if(bitBuffer.remaining() &lt; W) return; //达到末尾结束
+            //先取出第一个编码字符
+            int codeword = (int) bitBuffer.get(W);
+            String val = st[codeword]; //解码第一个字符
+            StringBuilder builder = new StringBuilder(); //存储解码后的字符串
+            while(true){
+                builder.append(val);
+                if(bitBuffer.remaining() &lt; W) break; //达到末尾结束
+                codeword = (int) bitBuffer.get(W); //读取一个编码字符
+                String s = st[codeword];
+                //扩展表
+                if(i == codeword) s = val+ val.charAt(0); //特殊情况,当前解码字符刚好是下一个要加入码表的字符
+                if(i &lt; L) st[i++] = val + s.charAt(0);
+                val = s;
+                if(builder.length() &gt; buffLength){ //分次写入
+                    out.write(builder.toString().getBytes("ISO8859-1"));
+                    builder.delete(0,builder.length());
+                }
+            }
+            out.write(builder.toString().getBytes("ISO8859-1"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+}</code></pre><h5 id="2-2-LZW算法-从9bit位开始变长编码"><a href="#2-2-LZW算法-从9bit位开始变长编码" class="headerlink" title="2.2.LZW算法-从9bit位开始变长编码"></a>2.2.LZW算法-从9bit位开始变长编码</h5><pre><code>/**
+ * LZW算法
+ * 概述: gif格式用到此算法思想,适合有大量重复值的数据,如果重复数据很少,反而会有反效果
+ * 实现: 1.在LZW算法基础上使用变长的编码,从9bit位开始,用完时扩展,并使用最后一位L-1作为变更标记
+ *      2.JDK1.7+之后substring方法性能下降,在此直接处理字节数组,不再像算法4中转为字符串处理
+ *      3.压缩性能有待改进
+ */
+public class LZW {
+    private int buffLength = 8192; //缓冲大小8M
+    private int R = 256; //基本码表
+    private int W = 9; //从9bit位开始扩展码表
+    private int maxW = 24; //最大扩展bit位
+    private int L = 1 &lt;&lt; W; //码表大小
+
+    /** 压缩 **/
+    public void compress(InputStream in, OutputStream out){
+        try {
+            byte[] buff = new byte[in.available()];
+            int length = in.read(buff);
+            //基础表
+            TST&lt;Integer&gt; st = new TST&lt;&gt;(); //稍作更改的三向单词查找树(直接处理字节数组)
+            for(int i=0;i&lt;R;++i)
+                st.put(""+(char)i,i);
+            int code = R+1;
+            BitBuffer bitBuffer = new BitBuffer(length &lt;&lt; 1);
+            //压缩
+            for(int i=0;i&lt;length;){
+                //获取最长前缀索引
+                int index = st.longestPrefixof(buff,i,length-1);
+                //压缩后写入缓冲区
+                Integer value = st.get(buff,i,index);
+                bitBuffer.put(value,W);
+                //扩展表
+                if(index &lt; length-1 &amp;&amp; code &lt; L-1) //W位表没有满就扩展码表
+                    st.put(buff,i,index+1,code++);
+                else if(code == L-1){   //L-1标记当前M bit位码表编满,扩展码表为M+1 bit位
+                    bitBuffer.put(L-1,W);
+                    if(W == maxW){ //达到最大就重新创建码表
+                        st = new TST&lt;&gt;();
+                        for(int k=0;k&lt;R;++k)
+                            st.put(""+(char)k,k);
+                        code = R+1;
+                        W = 9;
+                    }
+                    else {  //没有达到最大就增加bit位扩展码表
+                        code++;
+                        if (index &lt; length - 1)
+                            st.put(buff, i, index + 1, code++);
+                        W++;
+                    }
+                    L = 1 &lt;&lt; W;
+                }
+                i = index + 1;
+            }
+            long position = bitBuffer.position();
+            int len = (int)((position &amp; 7 ) == 0 ? position &gt;&gt;&gt; 3 : (position &gt;&gt;&gt; 3) + 1);
+            byte[] buf = bitBuffer.array();
+            //分段写入
+            for(int k = 0;k&lt;len;k+=buffLength){
+                if(k + buffLength &gt; len)
+                    out.write(buf,k,len - k);
+                else
+                    out.write(buf,k,buffLength);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /** 解压 **/
+    public void expand(InputStream in,OutputStream out){
+        try {
+            byte[] buff = new byte[in.available()];
+            long length = in.read(buff);
+            //不确定码表总大小,使用hashMap
+            HashMap&lt;Integer,String&gt; st = new HashMap&lt;&gt;(L);
+            int i;
+            //基础表
+            for(i=0;i&lt;R;++i)
+                st.put(i,""+(char)i);
+            st.put(i++,"");
+            BitBuffer bitBuffer = BitBuffer.wrap(buff,length &lt;&lt; 3);
+            if(bitBuffer.remaining() &lt; W) return; //达到末尾结束
+            //先取出第一个编码字符
+            int codeword = (int) bitBuffer.get(W);
+            String val = st.get(codeword); //解码第一个字符
+            StringBuilder builder = new StringBuilder(); //存储解码后的字符串
+            while(true){
+                builder.append(val); //解码后存入StringBuilder
+                if(bitBuffer.remaining() &lt; W) break; //达到末尾结束
+                codeword = (int) bitBuffer.get(W); //读取一个编码字符
+                if(codeword == L-1){ //达到最大码表,增加一bit位或者重置
+                    if(W == maxW){ //达到最大bit位重置码表
+                        W = 9;
+                        L = 1 &lt;&lt; W;
+                        st = new HashMap&lt;&gt;(L);
+                        //基础表
+                        for(i=0;i&lt;R;++i)
+                            st.put(i,""+(char)i);
+                        st.put(i++,"");
+                        if(bitBuffer.remaining() &lt; W) return; //结束
+                        codeword = (int) bitBuffer.get(W);
+                        val = st.get(codeword);
+                        continue;
+                    }
+                    else {
+                        W++;
+                        L = 1 &lt;&lt; W;
+                        if(bitBuffer.remaining() &lt; W) return; //结束
+                        codeword = (int) bitBuffer.get(W);
+                        i++; //L-1作为标记,不再使用跳过
+                    }
+                }
+                String s = st.get(codeword);
+                //扩展表
+                if(i == codeword) s = val+ val.charAt(0); //特殊情况,当前解码字符刚好是下一个要加入码表的字符
+                if(i &lt; L) st.put(i++,val+s.charAt(0));
+                val = s; //更新
+                if(builder.length() &gt; buffLength){ //分次写入
+                    out.write(builder.toString().getBytes("ISO8859-1"));
+                    builder.delete(0,builder.length());
+                }
+            }
+            //写入最后部分
+            out.write(builder.toString().getBytes("ISO8859-1"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}</code></pre><script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com/2019/07/30/DataCompress/">http://yoursite.com/2019/07/30/DataCompress/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://yoursite.com" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                                    <span class="chip bg-color">字符串</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2019-07-30T21-21-33',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/08/10/SharingObjects/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="并发-对象的共享">
+                        
+                        <span class="card-title">并发-对象的共享</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            非原子的64操作
+非volatile类型的64位数值变量(double和long),JVM允许将64位的读或写操作分解为两个32位操作,因此在多线程中使用共享且可变的long与double类型的变量是不安全的,需要使用volatile声明或
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-08-10
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%B9%B6%E5%8F%91/" class="post-category">
+                                    并发
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%B9%B6%E5%8F%91/">
+                        <span class="chip bg-color">并发</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/07/16/NFA/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="正则表达式">
+                        
+                        <span class="card-title">正则表达式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            正则表达式
+对于任意正则表达式都存在一个与之对应的非确定有限状态自动机(NFA),反之亦然
+
+1.正则匹配/**
+ * 正则表达式的模式匹配
+ * 概述: 每个正则表达式都对应一个NFA,反之亦然
+ * 思路: 将正则表达式转换为有向图(仅
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-16
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+                        <span class="chip bg-color">字符串</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="1124719830"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="http://yoursite.com" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">109.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>

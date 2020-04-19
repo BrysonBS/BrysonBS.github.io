@@ -1,0 +1,3460 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Java Swing, java,web">
+    <meta name="description" content="布局
+BorderLayout
+ public void borderLayout(){
+     JFrame jFrame = new JFrame(&#34;borderLayout&#34;); //窗体
+     jFrame.setLayout">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Java Swing | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Java Swing</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JUI/">
+                                <span class="chip bg-color">JUI</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/JUI/" class="post-category">
+                                JUI
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-03-19
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-03-19
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    8.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    50 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h4><ol>
+<li><p><strong>BorderLayout</strong></p>
+<pre><code> public void borderLayout(){
+     JFrame jFrame = new JFrame("borderLayout"); //窗体
+     jFrame.setLayout(new BorderLayout(10,5)); //设置布局
+     Container container = jFrame.getContentPane(); //获取窗体容器(用于添加组件)
+     //创建按钮
+     JButton east = new JButton("EAST");
+     JButton west = new JButton("WEST");
+     JButton south = new JButton("SOUTH");
+     JButton north = new JButton("NORTH");
+
+     //添加按钮
+     container.add(east,BorderLayout.EAST);
+     container.add(west,BorderLayout.WEST);
+     container.add(south,BorderLayout.SOUTH);
+     container.add(north,BorderLayout.NORTH);
+     container.add(new JLabel("CENTER"),BorderLayout.CENTER);
+
+     jFrame.setVisible(true);
+     jFrame.pack(); //窗体自适应大小
+     //添加事件
+     jFrame.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowActivated(WindowEvent e) { //窗体打开时触发事件
+             System.out.println("激活");
+         }
+     });
+ }</code></pre></li>
+<li><p><strong>FlowLayout</strong></p>
+<pre><code> public void flowLayout(){
+     JFrame jFrame = new JFrame("flowLayout");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new FlowLayout(FlowLayout.LEFT,5,10));
+     container.add(new JButton("button1"));
+     container.add(new JButton("button2"));
+     container.add(new JButton("button3"));
+     container.add(new JButton("button4"));
+     container.add(new JButton("button5"));
+     container.add(new JButton("button6"));
+     jFrame.setVisible(true);
+     jFrame.setSize(new Dimension(200,200));
+     jFrame.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowClosing(WindowEvent e) {
+             System.out.println("exit");
+         }
+     });
+ }</code></pre></li>
+<li><p><strong>GridLayout</strong></p>
+<pre><code> public void gridLayout(){
+     JFrame jFrame = new JFrame();
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(5,1,10,5));
+     container.add(new JButton("first"));
+     container.add(new JButton("second"));
+     container.add(new JButton("third"));
+     container.add(new JButton("fourth"));
+     container.add(new JButton("fifth"));
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+     jFrame.addWindowListener(new WindowAdapter() {
+         @Override
+         public void windowIconified(WindowEvent e) {
+             System.out.println("最小化");
+         }
+     });
+ }</code></pre></li>
+<li><p><strong>CardLayout</strong></p>
+<pre><code> public void cardLayout(){
+     JFrame jFrame = new JFrame("cardLayout");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(2,1,0,5));
+     JPanel top = new JPanel();
+     JPanel down = new JPanel(new CardLayout());
+     //创建按钮并添加点击事件
+     JButton button = new JButton("切换");
+     button.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             ((CardLayout)down.getLayout()).next(down); //点击时切换下一卡片
+         }
+     });
+     top.setPreferredSize(new Dimension(200,30));//设置大小
+     top.add(button);
+
+     down.setPreferredSize(new Dimension(200,50));
+     down.add("one",new JButton("page1"));
+     down.add(new JLabel("page2"));
+     down.add(new JButton("page3"));
+
+     container.add(top);
+     container.add(down);
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+
+ }</code></pre></li>
+<li><p><strong>GridbagLayout</strong></p>
+<pre><code> public void gridbagLayout(){
+     JButton b;
+     GridBagConstraints c;
+
+     JFrame f = new JFrame("gridbagLayout");
+     GridBagLayout gridbag = new GridBagLayout();
+     Container container = f.getContentPane();
+     container.setLayout(gridbag);
+
+     b = new JButton("first");
+     c = new GridBagConstraints(0,0,1,1,0,0,GridBagConstraints.EAST,1,new Insets(0,0,0,0),2,2);
+     b.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println("first");
+         }
+     });
+     gridbag.setConstraints(b,c);
+     container.add(b);
+
+     b = new JButton("second");
+     c = new GridBagConstraints(1,0,3,1,0,0,GridBagConstraints.EAST,1,new Insets(0,0,0,0),2,2);
+     gridbag.setConstraints(b,c);
+     container.add(b);
+
+     b = new JButton("third");
+     c = new GridBagConstraints(0,2,1,1,0,0,GridBagConstraints.EAST,1,new Insets(5,0,0,0),2,30);
+     gridbag.setConstraints(b,c);
+     container.add(b);
+
+     b = new JButton("four");
+     c = new GridBagConstraints(1,2,1,1,0,0,GridBagConstraints.EAST,0,new Insets(0,0,0,0),2,2);
+     gridbag.setConstraints(b,c);
+     container.add(b);
+
+     b = new JButton("last button");
+     c = new GridBagConstraints(2,3,1,1,0,0,GridBagConstraints.EAST,1,new Insets(0,0,0,0),2,2);
+     gridbag.setConstraints(b,c);
+     container.add(b);
+
+     f.setVisible(true);
+     f.pack();
+
+ }</code></pre></li>
+<li><p><strong>BoxLayout</strong></p>
+<pre><code> public void boxLayout(){
+     JFrame frame = new JFrame();
+     Container container = frame.getContentPane();
+     Box box = Box.createHorizontalBox();
+     container.add(box);
+     JButton a = new JButton("A");
+     a.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println("A");
+         }
+     });
+     box.add(a);
+     //box.add(Box.createHorizontalGlue()); //加入透明组件
+     //box.add(Box.createHorizontalStrut(50)); //加入指定宽度的透明组件
+     //box.add(Box.createRigidArea(new Dimension(50,100)));
+     //box.add(new Box.Filler(new Dimension(50,50),new Dimension(100,50),new Dimension(200,100)));
+     box.add(new JButton("B"));
+     frame.setVisible(true);
+     frame.setSize(300,100);
+ }</code></pre><pre><code> public void boxLayoutTest(){
+     JFrame jFrame = new JFrame("box");
+     Container container = jFrame.getContentPane();
+     Box boxMain = Box.createHorizontalBox();
+
+     Box vbox = Box.createVerticalBox();
+     JButton b = new JButton("first");
+     vbox.add(b);
+
+     b = new JButton("third");
+     b.setMaximumSize(new Dimension(100,150));
+     vbox.add(b);
+     boxMain.add(vbox);
+
+     Box vbox1 = Box.createVerticalBox();
+     boxMain.add(vbox1);
+     b = new JButton("second");
+     b.setAlignmentX(Component.CENTER_ALIGNMENT);
+     b.setMaximumSize(new Dimension(300,50));
+     vbox1.add(b);
+
+     Box hbox = Box.createHorizontalBox();
+     vbox1.add(hbox);
+
+     Box vbox2 = Box.createVerticalBox();
+     vbox2.add(Box.createVerticalStrut(50));
+     vbox2.add(new JButton("fourth"));
+     vbox2.add(Box.createVerticalStrut(50));
+     Box vbox3 = Box.createVerticalBox();
+     vbox3.add(Box.createVerticalGlue());
+     vbox3.add(new JButton("this is the last button"));
+
+     hbox.add(vbox2);
+     hbox.add(vbox3);
+
+     container.add(boxMain);
+     jFrame.pack();
+     jFrame.setVisible(true);
+ }</code></pre><pre><code> public void boxLayoutTestOne(){
+     JFrame jFrame = new JFrame("test");
+     Container container = jFrame.getContentPane();
+     Box boxMain = Box.createVerticalBox();
+     Box topBox = Box.createHorizontalBox();
+     Box downBox = Box.createHorizontalBox();
+
+     topBox.add(new JButton("first"));
+     JButton second = new JButton("second");
+     second.setAlignmentX(Component.CENTER_ALIGNMENT);
+     second.setMaximumSize(new Dimension(300,26));
+     topBox.add(second);
+
+     JButton third = new JButton("third");
+     third.setMaximumSize(new Dimension(100,150));
+     Box fourth = Box.createVerticalBox();
+     Box last = Box.createVerticalBox();
+     fourth.add(Box.createVerticalStrut(50));
+     fourth.add(new JButton("fourth"));
+     fourth.add(Box.createVerticalStrut(50));
+     last.add(Box.createVerticalGlue());
+     last.add(new JButton("this is the last button"));
+
+     downBox.add(third);
+     downBox.add(fourth);
+     downBox.add(last);
+
+     boxMain.add(topBox);
+     boxMain.add(downBox);
+     jFrame.add(boxMain);
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre></li>
+<li><p><strong>不使用布局</strong></p>
+<pre><code> public void noLayout(){
+     JFrame jFrame = new JFrame("noLayout");
+     Container container = jFrame.getContentPane();
+     container.setLayout(null); //不要布局管理器
+     JButton first = new JButton("first");
+     JButton second = new JButton("second");
+
+     container.add(first);
+     container.add(second);
+
+     first.setBounds(15,10,80,30);
+     second.setBounds(80,50,90,40);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(400,200);
+
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h4><ol>
+<li><p><strong>按钮事件</strong></p>
+<pre><code> int count = 0;
+ public void actionListener(){
+     JFrame jFrame = new JFrame("event");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new BorderLayout());
+
+     JButton b = new JButton("点击");
+     b.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             count++;
+             ((JButton)e.getSource()).setText(count+"");
+             String str = e.paramString();
+             System.out.println(str);
+         }
+     });
+     container.add(b,BorderLayout.CENTER);
+
+     jFrame.setSize(200,70);
+     jFrame.setVisible(true);
+ }</code></pre><pre><code> public void manyAction(){
+     JFrame jFrame = new JFrame("many");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new FlowLayout(FlowLayout.RIGHT));
+     JButton b1 = new JButton("first");
+     JButton b2 = new JButton("second");
+     b1.addActionListener(myAction());
+     b2.addActionListener(myAction());
+     container.add(b1);
+     container.add(b2);
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }
+ public ActionListener myAction(){
+     return new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             String name = e.getActionCommand();
+             if("first".equals(name)) System.out.println("成功");
+             else System.out.println("失败");
+         }
+     };
+ }</code></pre></li>
+<li><p><strong>鼠标事件</strong></p>
+<pre><code> public void mouseLintener(){
+     JFrame jFrame = new JFrame("mouse");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(2,1));
+     JLabel label = new JLabel("初始状态",JLabel.CENTER);
+     JButton b = new JButton("按钮");
+     b.setPreferredSize(new Dimension(150,40));
+     b.addMouseListener(mouseEvent(label));
+     container.add(label);
+     container.add(b);
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }
+ public MouseAdapter mouseEvent(JLabel label){
+     return new MouseAdapter(){
+         public void mouseClicked(MouseEvent e) {
+             if(e.getClickCount() == 2){
+                 JFrame jFrame = new JFrame("连按2次");
+                 jFrame.setSize(100,100);
+                 jFrame.setVisible(true);
+             }
+         }
+         public void mousePressed(MouseEvent e) {
+             label.setText("鼠标按下");
+         }
+         public void mouseReleased(MouseEvent e) {
+             label.setText("鼠标弹起");
+         }
+     };
+ }</code></pre><pre><code> int startX,startY,endX,endY;
+ ArrayDeque&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();
+ public void mouseMotionLintener(){
+     JFrame jFrame = new JFrame("motion"){
+         @Override
+         public void paint(Graphics g) {
+             g.setColor(Color.MAGENTA);
+             g.clearRect(0,0,300,300);
+             int i = 0;
+             int[] arr = new int[4];
+             for(int a : queue){
+                 arr[(i++)%4] = a;
+                 if(i%4 == 0) g.drawLine(arr[0],arr[1],arr[2],arr[3]);
+             }
+             g.drawLine(startX,startY,endX,endY);
+         }
+     };
+     Container container = jFrame.getContentPane();
+     container.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mousePressed(MouseEvent e) {
+             startX = e.getX();
+             startY = e.getY();
+         }
+
+         @Override
+         public void mouseReleased(MouseEvent e) {
+             queue.offer(startX);
+             queue.offer(startY);
+             queue.offer(endX);
+             queue.offer(endY);
+             //System.out.println("Mousereleased"+startX+","+startY+","+endX+","+endY);
+         }
+     });
+     container.addMouseMotionListener(new MouseMotionAdapter() {
+         @Override
+         public void mouseDragged(MouseEvent e) {
+             endX = e.getX();
+             endY = e.getY();
+             jFrame.paint(jFrame.getGraphics());
+         }
+     });
+
+     jFrame.setSize(300,300);
+     jFrame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>键盘事件</strong></p>
+<pre><code> String keyString = "";
+ public void keyLinstener(){
+     JFrame jFrame = new JFrame("key");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(3,1));
+     JLabel jLabel = new JLabel("",JLabel.CENTER);
+     JTextField jTextField = new JTextField();
+     JButton jButton = new JButton("清除");
+
+     //event
+     jButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             jLabel.setText("");
+             jTextField.setText("");
+             keyString = "";
+         }
+     });
+     jTextField.addKeyListener(new KeyAdapter() {
+         @Override
+         public void keyTyped(KeyEvent e) {
+             keyString += e.getKeyChar();
+             jLabel.setText(keyString);
+         }
+     });
+
+     container.add(jLabel);
+     container.add(jTextField);
+     container.add(jButton);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,150);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="窗体与面板"><a href="#窗体与面板" class="headerlink" title="窗体与面板"></a>窗体与面板</h4><ol>
+<li><p><strong>JFrame与JInternalFrame</strong></p>
+<pre><code> public void jInternalFrame(){
+     JFrame jFrame = new JFrame("internal");
+     Container container = jFrame.getContentPane();
+     JDesktopPane jDesktopPane = new JDesktopPane();
+     JButton jButton = new JButton("new");
+     jButton.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             JInternalFrame jInternalFrame = new JInternalFrame("Internal",true,true,true,true);
+             jInternalFrame.setSize(200,200);
+             jInternalFrame.setVisible(true);
+             jInternalFrame.setLocation(20,20);
+             Container container = jInternalFrame.getContentPane();
+             container.setLayout(new BorderLayout());
+             container.add(new JTextArea(),BorderLayout.CENTER);
+             container.add(new JButton("internal"),BorderLayout.SOUTH);
+             jDesktopPane.add(jInternalFrame);
+         }
+     });
+
+     container.setLayout(new BorderLayout());
+     container.add(jDesktopPane,BorderLayout.CENTER);
+     container.add(jButton,BorderLayout.SOUTH);
+     jFrame.setVisible(true);
+     jFrame.setSize(350,350);
+ }</code></pre></li>
+<li><p><strong>JLayeredPane(面板的层级)</strong></p>
+<pre><code> public void jLayeredPane(){
+     Integer[] layeredConstant = {
+             JLayeredPane.DEFAULT_LAYER,
+             JLayeredPane.PALETTE_LAYER,
+             101,
+             JLayeredPane.MODAL_LAYER,
+             JLayeredPane.POPUP_LAYER,
+             JLayeredPane.DRAG_LAYER,
+             //JLayeredPane.FRAME_CONTENT_LAYER
+             1001
+     };
+     Color[] colors = {
+             Color.RED,
+             Color.ORANGE,
+             Color.YELLOW,
+             Color.GREEN,
+             Color.CYAN,
+             Color.BLUE,
+             Color.MAGENTA
+     };
+     JLabel[] labels = new JLabel[7];
+     JFrame jFrame = new JFrame("layered");
+     JLayeredPane jLayeredPane = jFrame.getLayeredPane();
+     Point point = new Point(0,0);
+
+     for(int i = 0 ; i &lt; 7 ; ++i){
+         labels[i] = createLabel("第"+i+"层",colors[i],point);
+         point.x += 20;
+         point.y += 20;
+         jLayeredPane.add(labels[i],layeredConstant[i]);
+     }
+
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }
+ public JLabel createLabel(String name,Color color,Point position){
+     JLabel jLabel = new JLabel(name,JLabel.CENTER);
+     jLabel.setVerticalAlignment(JLabel.TOP);
+     jLabel.setBackground(color);
+     //jLabel.setForeground(Color.black);
+     jLabel.setOpaque(true);
+     jLabel.setBounds(position.x,position.y,100,100);
+     return jLabel;
+ }</code></pre></li>
+<li><p><strong>JPanel</strong></p>
+<pre><code> public void jPanel(){
+     JFrame jFrame = new JFrame("jPanel");
+     Container container = jFrame.getContentPane();
+     Box main = Box.createVerticalBox();
+     Box top = Box.createHorizontalBox();
+     Box down = Box.createHorizontalBox();
+     Box last = Box.createVerticalBox();
+
+     JLabel label1 = new JLabel("label1",JLabel.CENTER);
+     JLabel label2 = new JLabel("label2",JLabel.CENTER);
+     JLabel label3 = new JLabel("label3",JLabel.CENTER);
+     JLabel label4 = new JLabel("label4",JLabel.CENTER);
+     JLabel label5 = new JLabel("label5",JLabel.CENTER);
+     label1.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     label2.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     label3.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     label4.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     label5.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+     JPanel panel1 = new JPanel(new BorderLayout());
+     JPanel panel2 = new JPanel(new BorderLayout());
+     JPanel panel3 = new JPanel(new BorderLayout());
+     JPanel panel4 = new JPanel(new BorderLayout());
+     JPanel panel5 = new JPanel(new BorderLayout());
+     panel1.setPreferredSize(new Dimension(300,100));
+     panel2.setPreferredSize(new Dimension(100,100));
+     panel3.setPreferredSize(new Dimension(100,100));
+     panel4.setPreferredSize(new Dimension(100,50));
+     panel5.setPreferredSize(new Dimension(100,50));
+
+     panel1.add(label1,BorderLayout.CENTER);
+     panel2.add(label2,BorderLayout.CENTER);
+     panel3.add(label3,BorderLayout.CENTER);
+     panel4.add(label4,BorderLayout.CENTER);
+     panel5.add(label5,BorderLayout.CENTER);
+
+     last.add(panel4);
+     last.add(panel5);
+
+     top.add(panel1);
+     down.add(panel2);
+     down.add(panel3);
+     down.add(last);
+     main.add(top);
+     main.add(down);
+
+     container.add(main);
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre></li>
+<li><p><strong>JSplitPane(分割面板)</strong></p>
+<pre><code> public void jSplitPane(){
+     JFrame jFrame = new JFrame("split");
+     Container container = jFrame.getContentPane();
+     JLabel label1 = new JLabel("label1",JLabel.CENTER);
+     JLabel label2 = new JLabel("label2",JLabel.CENTER);
+     JLabel label3 = new JLabel("label3",JLabel.CENTER);
+
+     JSplitPane jSplitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,true,label1,label2);
+     jSplitPane1.setDividerLocation(0.3);
+     jSplitPane1.setOneTouchExpandable(true);
+     jSplitPane1.setDividerSize(10);
+     JSplitPane jSplitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,true,jSplitPane1,label3);
+     jSplitPane2.setDividerLocation(35);
+     jSplitPane2.setOneTouchExpandable(true);
+     jSplitPane2.setDividerSize(10);
+
+     container.add(jSplitPane2);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+
+ }</code></pre></li>
+<li><p><strong>JTabbedPanne(标签面板)</strong></p>
+<pre><code> public void jtabbedPane(){
+     JFrame jFrame = new JFrame("tab");
+     Container container = jFrame.getContentPane();
+
+     JPanel panel1 = new JPanel();
+     panel1.add(new JLabel("label1"));
+     JPanel panel2 = new JPanel();
+     panel2.add(new JLabel(new ImageIcon(FrameTest.class.getResource("./bpm.png"))));//图片作为背景
+     JPanel panel3 = new JPanel();
+     panel3.add(new JLabel("label3"));
+
+     JTabbedPane jTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+     JScrollPane jScrollPane = new JScrollPane(panel2,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+     jTabbedPane.add("first",panel1);
+     jTabbedPane.add("image",jScrollPane);
+     jTabbedPane.add("third",panel3);
+
+     container.add(jTabbedPane);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,300);
+
+ }</code></pre></li>
+<li><p><strong>JScrollPane(滚动面板)</strong></p>
+<pre><code> public void jScrollPane(){
+     JFrame jFrame = new JFrame("scroll");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new BorderLayout());
+
+     JPanel center = new JPanel();
+     center.add(new JLabel(new ImageIcon(FrameTest.class.getResource("./bpm.png"))));
+     JScrollPane jScrollPane = new JScrollPane(center,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+     JPanel west = new JPanel();
+     west.setPreferredSize(new Dimension(100,100));
+     west.setLayout(new GridLayout(5,1));
+     JButton b1 = new JButton("显示水平滚动条");
+     JButton b2 = new JButton("不显示水平滚动条");
+     JButton b3 = new JButton("适时显示水平滚动条");
+     b1.addActionListener(addBtnAction(jScrollPane));
+     b2.addActionListener(addBtnAction(jScrollPane));
+     b3.addActionListener(addBtnAction(jScrollPane));
+     west.add(b1);
+     west.add(b2);
+     west.add(b3);
+
+     container.add(west,BorderLayout.WEST);
+     container.add(jScrollPane,BorderLayout.CENTER);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }
+ public ActionListener addBtnAction(JScrollPane jScrollPane){
+     return new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             String name = e.getActionCommand();
+             if("显示水平滚动条".equals(name)){
+                 jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+             }
+             else if("不显示水平滚动条".equals(name)){
+                 jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+             }
+             else{
+                 jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+             }
+             jScrollPane.revalidate();
+         }
+     };
+ }</code></pre></li>
+<li><p><strong>JScrollBar(滚动条)</strong></p>
+<pre><code> public void jScrollBar(){
+     JFrame jFrame = new JFrame("bar");
+     Container container = jFrame.getContentPane();
+
+     JLabel top = new JLabel("刻度:",JLabel.CENTER);
+     JPanel center = new JPanel();
+     center.add(new JLabel(new ImageIcon(FrameTest.class.getResource("./bpm.png"))));
+
+     JScrollBar down = new JScrollBar(JScrollBar.HORIZONTAL,0,10,0,300);
+     JScrollBar right = new JScrollBar(JScrollBar.VERTICAL,0,10,0,200);
+     down.setUnitIncrement(5);
+     down.setBlockIncrement(10);
+     right.setUnitIncrement(2);
+     right.setBlockIncrement(5);
+     down.addAdjustmentListener(addBarAction(top,right,down));
+     right.addAdjustmentListener(addBarAction(top,right,down));
+
+     container.add(down,BorderLayout.SOUTH);
+     container.add(right,BorderLayout.EAST);
+     container.add(top,BorderLayout.NORTH);
+     container.add(center,BorderLayout.CENTER);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }
+ public AdjustmentListener addBarAction(JLabel label,JScrollBar vbar,JScrollBar hbar){
+     return new AdjustmentListener() {
+         @Override
+         public void adjustmentValueChanged(AdjustmentEvent e) {
+             if((JScrollBar)e.getSource() == vbar){
+                 label.setText("垂直刻度: " + e.getValue());
+             }
+             else if((JScrollBar)e.getSource() == hbar){
+                 label.setText("水平刻度: " + e.getValue());
+             }
+         }
+     };
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="标签与按钮"><a href="#标签与按钮" class="headerlink" title="标签与按钮"></a>标签与按钮</h4><ol>
+<li><p><strong>Border</strong></p>
+<pre><code> public void border(){
+     Color[] colors = {
+             Color.RED,Color.ORANGE,Color.YELLOW,Color.GREEN,Color.CYAN,Color.BLUE,Color.MAGENTA
+     };
+     JFrame jFrame = new JFrame("border");
+     Container container = jFrame.getContentPane();
+     JButton btn = new JButton("toggle");
+     btn.setPreferredSize(new Dimension(100,30));
+     btn.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             int i = new Random().nextInt(7);
+             btn.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(colors[i],3),"toggle", TitledBorder.CENTER,TitledBorder.CENTER,null,colors[i%6+1]));
+         }
+     });
+
+     container.add(btn);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,100);
+ }</code></pre></li>
+<li><p><strong>Icon</strong></p>
+<pre><code> public void imageIcon(){
+     JFrame jFrame = new JFrame("icon");
+     Container container = jFrame.getContentPane();
+     JLabel label = new JLabel();
+     label.setIcon(new ImageIcon(FrameTest.class.getResource("./bpm.png")));
+     label.setPreferredSize(new Dimension(100,50));
+     label.setBorder(BorderFactory.createLineBorder(Color.MAGENTA,3));
+     //label.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.MAGENTA,3),"label"));
+
+     Box box = Box.createHorizontalBox();
+     box.add(Box.createHorizontalGlue());
+     box.add(label);
+     box.add(Box.createHorizontalGlue());
+     container.setLayout(new GridLayout(3,1));
+     container.add(new JLabel());
+     container.add(box);
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre><pre><code> public void imageIconByte(){
+     JFrame jFrame = new JFrame("byte");
+     Container container = jFrame.getContentPane();
+     URL url = FrameTest.class.getResource("./bpm.png");
+     System.out.println(url.getPath());
+     File file = new File(url.getPath());
+     InputStream input = null;
+     int length = (int)file.length();
+     byte[] buff = new byte[length];
+     try {
+         input = new FileInputStream(file);
+         input.read(buff);
+     } catch (Exception e) {
+         e.printStackTrace();
+     } finally {
+         try {
+             input.close();
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+     }
+     //for(byte a : buff) System.out.print((char)a);
+     ImageIcon icon = new ImageIcon(buff);
+     JButton b = new JButton(icon);
+     container.add(b);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(200,100);
+ }</code></pre><pre><code> //创建纯色图片
+ public Image getPureImage(Color color,int w,int h){
+     BufferedImage image = new BufferedImage(w,h,BufferedImage.TYPE_INT_BGR);
+     Graphics g = image.getGraphics();
+     g.setColor(color);
+     g.fillRect(0,0,w,h);
+     return image;
+ }
+ //创建文字图片
+ public ImageIcon getImageIcon2D(Image image,String title,Font font,Color fontColor){
+     Graphics2D g2d = (Graphics2D) image.getGraphics();
+     ImageIcon icon = new ImageIcon(image);
+     if(title != null &amp;&amp; title.length() &gt; 0) {
+         if(font == null) font = new Font("宋体",Font.LAYOUT_LEFT_TO_RIGHT,20);
+         if(fontColor == null) fontColor = Color.BLACK;
+         double width = font.getStringBounds(title, g2d.getFontRenderContext()).getWidth();
+         double height = width/title.length();
+         g2d.setFont(font);
+         g2d.setColor(fontColor);
+         long x = Math.round((icon.getIconWidth() - width)/2);
+         long y = Math.round((icon.getIconHeight() + height)/2);
+         g2d.drawString(title,x,y);
+     }
+     return icon;
+ }</code></pre></li>
+<li><p><strong>JLabel</strong></p>
+<pre><code> public void jLabel(){
+     JFrame jFrame = new JFrame("label");
+     Container container = jFrame.getContentPane();
+
+     JLabel jLabel = new JLabel();
+     jLabel.setText("label");
+     jLabel.setHorizontalAlignment(JLabel.CENTER);
+     jLabel.setVerticalAlignment(JLabel.BOTTOM);
+
+     container.add(jLabel);
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>JButton</strong></p>
+<pre><code> public void jButton(){
+     JFrame jFrame = new JFrame("button");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new FlowLayout());
+
+     JButton b = new JButton("确定",new ImageIcon(getPureImage(Color.MAGENTA,80,40)));
+     b.setRolloverEnabled(true);
+     b.setRolloverIcon(new ImageIcon(getPureImage(Color.RED,80,40)));
+     b.setPressedIcon(new ImageIcon(getPureImage(Color.BLUE,80,40)));
+     b.setHorizontalTextPosition(JButton.CENTER);
+     b.setPreferredSize(new Dimension(80,40));
+     container.add(b);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,100);
+ }</code></pre><pre><code> //设置按钮快捷键
+ public void DefaultShortcut(){
+     JFrame jFrame = new JFrame("default enter");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(1,2));
+     JButton btn1 = new JButton("first");
+     JButton btn2 = new JButton("second");
+     ActionListener action = new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println(e.getActionCommand());
+             if(e.getSource() == btn1){
+                 JFrame jFrame1 = new JFrame("first");
+                 jFrame1.setBounds(100,100,300,200);
+                 jFrame1.setVisible(true);
+             }
+             else if(e.getSource() == btn2){
+                 JFrame jFrame1 = new JFrame("second");
+                 jFrame1.setBounds(150,150,300,200);
+                 jFrame1.setVisible(true);
+             }
+         }
+     };
+     btn1.addActionListener(action);
+     btn2.addActionListener(action);
+     btn2.setMnemonic('S');
+
+     container.add(btn1);
+     container.add(btn2);
+     jFrame.getRootPane().setDefaultButton(btn1);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }
+ //设置按钮快捷键
+ public void jButtonShortcut(){
+     JFrame jframe = new JFrame("shortcut");
+     Container container = jframe.getContentPane();
+
+     JButton btn = new JButton("Open new window");
+     btn.setMnemonic('O');
+     btn.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println("Open new window");
+             JFrame jFrame = new JFrame("new window");
+             jFrame.setVisible(true);
+             jFrame.setBounds(100,100,300,200);
+         }
+     });
+
+     container.add(btn);
+     jframe.setSize(300,200);
+     jframe.setVisible(true);
+
+ }</code></pre></li>
+<li><p><strong>JToggleButton</strong></p>
+<pre><code> public void toggleButton(){
+     JFrame jFrame = new JFrame("toggle");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(1,3));
+     JToggleButton tbtn1 = new JToggleButton("first");
+     JToggleButton tbtn2 = new JToggleButton("second");
+     JToggleButton tbtn3 = new JToggleButton("third");
+
+     container.add(tbtn1);
+     container.add(tbtn2);
+     container.add(tbtn3);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="表单组件"><a href="#表单组件" class="headerlink" title="表单组件"></a>表单组件</h4><ol>
+<li><p><strong>JCheckBox</strong></p>
+<pre><code> public void jCheckBox(){
+     JFrame jFrame  = new JFrame("checkBox");
+     Container container = jFrame.getContentPane();
+     container.setLayout(new GridLayout(3,1));
+
+     JCheckBox checkBox1 = new JCheckBox("first");
+     JCheckBox checkBox2 = new JCheckBox("second");
+     JCheckBox checkBox3 = new JCheckBox("third");
+
+     ItemListener itemListener = new ItemListener() {
+         @Override
+         public void itemStateChanged(ItemEvent e) {
+             if(e.getStateChange() == e.SELECTED){
+                 System.out.println(((JCheckBox)e.getItem()).getText());
+             }
+         }
+     };
+     checkBox1.addItemListener(itemListener);
+     checkBox2.addItemListener(itemListener);
+     checkBox3.addItemListener(itemListener);
+     container.add(checkBox1);
+     container.add(checkBox2);
+     container.add(checkBox3);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>JRadioButton</strong></p>
+<pre><code> public void jRadioButton(){
+     JFrame jFrame = new JFrame("radio");
+     Container container = jFrame.getContentPane();
+
+     JRadioButton btn1 = new JRadioButton("male");
+     JRadioButton btn2 = new JRadioButton("female");
+     JPanel jPanel = new JPanel(new GridLayout(3,1));
+     jPanel.add(btn1);
+     jPanel.add(btn2);
+     ButtonGroup group = new ButtonGroup();
+     group.add(btn1);
+     group.add(btn2);
+
+     container.add(jPanel);
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>JList</strong></p>
+<pre><code> public void jList(){
+     JFrame jFrame = new JFrame();
+     Container container = jFrame.getContentPane();
+     Vector&lt;String&gt; vector = new Vector&lt;&gt;();
+     Vector&lt;String&gt; vector2 = new Vector&lt;&gt;();
+
+     String sql = "SELECT * FROM NBL_TEST_ONE";
+     String sql_son = "SELECT * FROM NBL_TEST_ONE_SON";
+     Connection conn = JdbcUtils.getConnection();
+     try {
+         PreparedStatement statement = conn.prepareStatement(sql);
+         ResultSet res = statement.executeQuery();
+         while(res.next())
+             vector.add(res.getString("NAME"));
+
+         ResultSet ress = conn.prepareStatement(sql_son).executeQuery();
+         while(ress.next())
+             vector2.add(ress.getString("SNAME"));
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+
+     JList&lt;String&gt; list = new JList&lt;&gt;(vector);
+     JList&lt;String&gt; list2 = new JList&lt;&gt;(vector2);
+
+     list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+     list.addListSelectionListener(new ListSelectionListener() {
+         @Override
+         public void valueChanged(ListSelectionEvent e) {
+             String name = list.getSelectedValue();
+             list2.setSelectedValue(name,false);
+         }
+     });
+
+     JPanel jPanel = new JPanel(new BorderLayout());
+     JPanel jPanel2 = new JPanel(new BorderLayout());
+     jPanel.setPreferredSize(new Dimension(150,200));
+     jPanel.add(list);
+     jPanel2.setPreferredSize(new Dimension(150,200));
+     jPanel2.add(list2);
+
+     JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,jPanel,jPanel2);
+     jSplitPane.setDividerLocation(0.5);
+     container.add(jSplitPane);
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre><pre><code> public void jListModel(){
+     JFrame jFrame = new JFrame("listModel");
+     Container container = jFrame.getContentPane();
+
+     JPanel panel1 = new JPanel(new BorderLayout());
+     JPanel panel2 = new JPanel(new BorderLayout());
+
+     Vector&lt;String&gt; vector = new Vector&lt;&gt;();
+     vector.add("A");
+     vector.add("B");
+     vector.add("C");
+     vector.add("D");
+     vector.add("E");
+     vector.add("F");
+
+     ListModel&lt;String&gt; model = new AbstractListModel&lt;String&gt;() {
+         @Override
+         public int getSize() {
+             return vector.size();
+         }
+
+         @Override
+         public String getElementAt(int index) {
+             return vector.get(index);
+         }
+     };
+
+     ListModel&lt;String&gt; model1 = new DefaultListModel&lt;String&gt;(){
+         {
+             addElement("O");
+             addElement("P");
+             addElement("E");
+             addElement("N");
+             addElement("C");
+             addElement("A");
+         }
+     };
+
+     JList&lt;String&gt; list1 = new JList&lt;&gt;(model);
+     JList&lt;String&gt; list2 = new JList&lt;&gt;(model1);
+
+     list1.addListSelectionListener(new ListSelectionListener() {
+         @Override
+         public void valueChanged(ListSelectionEvent e) {
+
+         }
+     });
+
+     panel1.add(list1);
+     panel2.add(list2);
+     panel1.setPreferredSize(new Dimension(150,200));
+     panel2.setPreferredSize(new Dimension(150,200));
+     JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,panel1,panel2);
+     jSplitPane.setDividerLocation(0.5);
+     container.add(jSplitPane);
+
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre><pre><code> public void jListClick(){
+     JFrame jFrame = new JFrame("click");
+     Container container = jFrame.getContentPane();
+
+     DefaultListModel&lt;String&gt; model = new DefaultListModel&lt;String&gt;(){
+         {
+             addElement("A");
+             addElement("B");
+             addElement("C");
+             addElement("D");
+             addElement("E");
+         }
+     };
+     DefaultListModel&lt;String&gt; model1 = new DefaultListModel&lt;&gt;();
+     JList&lt;String&gt; jList = new JList&lt;&gt;(model);
+     JList&lt;String&gt; jList1 = new JList&lt;&gt;(model1);
+     jList.setPreferredSize(new Dimension(150,200));
+     jList1.setPreferredSize(new Dimension(150,200));
+
+     MouseAdapter mouseAdapter = new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+             if(e.getClickCount() == 2){ //双击
+                 if(e.getSource() == jList) {
+                     int index = jList.locationToIndex(e.getPoint());
+                     model1.addElement(model.getElementAt(index));
+                     model.removeElementAt(index);
+                 }
+                 else if(e.getSource() == jList1){
+                     int index = jList1.locationToIndex(e.getPoint());
+                     model.addElement(model1.getElementAt(index));
+                     model1.removeElementAt(index);
+                 }
+             }
+         }
+     };
+
+     jList.addMouseListener(mouseAdapter);
+     jList1.addMouseListener(mouseAdapter);
+
+     JSplitPane jSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,jList,jList1);
+     jSplitPane.setDividerLocation(0.5);
+
+     container.add(jSplitPane);
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre></li>
+<li><p><strong>JComboBox</strong></p>
+<pre><code> public void jComboBox(){
+     JFrame jFrame = new JFrame("comboBox");
+     Container container = jFrame.getContentPane();
+
+     Vector&lt;String&gt; vector1 = new Vector&lt;&gt;();
+     Vector&lt;String&gt; vector2 = new Vector&lt;&gt;();
+     vector1.add("A");
+     vector1.add("B");
+     vector1.add("C");
+     vector2.add("D");
+     vector2.add("E");
+     vector2.add("F");
+
+     JComboBox&lt;String&gt; comboBox1 = new JComboBox&lt;&gt;(vector1);
+     JComboBox&lt;String&gt; comboBox2 = new JComboBox&lt;&gt;(vector2);
+     JPanel jPanel = new JPanel();
+     ((FlowLayout)jPanel.getLayout()).setAlignment(FlowLayout.LEFT);
+     //jPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+     jPanel.add(comboBox1);
+     jPanel.add(comboBox2);
+
+     container.add(jPanel);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre><pre><code> public void jComboBoxModel(){
+     JFrame jFrame = new JFrame("model");
+     Container container = jFrame.getContentPane();
+
+     class CustomComboBoxModel extends AbstractListModel&lt;String&gt; implements ComboBoxModel&lt;String&gt;{
+         String[] arr = {"A","B","C","D"};
+         String item = null;
+         @Override
+         public int getSize() {
+             return arr.length;
+         }
+
+         @Override
+         public String getElementAt(int index) {
+             return arr[index];
+         }
+
+         @Override
+         public void setSelectedItem(Object anItem) {
+             item = anItem.toString();
+         }
+
+         @Override
+         public Object getSelectedItem() {
+             return item;
+         }
+     }
+     ComboBoxModel&lt;String&gt; model = new CustomComboBoxModel();
+
+     JComboBox&lt;String&gt; comboBox1 = new JComboBox&lt;&gt;(model);
+     JComboBox&lt;String&gt; comboBox2 = new JComboBox&lt;&gt;(model);
+
+     //设置可编辑
+     comboBox1.setEditable(true);
+     ComboBoxEditor editer = comboBox1.getEditor();
+     comboBox1.configureEditor(editer,"ABC");
+     //事件
+     comboBox1.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println(comboBox1.getSelectedItem());
+         }
+     });
+     comboBox1.addItemListener(new ItemListener() {
+         @Override
+         public void itemStateChanged(ItemEvent e) {
+             System.out.println(e.getItem().toString());
+         }
+     });
+
+     Box box = Box.createHorizontalBox();
+     box.add(comboBox1);
+     box.add(comboBox2);
+
+     container.add(box);
+     container.setLayout(new FlowLayout(FlowLayout.LEFT));
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h4><ol>
+<li><p><strong>JTable</strong></p>
+<pre><code> public void jTable(){
+     JFrame jFrame = new JFrame("table");
+     Container container = jFrame.getContentPane();
+
+     Vector&lt;Vector&gt;&lt;String&gt;&gt; vectors = new Vector&lt;&gt;();
+     Vector&lt;String&gt; names = new Vector&lt;&gt;();
+
+     String sql = "SELECT * FROM NBL_TEST_ONE";
+     //String sql = "select * from NBL_IMPBPCMASTER_DTL";
+     Connection conn = JdbcUtils.getConnection();
+     try {
+         PreparedStatement pre =conn.prepareStatement(sql);
+         ResultSet rs = pre.executeQuery();
+         ResultSetMetaData rsd = rs.getMetaData();
+         for(int i = 1 ; i &lt;= rsd.getColumnCount(); ++i)
+             names.add(rsd.getColumnName(i));
+         while(rs.next()){
+             Vector&lt;String&gt; vector = new Vector&lt;&gt;();
+             for(String n : names)
+                 vector.add(rs.getString(n));
+             vectors.add(vector);
+         }
+
+     } catch (SQLException e) {
+         e.printStackTrace();
+     }
+
+     JTable table = new JTable(vectors,names);
+     //table.setPreferredScrollableViewportSize(new Dimension(500,30));
+     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+     TableColumnModel model = table.getColumnModel();
+     for(int i = 0 ; i&lt; model.getColumnCount() ; ++i){
+         TableColumn column = model.getColumn(i);
+         if((column.getModelIndex() &amp; 1) == 0)
+             column.setPreferredWidth(100);
+         else
+             column.setPreferredWidth(50);
+     }
+     table.getTableHeader().setForeground(Color.gray);
+     JScrollPane jScrollPane = new JScrollPane(table);
+     container.add(jScrollPane);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>TableModel</strong></p>
+<pre><code> public void jTableModel(){
+     JFrame jFrame = new JFrame("tableModel");
+     Container container = jFrame.getContentPane();
+
+     TableModel model = new AbstractTableModel() {
+         Object[][] p = {
+                 {new Integer(1),"Tom","110",new Boolean(true)},
+                 {new Integer(2),"Jerry","120",new Boolean(false)},
+                 {new Integer(3),"Sinba","130",new Boolean(true)}
+         };
+         String[] names = {"编号","名字","电话","选择"};
+         Class[] classs = {Integer.class,String.class,String.class,Boolean.class};
+
+         @Override
+         public boolean isCellEditable(int rowIndex, int columnIndex) {
+             return true;
+         }
+
+         @Override
+         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+             p[rowIndex][columnIndex] = aValue;
+             fireTableCellUpdated(rowIndex,columnIndex);
+         }
+
+         @Override
+         public Class&lt;?&gt; getColumnClass(int columnIndex) {
+             return classs[columnIndex];
+         }
+
+         @Override
+         public int getRowCount() {
+             //return vectors.size();
+             return p.length;
+         }
+
+         @Override
+         public int getColumnCount() {
+             //return names.size();
+             return names.length;
+         }
+
+         @Override
+         public String getColumnName(int column) {
+             //return names.get(column);
+             return names[column];
+         }
+
+         @Override
+         public Object getValueAt(int rowIndex, int columnIndex) {
+             //return vectors.get(rowIndex).get(columnIndex);
+             return p[rowIndex][columnIndex];
+         }
+     };
+     JTable jTable = new JTable(model);
+     //jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+     //TableColumnModel columnModel = jTable.getColumnModel();
+     //columnModel.getColumn(1).setCellEditor(new DefaultCellEditor(new JComboBox(new String[]{"A","B"})));
+     JScrollPane jScrollPane = new JScrollPane(jTable);
+
+     container.add(jScrollPane);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="文字输入组件"><a href="#文字输入组件" class="headerlink" title="文字输入组件"></a>文字输入组件</h4><ol>
+<li><p><strong>JTextField</strong></p>
+<pre><code> public void jTextField(){
+     JFrame jFrame = new JFrame("textField");
+     Container container = jFrame.getContentPane();
+
+     JLabel l1 = new JLabel("name:");
+     JLabel l2 = new JLabel("gender:");
+     JLabel l3 = new JLabel("phone:");
+     JLabel l4 = new JLabel("email:");
+     JTextField t1 = new JTextField("Tom");
+     JTextField t2 = new JTextField("male");
+     JTextField t3 = new JTextField("110222020202");
+     JTextField t4 = new JTextField("1233233");
+     JPanel jPanel = new JPanel(new GridBagLayout());
+     GridBagConstraints gbc = new GridBagConstraints();//new GridBagConstraints(0,0,1,1,0.0,0.0,GridBagConstraints.EAST,GridBagConstraints.BOTH,new Insets(5,5,5,5),0,0);
+     gbc.anchor = GridBagConstraints.WEST;
+     gbc.insets = new Insets(5,5,5,5);
+     jPanel.add(l1,gbc);
+     gbc.gridx = 1;
+     jPanel.add(t1,gbc);
+     gbc.gridx = 0;
+     gbc.gridy = 1;
+     jPanel.add(l2,gbc);
+     gbc.gridx = 1;
+     jPanel.add(t2,gbc);
+     gbc.gridx = 0;
+     gbc.gridy = 2;
+     jPanel.add(l3,gbc);
+     gbc.gridx = 1;
+     jPanel.add(t3,gbc);
+     gbc.gridx = 0;
+     gbc.gridy = 3;
+     jPanel.add(l4,gbc);
+     gbc.gridx = 1;
+     jPanel.add(t4,gbc);
+
+     container.setLayout(new BorderLayout());
+     container.add(jPanel);
+     jFrame.setVisible(true);
+     jFrame.pack();
+ }</code></pre><pre><code> public void jTextFieldDocument(){
+     JFrame jFrame = new JFrame("document");
+     Container container = jFrame.getContentPane();
+
+     JLabel label = new JLabel("title");
+     Document doc = new PlainDocument(){
+         @Override
+         public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+             if(getLength() + str.length() &lt; 5)
+                 super.insertString(offs, str, a);
+             else
+                 System.out.println("MAX");
+         }
+     };
+     JTextField textField = new JTextField(doc,"",5);
+     textField.addActionListener(new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println(e.getActionCommand()
+             );
+         }
+     });
+
+     JPanel panel = new JPanel(new GridLayout(1,2));
+     panel.add(label);
+     panel.add(textField);
+
+     container.setLayout(new FlowLayout());
+     container.add(panel);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>JTextArea</strong></p>
+<pre><code> public void jTextArea(){
+     JFrame jFrame = new JFrame("textArea");
+     Container container = jFrame.getContentPane();
+
+     JTextArea textArea = new JTextArea(3,10);
+     textArea.setFont(new Font("宋体",Font.BOLD,16));
+     JPanel panel = new JPanel(new GridLayout(1,3));
+
+     JButton btn1 = new JButton("复制");
+     JButton btn2 = new JButton("粘贴");
+     JButton btn3 = new JButton("剪切");
+     ActionListener listener = new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             if(e.getSource() == btn1) {
+                 textArea.select(0,textArea.getText().length());
+                 textArea.copy();
+             }
+             else if(e.getSource() == btn2) textArea.paste();
+             else if(e.getSource() == btn3) textArea.cut();
+             else ;
+         }
+     };
+     btn1.addActionListener(listener);
+     btn2.addActionListener(listener);
+     btn3.addActionListener(listener);
+     panel.add(btn1);
+     panel.add(btn2);
+     panel.add(btn3);
+
+     container.add(new JScrollPane(textArea),BorderLayout.CENTER);
+     container.add(panel,BorderLayout.SOUTH);
+
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre><pre><code> UndoableEdit edit = null;
+ public void jTextAreaUndo(){
+     JFrame jFrame = new JFrame("Undo,Redo");
+     Container container = jFrame.getContentPane();
+
+     JTextArea textArea = new JTextArea();
+     JMenuBar bar = new JMenuBar();
+     JMenu menu = new JMenu("Edit");
+     JMenuItem item1 = new JMenuItem("Undo");
+     JMenuItem item2 = new JMenuItem("Redo");
+     item1.setEnabled(false);
+     item2.setEnabled(false);
+     menu.add(item1);
+     menu.add(item2);
+     bar.add(menu);
+
+     UndoableEditListener undoableEditListener = new UndoableEditListener() {
+         @Override
+         public void undoableEditHappened(UndoableEditEvent e) {
+             edit = e.getEdit();
+             updateItem(item1,item2);
+         }
+     };
+
+     ActionListener actionListener = new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             if(e.getSource() == item1) edit.undo();
+             else if(e.getSource() == item2) edit.redo();
+             updateItem(item1,item2);
+         }
+     };
+     textArea.getDocument().addUndoableEditListener(undoableEditListener);
+     textArea.getDocument().addDocumentListener(new DocumentListener() {
+         @Override
+         public void insertUpdate(DocumentEvent e) {
+             DocumentEvent.ElementChange change = e.getChange(textArea.getDocument().getDefaultRootElement());
+             if(change != null)
+                 System.out.println("第"+(change.getIndex()+1)+"行");
+         }
+
+         @Override
+         public void removeUpdate(DocumentEvent e) {
+
+         }
+
+         @Override
+         public void changedUpdate(DocumentEvent e) {
+
+         }
+     });
+     item1.addActionListener(actionListener);
+     item2.addActionListener(actionListener);
+
+     container.add(textArea);
+
+     jFrame.setJMenuBar(bar);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }
+ public void updateItem(JMenuItem item1, JMenuItem item2){
+     item1.setEnabled(edit.canUndo());
+     item2.setEnabled(edit.canRedo());
+     item1.setText(edit.getUndoPresentationName());
+     item2.setText(edit.getRedoPresentationName());
+ }</code></pre></li>
+<li><p><strong>JEditorPane</strong></p>
+<pre><code> public void jEditorPane(){
+     JFrame jFrame = new JFrame("EditorPane");
+     Container container = jFrame.getContentPane();
+     URL url = null;
+     JEditorPane editorPane = null;
+     try {
+         url = new URL("https://www.baidu.com");
+         editorPane = new JEditorPane(url);
+     } catch(Exception e){
+         e.printStackTrace();
+     }
+     final JEditorPane editorPage = editorPane;
+     editorPane.setEditable(false);
+     editorPane.addHyperlinkListener((HyperlinkEvent e) -&gt;{
+         if(e.getEventType() == HyperlinkEvent.EventType.ACTIVATED){
+             try {
+                 editorPage.setPage(e.getURL());
+             } catch (IOException e1) {
+                 e1.printStackTrace();
+             }
+         }
+     });
+
+     JScrollPane scrollPane = new JScrollPane(editorPane);
+     container.add(scrollPane);
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>JTextPane(富文本框)</strong></p>
+<pre><code> public void JTextPane(){
+     JFrame frame = new JFrame("TextPane");
+     Container container = frame.getContentPane();
+
+     JTextPane textPane = new JTextPane();
+     Document doc = textPane.getDocument();
+     //属性设置
+     SimpleAttributeSet attributeSet = new SimpleAttributeSet();
+     StyleConstants.setForeground(attributeSet,Color.RED);//添加属性前景色
+     StyleConstants.setBold(attributeSet,true);//加粗
+     StyleConstants.setFontSize(attributeSet,20);//字体大小
+     try {
+         textPane.setEditable(false);//不可编辑
+         doc.insertString(doc.getLength(),"红色加粗20",attributeSet);
+
+         StyleConstants.setForeground(attributeSet,Color.BLUE);//添加属性前景色
+         StyleConstants.setBold(attributeSet,false);//加粗
+         StyleConstants.setFontSize(attributeSet,15);//字体大小
+         StyleConstants.setUnderline(attributeSet,true);//下划线
+         StyleConstants.setItalic(attributeSet,true); //斜体
+         doc.insertString(doc.getLength(),"蓝色不加粗下划线斜体15",attributeSet);
+
+     } catch (BadLocationException e) {
+         e.printStackTrace();
+     }
+
+     container.add(textPane);
+     frame.setVisible(true);
+     frame.setSize(300,200);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="目录树"><a href="#目录树" class="headerlink" title="目录树"></a>目录树</h4><ol>
+<li><p><strong>JTree</strong></p>
+<pre><code> public void jTree(){
+     JFrame jFrame = new JFrame("Tree");
+     Container container = jFrame.getContentPane();
+
+     JTree jTree = new JTree();
+     container.add(jTree);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>Hashtable构造JTree</strong></p>
+<pre><code> public void jTreeHashTable(){
+     JFrame jFrame = new JFrame("hashtable");
+     Container container = jFrame.getContentPane();
+
+     Hashtable&lt;String,Object&gt; table = new Hashtable&lt;&gt;();
+     Hashtable&lt;String,String[]&gt; table2 = new Hashtable&lt;&gt;();
+     table2.put("UK",new String[]{"U","K"});
+     table2.put("France",new String[]{"F","R","A","N","C","E"});
+
+     table.put("China",new String[]{"C","H","I","N","A"});
+     table.put("Europe",table2);
+     table.put("USA",new String[]{"U","S","A"});
+
+     JTree jTree = new JTree(table);
+     container.add(jTree);
+
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+ }</code></pre></li>
+<li><p><strong>TreeNode构造JTree</strong></p>
+<pre><code> public void jTreeNode(){
+     JFrame jFrame = new JFrame("TreeNode");
+     Container container = jFrame.getContentPane();
+
+     DefaultMutableTreeNode root = (DefaultMutableTreeNode) getRoot();
+
+     JTree jTree = new JTree(root);
+
+     JScrollPane jScrollPane = new JScrollPane(jTree,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+     container.add(jScrollPane);
+
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }
+ public TreeNode getRoot(){
+     DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
+     DefaultMutableTreeNode a = new DefaultMutableTreeNode("CHINA");
+     DefaultMutableTreeNode b = new DefaultMutableTreeNode("EUROPE");
+     DefaultMutableTreeNode c = new DefaultMutableTreeNode("USA");
+     root.add(a);
+     root.add(b);
+     root.add(c);
+     a.add(new DefaultMutableTreeNode("C"));
+     a.add(new DefaultMutableTreeNode("H"));
+     a.add(new DefaultMutableTreeNode("I"));
+     a.add(new DefaultMutableTreeNode("N"));
+     a.add(new DefaultMutableTreeNode("A"));
+     c.add(new DefaultMutableTreeNode("U"));
+     c.add(new DefaultMutableTreeNode("S"));
+     c.add(new DefaultMutableTreeNode("A"));
+     DefaultMutableTreeNode ba = new DefaultMutableTreeNode("FRANCE");
+     DefaultMutableTreeNode bb = new DefaultMutableTreeNode("UK");
+     ba.add(new DefaultMutableTreeNode("F"));
+     ba.add(new DefaultMutableTreeNode("R"));
+     ba.add(new DefaultMutableTreeNode("A"));
+     ba.add(new DefaultMutableTreeNode("N"));
+     ba.add(new DefaultMutableTreeNode("C"));
+     ba.add(new DefaultMutableTreeNode("E"));
+     bb.add(new DefaultMutableTreeNode("U"));
+     bb.add(new DefaultMutableTreeNode("K"));
+     b.add(ba);
+     b.add(bb);
+     return root;
+ }</code></pre></li>
+<li><p><strong>TreeModel构造JTree</strong></p>
+<pre><code> public void jTreeModel(){
+     JFrame jFrame = new JFrame();
+     Container container = jFrame.getContentPane();
+
+     DefaultTreeModel model = new DefaultTreeModel(getRoot());
+     JTree jTree = new JTree(model);
+     //jTree.putClientProperty("JTree.lineStyle","Horizontal");
+     //jTree.putClientProperty("JTree.lineStyle","Angled");
+     DefaultTreeCellRenderer renderer = (DefaultTreeCellRenderer)jTree.getCellRenderer();
+     renderer.setLeafIcon(new ImageIcon(getPureImage(Color.GRAY,20,10)));
+
+     jTree.addMouseListener(new MouseAdapter() {
+         public void mouseClicked(MouseEvent e) {
+             JTree tree = (JTree)e.getSource();
+             TreePath path = tree.getPathForLocation(e.getX(),e.getY());
+             if(path != null) {
+                 TreeNode node = (TreeNode) path.getLastPathComponent();
+                 //System.out.println(node.toString());
+             }
+         }
+     });
+     jTree.setEditable(true);
+     TreeModel treeModel = jTree.getModel();
+     treeModel.addTreeModelListener(new TreeModelAdapter(){
+         @Override
+         public void treeNodesChanged(TreeModelEvent e) {
+             TreeNode node = (TreeNode)(e.getTreePath().getLastPathComponent());
+             if(node != null){
+                 TreeNode leaf = node.getChildAt(e.getChildIndices()[0]);
+                 System.out.println(leaf.toString());
+             }
+         }
+     });
+
+     JScrollPane jScrollPane = new JScrollPane(jTree,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+     container.add(jScrollPane);
+     try {
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     jFrame.setVisible(true);
+     jFrame.setSize(300,200);
+
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="对话框-JOptionPane与JDialog"><a href="#对话框-JOptionPane与JDialog" class="headerlink" title="对话框(JOptionPane与JDialog)"></a>对话框(JOptionPane与JDialog)</h4><hr>
+<h4 id="菜单与工具栏"><a href="#菜单与工具栏" class="headerlink" title="菜单与工具栏"></a>菜单与工具栏</h4><ol>
+<li><p><strong>JMenu</strong></p>
+<pre><code> public void jOptionPaneMenuBar(){
+     JFrame jFrame = new JFrame("dialog");
+     Container container = jFrame.getContentPane();
+     JPanel panel = new JPanel();
+     ((FlowLayout)panel.getLayout()).setAlignment(FlowLayout.LEFT);
+     JButton btn = new JButton("show");
+     btn.addActionListener((ActionEvent e) -&gt;{
+         JOptionPane.showMessageDialog(jFrame,"错误","标题", JOptionPane.ERROR_MESSAGE);
+     });
+     panel.add(btn);
+     container.add(panel);
+
+     JMenuBar bar = new JMenuBar();
+     JMenu menu = new JMenu("file",false);
+     menu.setMnemonic('F');
+     JMenuItem item1 = new JMenuItem("new");
+     JMenuItem item2 = new JMenuItem("open");
+     JMenuItem item3 = new JMenuItem("save");
+     item1.setAccelerator(KeyStroke.getKeyStroke('N',java.awt.event.InputEvent.CTRL_DOWN_MASK,false));
+     item2.setAccelerator(KeyStroke.getKeyStroke('O',java.awt.event.InputEvent.CTRL_DOWN_MASK,false));
+     item3.setAccelerator(KeyStroke.getKeyStroke('S',java.awt.event.InputEvent.CTRL_DOWN_MASK,false));
+     item1.setIcon(new ImageIcon(getPureImage(Color.RED,20,20)));
+     item2.setIcon(new ImageIcon(getPureImage(Color.ORANGE,20,20)));
+     item3.setIcon(new ImageIcon(getPureImage(Color.YELLOW,20,20)));
+     item1.setHorizontalTextPosition(SwingConstants.RIGHT);
+     item2.setHorizontalTextPosition(SwingConstants.RIGHT);
+     item3.setHorizontalTextPosition(SwingConstants.RIGHT);
+
+     item1.addActionListener((ActionEvent e) -&gt; {
+         System.out.println("new");
+     });
+
+     JMenu preMenu = new JMenu("Preferences");
+     JMenuItem importItem = new JMenuItem("Import");
+     JMenuItem exportItem = new JMenuItem("Export");
+     preMenu.add(importItem);
+     preMenu.add(exportItem);
+
+     menu.add(item1);
+     menu.add(item2);
+     menu.add(item3);
+     menu.addSeparator();
+     menu.add(preMenu);
+
+     //JCheckBoxMenuItem
+     JMenu menu1 = new JMenu("Style");
+     JCheckBoxMenuItem lItem = new JCheckBoxMenuItem("Left");
+     JCheckBoxMenuItem cItem = new JCheckBoxMenuItem("Center");
+     JCheckBoxMenuItem rItem = new JCheckBoxMenuItem("Right");
+     JCheckBoxMenuItem jItem = new JCheckBoxMenuItem("Justify");
+     lItem.setAccelerator(KeyStroke.getKeyStroke('L',InputEvent.ALT_DOWN_MASK,false));
+     cItem.setAccelerator(KeyStroke.getKeyStroke('C',InputEvent.ALT_DOWN_MASK,false));
+     rItem.setAccelerator(KeyStroke.getKeyStroke('R',InputEvent.ALT_DOWN_MASK,false));
+     jItem.setAccelerator(KeyStroke.getKeyStroke('J',InputEvent.ALT_DOWN_MASK,false));
+     menu1.add(lItem);
+     menu1.add(cItem);
+     menu1.add(rItem);
+     menu1.add(jItem);
+
+     //JRadioButtonMenuItem
+     JMenu menu2 = new JMenu("Color");
+     JRadioButtonMenuItem redItem = new JRadioButtonMenuItem("Red");
+     JRadioButtonMenuItem yItem = new JRadioButtonMenuItem("Yellow");
+     JRadioButtonMenuItem bItem = new JRadioButtonMenuItem("Blue");
+     redItem.setAccelerator(KeyStroke.getKeyStroke('R',InputEvent.SHIFT_DOWN_MASK,false));
+     ButtonGroup group = new ButtonGroup();
+     group.add(redItem);
+     group.add(yItem);
+     group.add(bItem);
+     menu2.add(redItem);
+     menu2.add(yItem);
+     menu2.add(bItem);
+
+     bar.add(menu);
+     bar.add(menu1);
+     bar.add(menu2);
+     //bar.setOpaque(false);
+
+     Font font = new Font("宋体",Font.LAYOUT_LEFT_TO_RIGHT,15);
+     JToolBar toolBar = new JToolBar();
+     toolBar.setFloatable(true);
+     AbstractAction action = new AbstractAction() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println(e.getActionCommand());
+         }
+     };
+     JButton btns;
+
+     btns = toolBar.add(action);
+     btns.setActionCommand("NEW");
+     btns.setToolTipText("NEW");
+     btns.setIcon(getImageIcon2D(getPureImage(Color.GRAY,50,30),"NEW",font,Color.RED));
+     btns.setBorder(BorderFactory.createEmptyBorder());
+
+     toolBar.addSeparator();
+     btns = toolBar.add(action);
+     btns.setActionCommand("OPEN");
+     btns.setToolTipText("OPEN");
+     btns.setIcon(getImageIcon2D(getPureImage(Color.GRAY,50,30),"OPEN",font,Color.RED));
+     btns.setBorder(BorderFactory.createEmptyBorder());
+
+     toolBar.addSeparator();
+     btns = toolBar.add(action);
+     btns.setActionCommand("CLOSE");
+     btns.setToolTipText("CLOSE");
+     btns.setIcon(getImageIcon2D(getPureImage(Color.GRAY,50,30),"CLOSE",font,Color.RED));
+     btns.setBorder(BorderFactory.createEmptyBorder());
+
+     JLabel fontStyle = new JLabel(getImageIcon2D(getPureImage(Color.GRAY,50,30),"FONT:",font,Color.GREEN));
+     JComboBox comboBox = new JComboBox(new String[]{"A","B","C"});
+     toolBar.addSeparator();
+     toolBar.add(fontStyle);
+     toolBar.add(comboBox);
+
+     /*
+     JButton btn1 = new JButton(getImageIcon2D(getPureImage(Color.GRAY,50,30),"NEW",font,Color.RED));
+     JButton btn2 = new JButton(getImageIcon2D(getPureImage(Color.GRAY,50,30),"OPEN",font,Color.ORANGE));
+     JButton btn3 = new JButton(getImageIcon2D(getPureImage(Color.GRAY,50,30),"CLOSE",font,Color.BLUE));
+     JLabel fontStyle = new JLabel(getImageIcon2D(getPureImage(Color.GRAY,50,30),"FONT:",font,Color.GREEN));
+     JComboBox comboBox = new JComboBox(new String[]{"A","B","C"});
+     btn1.setBorder(BorderFactory.createEmptyBorder());
+     btn2.setBorder(BorderFactory.createEmptyBorder());
+     btn3.setBorder(BorderFactory.createEmptyBorder());
+     toolBar.add(btn1);
+     toolBar.addSeparator();
+     toolBar.add(btn2);
+     toolBar.addSeparator();
+     toolBar.add(btn3);
+     toolBar.addSeparator();
+     toolBar.add(fontStyle);
+     toolBar.add(comboBox);
+     */
+
+     container.add(bar,BorderLayout.NORTH);
+     container.add(toolBar,BorderLayout.SOUTH);
+
+     //panel.add(new JLabel(getImageIcon2D(getPureImage(Color.black,100,100),"测试",font,Color.WHITE)));
+
+     jFrame.setVisible(true);
+     //jFrame.setSize(300,200);
+     jFrame.pack();
+ }</code></pre></li>
+<li><p><strong>JPopupMenu</strong></p>
+<pre><code> public void jPopupMenu(){
+     JFrame jFrame = new JFrame("PopupMenu");
+     Container container = jFrame.getContentPane();
+
+     Font font = new Font("Microsoft YaHei",Font.LAYOUT_LEFT_TO_RIGHT,10);
+     JPopupMenu popupMenu = new JPopupMenu();
+     popupMenu.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     AbstractAction action = new AbstractAction() {
+         @Override
+         public void actionPerformed(ActionEvent e) {
+             System.out.println(e.getActionCommand());
+         }
+     };
+     MouseAdapter mouse = new MouseAdapter() {
+         @Override
+         public void mouseEntered(MouseEvent e) {
+             if(e.getSource() instanceof JMenuItem){
+                 JMenuItem item = (JMenuItem) e.getSource();
+                 item.setBackground(Color.BLUE);
+                 item.setForeground(Color.WHITE);
+             }
+         }
+
+         @Override
+         public void mouseExited(MouseEvent e) {
+             if(e.getSource() instanceof JMenuItem){
+                 JMenuItem item = (JMenuItem) e.getSource();
+                 item.setBackground(popupMenu.getBackground());
+                 item.setForeground(Color.BLACK);
+             }
+         }
+     };
+     JMenuItem item;
+     String title;
+     item = popupMenu.add(action);
+     popupMenu.add(item);
+     item.setActionCommand(title = "NEW");
+     item.setText(title);
+     item.addMouseListener(mouse);
+     item.setIcon(getImageIcon2D(getPureImage(Color.GRAY,30,20),title,font,Color.RED));
+
+     item = popupMenu.add(action);
+     item.setActionCommand(title = "OPEN");
+     item.setText(title);
+     item.addMouseListener(mouse);
+     item.setIcon(getImageIcon2D(getPureImage(Color.GRAY,30,20),title,font,Color.RED));
+     popupMenu.addSeparator();
+
+     item = popupMenu.add(action);
+     item.setActionCommand(title = "SAVE");
+     item.setText(title);
+     item.addMouseListener(mouse);
+     item.setIcon(getImageIcon2D(getPureImage(Color.GRAY,30,20),title,font,Color.RED));
+
+     JPanel panel = new JPanel();
+     panel.add(popupMenu);
+     container.add(panel);
+     jFrame.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+             if(e.getButton() == MouseEvent.BUTTON3) {
+                 popupMenu.setVisible(true);
+                 popupMenu.setLocation(e.getXOnScreen(), e.getYOnScreen());
+             }
+             else popupMenu.setVisible(false);
+         }
+     });
+
+     jFrame.setSize(300,200);
+     jFrame.setVisible(true);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="文件选择丶颜色选择丶分割线"><a href="#文件选择丶颜色选择丶分割线" class="headerlink" title="文件选择丶颜色选择丶分割线"></a>文件选择丶颜色选择丶分割线</h4><ol>
+<li><p><strong>JFileChooser</strong></p>
+<pre><code> public void jFileChooser(){
+     try {
+         //look and feel 使用Windows系统外观
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     JFrame frame = new JFrame("fileChooser");
+     Container container = frame.getContentPane();
+
+     JMenuBar bar = new JMenuBar();
+     JMenu menu = new JMenu("file");
+     JMenuItem open = new JMenuItem("open");
+     JMenuItem save = new JMenuItem("save");
+     menu.add(open);
+     menu.add(save);
+     bar.add(menu);
+     container.add(bar,BorderLayout.NORTH);
+
+     JTextArea area = new JTextArea();
+     JScrollPane scrollPane = new JScrollPane(area,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+     container.add(scrollPane);
+
+     JFileChooser chooser = new JFileChooser("C:\\Users\\NBL\\Desktop\\web\\c");
+     chooser.setFileFilter(new FileFilter() {
+         String name;
+         @Override
+         public boolean accept(File f) {
+             name = f.getName();
+             int index = name.lastIndexOf('.');
+             if(index &gt;0 &amp;&amp; index &lt; name.length()-1){
+                 String type = name.substring(index+1,name.length());
+                 if("html".equals(type) || "txt".equals(type))
+                     return true;
+             }
+             return false;
+         }
+
+         @Override
+         public String getDescription() {
+             return "*.txt *.html";
+         }
+     });
+     chooser.setFileView(new FileView() {
+         String name;
+         @Override
+         public Icon getIcon(File f) {
+             name = f.getName();
+             Font font = new Font("Microsoft YaHei",Font.LAYOUT_LEFT_TO_RIGHT,10);
+             int index = name.lastIndexOf('.');
+             if(index &gt;0 &amp;&amp; index &lt; name.length()-1){
+                 String type = name.substring(index+1,name.length());
+                 if("html".equals(type))
+                     return getImageIcon2D(getPureImage(Color.black,50,50),"网页",font,Color.MAGENTA);
+                 else if("txt".equals(type))
+                     return getImageIcon2D(getPureImage(Color.black,50,50),"文本",font,Color.red);
+             }
+             return getImageIcon2D(getPureImage(Color.black,50,50),"OTHER",font,Color.WHITE);
+         }
+     });
+     //add event
+     ActionListener action = e -&gt; {
+         File file;
+         StringBuilder builder = new StringBuilder();
+         BufferedReader reader = null;
+         BufferedWriter writer = null;
+         String command = e.getActionCommand();
+         if("open".equals(command)){
+             chooser.setDialogTitle("打开文件");
+             chooser.setApproveButtonText("确定");
+             int state = chooser.showOpenDialog(frame);
+             if(state == JFileChooser.APPROVE_OPTION){
+                 file = chooser.getSelectedFile();
+                 try {
+                     reader = new BufferedReader(new FileReader(file));
+                     String str;
+                     while((str = reader.readLine()) != null)
+                         builder.append(str+System.getProperty("line.separator"));
+                     area.setText(builder.toString());
+                 } catch (Exception e1) {
+                     e1.printStackTrace();
+                 } finally {
+                     try {
+                         reader.close();
+                     } catch (IOException e1) {
+                         e1.printStackTrace();
+                     }
+                 }
+             }
+         }
+         else if("save".equals(command)){
+             chooser.setDialogTitle("存储文件");
+             chooser.setApproveButtonText("保存");
+             int state = chooser.showOpenDialog(frame);
+             if(state == JFileChooser.APPROVE_OPTION){
+                 file = chooser.getSelectedFile();
+                 try {
+                     writer = new BufferedWriter(new FileWriter(file));
+                     writer.write(area.getText());
+                 } catch (IOException e1) {
+                     e1.printStackTrace();
+                 } finally {
+                     try {
+                         writer.close();
+                     } catch (IOException e1) {
+                         e1.printStackTrace();
+                     }
+                 }
+             }
+         }
+     };
+     open.addActionListener(action);
+     save.addActionListener(action);
+
+     frame.setSize(300,200);
+     frame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>JColorChooser</strong></p>
+<pre><code> public void jColorChooser(){
+     try {
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     JFrame frame = new JFrame("colorChooser");
+     Container container = frame.getContentPane();
+     JTextArea area = new JTextArea(5,30);
+     container.add(area);
+
+     JButton btn = new JButton("选择颜色");
+     btn.addActionListener(e -&gt;{
+         Color color = JColorChooser.showDialog(frame,"选择颜色",area.getForeground());
+         if(color != null){
+             area.setForeground(color);
+         }
+     });
+     JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+     panel.add(btn);
+     container.add(panel,BorderLayout.NORTH);
+
+     //in container
+     JToolBar toolBar = new JToolBar();
+     JColorChooser colorChooser = new JColorChooser(Color.WHITE);
+     AbstractColorChooserPanel[] chooserPanels = colorChooser.getChooserPanels();
+     colorChooser.removeChooserPanel(chooserPanels[1]);
+     colorChooser.removeChooserPanel(chooserPanels[2]);
+     colorChooser.removeChooserPanel(chooserPanels[4]);
+     colorChooser.getSelectionModel().addChangeListener(e -&gt; {
+         Color color = colorChooser.getColor();
+         area.setForeground(color);
+     });
+
+     toolBar.add(colorChooser);
+     container.add(toolBar,BorderLayout.EAST);
+
+     //frame.setSize(300,200);
+     frame.pack();
+     frame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>JSeparator</strong></p>
+<pre><code> public void jSeparator(){
+     JFrame frame = new JFrame("separator");
+     Container container = frame.getContentPane();
+     container.setLayout(new BorderLayout(1,2));
+     JPanel panel = new JPanel(new GridLayout(2,1));
+     panel.add(new JLabel("Horizontal"));
+     panel.add(new JSeparator());
+
+     JPanel panel1 = new JPanel(new GridLayout(1,2));
+     panel1.add(new JLabel("&lt;html&gt;V&lt;br/&gt;e&lt;br/&gt;r&lt;br/&gt;t&lt;br/&gt;i&lt;br/&gt;c&lt;br/&gt;a&lt;br/&gt;l"));
+     panel1.add(new JSeparator(JSeparator.VERTICAL));
+
+     container.add(panel);
+     container.add(panel1,BorderLayout.EAST);
+     frame.setSize(300,200);
+     frame.setVisible(true);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="滑动杆丶时间控制丶进度组件"><a href="#滑动杆丶时间控制丶进度组件" class="headerlink" title="滑动杆丶时间控制丶进度组件"></a>滑动杆丶时间控制丶进度组件</h4><ol>
+<li><p><strong>JSlider</strong></p>
+<pre><code> public void jSlider(){
+     /*     
+     try {
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     */
+     JFrame frame = new JFrame("slider");
+     Container container = frame.getContentPane();
+     JPanel panel = new JPanel();
+     JPanel panel1 = new JPanel();
+     JPanel panel2 = new JPanel();
+     panel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     panel1.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     panel2.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+     JLabel label = new JLabel("当前刻度: ");
+     JLabel label1 = new JLabel("当前刻度: ");
+     JLabel label2 = new JLabel("当前刻度: ");
+     JSlider slider = new JSlider(0,100);
+     JSlider slider1 = new JSlider(0,100);
+     JSlider slider2 = new JSlider(JSlider.VERTICAL,0,100,50);
+     slider.setPaintTicks(true); //添加刻度
+     slider.setMajorTickSpacing(30); //大刻度间距
+     slider.setMinorTickSpacing(10); //小刻度间距
+     slider.setPaintTrack(true); //是否显示滑动杆横杆(默认为true)
+     slider.setPaintLabels(true); //绘制数字标记
+     slider.setSnapToTicks(true);  //点击时一次移动一个小刻度
+     slider.putClientProperty("JSlider.isFilled",true); //设置滑动杆左右2侧颜色不一样
+
+     //自定义标记名称
+     Hashtable&lt;Integer,JLabel&gt; table = new Hashtable&lt;&gt;();
+     table.put(new Integer(30),new JLabel("低"));
+     table.put(new Integer(60),new JLabel("中"));
+     table.put(new Integer(90),new JLabel("高"));
+     slider.setLabelTable(table);
+
+     ChangeListener change = e -&gt; {
+         JSlider s = (JSlider) e.getSource();
+         if(s == slider) label.setText("当前刻度: "+s.getValue());
+         else if(s == slider1) label1.setText("当前刻度: "+s.getValue());
+         else if(s == slider2) label2.setText("当前刻度: "+s.getValue());
+     };
+     slider.addChangeListener(change);
+     slider1.addChangeListener(change);
+     slider2.addChangeListener(change);
+     slider2.setExtent(90);
+     panel.add(label);
+     panel.add(slider);
+     panel1.add(label1);
+     panel1.add(slider1);
+     panel2.add(label2);
+     panel2.add(slider2);
+     panel.setPreferredSize(new Dimension(100,50));
+     panel1.setPreferredSize(new Dimension(100,50));
+     panel2.setPreferredSize(new Dimension(50,100));
+
+     Box box = Box.createHorizontalBox();
+     Box box1 = Box.createVerticalBox();
+     Box box2 = Box.createVerticalBox();
+     Box box3 = Box.createVerticalBox();
+     Box box4 = Box.createVerticalBox();
+     box.add(box1);
+     box.add(box2);
+     box1.add(box3);
+     box1.add(box4);
+     box3.add(panel);
+     box4.add(panel1);
+     box2.add(panel2);
+
+     container.add(box);
+     frame.setSize(400,300);
+     frame.setVisible(true);
+ }</code></pre></li>
+<li><p><strong>Timer</strong></p>
+<ul>
+<li><p>已过时,推荐使用ScheduledThreadPoolExecutor替换</p>
+<pre><code>Timer timer;
+int delay;
+int index = 0;
+public void Timer(){
+  try {
+      UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+  } catch (Exception e) {
+      e.printStackTrace();
+  }
+  JFrame frame = new JFrame("Timer");
+  Container container = frame.getContentPane();
+
+  JPanel label = new JPanel();
+  label.setBackground(Color.gray);
+  JSlider slider = new JSlider(1000,10000);
+  slider.setPaintTicks(true);
+  slider.setPaintLabels(true);
+  slider.setMinorTickSpacing(500);
+  slider.setMajorTickSpacing(2000);
+  slider.setSnapToTicks(true);
+  JPanel panel = new JPanel();
+  JButton start = new JButton("start");
+  JButton reStart = new JButton("reStart");
+  JButton repeats = new JButton("don't repeats");
+  panel.add(start);
+  panel.add(reStart);
+  panel.add(repeats);
+
+  Box box = Box.createVerticalBox();
+  box.add(label);
+  box.add(slider);
+
+  Color[] colors = {Color.RED,Color.ORANGE,Color.YELLOW, Color.GREEN,Color.CYAN,Color.BLUE,Color.MAGENTA,Color.pink};
+  //Event
+  ActionListener action = e -&gt; {
+      String command = e.getActionCommand();
+      if("start".equals(command)){
+          delay = slider.getValue();
+          timer = new Timer(delay,es-&gt;{   //Timer
+              label.setBackground(colors[index++&amp;7]);
+          });
+          start.setText("stop");
+          timer.start();
+      }
+      else if("stop".equals(command)){
+          start.setText("start");
+          timer.stop();
+      }
+      else if("reStart".equals(command)){
+          timer.restart();
+      }
+      else if("don't repeats".equals(command)){
+          repeats.setText("repeats");
+          timer.setRepeats(false);
+      }
+      else if("repeats".equals(command)){
+          repeats.setText("don't repeats");
+          timer.setRepeats(true);
+          timer.restart();
+      }
+  };
+  start.addActionListener(action);
+  reStart.addActionListener(action);
+  repeats.addActionListener(action);
+  slider.addChangeListener(e -&gt; {
+      if(timer != null) timer.setDelay(slider.getValue());
+  });
+
+  container.add(box);
+  container.add(panel,BorderLayout.SOUTH);
+
+  frame.setSize(300,200);
+  frame.setVisible(true);
+}</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Progress</strong></p>
+<pre><code> public void jProgressBar(){
+     try {
+         UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     JFrame frame = new JFrame("progressBar");
+     Container container = frame.getContentPane();
+     container.setLayout(new GridLayout(3,1));
+     JPanel panel = new JPanel();
+     JButton btn = new JButton("start");
+     panel.add(btn);
+
+     //未覆盖前的进度条颜色
+     UIManager.put("ProgressBar.selectionBackground",Color.WHITE);
+     //覆盖后的进度条颜色
+     UIManager.put("ProgressBar.selectionForeground",Color.BLACK);
+     JProgressBar bar = new JProgressBar(0,100);
+     bar.setOrientation(JProgressBar.HORIZONTAL); //水平进度条
+     bar.setValue(0);
+     bar.setStringPainted(true); //显示进度信息
+     bar.setString("logging..."); //设置进度信息
+     bar.setBorderPainted(false); //不显示边框
+     bar.setForeground(Color.ORANGE); //前景色
+     bar.setBackground(Color.GRAY);  //背景色
+
+     JLabel label = new JLabel("当前进度: " + "0%");
+
+     //Event
+     Timer timer = new Timer(100,es -&gt; {
+         if(bar.getValue() &lt; 100) {
+             bar.setValue(bar.getValue() + 1);
+             label.setText("当前进度: " + bar.getValue() + "%");
+         }
+         if(bar.getValue() == 100) bar.setString("complete");
+     });
+
+     btn.addActionListener(e-&gt;{
+         String command = e.getActionCommand();
+         if("start".equals(command)){
+             timer.start();
+             btn.setText("stop");
+         }
+         else if("stop".equals(command)){
+             timer.stop();
+             btn.setText("start");
+         }
+     });
+
+     container.add(panel);
+     container.add(bar);
+     container.add(label);
+
+     frame.setSize(300,200);
+     frame.setVisible(true);
+ }</code></pre><pre><code> int ms = 0;
+ public void progressMonitor(){
+     JFrame frame = new JFrame("ProgressMonitor");
+     Container container = frame.getContentPane();
+     JPanel panel = new JPanel();
+     JButton btn = new JButton("start");
+     ProgressMonitor monitor = new ProgressMonitor(frame,"show Progress Mointor","",0,100);
+     monitor.setNote("note");
+     monitor.setProgress(0);
+     monitor.setMillisToDecideToPopup(0);
+     monitor.setMillisToPopup(1000);
+     Timer timer = new Timer(50,e -&gt; {
+        monitor.setProgress(ms++);
+     });
+     btn.addActionListener(e -&gt; {
+         timer.start();
+     });
+
+     panel.add(btn);
+     container.add(panel,BorderLayout.NORTH);
+
+     frame.setSize(300,200);
+     frame.setVisible(true);
+ }</code></pre><pre><code> public void progressMonitorInputStream(){
+     try {
+         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+     } catch (Exception e) {
+         e.printStackTrace();
+     }
+     JFrame frame = new JFrame();
+     Container container = frame.getContentPane();
+
+     JPanel panel = new JPanel();
+     JButton btn = new JButton("start");
+     panel.add(btn);
+     JTextArea area = new JTextArea();
+     JScrollPane scrollPane = new JScrollPane(area,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+     container.add(panel,BorderLayout.NORTH);
+     container.add(scrollPane);
+
+     JFileChooser fileChooser = new JFileChooser();
+     fileChooser.setMultiSelectionEnabled(false);
+     //Event
+     btn.addActionListener(e -&gt; {
+         int state = fileChooser.showOpenDialog(frame);
+         if(state == JFileChooser.APPROVE_OPTION){
+             new Thread(()-&gt;{
+                 File file = fileChooser.getSelectedFile();
+                 String str = "";
+                 byte[] buff = new byte[1];
+
+                 DecodeResult result = null;
+                 byte[] buffers = null;
+
+                 try {
+                     ProgressMonitorInputStream monitorInputStream = new ProgressMonitorInputStream(frame,"Running...",new FileInputStream(file));
+                     while(monitorInputStream.read(buff) != -1){
+                         if(result != null &amp;&amp; result.buffer != null) {
+                             int remainL = result.buffer.length;
+                             buffers = new byte[remainL + buff.length];
+                             System.arraycopy(result.buffer,0,buffers,0,remainL);
+                             System.arraycopy(buff,0,buffers,remainL,buff.length);
+                         }
+                         else {
+                             buffers = new byte[buff.length];
+                             System.arraycopy(buff,0,buffers,0,buffers.length);
+                         }
+                         result = decodeUTF8(buffers,buffers.length);
+                         str += result.result;
+
+                         //str += new String(buff,"UTF-8");
+                         area.setText(str);
+                         Thread.sleep(100);
+                     }
+                 } catch (Exception e1) {
+                     e1.printStackTrace();
+                 }
+             }).start();
+         }
+     });
+
+     frame.setSize(300,200);
+     frame.setVisible(true);
+ }</code></pre></li>
+</ol>
+<hr>
+<h4 id="Look-and-Feel"><a href="#Look-and-Feel" class="headerlink" title="Look and Feel"></a>Look and Feel</h4><blockquote>
+<p>选择系统环境,窗体会根据此环境显示相对应的界面</p>
+</blockquote>
+<pre class="line-numbers language-java"><code class="language-java">UIManager<span class="token punctuation">.</span><span class="token function">setLookAndFeel</span><span class="token punctuation">(</span><span class="token string">"com.sun.java.swing.plaf.windows.WindowsLookAndFeel"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://yoursite.com/2020/03/19/Java%20Swing/">http://yoursite.com/2020/03/19/Java%20Swing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://yoursite.com" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JUI/">
+                                    <span class="chip bg-color">JUI</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2020-03-19T19-56-32',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/03/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A6%82%E8%BF%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-概述">
+                        
+                        <span class="card-title">设计模式-概述</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            23种设计模式概述分类
+根据目的来划分
+
+根据模式是用来完成什么工作来划分，这种方式可分为创建型模式、结构型模式和行为型模式 3 种
+
+
+
+根据作用范围来划分
+
+根据模式是主要用于类上还是主要用于对象上来分，这种方式可分为类模式和对象模式两
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-24
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/03/09/Java%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="JVM-Java垃圾收集器与内存分配策略">
+                        
+                        <span class="card-title">JVM-Java垃圾收集器与内存分配策略</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述
+引用计数算法
+判断对象是否存活的一种算法: 给对象中添加一个引用计数器,每当有一个地方引用它时,计数器值就加1,当引用失效时,计数器值就减1;任何适合计数器都为0的对象就是不可能带被使用的
+Java语言没有选用引用计数算法来管理内存,
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JVM/" class="post-category">
+                                    JVM
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JVM/">
+                        <span class="chip bg-color">JVM</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="1124719830"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="http://yoursite.com" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">109.3k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>
