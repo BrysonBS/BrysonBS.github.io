@@ -437,6 +437,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                 <span class="chip bg-color">排序</span>
                             </a>
@@ -469,14 +473,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    279
+                    278
                 </div>
                 
 
@@ -506,23 +510,24 @@
 <blockquote>
 <p><strong>实现</strong></p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 插入排序
      * 思路: 将一个元素插入到已经有序的序列中;
      * 步骤: 1.起始时假设数组中索引 [0] 的为有序序列,此时将[1]插入,结果索引[0],[1]为有序序列
      *   　　2.继续索引[0],[1]为有序序列,将[2]插入,结果[0],[1],[2]为有序序列
      *　　　 3.依次类推,将[3]...插入,最后执行到数组末尾,则所有元素都插入到有序序列中去,排序完成
-     */
-    public void insertion(int[] arr){
-        for(int i=1,len=arr.length;i&lt;len;++i){
-            for(int j=i;j&gt;0 &amp;&amp; arr[j]&lt;arr[j-1];j--){
-                //交换
-                arr[j] = arr[j]^arr[j-1];
-                arr[j-1] = arr[j]^arr[j-1];
-                arr[j] = arr[j]^arr[j-1];
-            }
-        }
-    }</code></pre><script>
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insertion</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token operator">=</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">></span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&lt;</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//交换</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -602,6 +607,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                     <span class="chip bg-color">排序</span>
@@ -714,6 +723,10 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
                     </a>
@@ -769,6 +782,10 @@ V1.0
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
@@ -970,7 +987,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

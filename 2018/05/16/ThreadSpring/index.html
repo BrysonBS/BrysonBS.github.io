@@ -467,7 +467,7 @@ spring3以上版本.
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
@@ -503,53 +503,56 @@ spring3以上版本.
 <li>配置(采用java配置方式)</li>
 </ul>
 </blockquote>
-<pre><code>@Configuration            //java方式配置
-@ComponentScan("cn.com")  //指定注解扫描的包
-@EnableAsync              //开启对异步的支持
-public class Config {
-    //给定一个获取线程池对象的方法
-    @Bean   //等同于在xml中配置bean
-    public Executor getExecutor(){
-        //创建线程池
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        //设置线程池
-        taskExecutor.setCorePoolSize(5);
-        taskExecutor.setMaxPoolSize(10);
-        taskExecutor.setQueueCapacity(25);  //设置线程池所使用的缓冲队列
-        taskExecutor.initialize();
-        //返回线程池
-        return taskExecutor;
-    }
-}</code></pre><h3 id="2-创建多个线程任务"><a href="#2-创建多个线程任务" class="headerlink" title="2.创建多个线程任务"></a>2.创建多个线程任务</h3><pre><code>@Component  //ioc注入
-public class SpringThread {
-    @Async  //指定该方法为异步方法
-    public void threadOne(){
-        while(true){
-            System.out.println("one: ThreadOne is run...");
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>            <span class="token comment" spellcheck="true">//java方式配置</span>
+<span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span><span class="token string">"cn.com"</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//指定注解扫描的包</span>
+<span class="token annotation punctuation">@EnableAsync</span>              <span class="token comment" spellcheck="true">//开启对异步的支持</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Config</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//给定一个获取线程池对象的方法</span>
+    <span class="token annotation punctuation">@Bean</span>   <span class="token comment" spellcheck="true">//等同于在xml中配置bean</span>
+    <span class="token keyword">public</span> Executor <span class="token function">getExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//创建线程池</span>
+        ThreadPoolTaskExecutor taskExecutor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadPoolTaskExecutor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//设置线程池</span>
+        taskExecutor<span class="token punctuation">.</span><span class="token function">setCorePoolSize</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        taskExecutor<span class="token punctuation">.</span><span class="token function">setMaxPoolSize</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        taskExecutor<span class="token punctuation">.</span><span class="token function">setQueueCapacity</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//设置线程池所使用的缓冲队列</span>
+        taskExecutor<span class="token punctuation">.</span><span class="token function">initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//返回线程池</span>
+        <span class="token keyword">return</span> taskExecutor<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2-创建多个线程任务"><a href="#2-创建多个线程任务" class="headerlink" title="2.创建多个线程任务"></a>2.创建多个线程任务</h3><pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>  <span class="token comment" spellcheck="true">//ioc注入</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringThread</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Async</span>  <span class="token comment" spellcheck="true">//指定该方法为异步方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">threadOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"one: ThreadOne is run..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    @Async  //指定为异步方法
-    public void threadTwo(){
-        while(true){
-            System.out.println("two: ThreadTwo is run...");
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Async</span>  <span class="token comment" spellcheck="true">//指定为异步方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">threadTwo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"two: ThreadTwo is run..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-}</code></pre><h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h3><pre><code>AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(Config.class);  //根据java配置类创建spring应用上下文对象
-SpringThread st = ac.getBean(SpringThread.class);  
-st.threadOne();
-st.threadTwo();</code></pre><script>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-测试"><a href="#3-测试" class="headerlink" title="3.测试"></a>3.测试</h3><pre class="line-numbers language-java"><code class="language-java">AnnotationConfigApplicationContext ac <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AnnotationConfigApplicationContext</span><span class="token punctuation">(</span>Config<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//根据java配置类创建spring应用上下文对象</span>
+SpringThread st <span class="token operator">=</span> ac<span class="token punctuation">.</span><span class="token function">getBean</span><span class="token punctuation">(</span>SpringThread<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+st<span class="token punctuation">.</span><span class="token function">threadOne</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+st<span class="token punctuation">.</span><span class="token function">threadTwo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -995,7 +998,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

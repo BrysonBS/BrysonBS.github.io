@@ -7,9 +7,12 @@
     <meta name="keywords" content="并发-线程池的使用, java,web">
     <meta name="description" content="线程饥饿死锁
 在线程池中,如果任务依赖于其他任务,那么可能产生死锁
+
 饥饿: 一个线程在无限的等待另外一个或多个线程相互传递使用并且永不会释放的资源
-死锁: 可以认为是两个线程或者进程在请求对方占有的资源运行时间较长的任务
-如果任务阻塞的时间">
+
+死锁: 可以认为是两个线程或者进程在请求对方占有的资源
+运行时间较长的任务
+如果任务阻塞">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -435,6 +438,14 @@
                                 <span class="chip bg-color">并发</span>
                             </a>
                         
+                            <a href="/tags/%E9%94%81/">
+                                <span class="chip bg-color">锁</span>
+                            </a>
+                        
+                            <a href="/tags/%E7%BA%BF%E7%A8%8B/">
+                                <span class="chip bg-color">线程</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -463,7 +474,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-01
+                    2020-04-20
                 </div>
                 
 
@@ -494,25 +505,37 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="线程饥饿死锁"><a href="#线程饥饿死锁" class="headerlink" title="线程饥饿死锁"></a>线程饥饿死锁</h4><ul>
-<li>在线程池中,如果任务依赖于其他任务,那么可能产生死锁</li>
-<li><strong>饥饿:</strong> 一个线程在无限的等待另外一个或多个线程相互传递使用并且永不会释放的资源</li>
-<li><strong>死锁:</strong> 可以认为是两个线程或者进程在请求对方占有的资源<h4 id="运行时间较长的任务"><a href="#运行时间较长的任务" class="headerlink" title="运行时间较长的任务"></a>运行时间较长的任务</h4></li>
-<li>如果任务阻塞的时间过长,那么即使不出现死锁,线程池的响应性也会变得糟糕</li>
-<li>其中一种解决方案是限定任务等待资源的时间,而不要无限制的等待</li>
-<li>类库的大多数可阻塞方法中,都同时定义了限时版本和无限时版本,如Thread.join丶BolockingQueue.put丶CountDownLatch.await和Selector.select等,如果等待超时,那么可以把任务标识为失败,然后终止任务或者重新放回队列以便后续执行<h4 id="设置线程池的大小"><a href="#设置线程池的大小" class="headerlink" title="设置线程池的大小"></a>设置线程池的大小</h4></li>
-<li>要正确设置线程池的大小,必须分析计算环境丶资源预算和任务特性.部署的系统中有多少个CPU?多大的内存?任务是计算(CPU)密集型丶I/O密集型还是二者皆可?它们是否需要像JDBC连接这样的稀缺资源</li>
-<li>对于计算(CPU)密集型任务,线程池的大小一般设置为N(cpu) + 1,通常能实现最优利用率<h4 id="配置ThreadPoolExecutor"><a href="#配置ThreadPoolExecutor" class="headerlink" title="配置ThreadPoolExecutor"></a>配置ThreadPoolExecutor</h4></li>
-<li>ThreadPoolExecutor为一些Executor提供了基本的实现,如newCachedThreadPool丶newFixedThreadPool丶newScheduledThreadExecutor等工厂方法返回的</li>
-<li>如果默认的执行策略不能满足需求,那么可以使用ThreadPoolExecutor的构造函数来实例化一个对象,根据自己需求定制,可以参考Executors工厂类的源码<pre><code>  public ThreadPoolExecutor(
-      int corePoolSize,   //基本大小
-      int maximumPoolSize,    //最大大小
-      long keepAliveTime, //存活时间(空闲时间超过存活时间时,将被标记为可回收且线程池的当前大小超过基本大小时,该线程将被终止)
-      TimeUnit unit, //存活时间单位
-      BlockingQueue&lt;Runnable&gt; workQueue,//等待执行的任务放入的队列(无界,有界,同步移交)
-      ThreadFactory threadFactory, //每当线程池需要创建一个线程时,都是通过线程工厂方法来完成的
-      RejectedExecutionHandler handler //饱和策略,有界队列被填满后,拒绝新任务的策略
-  ){ ... }</code></pre></li>
-<li><strong>饱和策略:</strong><ul>
+<li><p>在线程池中,如果任务依赖于其他任务,那么可能产生死锁</p>
+</li>
+<li><p><strong>饥饿:</strong> 一个线程在无限的等待另外一个或多个线程相互传递使用并且永不会释放的资源</p>
+</li>
+<li><p><strong>死锁:</strong> 可以认为是两个线程或者进程在请求对方占有的资源</p>
+<h4 id="运行时间较长的任务"><a href="#运行时间较长的任务" class="headerlink" title="运行时间较长的任务"></a>运行时间较长的任务</h4></li>
+<li><p>如果任务阻塞的时间过长,那么即使不出现死锁,线程池的响应性也会变得糟糕</p>
+</li>
+<li><p>其中一种解决方案是限定任务等待资源的时间,而不要无限制的等待</p>
+</li>
+<li><p>类库的大多数可阻塞方法中,都同时定义了限时版本和无限时版本,如Thread.join丶BolockingQueue.put丶CountDownLatch.await和Selector.select等,如果等待超时,那么可以把任务标识为失败,然后终止任务或者重新放回队列以便后续执行</p>
+<h4 id="设置线程池的大小"><a href="#设置线程池的大小" class="headerlink" title="设置线程池的大小"></a>设置线程池的大小</h4></li>
+<li><p>要正确设置线程池的大小,必须分析计算环境丶资源预算和任务特性.部署的系统中有多少个CPU?多大的内存?任务是计算(CPU)密集型丶I/O密集型还是二者皆可?它们是否需要像JDBC连接这样的稀缺资源</p>
+</li>
+<li><p>对于计算(CPU)密集型任务,线程池的大小一般设置为N(cpu) + 1,通常能实现最优利用率</p>
+<h4 id="配置ThreadPoolExecutor"><a href="#配置ThreadPoolExecutor" class="headerlink" title="配置ThreadPoolExecutor"></a>配置ThreadPoolExecutor</h4></li>
+<li><p>ThreadPoolExecutor为一些Executor提供了基本的实现,如newCachedThreadPool丶newFixedThreadPool丶newScheduledThreadExecutor等工厂方法返回的</p>
+</li>
+<li><p>如果默认的执行策略不能满足需求,那么可以使用ThreadPoolExecutor的构造函数来实例化一个对象,根据自己需求定制,可以参考Executors工厂类的源码</p>
+<pre class="line-numbers language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token function">ThreadPoolExecutor</span><span class="token punctuation">(</span>
+      <span class="token keyword">int</span> corePoolSize<span class="token punctuation">,</span>   <span class="token comment" spellcheck="true">//基本大小</span>
+      <span class="token keyword">int</span> maximumPoolSize<span class="token punctuation">,</span>    <span class="token comment" spellcheck="true">//最大大小</span>
+      <span class="token keyword">long</span> keepAliveTime<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//存活时间(空闲时间超过存活时间时,将被标记为可回收且线程池的当前大小超过基本大小时,该线程将被终止)</span>
+      TimeUnit unit<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//存活时间单位</span>
+      BlockingQueue<span class="token operator">&lt;</span>Runnable<span class="token operator">></span> workQueue<span class="token punctuation">,</span><span class="token comment" spellcheck="true">//等待执行的任务放入的队列(无界,有界,同步移交)</span>
+      ThreadFactory threadFactory<span class="token punctuation">,</span> <span class="token comment" spellcheck="true">//每当线程池需要创建一个线程时,都是通过线程工厂方法来完成的</span>
+      RejectedExecutionHandler handler <span class="token comment" spellcheck="true">//饱和策略,有界队列被填满后,拒绝新任务的策略</span>
+  <span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>饱和策略:</strong></p>
+<ul>
 <li>setRejectedExecutionHandler设置ThreadPoolExecutor的饱和策略</li>
 <li>AbortPolicy 终止策略是默认的饱和策略,该策略将抛出未检查的RejectedExecutionException,调用者可捕获异常然后处理</li>
 <li>CallerRunsPolicy 调用者运行是一种调节机制,该机制会将某些任务回退到调用者,由调用者线程执行,这样会制约调用者线程一段时间内不能提交任务(回退任务没有执行完成前),在这期间,调用者线程不会调用accept,因此到达的请求将被保存在TCP层的队列中而不是在应用程序的队列中,如果持续过载,TCP层将最终发现它的请求队列被填满,因此同样会开始抛弃请求</li>
@@ -520,17 +543,20 @@
 <li>DiscardOldestPolicy 抛弃最旧的策略会抛弃下一个将被执行的任务,然后尝试重新提交新的任务</li>
 </ul>
 </li>
-<li><strong>线程工厂</strong><ul>
+<li><p><strong>线程工厂</strong></p>
+<ul>
 <li>每当线程池需要创建一个线程时,都是通过线程工厂(ThreadFactory)方法来完成的,如果要利用安全策略来控制对某些特殊代码库的访问权限,可通过Executor中的privilegedThreadFactory工厂来定制自己的线程工厂,这将与创建privilegedThreadFactory的线程拥有相同的访问权限,新线程的 accesscontrolcontext 和 contextclassloader 的其他设置与调用此 privilegedthreadfactory 方法的线程相同,如果不使用该方式,线程将从调用execute或者submit的客户程序中继承访问权限</li>
 </ul>
 </li>
-<li><strong>通过构造函数创建ThreadPoolExecutor对象后再设置</strong><ul>
+<li><p><strong>通过构造函数创建ThreadPoolExecutor对象后再设置</strong></p>
+<ul>
 <li>ThreadpoolExecutor对象提供的setter方法来设置参数(线程池基本大小,最大大小,存活时间,线程工厂,拒绝执行处理器)</li>
 <li>如果是通过Executors中的工厂方法创建的(newSingleThreadExecutor除外),那么可以将结果的类型强转为ThreadPoolExecutor进行设置</li>
 <li>Executors中有一个unconfigurableExecutorService工厂方法,该方法对现有的ExecutorService进行包装,使其只暴露出ExecutorService的方法,因此不能对其配置,newSingleThreadExecutor返回按这种方式封装的ExecutorService</li>
 </ul>
 </li>
-<li><strong>扩展ThreadPoolExecutor</strong><ul>
+<li><p><strong>扩展ThreadPoolExecutor</strong></p>
+<ul>
 <li>ThreadPoolExecutor中提供了beforeExecute丶afterExecute丶terminated方法可以在其子类中进行改写,从而扩展其行为,可以添加日志丶计时丶监视丶统计信息收集</li>
 <li>beforeExecute如果抛出异常,那么任务将不会被执行,afterExecute也不会被调用</li>
 <li>afterExecute: 无论任务是从run中正常返回,还是抛出异常返回,afterExecute都会被调用,如果任务完成后带有一个Error,那么就不会调用afterExecute</li>
@@ -621,6 +647,14 @@
                             
                                 <a href="/tags/%E5%B9%B6%E5%8F%91/">
                                     <span class="chip bg-color">并发</span>
+                                </a>
+                            
+                                <a href="/tags/%E9%94%81/">
+                                    <span class="chip bg-color">锁</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%BA%BF%E7%A8%8B/">
+                                    <span class="chip bg-color">线程</span>
                                 </a>
                             
                         </div>
@@ -731,6 +765,10 @@ eg: 1.线程A持有锁L并想获得锁M,同时线程B持有锁M并尝试获取�
                     
                     <a href="/tags/%E5%B9%B6%E5%8F%91/">
                         <span class="chip bg-color">并发</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%94%81/">
+                        <span class="chip bg-color">锁</span>
                     </a>
                     
                 </div>
@@ -982,7 +1020,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

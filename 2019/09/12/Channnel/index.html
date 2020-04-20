@@ -463,7 +463,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-01
+                    2020-04-20
                 </div>
                 
 
@@ -496,42 +496,45 @@
                 <h4 id="通道基础"><a href="#通道基础" class="headerlink" title="通道基础"></a>通道基础</h4><ol>
 <li><p><strong>基本</strong></p>
 <ul>
-<li>顶层的Channel接口,只有两个操作: 检查一个通道是否打开(isOpen())和关闭一个打开的通道(close())<pre><code>public interface Channel{
-  public boolean isOpen();//通道是否开启
-  public void close() throws IOException;//关闭打开的通道
-}</code></pre></li>
+<li>顶层的Channel接口,只有两个操作: 检查一个通道是否打开(isOpen())和关闭一个打开的通道(close())<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Channel</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isOpen</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//通道是否开启</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//关闭打开的通道</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>通道是访问I/O服务的导管,I/O可以分为广义的两大类:File I/O与Stream I/O,相应的有两种类型的通道与之对应,FileChannel类和socket通道类:SocketChannel丶ServerSocketChannel丶DatagramChannel(UDP)</li>
 </ul>
 </li>
 <li><p><strong>打开通道</strong></p>
-<pre><code> //socket通道可以直接使用其工厂方法open()打开
- SocketChannel sc = SocketChannel.open();
- sc.connect (new InetSocketAddress ("somehost", someport));
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//socket通道可以直接使用其工厂方法open()打开</span>
+ SocketChannel sc <span class="token operator">=</span> SocketChannel<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ sc<span class="token punctuation">.</span><span class="token function">connect</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InetSocketAddress</span> <span class="token punctuation">(</span><span class="token string">"somehost"</span><span class="token punctuation">,</span> someport<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- ServerSocketChannel ssc = ServerSocketChannel.open();
- ssc.socket().bind (new InetSocketAddress (somelocalport));
+ ServerSocketChannel ssc <span class="token operator">=</span> ServerSocketChannel<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ ssc<span class="token punctuation">.</span><span class="token function">socket</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">bind</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InetSocketAddress</span> <span class="token punctuation">(</span>somelocalport<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- DatagramChannel dc = DatagramChannel.open();
+ DatagramChannel dc <span class="token operator">=</span> DatagramChannel<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- //FileChannel只能通过RandomAccessFile丶FileInputStream丶FileOutputStream获取
- RandomAccessFile raf = new RandomAccessFile ("somefile", "r");
- FileChannel fc = raf.getChannel( );
+ <span class="token comment" spellcheck="true">//FileChannel只能通过RandomAccessFile丶FileInputStream丶FileOutputStream获取</span>
+ RandomAccessFile raf <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RandomAccessFile</span> <span class="token punctuation">(</span><span class="token string">"somefile"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ FileChannel fc <span class="token operator">=</span> raf<span class="token punctuation">.</span><span class="token function">getChannel</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- //Channels工厂类
-  Channels.newChannel(System.in);</code></pre></li>
+ <span class="token comment" spellcheck="true">//Channels工厂类</span>
+  Channels<span class="token punctuation">.</span><span class="token function">newChannel</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>使用通道</strong></p>
 <ul>
 <li>通道可以是单向的(unidirectional)或者双向的(bidirectional),一个类实现ReadableByteChannel接口或者WritableByteChannel接口其中一个则为单向,全部实现则为双向(可以双向传输数据),</li>
 <li>对于file文件可以在不同的时候以不同的权限打开,FileInputStream对象总是以read-only的权限打开文件,<strong>因此此对象的getChannel()方法虽然实现了两个接口,但是却是只读的</strong>,如果进行write()操作就会抛出异常</li>
 <li>ByteChannel的read()与write()方法使用ByteBuffer对象作为参数,两种方法均返回已传输的字节数,如果缓冲区没有满,则可重新提交给通道从上次中断的地方继续传输,直到缓冲区hasRemaining()方法返回false</li>
-<li>通道可以以阻塞(blocking)或非阻塞(nonblocking)模式运行,非阻塞模式的通道不会让调用线程休眠,请求的操作要么立即完成,要么返回一个未进行任何操作的结果,只有面向流的通道,如sockets和pipes才能使用非阻塞模式<pre><code>//读取接口
-public interface ReadableByteChannel extends Channel{
-  public int read (ByteBuffer dst) throws IOException;
-}
-//写入接口
-public interface WritableByteChannel extends Channel{
-  public int write (ByteBuffer src) throws IOException;
-}</code></pre></li>
+<li>通道可以以阻塞(blocking)或非阻塞(nonblocking)模式运行,非阻塞模式的通道不会让调用线程休眠,请求的操作要么立即完成,要么返回一个未进行任何操作的结果,只有面向流的通道,如sockets和pipes才能使用非阻塞模式<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//读取接口</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ReadableByteChannel</span> <span class="token keyword">extends</span> <span class="token class-name">Channel</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">read</span> <span class="token punctuation">(</span>ByteBuffer dst<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//写入接口</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">WritableByteChannel</span> <span class="token keyword">extends</span> <span class="token class-name">Channel</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">write</span> <span class="token punctuation">(</span>ByteBuffer src<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>关闭通道</strong></p>
@@ -546,17 +549,18 @@ public interface WritableByteChannel extends Channel{
 </li>
 <li><p><strong>Scatter/Gather(分散/聚集)</strong></p>
 <ul>
-<li>Scatter/Gather是一个简单却强大的概念,对于read(ByteBuffer [] dsts),从通道中读取的数据会按顺序分散(scatter)到多个缓冲区;对于write(ByteBuffer [] dsts),多个缓冲区中的数据会按顺序进入通道(gather)<pre><code>public interface ScatteringByteChannel extends ReadableByteChannel{
-  //scatter: 从通道中读取的数据按顺序放入多个缓冲区中
-  public long read (ByteBuffer [] dsts)throws IOException;
-  //offset为数组索引,指明从哪个缓冲区开始,length为要使用的缓冲区数量
-  public long read (ByteBuffer [] dsts, int offset, int length)throws IOException;
-}
-public interface GatheringByteChannel extends WritableByteChannel{
-  //gather: 多个缓冲区中的数据按顺序进入通道中
-  public long write(ByteBuffer[] srcs)throws IOException;
-  public long write(ByteBuffer[] srcs, int offset, int length) throws IOException;
-}</code></pre></li>
+<li>Scatter/Gather是一个简单却强大的概念,对于read(ByteBuffer [] dsts),从通道中读取的数据会按顺序分散(scatter)到多个缓冲区;对于write(ByteBuffer [] dsts),多个缓冲区中的数据会按顺序进入通道(gather)<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ScatteringByteChannel</span> <span class="token keyword">extends</span> <span class="token class-name">ReadableByteChannel</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//scatter: 从通道中读取的数据按顺序放入多个缓冲区中</span>
+  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">read</span> <span class="token punctuation">(</span>ByteBuffer <span class="token punctuation">[</span><span class="token punctuation">]</span> dsts<span class="token punctuation">)</span><span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//offset为数组索引,指明从哪个缓冲区开始,length为要使用的缓冲区数量</span>
+  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">read</span> <span class="token punctuation">(</span>ByteBuffer <span class="token punctuation">[</span><span class="token punctuation">]</span> dsts<span class="token punctuation">,</span> <span class="token keyword">int</span> offset<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span><span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">GatheringByteChannel</span> <span class="token keyword">extends</span> <span class="token class-name">WritableByteChannel</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//gather: 多个缓冲区中的数据按顺序进入通道中</span>
+  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">write</span><span class="token punctuation">(</span>ByteBuffer<span class="token punctuation">[</span><span class="token punctuation">]</span> srcs<span class="token punctuation">)</span><span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">long</span> <span class="token function">write</span><span class="token punctuation">(</span>ByteBuffer<span class="token punctuation">[</span><span class="token punctuation">]</span> srcs<span class="token punctuation">,</span> <span class="token keyword">int</span> offset<span class="token punctuation">,</span> <span class="token keyword">int</span> length<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 </ol>
@@ -566,38 +570,39 @@ public interface GatheringByteChannel extends WritableByteChannel{
 <li><p>文件通道总是阻塞式的,FileChannel实例只能通过一个打开的file对象(RandomAccessFile丶FileInputStream丶FileOutputStream)上调用getChannel()方法获取,获取到的对象与file对象访问权限相同</p>
 </li>
 <li><p>FileChannel对象是线程安全的,多个进程可以在同一个实例上并发调用方法而不会引起任何问题,但是有些文件操作是单线程的,会阻塞其他线程</p>
-<pre><code>public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
-  //...部分方法列表
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">FileChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ByteChannel</span><span class="token punctuation">,</span> GatheringByteChannel<span class="token punctuation">,</span> ScatteringByteChannel <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//...部分方法列表</span>
 
-  //从通道的position位置读取字节序列放入dst缓冲区
-  public abstract int read (ByteBuffer dst, long position)
-  //从给定缓冲区向通道从position位置写入字节序列
-  public abstract int write (ByteBuffer src, long position)
-  public abstract long size()//返回此通道文件的当前大小字节
-  public abstract long position()//返回此通道的文件位置
-  public abstract void position (long newPosition)//设置此通道的文件位置
-  public abstract void truncate (long size)//截断: 将此通道文件截断为指定大小
-  //参数metadata表示在方法返回值前文件的元数据(metadate)是否也要同步更新到磁盘
-  public abstract void force (boolean metaData)//强制文件的所有待定修改立即同步到磁盘
-  public final FileLock lock()//获取此通道文件的排它锁
-  //获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁
-  //获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限
-  public abstract FileLock lock (long position, long size, boolean shared)
-  public final FileLock tryLock()//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)
-  //尝试获取此通道给定区域的排它锁
-  public abstract FileLock tryLock (long position, long size, boolean shared)
-  //将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小
-  public abstract MappedByteBuffer map (MapMode mode, long position, long size)
-  public static class MapMode {
-      public static final MapMode READ_ONLY   //只读映射模式
-      public static final MapMode READ_WRITE  //读/写映射模式
-      public static final MapMode PRIVATE     //私有(写时复制)映射模式
-  }
-  //将该通道文件直接传输到给定的可写字节通道,position:起始位置,count:传输最大字节数,target:目标通道
-  public abstract long transferTo (long position, long count, WritableByteChannel target)
-  //从给定的可读字节通道将字节传输到当前通道中,src:源通道,position:起始位置,count:要传输的最大自己数
-  public abstract long transferFrom (ReadableByteChannel src, long position, long count)
-}</code></pre></li>
+  <span class="token comment" spellcheck="true">//从通道的position位置读取字节序列放入dst缓冲区</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">read</span> <span class="token punctuation">(</span>ByteBuffer dst<span class="token punctuation">,</span> <span class="token keyword">long</span> position<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//从给定缓冲区向通道从position位置写入字节序列</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">write</span> <span class="token punctuation">(</span>ByteBuffer src<span class="token punctuation">,</span> <span class="token keyword">long</span> position<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回此通道文件的当前大小字节</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">position</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回此通道的文件位置</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">position</span> <span class="token punctuation">(</span><span class="token keyword">long</span> newPosition<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//设置此通道的文件位置</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">truncate</span> <span class="token punctuation">(</span><span class="token keyword">long</span> size<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//截断: 将此通道文件截断为指定大小</span>
+  <span class="token comment" spellcheck="true">//参数metadata表示在方法返回值前文件的元数据(metadate)是否也要同步更新到磁盘</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">force</span> <span class="token punctuation">(</span><span class="token keyword">boolean</span> metaData<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//强制文件的所有待定修改立即同步到磁盘</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> FileLock <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//获取此通道文件的排它锁</span>
+  <span class="token comment" spellcheck="true">//获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁</span>
+  <span class="token comment" spellcheck="true">//获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> FileLock <span class="token function">lock</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">,</span> <span class="token keyword">boolean</span> shared<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> FileLock <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)</span>
+  <span class="token comment" spellcheck="true">//尝试获取此通道给定区域的排它锁</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> FileLock <span class="token function">tryLock</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">,</span> <span class="token keyword">boolean</span> shared<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> MappedByteBuffer <span class="token function">map</span> <span class="token punctuation">(</span>MapMode mode<span class="token punctuation">,</span> <span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MapMode</span> <span class="token punctuation">{</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode READ_ONLY   <span class="token comment" spellcheck="true">//只读映射模式</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode READ_WRITE  <span class="token comment" spellcheck="true">//读/写映射模式</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode PRIVATE     <span class="token comment" spellcheck="true">//私有(写时复制)映射模式</span>
+  <span class="token punctuation">}</span>
+  <span class="token comment" spellcheck="true">//将该通道文件直接传输到给定的可写字节通道,position:起始位置,count:传输最大字节数,target:目标通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">transferTo</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> count<span class="token punctuation">,</span> WritableByteChannel target<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//从给定的可读字节通道将字节传输到当前通道中,src:源通道,position:起始位置,count:要传输的最大自己数</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">long</span> <span class="token function">transferFrom</span> <span class="token punctuation">(</span>ReadableByteChannel src<span class="token punctuation">,</span> <span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> count<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>访问文件</strong></p>
@@ -611,27 +616,29 @@ public interface GatheringByteChannel extends WritableByteChannel{
 </ul>
 </li>
 <li><p><strong>文件锁定</strong></p>
-<pre><code> public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
-     //...other
-     public final FileLock lock()//获取此通道文件的排它锁
-     //获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁
-     //获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限
-     public abstract FileLock lock (long position, long size, boolean shared)
-     public final FileLock tryLock()//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)
-     //尝试获取此通道给定区域的排它锁
-     public abstract FileLock tryLock (long position, long size, boolean shared)
- }</code></pre><ul>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">FileChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ByteChannel</span><span class="token punctuation">,</span> GatheringByteChannel<span class="token punctuation">,</span> ScatteringByteChannel <span class="token punctuation">{</span>
+     <span class="token comment" spellcheck="true">//...other</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> FileLock <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//获取此通道文件的排它锁</span>
+     <span class="token comment" spellcheck="true">//获取此通道给定区域的锁定,position:锁定区域起始位置,size:锁的区域大小,shared:true=共享锁,false=独占锁</span>
+     <span class="token comment" spellcheck="true">//获取共享锁时必须以只读的权限打开,获取独占锁时则需要写的权限</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> FileLock <span class="token function">lock</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">,</span> <span class="token keyword">boolean</span> shared<span class="token punctuation">)</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> FileLock <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//尝试获取此通道文件的排它锁,会立即返回结果(成功或者失败)</span>
+     <span class="token comment" spellcheck="true">//尝试获取此通道给定区域的排它锁</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> FileLock <span class="token function">tryLock</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">,</span> <span class="token keyword">boolean</span> shared<span class="token punctuation">)</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>文件锁与文件关联,而不是与通道关联,锁的是外部进程,而不是同一个Java虚拟机上的线程</li>
-<li>锁定区域的范围不一定限制在文件的size以内,可以超出文件尾,因此,我们可以提前把待写入数据的区域锁定,我们也可以锁定一个不包含任何文件内容的区域,以备后续增长需要,相反如果锁定了文件的某块区域,然后文件增长超出了那块区域,那么新增加的文件内容将不受到锁保护<pre><code>//文件锁API
-public abstract class FileLock {
-  public final FileChannel channel()//锁是由哪个锁创建的
-  public final long position()//锁定文件的起始位置
-  public final long size()//锁定文件的大小
-  public final boolean isShared()//是否为共享锁
-  public final boolean overlaps (long position, long size)//锁是否与给定范围重叠
-  public abstract boolean isValid();//锁是否有效
-  public abstract void release( ) throws IOException;//释放锁
-}</code></pre></li>
+<li>锁定区域的范围不一定限制在文件的size以内,可以超出文件尾,因此,我们可以提前把待写入数据的区域锁定,我们也可以锁定一个不包含任何文件内容的区域,以备后续增长需要,相反如果锁定了文件的某块区域,然后文件增长超出了那块区域,那么新增加的文件内容将不受到锁保护<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//文件锁API</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">FileLock</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> FileChannel <span class="token function">channel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//锁是由哪个锁创建的</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">long</span> <span class="token function">position</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//锁定文件的起始位置</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">long</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//锁定文件的大小</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isShared</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//是否为共享锁</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">overlaps</span> <span class="token punctuation">(</span><span class="token keyword">long</span> position<span class="token punctuation">,</span> <span class="token keyword">long</span> size<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//锁是否与给定范围重叠</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//锁是否有效</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">release</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>内存映射文件</strong></p>
@@ -643,30 +650,32 @@ public abstract class FileLock {
 <li>MapMode.PRIVATE表示写时复制模式,通过put()方法所做的修改会导致产生一个私有的数据拷贝并且该拷贝中的数据只有MappedByteBuffer实例可以看到,该过程不会对底层文件做任何修改,一旦缓冲区被施以垃圾回收,那么修改就会丢失,必须以read/wirte权限打开文件才能建立MapMode.PRIVATE映射</li>
 <li>MapMode.PRIVATE模式并不会导致你的缓冲区看不到通过其他方式对文件所做的修改,对文件某个区域的修改再使用MapMode.PRIVATE模式的缓冲区中都能反映出来,除非该缓冲区已经修改了文件上的同一个区域</li>
 <li>MappedByteBuffer对象一旦建立之后就保持有效,直到被垃圾收集为止,没有绑定在创建他们的通道上,关闭相关联的FileChannel不会破坏映射(易导致文件被占用无法及时释放)</li>
-<li>MemoryMappedBuffer直接反映它所关联的磁盘文件,如果映射有效时文件被在结构上(大小)修改,那么缓冲区部分可能无法访问,并抛出未检查异常<pre><code>//MappedByteBuffer创建
-public abstract class FileChannel extends AbstractChannel implements ByteChannel, GatheringByteChannel, ScatteringByteChannel {
-  // other
-  //将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小
-  public abstract MappedByteBuffer map (MapMode mode, long position,long size)
-  public static class MapMode {
-      public static final MapMode READ_ONLY //只读映射模式
-      public static final MapMode READ_WRITE //读/写映射模式
-      public static final MapMode PRIVATE    //私有(写时复制)映射模式
-  }
-}</code></pre></li>
+<li>MemoryMappedBuffer直接反映它所关联的磁盘文件,如果映射有效时文件被在结构上(大小)修改,那么缓冲区部分可能无法访问,并抛出未检查异常<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//MappedByteBuffer创建</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">FileChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ByteChannel</span><span class="token punctuation">,</span> GatheringByteChannel<span class="token punctuation">,</span> ScatteringByteChannel <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// other</span>
+  <span class="token comment" spellcheck="true">//将此通道文件的指定区域直接映射到内存中,position:起始位置,size大小</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> MappedByteBuffer <span class="token function">map</span> <span class="token punctuation">(</span>MapMode mode<span class="token punctuation">,</span> <span class="token keyword">long</span> position<span class="token punctuation">,</span><span class="token keyword">long</span> size<span class="token punctuation">)</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">MapMode</span> <span class="token punctuation">{</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode READ_ONLY <span class="token comment" spellcheck="true">//只读映射模式</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode READ_WRITE <span class="token comment" spellcheck="true">//读/写映射模式</span>
+      <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> MapMode PRIVATE    <span class="token comment" spellcheck="true">//私有(写时复制)映射模式</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>当为一个文件建立虚拟内存映射之后,文件数据通常不会因此被从磁盘读取到内存,对于映射缓冲区,虚拟内存系统将根据需要来把文件中相应区块的数据读进来,这个过程是需要时间的,因此可以使用load()提前加载</li>
 <li>load()方法会加载整个文件以使它常驻内存,这样后续的操作基于内存,访问速度将更高</li>
 <li>但是load()方法是一个代价高的操作,因为它会导致大量的页调入,load()方法返回并不能保证文件就会完全常驻内存,由于请求页面调入是动态的,该方法主要作用是提前加载文件进入内存,以便后续的访问速度尽可能快</li>
 <li>对于大多数程序,提前加载文件消耗资源是不划算的,在实际访问时分摊页调入开销才是更好的选择</li>
-<li>应该总是使用MappedByteBuffer.force()而非FileChannel.force()方法,因为通道对象可能不清楚通过映射缓冲区做出的文件的全部更改<pre><code>public abstract class MappedByteBuffer extends ByteBuffer {
-  // other
-  //MappedByteBuffer特别的方法
-  public final MappedByteBuffer load()//加载整个文件使他常驻内存(相当于提前加载)
-  public final boolean isLoaded()//判断被映射的文件是否常驻内存了(不绝对,只是一个暗示)
-  //应使用MappedByteBuffer的force()方法,而非FileChannel的force()方法,
-  //因为通道对象可能不清楚通过映射缓冲区做出的全部更改
-  public final MappedByteBuffer force()//强制将缓冲区更改反映到磁盘上
-}</code></pre></li>
+<li>应该总是使用MappedByteBuffer.force()而非FileChannel.force()方法,因为通道对象可能不清楚通过映射缓冲区做出的文件的全部更改<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">MappedByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">ByteBuffer</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// other</span>
+  <span class="token comment" spellcheck="true">//MappedByteBuffer特别的方法</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> MappedByteBuffer <span class="token function">load</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//加载整个文件使他常驻内存(相当于提前加载)</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isLoaded</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//判断被映射的文件是否常驻内存了(不绝对,只是一个暗示)</span>
+  <span class="token comment" spellcheck="true">//应使用MappedByteBuffer的force()方法,而非FileChannel的force()方法,</span>
+  <span class="token comment" spellcheck="true">//因为通道对象可能不清楚通过映射缓冲区做出的全部更改</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> MappedByteBuffer <span class="token function">force</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//强制将缓冲区更改反映到磁盘上</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>Channel-to-Channel传输</strong></p>
@@ -684,102 +693,107 @@ public abstract class FileChannel extends AbstractChannel implements ByteChannel
 <ul>
 <li>全部的socket通道类(DatagramChannel丶SocketChannel和ServerSocketChannel)在被实例化时都会创建一个对等socket对象(java.net类中的Socket丶ServerSocket丶DatagramSocket,它们已经被更新以识别通道),对等的socket可以通过调用socket()方法从一个通道上获取,此外这三个java.net类现在都有getChannel()方法</li>
 <li>虽然每个socket通道(java.nio.channel包中)都有一个关联的java.net.socket对象,却并非所有的socket都有一个关联的通道,如果使用传统方式(直接实例化)创建了一个Socket对象,它就不会有关联的SocketChannel并且它的getChannel()方法将总是返回null</li>
-<li>方法<pre><code>public abstract class SelectableChannel extends AbstractChannel implements Channel {
-  // 部分API列表
-  //设置通道的阻塞模式:阻塞/非阻塞
-  public abstract void configureBlocking (boolean block) throws IOException;
-  public abstract boolean isBlocking( ); //判断通道是那种阻塞模式
-  //防止其他对象修改阻塞模式,只有拥有该对象锁的线程才能修改阻塞模式
-  public abstract Object blockingLock( );
-}</code></pre></li>
+<li>方法<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SelectableChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractChannel</span> <span class="token keyword">implements</span> <span class="token class-name">Channel</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// 部分API列表</span>
+  <span class="token comment" spellcheck="true">//设置通道的阻塞模式:阻塞/非阻塞</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">configureBlocking</span> <span class="token punctuation">(</span><span class="token keyword">boolean</span> block<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isBlocking</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//判断通道是那种阻塞模式</span>
+  <span class="token comment" spellcheck="true">//防止其他对象修改阻塞模式,只有拥有该对象锁的线程才能修改阻塞模式</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Object <span class="token function">blockingLock</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>ServerSocketChannel</strong></p>
 <ul>
-<li>完整API<pre><code>public abstract class ServerSocketChannel extends AbstractSelectableChannel {
-  /**
+<li>完整API<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ServerSocketChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSelectableChannel</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">/**
    *工厂方法创建一个新的ServerSocketChannel对象,
    *返回同一个未绑定的java.net.ServerSocket关联的通道
    *该对等ServerSocket可以通过ServerSocketChannel对象调用socket()获取
    *通过对等的socket的bind()方法绑定到一个端口开始监听
-   **/
-  public static ServerSocketChannel open( ) throws IOException
-  //返回对等的Socket对象
-  public abstract ServerSocket socket( );
-  //返回的对象可以在非阻塞模式下运行,非阻塞模式下调用,没有传入链接在等待时,会立即返回null
-  public abstract ServerSocket accept( ) throws IOException;
-  //返回此频道支持操作的操作集
-  public final int validOps( )
-}</code></pre></li>
+   **/</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> ServerSocketChannel <span class="token function">open</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//返回对等的Socket对象</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ServerSocket <span class="token function">socket</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回的对象可以在非阻塞模式下运行,非阻塞模式下调用,没有传入链接在等待时,会立即返回null</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ServerSocket <span class="token function">accept</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回此频道支持操作的操作集</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">validOps</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>SocketChannel</strong></p>
 <ul>
-<li>API<pre><code>  public abstract class SocketChannel extends AbstractSelectableChannel implements ByteChannel, ScatteringByteChannel, GatheringByteChannel {
-  //部分API列表
-  //打开链接通道
-  public static SocketChannel open( ) throws IOException
-  //打开链接通道并链接到远程地址(相当于open()+connect(remote))
-  public static SocketChannel open (InetSocketAddress remote) throws IOException
-  //获取与此通道对等的Socket
-  public abstract Socket socket( );
-  //将此通道链接到远程地址
-  public abstract boolean connect (SocketAddress remote) throws IOException;
-  //判断是否正在进行链接操作
-  public abstract boolean isConnectionPending( );
-  //判断是否完成链接操作
-  public abstract boolean finishConnect( ) throws IOException;
-  //判断是否已经完成链接
-  public abstract boolean isConnected( );
-  //确定支持的操作的操作集
-  public final int validOps( )
-}</code></pre></li>
+<li>API<pre class="line-numbers language-java"><code class="language-java">  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SocketChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSelectableChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ByteChannel</span><span class="token punctuation">,</span> ScatteringByteChannel<span class="token punctuation">,</span> GatheringByteChannel <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//部分API列表</span>
+  <span class="token comment" spellcheck="true">//打开链接通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> SocketChannel <span class="token function">open</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//打开链接通道并链接到远程地址(相当于open()+connect(remote))</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> SocketChannel <span class="token function">open</span> <span class="token punctuation">(</span>InetSocketAddress remote<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//获取与此通道对等的Socket</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Socket <span class="token function">socket</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//将此通道链接到远程地址</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">connect</span> <span class="token punctuation">(</span>SocketAddress remote<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//判断是否正在进行链接操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isConnectionPending</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//判断是否完成链接操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">finishConnect</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//判断是否已经完成链接</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isConnected</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//确定支持的操作的操作集</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">validOps</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>Socket通道是线程安全的,但是任何时候都只有一个读操作和一个写操作在进行中,sockets是面向流而非包导向的,他们可以保证发送的字节会按照顺序到达但无法承诺维持字节分组,例如某个发送器可能给一个socket写入20字节而接收器调用read()方法却只收到了其中3个字节,剩下的17个字节还在传输中,因此让多个不配合的线程共享某个流socket的同一侧绝非一个好的涉及选择</li>
 <li>connect()和finishConnect()方法是互相同步的,并且只要其中一个操作正在进行,任何读或写方法调用都会阻塞,即使是在非阻塞模式下</li>
 </ul>
 </li>
 <li><p><strong>DatagramSocket</strong></p>
 <ul>
-<li>API<pre><code>public abstract class DatagramChannel extends AbstractSelectableChannel implements ByteChannel, ScatteringByteChannel, GatheringByteChannel {
-  //部分方法列表
-  //打开数据通道
-  public static DatagramChannel open( ) throws IOException
-  //获取与通道等价的socket
-  public abstract DatagramSocket socket( );
-  //指定链接到的地址,除了此地址之外任何其他源地址的数据包都会被忽略
-  public abstract DatagramChannel connect (SocketAddress remote) throws IOException;
-  //判断是否指定连接地址
-  public abstract boolean isConnected( );
-  //取消指定的连接地址
-  public abstract DatagramChannel disconnect( ) throws IOException;
-  //接收数据放入ByteBuffer中,非阻塞模式没有可接受包时会返回null,
-  //包内数据超出byteBuffer范围则会被悄悄丢弃
-  public abstract SocketAddress receive (ByteBuffer dst) throws IOException;
-  //发送数据包,非阻塞模式返回发送字节数或者0,
-  //发送数据包是一个全有全无的行为,如果超出数据包承载能力,就什么都不发送
-  public abstract int send (ByteBuffer src, SocketAddress target)
-  //返回读取字节的数量,非阻塞模式返回值可能为0    
-  public abstract int read (ByteBuffer dst) throws IOException;
-  public abstract int write (ByteBuffer src) throws IOException;
-}</code></pre></li>
+<li>API<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">DatagramChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSelectableChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ByteChannel</span><span class="token punctuation">,</span> ScatteringByteChannel<span class="token punctuation">,</span> GatheringByteChannel <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//部分方法列表</span>
+  <span class="token comment" spellcheck="true">//打开数据通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> DatagramChannel <span class="token function">open</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//获取与通道等价的socket</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> DatagramSocket <span class="token function">socket</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//指定链接到的地址,除了此地址之外任何其他源地址的数据包都会被忽略</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> DatagramChannel <span class="token function">connect</span> <span class="token punctuation">(</span>SocketAddress remote<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//判断是否指定连接地址</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isConnected</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//取消指定的连接地址</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> DatagramChannel <span class="token function">disconnect</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//接收数据放入ByteBuffer中,非阻塞模式没有可接受包时会返回null,</span>
+  <span class="token comment" spellcheck="true">//包内数据超出byteBuffer范围则会被悄悄丢弃</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SocketAddress <span class="token function">receive</span> <span class="token punctuation">(</span>ByteBuffer dst<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//发送数据包,非阻塞模式返回发送字节数或者0,</span>
+  <span class="token comment" spellcheck="true">//发送数据包是一个全有全无的行为,如果超出数据包承载能力,就什么都不发送</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">send</span> <span class="token punctuation">(</span>ByteBuffer src<span class="token punctuation">,</span> SocketAddress target<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//返回读取字节的数量,非阻塞模式返回值可能为0    </span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">read</span> <span class="token punctuation">(</span>ByteBuffer dst<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">write</span> <span class="token punctuation">(</span>ByteBuffer src<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>DatagramChannel(数据包通道UDP)不同与流socket(TCP/IP),流socket具有有序而可靠的数据传输特性,但是该协议为了在包导向的互联网基础设施上维护流的语义必然会产生巨大的开销,并且流语义不能适用所有情形,数据包的吞吐量要比流协议高很多</li>
 </ul>
 </li>
 </ol>
 <h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><ol>
 <li><strong>基本</strong><ul>
-<li>API<pre><code>public abstract class Pipe {
-  //打开管道
-  public static Pipe open( ) throws IOException
-  //返回此通道的源通道    
-  public abstract SourceChannel source( );
-  //返回此通道的接收通道
-  public abstract SinkChannel sink( );
-  //Pipe可写端的通道
-  public static abstract class SourceChannel extends AbstractSelectableChannel implements ReadableByteChannel, ScatteringByteChannel
-  //Pipe可读端的通道
-  public static abstract class SinkChannel extends AbstractSelectableChannel implements WritableByteChannel, GatheringByteChannel
-}</code></pre></li>
+<li>API<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Pipe</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//打开管道</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> Pipe <span class="token function">open</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//返回此通道的源通道    </span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SourceChannel <span class="token function">source</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回此通道的接收通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SinkChannel <span class="token function">sink</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//Pipe可写端的通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SourceChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSelectableChannel</span> <span class="token keyword">implements</span> <span class="token class-name">ReadableByteChannel</span><span class="token punctuation">,</span> ScatteringByteChannel
+  <span class="token comment" spellcheck="true">//Pipe可读端的通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SinkChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractSelectableChannel</span> <span class="token keyword">implements</span> <span class="token class-name">WritableByteChannel</span><span class="token punctuation">,</span> GatheringByteChannel
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li>Pipe实例是通过调用不带参数的Pipe.open()工厂方法来创建的,Pipe类定义了两个嵌套的通道类来实现管路,Pipe.SourceChannel(管道负责读的一端)和Pipe.SinkChannel(管道负责写的一端),这两个通道实例是在Pipe对象创建的同时被创建的,可以通过在Pipe对象上分别调用source()与sink()方法来获取</li>
 <li>管道所能承载的数据量是依赖实现的,唯一可保证的是写到SinkChannel中的字节都能按照同样的顺序在SourceChannel上重现</li>
 </ul>
@@ -1254,7 +1268,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

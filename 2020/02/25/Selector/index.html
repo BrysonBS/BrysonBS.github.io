@@ -462,7 +462,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-01
+                    2020-04-20
                 </div>
                 
 
@@ -495,81 +495,84 @@
                 <h4 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a>选择器</h4><ol>
 <li><p><strong>基本</strong></p>
 <ul>
-<li><strong>选择器(Selector):</strong> 选择器类管理着一个被注册的通道集合的信息和他们的就绪状态.通道是和选择器一起被注册的,并且使用选择器来更新通道的就绪状态<pre><code>//选择器维护了一个需要监控的通道集合,一个给定的通道可以被注册到多个选择器上
-//选择器对象是线程安全的
-public abstract class Selector {
-  //打开选择器
-  public static Selector open( ) throws IOException
-  //选择器是否打开
-  public abstract boolean isOpen( );
-  //关闭选择器
-  public abstract void close( ) throws IOException;
-  //返回创建此通道的提供程序
-  public abstract SelectionProvider provider( );
-  //阻塞: 选择一组其相应通道准备好进行的I/O操作的键
-  public abstract int select( ) throws IOException;
-  //阻塞:
-  public abstract int select (long timeout) throws IOException;
-  //非阻塞: 立即返回
-  public abstract int selectNow( ) throws IOException;
-  //结束阻塞的select方法立即返回
-  public abstract void wakeup( );
-  //返回此选择器的键集
-  public abstract Set keys( );
-  //返回此选择器的选择键集,需要从键集手动移除(键集不是线程安全的)
-  public abstract Set selectedKeys( );
-}</code></pre></li>
-<li><strong>可选择通道(SelectableChannel):</strong> 这个抽象类提供了实现通道的可选择性所需要的公共方法,它是所有支持就绪检查的通道类的父类.FileChannel对象不是可选择的(没有继承),所有socket通道都是可选择的,包括从管道(Pipe)对象中获得的通道.SelectableChannel可以被注册到Selector对象上,同时可以指定选择器的操作,一个通道可以被注册到多个选择器上,但对每个选择器而言只能被注册一次.<pre><code>public abstract class SelectableChannel extends AbstractChannel implements Channel {
-  //部分API列表
-  //将通道注册到给定选择器上,并规定操作,返回一个选择键(必须为非阻塞通道,同时一旦被注册,就不能回到阻塞状态)
-  public abstract SelectionKey register (Selector sel, int ops) throws ClosedChannelException;
-  //att设置附加对象到选择键中
-  public abstract SelectionKey register (Selector sel, int ops,Object att) throws ClosedChannelException;
-  //检查通道是否已经被注册到选择器上
-  public abstract boolean isRegistered( );
-  //返回与该通道指定的选择键
-  public abstract SelectionKey keyFor (Selector sel);
-  //获取通道所支持的操作集合
-  public abstract int validOps( );
-  //在通道被注册到一个选择器上时必须先设置通道为非阻塞模式: configureBlocking(false)
-  public abstract void configureBlocking (boolean block) throws IOException;
-  //是否为阻塞模式
-  public abstract boolean isBlocking( );
-  //获取阻塞模式的锁对象
-  public abstract Object blockingLock( );
-}</code></pre></li>
-<li><strong>选择键(SelectionKey):</strong> 选择键封装了特定的通道与特定的选择器的注册关系.选择键对象被SelectableChannle.register()返回并提供一个表示这种注册关系的标记.选择键包含了两个比特集(以整数的形式进行编码),指示了该注册关系所关心的通道操作,以及通道已经准备好的操作<pre><code>public abstract class SelectionKey {
-  public static final int OP_READ     //读操作
-  public static final int OP_WRITE    //写操作
-  public static final int OP_CONNECT  //连接操作,Client端支持的一种操作
-  public static final int OP_ACCEPT   //连接可接受操作,仅ServerSocketChannel支持
-  //返回此选择键所关联的通道
-  public abstract SelectableChannel channel( );
-  //返回此选择键所关联的选择器
-  public abstract Selector selector( );
-  //取消选择键注册,取消的键不会立即从selector中移除,而是添加到cancelledKeys中
-  //在下一次select操作中移除它,所以在调用某个选择键时需要使用isValid校验
-  public abstract void cancel( );
-  //检查此选择键是否有效
-  public abstract boolean isValid( );
-  //获得此选择键的感兴趣操作集
-  public abstract int interestOps( );
-  public abstract void interestOps (int ops);
-  //获取此选择键的准备好的操作集
-  public abstract int readyOps( );
-  //检测此选择键是否可读操作
-  public final boolean isReadable( )
-  //检测此选择键是否可写操作
-  public final boolean isWritable( )
-  //检测此选择键关联的通道是否完成套接字连接操作
-  public final boolean isConnectable( )
-  //检测此选择键关联的通道是否已经准备好接受新的套接字链接操作
-  public final boolean isAcceptable( )
-  //将给定附件对象注册到此选择键上
-  public final Object attach (Object ob)
-  //获取此选择键上注册的附件对象
-  public final Object attachment( )
-}</code></pre></li>
+<li><strong>选择器(Selector):</strong> 选择器类管理着一个被注册的通道集合的信息和他们的就绪状态.通道是和选择器一起被注册的,并且使用选择器来更新通道的就绪状态<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//选择器维护了一个需要监控的通道集合,一个给定的通道可以被注册到多个选择器上</span>
+<span class="token comment" spellcheck="true">//选择器对象是线程安全的</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Selector</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//打开选择器</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> Selector <span class="token function">open</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException
+  <span class="token comment" spellcheck="true">//选择器是否打开</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isOpen</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//关闭选择器</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">close</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回创建此通道的提供程序</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SelectionProvider <span class="token function">provider</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//阻塞: 选择一组其相应通道准备好进行的I/O操作的键</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//阻塞:</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">select</span> <span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//非阻塞: 立即返回</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">selectNow</span><span class="token punctuation">(</span> <span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//结束阻塞的select方法立即返回</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">wakeup</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回此选择器的键集</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Set <span class="token function">keys</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回此选择器的选择键集,需要从键集手动移除(键集不是线程安全的)</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Set <span class="token function">selectedKeys</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><strong>可选择通道(SelectableChannel):</strong> 这个抽象类提供了实现通道的可选择性所需要的公共方法,它是所有支持就绪检查的通道类的父类.FileChannel对象不是可选择的(没有继承),所有socket通道都是可选择的,包括从管道(Pipe)对象中获得的通道.SelectableChannel可以被注册到Selector对象上,同时可以指定选择器的操作,一个通道可以被注册到多个选择器上,但对每个选择器而言只能被注册一次.<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SelectableChannel</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractChannel</span> <span class="token keyword">implements</span> <span class="token class-name">Channel</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//部分API列表</span>
+  <span class="token comment" spellcheck="true">//将通道注册到给定选择器上,并规定操作,返回一个选择键(必须为非阻塞通道,同时一旦被注册,就不能回到阻塞状态)</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SelectionKey <span class="token function">register</span> <span class="token punctuation">(</span>Selector sel<span class="token punctuation">,</span> <span class="token keyword">int</span> ops<span class="token punctuation">)</span> <span class="token keyword">throws</span> ClosedChannelException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//att设置附加对象到选择键中</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SelectionKey <span class="token function">register</span> <span class="token punctuation">(</span>Selector sel<span class="token punctuation">,</span> <span class="token keyword">int</span> ops<span class="token punctuation">,</span>Object att<span class="token punctuation">)</span> <span class="token keyword">throws</span> ClosedChannelException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//检查通道是否已经被注册到选择器上</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isRegistered</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回与该通道指定的选择键</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SelectionKey <span class="token function">keyFor</span> <span class="token punctuation">(</span>Selector sel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//获取通道所支持的操作集合</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">validOps</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//在通道被注册到一个选择器上时必须先设置通道为非阻塞模式: configureBlocking(false)</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">configureBlocking</span> <span class="token punctuation">(</span><span class="token keyword">boolean</span> block<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//是否为阻塞模式</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isBlocking</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//获取阻塞模式的锁对象</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Object <span class="token function">blockingLock</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><strong>选择键(SelectionKey):</strong> 选择键封装了特定的通道与特定的选择器的注册关系.选择键对象被SelectableChannle.register()返回并提供一个表示这种注册关系的标记.选择键包含了两个比特集(以整数的形式进行编码),指示了该注册关系所关心的通道操作,以及通道已经准备好的操作<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SelectionKey</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> OP_READ     <span class="token comment" spellcheck="true">//读操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> OP_WRITE    <span class="token comment" spellcheck="true">//写操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> OP_CONNECT  <span class="token comment" spellcheck="true">//连接操作,Client端支持的一种操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> OP_ACCEPT   <span class="token comment" spellcheck="true">//连接可接受操作,仅ServerSocketChannel支持</span>
+  <span class="token comment" spellcheck="true">//返回此选择键所关联的通道</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> SelectableChannel <span class="token function">channel</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//返回此选择键所关联的选择器</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> Selector <span class="token function">selector</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//取消选择键注册,取消的键不会立即从selector中移除,而是添加到cancelledKeys中</span>
+  <span class="token comment" spellcheck="true">//在下一次select操作中移除它,所以在调用某个选择键时需要使用isValid校验</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//检查此选择键是否有效</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isValid</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//获得此选择键的感兴趣操作集</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">interestOps</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">interestOps</span> <span class="token punctuation">(</span><span class="token keyword">int</span> ops<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//获取此选择键的准备好的操作集</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">readyOps</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//检测此选择键是否可读操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isReadable</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//检测此选择键是否可写操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isWritable</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//检测此选择键关联的通道是否完成套接字连接操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isConnectable</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//检测此选择键关联的通道是否已经准备好接受新的套接字链接操作</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">isAcceptable</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//将给定附件对象注册到此选择键上</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> Object <span class="token function">attach</span> <span class="token punctuation">(</span>Object ob<span class="token punctuation">)</span>
+  <span class="token comment" spellcheck="true">//获取此选择键上注册的附件对象</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> Object <span class="token function">attachment</span><span class="token punctuation">(</span> <span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>异步关闭能力</strong></p>
@@ -1026,7 +1029,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

@@ -434,6 +434,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                 <span class="chip bg-color">字符串</span>
                             </a>
@@ -466,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-06-21
+                    2020-04-20
                 </div>
                 
 
@@ -499,150 +503,154 @@
                 <h3 id="字符串排序"><a href="#字符串排序" class="headerlink" title="字符串排序"></a>字符串排序</h3><blockquote>
 <p>利用字符串的特殊性质将字符串排序,比通用的排序算法效率更高</p>
 </blockquote>
-<h4 id="1-低位优先的字符串排序-LSD"><a href="#1-低位优先的字符串排序-LSD" class="headerlink" title="1.低位优先的字符串排序(LSD)"></a>1.低位优先的字符串排序(LSD)</h4><pre><code>/**
+<h4 id="1-低位优先的字符串排序-LSD"><a href="#1-低位优先的字符串排序-LSD" class="headerlink" title="1.低位优先的字符串排序(LSD)"></a>1.低位优先的字符串排序(LSD)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 低位优先的字符串排序(LSD)
  * 概述: 适合相同长度的字符串排序,是稳定排序
  * 思想: 键索引计数法
  * 步骤: 从低位开始每轮取一个字符,使用键索引计数法排序,直到最高位结束
- */
-public class LSD {
-    public static void sort(String[] a,int w){
-        int N = a.length;
-        int R = 256;
-        String[] aux = new String[N];
-        int[] count = new int[R+1];
-        for(int d=w-1;d&gt;=0;d--) {//使用键索引计数法进行w轮排序
-            //统计频率
-            for(int i=0;i&lt;N;++i)
-                count[a[i].charAt(d)+1]++;
-            //计算索引
-            for(int i=0;i&lt;R;++i)
-                count[i+1] += count[i];
-            //数据分类
-            for(int i=0;i&lt;N;++i)
-                aux[count[a[i].charAt(d)]++] = a[i];
-            //回写
-            for(int i=0;i&lt;N;++i)
-                a[i] = aux[i];
-            Arrays.fill(count,0);
-        }
-    }
-}</code></pre><h4 id="2-高位优先的字符串排序-MSD"><a href="#2-高位优先的字符串排序-MSD" class="headerlink" title="2.高位优先的字符串排序(MSD)"></a>2.高位优先的字符串排序(MSD)</h4><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LSD</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> w<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> N <span class="token operator">=</span> a<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> aux <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> d<span class="token operator">=</span>w<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>d<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span>d<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//使用键索引计数法进行w轮排序</span>
+            <span class="token comment" spellcheck="true">//统计频率</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+                count<span class="token punctuation">[</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//计算索引</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+                count<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+=</span> count<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//数据分类</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+                aux<span class="token punctuation">[</span>count<span class="token punctuation">[</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//回写</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+                a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            Arrays<span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-高位优先的字符串排序-MSD"><a href="#2-高位优先的字符串排序-MSD" class="headerlink" title="2.高位优先的字符串排序(MSD)"></a>2.高位优先的字符串排序(MSD)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 高位优先的字符串排序(MSD)
  * 概述: 通用的字符串排序算法
  *       缺点: 对于较长相同前缀的字符串进行排序会产生大量小数组
  * 思想: 键索引计数法
  * 步骤: 使用键索引计数法每轮去一个字符从高位开始排序
- */
-public class MSD {
-    private static int R = 256;
-    private static int M = 15;
-    private static String[] aux;
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MSD</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> M <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span>
 
-    public static void sort(String[] a){
-        int N = a.length;
-        aux = new String[N];
-        int[] count = new int[R+2];
-        sort(a,0,N,0);
-    }
-    private static void sort(String[] a,int lo,int hi,int d){
-        //if(lo &gt;= hi-1) return;
-        if (hi &lt;= lo + M) { //较短时使用插入排序进行优化
-            Insertion.sort(a, lo, hi, d);
-            return;
-        }
-        /**
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> N <span class="token operator">=</span> a<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        aux <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>N<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//if(lo >= hi-1) return;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>hi <span class="token operator">&lt;=</span> lo <span class="token operator">+</span> M<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//较短时使用插入排序进行优化</span>
+            Insertion<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> lo<span class="token punctuation">,</span> hi<span class="token punctuation">,</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">/**
          * 键索引计数法
-         */
-        //统计频率
-        int[] count = new int[R+2];
-        for(int i=lo;i&lt;hi;++i)
-            count[charAt(a[i],d)+2]++;
-        //计算索引
-        for(int i=0;i&lt;R+1;++i)
-            count[i+1] += count[i];
-        //数据分类
-        for(int i=lo;i&lt;hi;++i)
-            aux[count[charAt(a[i],d)+1]++] = a[i];
-        //回写
-        for(int i=lo;i&lt;hi;++i)
-            a[i] = aux[i-lo];
-        //递归:字符相同的,对下一位字符进行排序
-        for(int i=0;i&lt;R;i++)
-            sort(a,lo+count[i],lo+count[i+1],d+1);
-    }
-    private static int charAt(String s,int d){
-        if(d &lt; s.length()) return s.charAt(d);
-        return -1;
-    }
-}</code></pre><h5 id="2-1插入排序"><a href="#2-1插入排序" class="headerlink" title="2.1插入排序"></a>2.1插入排序</h5><pre><code>/**
+         */</span>
+        <span class="token comment" spellcheck="true">//统计频率</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            count<span class="token punctuation">[</span><span class="token function">charAt</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//计算索引</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>R<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            count<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+=</span> count<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//数据分类</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>count<span class="token punctuation">[</span><span class="token function">charAt</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//回写</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">-</span>lo<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//递归:字符相同的,对下一位字符进行排序</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>R<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>lo<span class="token operator">+</span>count<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>lo<span class="token operator">+</span>count<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">charAt</span><span class="token punctuation">(</span>String s<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-1插入排序"><a href="#2-1插入排序" class="headerlink" title="2.1插入排序"></a>2.1插入排序</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 插入排序
- */
-public class Insertion {
-    public static void sort(String[] a,int lo,int hi,int d){
-        for(int i=lo+1;i&lt;hi;++i){
-            for(int j=i;j&gt;lo &amp;&amp; less(a[j],a[j-1],d);j--)
-                exch(a,j,j-1);
-        }
-    }
-    //比较
-    private static boolean less(String a,String b,int d){
-        int alen = a.length();
-        int blen = b.length();
-        int min = Math.min(alen,blen);
-        while(d &lt; min){
-            int c1 = a.charAt(d);
-            int c2 = b.charAt(d);
-            if(c1 != c2) return c1 - c2 &lt; 0;
-            d++;
-        }
-        return alen - blen &lt; 0;
-        //return a.substring(d).compareTo(b.substring(d)) &lt; 0;
-    }
-    //交换
-    private static void exch(String[] a,int i,int j){
-        String temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-}</code></pre><h4 id="3-三向字符串快速排序"><a href="#3-三向字符串快速排序" class="headerlink" title="3.三向字符串快速排序"></a>3.三向字符串快速排序</h4><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Insertion</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">></span>lo <span class="token operator">&amp;&amp;</span> <span class="token function">less</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>a<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>j<span class="token operator">--</span><span class="token punctuation">)</span>
+                <span class="token function">exch</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>j<span class="token punctuation">,</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//比较</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">less</span><span class="token punctuation">(</span>String a<span class="token punctuation">,</span>String b<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> alen <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> blen <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> min <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>alen<span class="token punctuation">,</span>blen<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> min<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> c1 <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> c2 <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>c1 <span class="token operator">!=</span> c2<span class="token punctuation">)</span> <span class="token keyword">return</span> c1 <span class="token operator">-</span> c2 <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            d<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> alen <span class="token operator">-</span> blen <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//return a.substring(d).compareTo(b.substring(d)) &lt; 0;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//交换</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">exch</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String temp <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-三向字符串快速排序"><a href="#3-三向字符串快速排序" class="headerlink" title="3.三向字符串快速排序"></a>3.三向字符串快速排序</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 三向字符串快速排序
  * 概述: 通用字符串排序算法,适合处理含有较长相同前缀的字符串
  * 步骤: 从高位开始对单个字符进行三向切分的快速排序,若按照v切分,则一轮结束后
  *       小于v部分 &lt; 等于v部分 &lt; 大于v部分, 对于等于v部分的下一位字符进行排序
  *       其他部分正常排序
- */
-public class Quick3String {
-    public static void sort(String[] a){
-        sort(a,0,a.length-1,0);
-    }
-    private static void sort(String[] a,int lo,int hi,int d){
-        if(lo &gt;= hi) return;    //可以在较短时使用插入排序优化
-        int v = charAt(a[lo],d); //取第一个为切分点,v = -1时为没有字符
-        int lt = lo,gt = hi;
-        int i = lt + 1;
-        while(i &lt;= gt){//从切分点下一个开始逐个归位
-            int t = charAt(a[i],d);
-            if(t &lt; v) exch(a,i++,lt++); //小于v放到v左边
-            else if(t &gt; v) exch(a,i,gt--);//大于v放到右边(往末尾放)
-            else i++;
-        }
-        // v == -1 时不会有小于v的部分,等于v的部分无需再排序
-        if(v &gt;= 0 ) sort(a,lo,lt-1,d);
-        if(v &gt;= 0 ) sort(a,lt,gt,d+1);
-        sort(a,gt+1,hi,d);
-    }
-    //交换
-    private static void exch(String[] a,int i, int j){
-        String temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-    private static int charAt(String s,int d){
-        if(d &lt; s.length()) return s.charAt(d);
-        return -1;
-    }
-}</code></pre><script>
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Quick3String</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>a<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>lo <span class="token operator">>=</span> hi<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//可以在较短时使用插入排序优化</span>
+        <span class="token keyword">int</span> v <span class="token operator">=</span> <span class="token function">charAt</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>lo<span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//取第一个为切分点,v = -1时为没有字符</span>
+        <span class="token keyword">int</span> lt <span class="token operator">=</span> lo<span class="token punctuation">,</span>gt <span class="token operator">=</span> hi<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lt <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>i <span class="token operator">&lt;=</span> gt<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//从切分点下一个开始逐个归位</span>
+            <span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token function">charAt</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">&lt;</span> v<span class="token punctuation">)</span> <span class="token function">exch</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>i<span class="token operator">++</span><span class="token punctuation">,</span>lt<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//小于v放到v左边</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">></span> v<span class="token punctuation">)</span> <span class="token function">exch</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>i<span class="token punctuation">,</span>gt<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//大于v放到右边(往末尾放)</span>
+            <span class="token keyword">else</span> i<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// v == -1 时不会有小于v的部分,等于v的部分无需再排序</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>v <span class="token operator">>=</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>lt<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>v <span class="token operator">>=</span> <span class="token number">0</span> <span class="token punctuation">)</span> <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>lt<span class="token punctuation">,</span>gt<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>gt<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//交换</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">exch</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String temp <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">charAt</span><span class="token punctuation">(</span>String s<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -722,6 +730,10 @@ public class Quick3String {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                     <span class="chip bg-color">字符串</span>
@@ -836,6 +848,10 @@ public class Quick3String {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
                     </a>
@@ -865,13 +881,14 @@ public class Quick3String {
                         
                             最短路径
 加权有向图的最短路径
+地址: 整合为JUI程序(Java 8+)
 
 1. 加权有向边API/**
  * 加权有向边API
- * v -&gt; w
+ * v -> w
  */
 public class DirectedEdge {
-    private double weight;  //边
+    private 
                         
                     </div>
                     <div class="publish-info">
@@ -892,6 +909,10 @@ public class DirectedEdge {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%9B%BE/">
                         <span class="chip bg-color">图</span>
@@ -1093,7 +1114,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

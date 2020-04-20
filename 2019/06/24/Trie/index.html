@@ -434,6 +434,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                 <span class="chip bg-color">字符串</span>
                             </a>
@@ -466,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-07-29
+                    2020-04-20
                 </div>
                 
 
@@ -499,359 +503,361 @@
                 <h3 id="单词查找树"><a href="#单词查找树" class="headerlink" title="单词查找树"></a>单词查找树</h3><blockquote>
 <p>利用字符串的性质构建比通用的查找算法更有效的查找算法</p>
 </blockquote>
-<h4 id="1-R向单词查找树"><a href="#1-R向单词查找树" class="headerlink" title="1.R向单词查找树"></a>1.R向单词查找树</h4><pre><code>/**
+<h4 id="1-R向单词查找树"><a href="#1-R向单词查找树" class="headerlink" title="1.R向单词查找树"></a>1.R向单词查找树</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * R向单词查找树
  * 概述: 1.每个节点都含有R个连接,对应着每个可能出现的字符
  *       2.字符和键隐式的保存在数据结构中
  * 缺点: 1.空节点也分配内存,空间开销比较大
  *       2.不适合处理大型字母表,尤其是含有大量长键
- */
-public class TrieST&lt;V&gt;{
-    private static final int R = 256; //256字符的字母表
-    private Node root;
-    //节点
-    private static class Node{
-        private Object value;    //键值不为null时表示存在键
-        private Node[] next = new Node[R];  //节点数组表示R向
-    }
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TrieST</span><span class="token operator">&lt;</span>V<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//256字符的字母表</span>
+    <span class="token keyword">private</span> Node root<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//节点</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+        <span class="token keyword">private</span> Object value<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//键值不为null时表示存在键</span>
+        <span class="token keyword">private</span> Node<span class="token punctuation">[</span><span class="token punctuation">]</span> next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//节点数组表示R向</span>
+    <span class="token punctuation">}</span>
 
-    //获取
-    public V get(String key){
-        if(key == null) return null;
-        Node x = get(root,key,0);
-        if(x != null) return (V) x.value;
-        return null;
-    }
+    <span class="token comment" spellcheck="true">//获取</span>
+    <span class="token keyword">public</span> V <span class="token function">get</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>V<span class="token punctuation">)</span> x<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-     /**获取: 从root根节点开始查找,多维护一个变量d标记当前查找的字符*/
-    private Node get(Node x,String key,int d){
-        if(x == null) return null;
-        if(d == key.length()) return x;
-        return get(x.next[key.charAt(d)],key,d+1);
-    }
-    //插入
-    public void put(String key,V value){
-        if(key == null) return;
-        if(value == null) delete(key);
-        root = put(root,key,value,0);
-    }
-    /**插入: 先查找,在赋值即可,查询过程中没有就创建,找到结尾就保存键值 */
-    private Node put(Node x,String key,V value,int d){
-        if(x == null) x = new Node();
-        if(d == key.length()){  //查询到末尾,赋值
-            x.value = value;
-            return x;
-        }
-        char c = key.charAt(d);
-        x.next[c] = put(x.next[c],key,value,d+1);
-        return x;
-    }
-    //删除
-    public void delete(String key){
-        if(key == null) return;
-        root = delete(root,key,0);
-    }
-    /**删除: 先查找到节点,值设置为null,然后判断当前节点的R条子链接全为null
+     <span class="token comment" spellcheck="true">/**获取: 从root根节点开始查找,多维护一个变量d标记当前查找的字符*/</span>
+    <span class="token keyword">private</span> Node <span class="token function">get</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//插入</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span>String key<span class="token punctuation">,</span>V value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>value <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token function">delete</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        root <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**插入: 先查找,在赋值即可,查询过程中没有就创建,找到结尾就保存键值 */</span>
+    <span class="token keyword">private</span> Node <span class="token function">put</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span>V value<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//查询到末尾,赋值</span>
+            x<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//删除</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        root <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**删除: 先查找到节点,值设置为null,然后判断当前节点的R条子链接全为null
      *       则删除当前节点,否则返回当前节点
-     */
-    private Node delete(Node x,String key,int d){
-        if(x == null) return null;
-        if(d == key.length()){//找到
-            x.value = null;
-            for(char c=0;c&lt;R;++c) //当前节点的R条子连接节点不为null,返回当前节点
-                if(x.next[c] != null) return x;
-            return null;    //否则都为null,删除当前节点
-        }
-        char c = key.charAt(d);
-        x.next[c] = delete(x.next[c],key,d+1);
-        return x;
-    }
-    //键总数量
-    public int size(){ return size(root); }
-    /**键总量: 遍历所有节点,值不为null时为一个键,标记为1,递归相加 */
-    private int size(Node x){
-        if(x == null) return 0;
-        int count = 0;
-        if(x.value != null) ++count;//存在值,有一个键位,标记为1
-        for(char c=0;c&lt;R;++c)
-            count += size(x.next[c]);//递归相加
-        return count;
-    }
-    //包含
-    public boolean contains(String key){ return get(key) != null; }
-    //是否为空
-    public boolean isEmpty(){ return size() == 0; }
-    //所有键
-    public Iterable&lt;String&gt; keys(){ return keysWithPrefixOf(""); }
-    //指定前缀的所有键
-    public Iterable&lt;String&gt; keysWithPrefix(String prefix){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(get(root,prefix,0),prefix,queue);
-        return queue;
-    }
-    /**指定前缀的所有键: 
+     */</span>
+    <span class="token keyword">private</span> Node <span class="token function">delete</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//找到</span>
+            x<span class="token punctuation">.</span>value <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//当前节点的R条子连接节点不为null,返回当前节点</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> null<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//否则都为null,删除当前节点</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//键总数量</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">size</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**键总量: 遍历所有节点,值不为null时为一个键,标记为1,递归相加 */</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">++</span>count<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存在值,有一个键位,标记为1</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span>
+            count <span class="token operator">+=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//递归相加</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//包含</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">contains</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//是否为空</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//所有键</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">keysWithPrefixOf</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//指定前缀的所有键</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysWithPrefix</span><span class="token punctuation">(</span>String prefix<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span><span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>prefix<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**指定前缀的所有键: 
      *   与统计键总量思路相同,额外维护一个变量保存当前递归过的节点字符集合
      *   当键的值存在时将该变量入队保存
-     */
-    private void collect(Node x,String prefix,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        if(x.value != null) queue.offer(prefix);    //存在值,入队
-        for(char c=0;c&lt;R;++c)
-            collect(x.next[c],prefix+c,queue); //递归进入下一层,更新当前递归过的字符集合
-        //prefix+c会产生很多字符串,可使用StringBuilder优化
-    }
-    //指定前缀的所有键(使用StringBuilder优化)
-    public Iterable&lt;String&gt; keysWithPrefixOf(String prefix){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(get(root,prefix,0),new StringBuilder(prefix),queue);
-        return queue;
-    }
-    private void collect(Node x,StringBuilder prefix,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        if(x.value != null) queue.offer(prefix.toString());
-        for(char c=0;c&lt;R;++c) {
-            prefix.append(c);   //递归进入增加当前节点字符
-            collect(x.next[c], prefix, queue);
-            prefix.deleteCharAt(prefix.length()-1); //递归结束删除增加的字符
-        }
-    }
-    //通配符匹配(仅"."通配符,如.a.表示包含3个字符中间为a的字符串)
-    public Iterable&lt;String&gt; keysThatMatch(String pattern){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(root,"",pattern,queue);
-        return queue;
-    }
-    /**通配符匹配: 按照遍历指定前缀所有键的思路,遇到.时不变,遇到特定字符时,只遍历特定子节点即可*/
-    private void collect(Node x,String prefix,String pattern,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        int d = prefix.length();
-        if(d == pattern.length() &amp;&amp; x.value != null)//存在键,且匹配到pattern时保存
-            queue.offer(prefix);
-        if(d == pattern.length()) return;
-        int ch = pattern.charAt(d);
-        for(char c=0;c&lt;R;++c){
-            if(ch =='.' || ch == c){//'.'字符时遍历所有,特定字符ch时遍历特定子节点
-                collect(x.next[c],prefix+c,pattern,queue);
-                //1.prefix+c会创建大量字符串,可使用StringBuilder优化
-                //ch==c 时依然会进行循环判断,可优化, 不放到循环中
-            }
-        }
-    }
-    //通配符匹配(仅"."通配符)(使用StringBuilder优化)
-    public Iterable&lt;String&gt; keysThatMatchOf(String pattern){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(root,new StringBuilder(),pattern,queue);
-        return queue;
-    }
-    private void collect(Node x,StringBuilder prefix,String pattern,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        int d = prefix.length();
-        if(d == pattern.length() &amp;&amp; x.value != null)
-            queue.offer(prefix.toString());
-        if(d == pattern.length()) return;
-        char ch = pattern.charAt(d);
-        if(ch =='.'){
-            for(char c=0;c&lt;R;++c) {
-                prefix.append(c);
-                collect(x.next[c], prefix, pattern, queue);
-                prefix.deleteCharAt(prefix.length() - 1);
-            }
-        }
-        else{   //去掉不必要的循环
-            prefix.append(ch);
-            collect(x.next[ch], prefix, pattern, queue);
-            prefix.deleteCharAt(prefix.length() - 1);
-        }
-    }
-    //前缀最长的键(与s从第一位开始匹配往后匹配最多字符的键)
-    public String longestPrefixOf(String s){
-        return s.substring(0,longestPrefixOf(root,s,0,0));
-    }
-    /**前缀最长的键: 按照给定的键遍历指定的子节点,同时额外维护当前匹配到的最长键,查询到最后一个字符返回维护的值*/
-    private int longestPrefixOf(Node x,String s,int d,int length){
-        if(x == null) return length;
-        if(x.value != null) length = d; //存在键更新当前匹配的最长键
-        if(d == s.length()) return length;  //查询到s末尾时返回维护的最长键长度
-        return longestPrefixOf(x.next[s.charAt(d)],s,d+1,length);
-    }
-}</code></pre><h4 id="2-三向单词查找树"><a href="#2-三向单词查找树" class="headerlink" title="2.三向单词查找树"></a>2.三向单词查找树</h4><pre><code>/**
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String prefix<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//存在值,入队</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span>
+            <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>prefix<span class="token operator">+</span>c<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//递归进入下一层,更新当前递归过的字符集合</span>
+        <span class="token comment" spellcheck="true">//prefix+c会产生很多字符串,可使用StringBuilder优化</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//指定前缀的所有键(使用StringBuilder优化)</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysWithPrefixOf</span><span class="token punctuation">(</span>String prefix<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span><span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>StringBuilder prefix<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            prefix<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//递归进入增加当前节点字符</span>
+            <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span> prefix<span class="token punctuation">,</span> queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            prefix<span class="token punctuation">.</span><span class="token function">deleteCharAt</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//递归结束删除增加的字符</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//通配符匹配(仅"."通配符,如.a.表示包含3个字符中间为a的字符串)</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysThatMatch</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**通配符匹配: 按照遍历指定前缀所有键的思路,遇到.时不变,遇到特定字符时,只遍历特定子节点即可*/</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String prefix<span class="token punctuation">,</span>String pattern<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> d <span class="token operator">=</span> prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//存在键,且匹配到pattern时保存</span>
+            queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> ch <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>ch <span class="token operator">==</span><span class="token string">'.'</span> <span class="token operator">||</span> ch <span class="token operator">==</span> c<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//'.'字符时遍历所有,特定字符ch时遍历特定子节点</span>
+                <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span>prefix<span class="token operator">+</span>c<span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment" spellcheck="true">//1.prefix+c会创建大量字符串,可使用StringBuilder优化</span>
+                <span class="token comment" spellcheck="true">//ch==c 时依然会进行循环判断,可优化, 不放到循环中</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//通配符匹配(仅"."通配符)(使用StringBuilder优化)</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysThatMatchOf</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>StringBuilder prefix<span class="token punctuation">,</span>String pattern<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> d <span class="token operator">=</span> prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span>
+            queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span> ch <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ch <span class="token operator">==</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                prefix<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">,</span> prefix<span class="token punctuation">,</span> pattern<span class="token punctuation">,</span> queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                prefix<span class="token punctuation">.</span><span class="token function">deleteCharAt</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//去掉不必要的循环</span>
+            prefix<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>ch<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>ch<span class="token punctuation">]</span><span class="token punctuation">,</span> prefix<span class="token punctuation">,</span> pattern<span class="token punctuation">,</span> queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            prefix<span class="token punctuation">.</span><span class="token function">deleteCharAt</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//前缀最长的键(与s从第一位开始匹配往后匹配最多字符的键)</span>
+    <span class="token keyword">public</span> String <span class="token function">longestPrefixOf</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token function">longestPrefixOf</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>s<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**前缀最长的键: 按照给定的键遍历指定的子节点,同时额外维护当前匹配到的最长键,查询到最后一个字符返回维护的值*/</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">longestPrefixOf</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String s<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">,</span><span class="token keyword">int</span> length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> length<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> length <span class="token operator">=</span> d<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//存在键更新当前匹配的最长键</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> length<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//查询到s末尾时返回维护的最长键长度</span>
+        <span class="token keyword">return</span> <span class="token function">longestPrefixOf</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>next<span class="token punctuation">[</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>s<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-三向单词查找树"><a href="#2-三向单词查找树" class="headerlink" title="2.三向单词查找树"></a>2.三向单词查找树</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 三向单词查找树
  * 概述: 每个节点含有一个字符,三条链接和一个值,三条链接分辨对应着小于,等于,大于当前字符的键
  * 优点: 1.避免了R向单词查找树过度的空间消耗
  *       2.可以用于大型字母表
- */
-public class TST&lt;V&gt; {
-    private int n;  //维护键的数量
-    private Node&lt;V&gt; root;//根节点
-    private class Node&lt;V&gt;{  //节点
-        private char c; //字符
-        private Node&lt;V&gt; left; //左连接 &lt;c
-        private Node&lt;V&gt; mid;  //中连接 =c
-        private Node&lt;V&gt; right;//右连接 &gt;c
-        private V value;    //保存键值
-    }
-    //获取
-    public V get(String key){
-        Node x = get(root,key,0);
-        if(x != null) return (V) x.value;
-        return null;
-    }
-    /**获取: 额外维护一个变量保存当前需要查询第几个字符,找到时返回节点 */
-    private Node get(Node x,String key,int d){
-        if(key == null || key.length() == 0) return null;
-        if(x == null) return null;
-        char c = key.charAt(d);//当前需要查询键的的字符
-        if(x.c &gt; c) return get(x.left,key,d);
-        else if(x.c &lt; c) return get(x.right,key,d);
-        else if(d &lt; key.length()-1) return get(x.mid,key,d+1);
-        else return x;  //找到返回节点
-    }
-    //插入
-    public void put(String key, V value){
-        if(key == null || key.length() == 0) return;
-        if(!contains(key)) ++n;
-        root = put(root,key,value,0);
-    }
-    /**插入: 与获取思路相同,只是遇到空节点创建新节点,到末尾时保存键值*/
-    private Node put(Node x,String key,V value,int d){
-        char c = key.charAt(d);
-        if(x == null) { //没有节点就创建
-            x = new Node();
-            x.c = c;
-        }
-        if(x.c &gt; c) x.left = put(x.left,key,value,d);
-        else if(x.c &lt; c) x.right = put(x.right,key,value,d);
-        else if(d &lt; key.length()-1) x.mid = put(x.mid,key,value,d+1);
-        else x.value = value;   //末尾时保存键值
-        return x;
-    }
-    //包含
-    public boolean contains(String key){ return get(key) != null; }
-    //键数量
-    public int size(){ return n; }
-    //返回所有键
-    public Iterable&lt;String&gt; keys(){
-        Queue&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(root, new StringBuilder(), queue);
-        return queue;
-    }
-    //指定前缀的所有键
-    public Iterable&lt;String&gt; keysWithPrefix(String prefix){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        if(prefix == null) return queue;
-        Node x = get(root,prefix,0);
-        if(x == null) return queue;
-        if(x.value != null) queue.offer(prefix);
-        collect(x.mid,new StringBuilder(prefix),queue);
-        return queue;
-    }
-    /**遍历所有节点,同时使用一个额外的变量维护当前递归过的字符,中连接时才增加字符,当值存在时,将键入队*/
-    private void collect(Node x,StringBuilder prefix,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        collect(x.left,prefix,queue);//递归遍历左子树
-        if(x.value != null) queue.offer(prefix.toString()+x.c);//中子树开始,增加字符
-        collect(x.mid,prefix.append(x.c),queue);//递归遍历右子树
-        prefix.deleteCharAt(prefix.length()-1); //递归结束删除字符
-        collect(x.right,prefix,queue); //递归遍历右子树
-    }
-    //通配符匹配(仅"."通配符,如.a.表示包含3个字符中间为a的字符串)
-    public Iterable&lt;String&gt; keysThatMatch(String pattern){
-        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
-        collect(root,new StringBuilder(),pattern,queue);
-        return queue;
-    }
-    /**与上面思路相同,只需要做不同筛选即可*/
-    private void collect(Node x,StringBuilder prefix,String pattern,Queue&lt;String&gt; queue){
-        if(x == null) return;
-        int d = prefix.length();
-        char c = pattern.charAt(d);
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TST</span><span class="token operator">&lt;</span>V<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> n<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//维护键的数量</span>
+    <span class="token keyword">private</span> Node<span class="token operator">&lt;</span>V<span class="token operator">></span> root<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//根节点</span>
+    <span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>V<span class="token operator">></span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//节点</span>
+        <span class="token keyword">private</span> <span class="token keyword">char</span> c<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//字符</span>
+        <span class="token keyword">private</span> Node<span class="token operator">&lt;</span>V<span class="token operator">></span> left<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//左连接 &lt;c</span>
+        <span class="token keyword">private</span> Node<span class="token operator">&lt;</span>V<span class="token operator">></span> mid<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//中连接 =c</span>
+        <span class="token keyword">private</span> Node<span class="token operator">&lt;</span>V<span class="token operator">></span> right<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//右连接 >c</span>
+        <span class="token keyword">private</span> V value<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//保存键值</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//获取</span>
+    <span class="token keyword">public</span> V <span class="token function">get</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node x <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span>V<span class="token punctuation">)</span> x<span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**获取: 额外维护一个变量保存当前需要查询第几个字符,找到时返回节点 */</span>
+    <span class="token keyword">private</span> Node <span class="token function">get</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null <span class="token operator">||</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//当前需要查询键的的字符</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">></span> c<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">&lt;</span> c<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//找到返回节点</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//插入</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span>String key<span class="token punctuation">,</span> V value<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null <span class="token operator">||</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">contains</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">++</span>n<span class="token punctuation">;</span>
+        root <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**插入: 与获取思路相同,只是遇到空节点创建新节点,到末尾时保存键值*/</span>
+    <span class="token keyword">private</span> Node <span class="token function">put</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span>V value<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//没有节点就创建</span>
+            x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">.</span>c <span class="token operator">=</span> c<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">></span> c<span class="token punctuation">)</span> x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">&lt;</span> c<span class="token punctuation">)</span> x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> x<span class="token punctuation">.</span>mid <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span>key<span class="token punctuation">,</span>value<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> x<span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//末尾时保存键值</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//包含</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">contains</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//键数量</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> n<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//返回所有键</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//指定前缀的所有键</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysWithPrefix</span><span class="token punctuation">(</span>String prefix<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>prefix <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span>prefix<span class="token punctuation">)</span><span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**遍历所有节点,同时使用一个额外的变量维护当前递归过的字符,中连接时才增加字符,当值存在时,将键入队*/</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>StringBuilder prefix<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//递归遍历左子树</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>x<span class="token punctuation">.</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//中子树开始,增加字符</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span>prefix<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c<span class="token punctuation">)</span><span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//递归遍历右子树</span>
+        prefix<span class="token punctuation">.</span><span class="token function">deleteCharAt</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//递归结束删除字符</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//递归遍历右子树</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//通配符匹配(仅"."通配符,如.a.表示包含3个字符中间为a的字符串)</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">keysThatMatch</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>String<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">collect</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**与上面思路相同,只需要做不同筛选即可*/</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">collect</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>StringBuilder prefix<span class="token punctuation">,</span>String pattern<span class="token punctuation">,</span>Queue<span class="token operator">&lt;</span>String<span class="token operator">></span> queue<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> d <span class="token operator">=</span> prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        if(c == '.' || c &lt; x.c) collect(x.left,prefix,pattern,queue);   //增加额外判断,减少不必要的递归
-        if(c == '.' || c &gt; x.c) collect(x.right,prefix,pattern,queue);  //增加额外判断,减少不必要的递归
-        if(c == '.' || c == x.c){   //当'.'时匹配所有,遍历所有中子树,当为c时遍历指定的中子树
-            if(d == pattern.length()-1){ //找到匹配的键
-                if(x.value != null) queue.offer(prefix.toString() + x.c); //如果值存在就入队
-                return;
-            }
-            collect(x.mid,prefix.append(x.c),pattern,queue);
-            prefix.deleteCharAt(prefix.length()-1); //递归结束,删除增加的字符
-        }
-    }
-    //前缀最长的键(与s从第一位开始匹配往后匹配最多字符的键)
-    public String longestPrefixOf(String s){
-        if(s == null || s.length() ==0) return null;
-        int d = 0; //保存当前需要查询的字符位置
-        int len = 0; //保存当前查询到的最长键长度
-        Node x = root;
-        while(x != null &amp;&amp; d &lt; s.length()){
-            char c = s.charAt(d);
-            if(x.c &gt; c) x = x.left;
-            else if(x.c &lt; c) x = x.right;
-            else{   //匹配到一个字符
-                d++;//更新需要查询的字符位置为下一个字符
-                if(x.value != null) len = d;    //存在值,更新最长键
-                x = x.mid;
-            }
-        }
-        return s.substring(0,len);
-    }
+        <span class="token keyword">if</span><span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'.'</span> <span class="token operator">||</span> c <span class="token operator">&lt;</span> x<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//增加额外判断,减少不必要的递归</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'.'</span> <span class="token operator">||</span> c <span class="token operator">></span> x<span class="token punctuation">.</span>c<span class="token punctuation">)</span> <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>prefix<span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//增加额外判断,减少不必要的递归</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token string">'.'</span> <span class="token operator">||</span> c <span class="token operator">==</span> x<span class="token punctuation">.</span>c<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//当'.'时匹配所有,遍历所有中子树,当为c时遍历指定的中子树</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//找到匹配的键</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> x<span class="token punctuation">.</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//如果值存在就入队</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">collect</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span>prefix<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c<span class="token punctuation">)</span><span class="token punctuation">,</span>pattern<span class="token punctuation">,</span>queue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            prefix<span class="token punctuation">.</span><span class="token function">deleteCharAt</span><span class="token punctuation">(</span>prefix<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//递归结束,删除增加的字符</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//前缀最长的键(与s从第一位开始匹配往后匹配最多字符的键)</span>
+    <span class="token keyword">public</span> String <span class="token function">longestPrefixOf</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>s <span class="token operator">==</span> null <span class="token operator">||</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> d <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//保存当前需要查询的字符位置</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//保存当前查询到的最长键长度</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> d <span class="token operator">&lt;</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">char</span> c <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">></span> c<span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">&lt;</span> c<span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//匹配到一个字符</span>
+                d<span class="token operator">++</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//更新需要查询的字符位置为下一个字符</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> len <span class="token operator">=</span> d<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//存在值,更新最长键</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>mid<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> s<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //删除
-    public void delete(String key){
-        if(key == null || key.length() == 0) return;
-        root = delete(root,key,0);
-    }
+    <span class="token comment" spellcheck="true">//删除</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>String key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>key <span class="token operator">==</span> null <span class="token operator">||</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        root <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 删除键
      * 1.查询到删除的键的最后一个字符节点,将值设置为null
      * 2.如果中子树存在,此时不能删除该节点
      * 3.如果中子树不存在,则可以删除该节点,使用当前节点右子树的最左边的节点或者为中子树替换掉当前节点
      * 4.递归返回时,如果当前节点的中子树为null且当前节点值为null,该节点也可以删除,同上述方法删除,知道根节点结束
-     */
-    private Node delete(Node x,String key,int d){
-        if(x == null) return null; //没找到
-        char c = key.charAt(d);
-        if(x.c &gt; c)  x.left = delete(x.left,key,d);
-        else if(x.c &lt; c)  x.right = delete(x.right,key,d);
-        else if(d &lt; key.length()-1)  x.mid = delete(x.mid,key,d+1);
-        else{//找到
-            if(x.value != null) --n; //找到删除
-            x.value = null;
-            if(x.mid != null) return x;//中子树存在,不能删除当前节点,直接返回
-            /**中子树不存在,当前节点可以删除*/
-            if(x.left == null) return x.right;
-            if(x.right == null) return x.left;
-            //左右子节点不为null,中节点为null时,使用右子树最左边节点或为中子树替换x
-            Node t = x;
-            x = min(t.right); //最左边节点,可能含x.mid子树
-            x.right = delMin(t.right);
-            x.left = t.left;
-        }
-        /**递归返回时删除没有中子树,并且当前节点值为null的节点*/
-        if(x.mid == null &amp;&amp; x.value == null){
-            if(x.left == null) return x.right;
-            if(x.right == null) return x.left;
-            //左右子节点不为null,中节点为null时,使用右子树最左边节点或为中子树替换x
-            Node t = x;
-            x = min(t.right); //最左边节点,可能含x.mid子树
-            x.right = delMin(t.right);
-            x.left = t.left;
-        }
-        return x;
-    }
-    //获取最左边节点或中子树
-    private Node min(Node x){
-        if(x.left == null) return x;
-        return min(x.left);
-    }
-    //删除最左边节点或中子树
-    private Node delMin(Node x){
-        if(x.left == null) return x.right;
-        x.left = delMin(x.left);
-        return x;
-    }
-}</code></pre><script>
+     */</span>
+    <span class="token keyword">private</span> Node <span class="token function">delete</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>String key<span class="token punctuation">,</span><span class="token keyword">int</span> d<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//没找到</span>
+        <span class="token keyword">char</span> c <span class="token operator">=</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">></span> c<span class="token punctuation">)</span>  x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>c <span class="token operator">&lt;</span> c<span class="token punctuation">)</span>  x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>d <span class="token operator">&lt;</span> key<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>  x<span class="token punctuation">.</span>mid <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid<span class="token punctuation">,</span>key<span class="token punctuation">,</span>d<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//找到</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>value <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token operator">--</span>n<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//找到删除</span>
+            x<span class="token punctuation">.</span>value <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//中子树存在,不能删除当前节点,直接返回</span>
+            <span class="token comment" spellcheck="true">/**中子树不存在,当前节点可以删除*/</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//左右子节点不为null,中节点为null时,使用右子树最左边节点或为中子树替换x</span>
+            Node t <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            x <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//最左边节点,可能含x.mid子树</span>
+            x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">delMin</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">.</span>left <span class="token operator">=</span> t<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">/**递归返回时删除没有中子树,并且当前节点值为null的节点*/</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>mid <span class="token operator">==</span> null <span class="token operator">&amp;&amp;</span> x<span class="token punctuation">.</span>value <span class="token operator">==</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//左右子节点不为null,中节点为null时,使用右子树最左边节点或为中子树替换x</span>
+            Node t <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            x <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//最左边节点,可能含x.mid子树</span>
+            x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">delMin</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">.</span>left <span class="token operator">=</span> t<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//获取最左边节点或中子树</span>
+    <span class="token keyword">private</span> Node <span class="token function">min</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">min</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//删除最左边节点或中子树</span>
+    <span class="token keyword">private</span> Node <span class="token function">delMin</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">delMin</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -931,6 +937,10 @@ public class TST&lt;V&gt; {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                     <span class="chip bg-color">字符串</span>
@@ -1043,6 +1053,10 @@ public class TST&lt;V&gt; {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
                     </a>
@@ -1098,6 +1112,10 @@ public class TST&lt;V&gt; {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
@@ -1299,7 +1317,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

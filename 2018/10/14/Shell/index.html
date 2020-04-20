@@ -432,6 +432,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                 <span class="chip bg-color">排序</span>
                             </a>
@@ -464,14 +468,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-14
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    379
+                    376
                 </div>
                 
 
@@ -497,33 +501,34 @@
                 <h3 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h3><blockquote>
 <p>希尔排序又称”缩小增量排序”,是插入排序的优化,插入排序在少量数据或部分有序的情况下,非常高效,因此希尔排序通过适当构造满足前述的条件,让整个排序过程处理的比插入排序更优</p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 希尔排序
      * 步骤: 将数组分隔为h个间隔序列,例如:数组1~6分隔为[1,3][2,4][3,6],每个间隔序列相当于一个子数组,
      *       使用插入排序对子数组排序,然后减小h的值重新分割排序,当h为1时,数组和子数组相同,排序完成
      * 概述: 希尔排序权衡了子数组的规模和有序性,排序之初,各个子数组都很短;排序之后,子数组长但是部分有序
      *       这两种情况都很适合插入排序
-     */
-    public void shell(int[] arr){
-        int len = arr.length;
-        int h = 1;
-        //设置间隔序列
-        while(len/3&gt;h)
-            h = 3*h+1;
-        //使用插入排序对每个间隔序列进行排序
-        while(h &gt; 0){
-            for(int i=h;i&lt;len;++i){
-                for(int j=i;j&gt;=h &amp;&amp; arr[j] &lt; arr[j-h];j-=h){
-                    //交换
-                    arr[j] = arr[j]^arr[j-h];
-                    arr[j-h] = arr[j]^arr[j-h];
-                    arr[j] = arr[j]^arr[j-h];
-                }
-            }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">shell</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> h <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//设置间隔序列</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>len<span class="token operator">/</span><span class="token number">3</span><span class="token operator">></span>h<span class="token punctuation">)</span>
+            h <span class="token operator">=</span> <span class="token number">3</span><span class="token operator">*</span>h<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//使用插入排序对每个间隔序列进行排序</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>h <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>h<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">>=</span>h <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&lt;</span> arr<span class="token punctuation">[</span>j<span class="token operator">-</span>h<span class="token punctuation">]</span><span class="token punctuation">;</span>j<span class="token operator">-=</span>h<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token comment" spellcheck="true">//交换</span>
+                    arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span>h<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arr<span class="token punctuation">[</span>j<span class="token operator">-</span>h<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span>h<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span>h<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
 
-            h /= 3;
-        }
-    }</code></pre><script>
+            h <span class="token operator">/=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -603,6 +608,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                     <span class="chip bg-color">排序</span>
@@ -716,6 +725,10 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
                     </a>
@@ -774,6 +787,10 @@
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
@@ -975,7 +992,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

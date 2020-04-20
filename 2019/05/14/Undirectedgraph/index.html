@@ -433,6 +433,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E5%9B%BE/">
                                 <span class="chip bg-color">图</span>
                             </a>
@@ -465,7 +469,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-05-16
+                    2020-04-20
                 </div>
                 
 
@@ -498,273 +502,281 @@
                 <h3 id="无向图"><a href="#无向图" class="headerlink" title="无向图"></a>无向图</h3><blockquote>
 <p><strong>概述:</strong> 在此使用邻接表的数据结构表示无向图</p>
 </blockquote>
-<h4 id="1-无向图数据结构"><a href="#1-无向图数据结构" class="headerlink" title="1.无向图数据结构"></a>1.无向图数据结构</h4><pre><code>public class Graph {
-    private int v; //顶点数目
-    private int e; //边数
-    private LinkedList&lt;Integer&gt;[] adj; //邻接表
-    //创建v个顶点,没有边的图
-    public Graph(int v){
-        this.v = v;
-        this.e = 0;
-        //初始化邻接表
-        adj = (LinkedList&lt;Integer&gt;[]) new LinkedList[v];
-        for(int i = 0 ; i &lt; v;i++)
-            adj[i] = new LinkedList&lt;Integer&gt;();
-    }
-    //从标准输入流读取一幅图,给定顶点数,与边数,然后读入所有边
-    public Graph(InputStream in){
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        String value = null;
-        try {
-            int v = Integer.parseInt(reader.readLine());
-            this.v = v;
-            adj = (LinkedList&lt;Integer&gt;[]) new LinkedList[v];
-            for(int i = 0 ; i &lt; v;i++)
-                adj[i] = new LinkedList&lt;Integer&gt;();
-            int e = Integer.parseInt(reader.readLine());
-            for(int i=0; i&lt;e; i++){
-                String[] str = reader.readLine().split(" ");
-                addEdge(Integer.parseInt(str[0]),Integer.parseInt(str[1]));
-            }
+<h4 id="1-无向图数据结构"><a href="#1-无向图数据结构" class="headerlink" title="1.无向图数据结构"></a>1.无向图数据结构</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Graph</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> v<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//顶点数目</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> e<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//边数</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> adj<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//邻接表</span>
+    <span class="token comment" spellcheck="true">//创建v个顶点,没有边的图</span>
+    <span class="token keyword">public</span> <span class="token function">Graph</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>e <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//初始化邻接表</span>
+        adj <span class="token operator">=</span> <span class="token punctuation">(</span>LinkedList<span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;</span> v<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+            adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//从标准输入流读取一幅图,给定顶点数,与边数,然后读入所有边</span>
+    <span class="token keyword">public</span> <span class="token function">Graph</span><span class="token punctuation">(</span>InputStream in<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        BufferedReader reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InputStreamReader</span><span class="token punctuation">(</span>in<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String value <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
+            adj <span class="token operator">=</span> <span class="token punctuation">(</span>LinkedList<span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;</span> v<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+                adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> e <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>e<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                String<span class="token punctuation">[</span><span class="token punctuation">]</span> str <span class="token operator">=</span> reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">addEdge</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>str<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>str<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-    }
-    //顶点数
-    public int V(){ return v; }
-    //边数
-    public int E(){ return e;}
-    //向图中添加一条边v-w
-    public void addEdge(int v, int w){
-        adj[v].add(w);
-        adj[w].add(v);
-        e++;
-    }
-    //和v相邻的所有顶点
-    public Iterable&lt;Integer&gt; adj(int v){ return adj[v]; }
-    //对象字符串表示(邻接表字符串表示)
-    public String toString(){
-        String s = V() + "vertices, " + E() + " edges\n";
-        for(int v = 0;v &lt; V();v++){
-            s += v + ": ";
-            for(int w : adj(v))
-                s += w + " ";
-            s += "\n";
-        }
-        return s;
-    }
-}</code></pre><h4 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2.深度优先搜索"></a>2.深度优先搜索</h4><blockquote>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e1<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//顶点数</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> v<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//边数</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">E</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> e<span class="token punctuation">;</span><span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//向图中添加一条边v-w</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addEdge</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">,</span> <span class="token keyword">int</span> w<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        adj<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        e<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//和v相邻的所有顶点</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">adj</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//对象字符串表示(邻接表字符串表示)</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String s <span class="token operator">=</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"vertices, "</span> <span class="token operator">+</span> <span class="token function">E</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" edges\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> v <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>v <span class="token operator">&lt;</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>v<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            s <span class="token operator">+=</span> v <span class="token operator">+</span> <span class="token string">": "</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> <span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                s <span class="token operator">+=</span> w <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+            s <span class="token operator">+=</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-深度优先搜索"><a href="#2-深度优先搜索" class="headerlink" title="2.深度优先搜索"></a>2.深度优先搜索</h4><blockquote>
 <p>概述:给定一个图和起点s,遍历所有与起点s连通的顶点</p>
 <p>思路: </p>
 <p>1.将起点s标记为已访问</p>
 <p>2.递归的遍历它的所有没有被标记过的邻居顶点</p>
 </blockquote>
-<pre><code>public class DepthFirstSearch {
-    private boolean[] marked;   //用来标记顶点是否被访问过
-    private int count;          //统计
-    public DepthFirstSearch(Graph g,int s){
-        marked = new boolean[g.V()];
-        dfs(g,s);   //从起点s开始遍历
-    }
-    private void dfs(Graph g,int v){
-        marked[v] = true;           //被访问过的顶点标记为true
-        count++;
-        for(int w : g.adj(v))       //遍历其邻居顶点
-            if(!marked[w]) dfs(g,w);    //递归遍历没有被访问过的顶点(使用FIFO队列代替递归即可变成广度优先搜索)
-    }
-    public boolean marked(int v){ return marked[v]; }
-    public int count(){ return count; }
-}</code></pre><h4 id="3-使用深度优先搜索解决单点路径问题"><a href="#3-使用深度优先搜索解决单点路径问题" class="headerlink" title="3.使用深度优先搜索解决单点路径问题"></a>3.使用深度优先搜索解决单点路径问题</h4><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DepthFirstSearch</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//用来标记顶点是否被访问过</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//统计</span>
+    <span class="token keyword">public</span> <span class="token function">DepthFirstSearch</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//从起点s开始遍历</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>           <span class="token comment" spellcheck="true">//被访问过的顶点标记为true</span>
+        count<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>       <span class="token comment" spellcheck="true">//遍历其邻居顶点</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//递归遍历没有被访问过的顶点(使用FIFO队列代替递归即可变成广度优先搜索)</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">marked</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> count<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-使用深度优先搜索解决单点路径问题"><a href="#3-使用深度优先搜索解决单点路径问题" class="headerlink" title="3.使用深度优先搜索解决单点路径问题"></a>3.使用深度优先搜索解决单点路径问题</h4><blockquote>
 <p>概述: 给定一幅图和一个起点s,找出是否存在从s到给定的一个终点s的一条路径,如果有,找出该路径</p>
 <p>思路: 在深度优先搜索的基础上维护一个数组,索引为当前顶点,值保存前一个连通顶点即可</p>
 </blockquote>
-<pre><code>public class DepthFirstPaths {
-    private boolean[] marked;
-    private int[] edgeTo;   //维护数组,索引为当前顶点,值保存前一个连通的顶点
-    private final int s;    //开始顶点
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DepthFirstPaths</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> edgeTo<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//维护数组,索引为当前顶点,值保存前一个连通的顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> s<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//开始顶点</span>
 
-    public DepthFirstPaths(Graph g,int s) {//给定一个图和开始顶点s
-        marked = new boolean[g.V()];
-        edgeTo = new int[g.V()];
-        this.s = s;
-        dfs(g,s);
-    }
-    private void dfs(Graph g,int v){    //与深度优先搜索相同,只须额外维护一个保存路径信息的数组
-        marked[v] = true;
-        for(int w : g.adj(v))
-            if(!marked[w]){
-                edgeTo[w] = v;  //维护与其连通的前一个顶点
-                dfs(g, w);
-            }
-    }
-    public boolean hasPathTo(int v){ return marked[v]; }    //起点s与给定的顶点v是否连通
-    public Iterable&lt;Integer&gt; pathTo(int v){ //获取与顶点v到起点s的一条路径,在edgeTo数组中从v找到s即可
-        if(!hasPathTo(v)) return null;
-        ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
-        for(int x=v;x!=s;x=edgeTo[x]) stack.push(x);
-        stack.push(s);
-        return stack;
-    }
-}</code></pre><h4 id="4-深度优先搜索搜索最短路径"><a href="#4-深度优先搜索搜索最短路径" class="headerlink" title="4.深度优先搜索搜索最短路径"></a>4.深度优先搜索搜索最短路径</h4><pre><code>/**
+    <span class="token keyword">public</span> <span class="token function">DepthFirstPaths</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//给定一个图和开始顶点s</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        edgeTo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>s <span class="token operator">=</span> s<span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//与深度优先搜索相同,只须额外维护一个保存路径信息的数组</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                edgeTo<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//维护与其连通的前一个顶点</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">hasPathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>    <span class="token comment" spellcheck="true">//起点s与给定的顶点v是否连通</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">pathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//获取与顶点v到起点s的一条路径,在edgeTo数组中从v找到s即可</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">hasPathTo</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token operator">=</span>v<span class="token punctuation">;</span>x<span class="token operator">!=</span>s<span class="token punctuation">;</span>x<span class="token operator">=</span>edgeTo<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-深度优先搜索搜索最短路径"><a href="#4-深度优先搜索搜索最短路径" class="headerlink" title="4.深度优先搜索搜索最短路径"></a>4.深度优先搜索搜索最短路径</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 深度优先搜索搜索最短路径
  * 思路: 在深度优先搜索查找单点路径的基础上稍做修改,维护一个起点s,一个数组min,
  *       索引为顶点v,值min[v]记录了起点s到顶点v的路径值(在此用递归层数表示)
  *       遍历所有经过的路径,记录最小值的路径即可
- */
-public class ShortPathDFS {
-    private boolean[] marked; //标记是否被访问过
-    private int count;       //记录递归层数,同时也代表了距离起点的路径距离
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ShortPathDFS</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//标记是否被访问过</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//记录递归层数,同时也代表了距离起点的路径距离</span>
 
-    private int[] edgeTo;    //记录路径,索引为顶点,值为顶点相连的前一个顶点
-    private final int s;     //起点
-    private int[] min;       //记录起点到当前顶点v的距离min[v]值表示
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> edgeTo<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//记录路径,索引为顶点,值为顶点相连的前一个顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> s<span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//起点</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> min<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//记录起点到当前顶点v的距离min[v]值表示</span>
 
-    public ShortPathDFS(Graph g,int s) {
-        marked = new boolean[g.V()];
-        edgeTo = new int[g.V()];
-        min = new int[g.V()];
-        this.s = s;
-        dfs(g,s);   //从起点开始进行深度优先搜索遍历
-    }
-    private void dfs(Graph g,int v){
-        marked[v] = true;
-        ++count;
-        min[v] = count;
-        for(int w : g.adj(v)) {
-            if (!marked[w]) {
-                if(min[w] != 0 &amp;&amp; min[w] &lt; count+1) continue; //此时下层顶点已经记录的路径更小,无需再遍历更新最短路径
-                edgeTo[w] = v;      //如果有更小路径则更新路径
-                dfs(g, w);
-            }
-        }
-        marked[v] = false;  //递归返回上层时,下层顶点全部标记为未访问,这样可以继续遍历所有上层顶点到下层顶点的其他路径
-        --count;    //递归返回上层,层数-1,即路径距离-1
-    }
-    public boolean hasPathTo(int v){ return min[v] != 0; }
-    public Iterable&lt;Integer&gt; pathTo(int v){   //获取起点s到v的最短路径
-        if(!hasPathTo(v)) return null;
-        ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
-        for(int x=v;x!=s;x=edgeTo[x]) stack.push(x);
-        stack.push(s);
-        return stack;
-    }
-    public boolean marked(int v){ return marked[v]; }
+    <span class="token keyword">public</span> <span class="token function">ShortPathDFS</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        edgeTo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        min <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>s <span class="token operator">=</span> s<span class="token punctuation">;</span>
+        <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//从起点开始进行深度优先搜索遍历</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token operator">++</span>count<span class="token punctuation">;</span>
+        min<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>min<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> min<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">&lt;</span> count<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//此时下层顶点已经记录的路径更小,无需再遍历更新最短路径</span>
+                edgeTo<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//如果有更小路径则更新路径</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span> w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//递归返回上层时,下层顶点全部标记为未访问,这样可以继续遍历所有上层顶点到下层顶点的其他路径</span>
+        <span class="token operator">--</span>count<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//递归返回上层,层数-1,即路径距离-1</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">hasPathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> min<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">pathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//获取起点s到v的最短路径</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">hasPathTo</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token operator">=</span>v<span class="token punctuation">;</span>x<span class="token operator">!=</span>s<span class="token punctuation">;</span>x<span class="token operator">=</span>edgeTo<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">marked</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
 
-}</code></pre><h4 id="5-深度优先搜索找出图中的所有连通分量"><a href="#5-深度优先搜索找出图中的所有连通分量" class="headerlink" title="5.深度优先搜索找出图中的所有连通分量"></a>5.深度优先搜索找出图中的所有连通分量</h4><blockquote>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="5-深度优先搜索找出图中的所有连通分量"><a href="#5-深度优先搜索找出图中的所有连通分量" class="headerlink" title="5.深度优先搜索找出图中的所有连通分量"></a>5.深度优先搜索找出图中的所有连通分量</h4><blockquote>
 <p>概述: 连通分量即为图中的极大连通子图</p>
 <p>思路: 使用深度优先搜索遍历,执行一次即可获取一个连通分量,如果存在没有遍历过的顶点,则继续对该顶点进行深度优先搜索,此时又获取一个连通分量,直到所有顶点都被遍历过为止</p>
 </blockquote>
-<pre><code>public class CC {
-    private boolean[] marked;
-    private int[] id;   //额外维护一个数组标记顶点连通分量,索引为顶点,值相同的表示为同一连通分量内的顶点
-    private int count;  //统计连通分量个数
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CC</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> id<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//额外维护一个数组标记顶点连通分量,索引为顶点,值相同的表示为同一连通分量内的顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//统计连通分量个数</span>
 
-    public CC(Graph g) {
-        marked = new boolean[g.V()];
-        id = new int[g.V()];
-        for(int s = 0;s&lt;g.V();s++)
-            if(!marked[s]) {    //遍历没有遍历过的顶点(没有遍历过的即为一个新连通分量)
-                dfs(g,s);       //使用深度优先搜索遍历与s连通的所有顶点并标记
-                ++count;        //统计连通分量
-            }
-    }
-    private void dfs(Graph g,int v){
-        marked[v] = true;
-        id[v] = count;          //标记该顶点的连通分量
-        for(int w : g.adj(v))
-            if(!marked[w]) dfs(g,w);
-    }
-    public boolean connected(int v, int w){ return id[v] == id[w]; }   //两个顶点标记的连通分量相同时即连通
-    public int id(int v){ return id[v]; }       //返回标记的连通分量
-    public int count(){ return count; }         //返回连通分量数量
-}</code></pre><h4 id="6-深度优先搜索判断是否为有环图"><a href="#6-深度优先搜索判断是否为有环图" class="headerlink" title="6.深度优先搜索判断是否为有环图"></a>6.深度优先搜索判断是否为有环图</h4><pre><code>/**
+    <span class="token keyword">public</span> <span class="token function">CC</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>s<span class="token operator">&lt;</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>s<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//遍历没有遍历过的顶点(没有遍历过的即为一个新连通分量)</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//使用深度优先搜索遍历与s连通的所有顶点并标记</span>
+                <span class="token operator">++</span>count<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//统计连通分量</span>
+            <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        id<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//标记该顶点的连通分量</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">,</span> <span class="token keyword">int</span> w<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> id<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">==</span> id<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>   <span class="token comment" spellcheck="true">//两个顶点标记的连通分量相同时即连通</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">id</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> id<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>       <span class="token comment" spellcheck="true">//返回标记的连通分量</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> count<span class="token punctuation">;</span> <span class="token punctuation">}</span>         <span class="token comment" spellcheck="true">//返回连通分量数量</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="6-深度优先搜索判断是否为有环图"><a href="#6-深度优先搜索判断是否为有环图" class="headerlink" title="6.深度优先搜索判断是否为有环图"></a>6.深度优先搜索判断是否为有环图</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 是否为有环图(不考虑自环与平行边)
  * 思路: 对图的每一个连通分量通过深度优先搜索遍历
  *       记录前一个顶点u,当前节点v,下一个将遍历的节点w
  *       如果顶点w已遍历过且不是前一个顶点u,则形成了环
- */
-public class Cycle {
-    private boolean[] marked;
-    private boolean hasCycle;       //标记是否有环
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Cycle</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> hasCycle<span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//标记是否有环</span>
 
-    public Cycle(Graph g) {
-        marked = new boolean[g.V()];
-        for(int s=0;s&lt;g.V();++s)    //对每个连通分量进行遍历
-            if(!marked[s]) dfs(g,s,s);
-    }
-    private void dfs(Graph g,int v,int u){
-        marked[v] = true;
-        for(int w : g.adj(v))
-            if(!marked[w]) dfs(g,w,v);
-            else if(w != u) hasCycle = true;    //将遍历的顶点w已遍历过且不是前一个顶点u时形成环
-    }
-    public boolean hasCycle(){ return hasCycle; }
-}</code></pre><h4 id="7-深度优先搜索判断是否为二分图"><a href="#7-深度优先搜索判断是否为二分图" class="headerlink" title="7.深度优先搜索判断是否为二分图"></a>7.深度优先搜索判断是否为二分图</h4><pre><code>/**
+    <span class="token keyword">public</span> <span class="token function">Cycle</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> s<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>s<span class="token operator">&lt;</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>s<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//对每个连通分量进行遍历</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">,</span><span class="token keyword">int</span> u<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>w<span class="token punctuation">,</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>w <span class="token operator">!=</span> u<span class="token punctuation">)</span> hasCycle <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//将遍历的顶点w已遍历过且不是前一个顶点u时形成环</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">hasCycle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> hasCycle<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="7-深度优先搜索判断是否为二分图"><a href="#7-深度优先搜索判断是否为二分图" class="headerlink" title="7.深度优先搜索判断是否为二分图"></a>7.深度优先搜索判断是否为二分图</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 判断是否为二分图
  * 等价于: 能够用两种颜色将图的所有顶点着色,使得任意一条边的两个顶点颜色都不同
  * 思路: 使用深度优先搜索对图进行着色,保证一条边的两个顶点颜色不同,
  *       如果遍历到已着色顶点,则进行判断是否还满足条件,如果不满足则不是二分图
- */
-public class TwoColor {
-    private boolean[] marked;
-    private boolean[] color;    //额外维护数组维护顶点的颜色,索引为顶点v,值color[v]为颜色值
-    private boolean isTwoColor = true;  //标记是否为二分图,默认为true
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TwoColor</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> color<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//额外维护数组维护顶点的颜色,索引为顶点v,值color[v]为颜色值</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> isTwoColor <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//标记是否为二分图,默认为true</span>
 
-    public TwoColor(Graph g) {
-        marked = new boolean[g.V()];
-        color = new boolean[g.V()];
-        for(int s=0;s&lt;g.V();++s)    //深度优先搜索遍历所有连通分量,检测是否满足颜色条件
-            if(!marked[s]) dfs(g,s);
-    }
-    private void dfs(Graph g,int v){
-        marked[v] = true;
-        for(int w : g.adj(v))
-            if(!marked[w]){
-                color[w] = !color[v];   //正常着色,此时满足条件
-                dfs(g,w);
-            }   //遍历到已访问过(已着色)的顶点,如果一条边的两个顶点颜色相同,则不是二分图
-            else if(color[w] == color[v]) isTwoColor = false;
-    }
-    public boolean isToColor(){ return isTwoColor;}
-}</code></pre><h4 id="8-广度优先搜索"><a href="#8-广度优先搜索" class="headerlink" title="8.广度优先搜索"></a>8.广度优先搜索</h4><blockquote>
+    <span class="token keyword">public</span> <span class="token function">TwoColor</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        color <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> s<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>s<span class="token operator">&lt;</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>s<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//深度优先搜索遍历所有连通分量,检测是否满足颜色条件</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">dfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                color<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">!</span>color<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//正常着色,此时满足条件</span>
+                <span class="token function">dfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>   <span class="token comment" spellcheck="true">//遍历到已访问过(已着色)的顶点,如果一条边的两个顶点颜色相同,则不是二分图</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>color<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">==</span> color<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> isTwoColor <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isToColor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> isTwoColor<span class="token punctuation">;</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="8-广度优先搜索"><a href="#8-广度优先搜索" class="headerlink" title="8.广度优先搜索"></a>8.广度优先搜索</h4><blockquote>
 <p>概述: 广度优先搜索中按照与起点的距离顺序遍历所有连通顶点,即从起点开始,依次遍历相邻节点</p>
 <p>思路: 使用FIFO(先进先出)队列代替深度优先搜索的递归(LIFO,后进先出)即可实现广度优先搜索</p>
 </blockquote>
-<h4 id="9-广度优先搜索搜索最短路径"><a href="#9-广度优先搜索搜索最短路径" class="headerlink" title="9.广度优先搜索搜索最短路径"></a>9.广度优先搜索搜索最短路径</h4><pre><code>public class BreadthFirstPaths {
-    private boolean[] marked;
-    private int[] edgeTo;   //维护数组,索引为当前顶点,值保存前一个连通的顶点
-    private final int s;    //开始顶点
+<h4 id="9-广度优先搜索搜索最短路径"><a href="#9-广度优先搜索搜索最短路径" class="headerlink" title="9.广度优先搜索搜索最短路径"></a>9.广度优先搜索搜索最短路径</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BreadthFirstPaths</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> edgeTo<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//维护数组,索引为当前顶点,值保存前一个连通的顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> s<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//开始顶点</span>
 
-    public BreadthFirstPaths(Graph g,int s) { //给定一个图和开始顶点s
-        marked = new boolean[g.V()];
-        edgeTo = new int[g.V()];
-        this.s = s;
-        bfs(g,s);
-    }
-    private void bfs(Graph g,int s){
-        marked[s] = true;       //标记
-        ArrayDeque&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();
-        queue.offer(s);         //加入队列
-        while(!queue.isEmpty()){    //遍历队列,队列代替了深度优先搜索递归(栈)调用,变成广度优先搜索
-            int v = queue.poll();   //出队并遍历没有被访问过的顶点
-            for(int w : g.adj(v)){
-                if(marked[w]) continue;
-                edgeTo[w] = v;      //保存最短路径中与其相邻上一个的顶点
-                marked[w] = true;   //标记
-                queue.offer(w);     //入队
-            }
-        }
-    }
-    public boolean hasPathTo(int v){ return marked[v];}
-    public Iterable&lt;Integer&gt; pathTo(int v){  //获取与顶点v到起点s的一条路径,在edgeTo数组中从v找到s即可
-        if(!hasPathTo(v)) return null;
-        ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
-        for(int x=v;x!=s;x=edgeTo[x]) stack.push(x);
-        stack.push(s);
-        return stack;
-    }
-}</code></pre><script>
+    <span class="token keyword">public</span> <span class="token function">BreadthFirstPaths</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//给定一个图和开始顶点s</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        edgeTo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>s <span class="token operator">=</span> s<span class="token punctuation">;</span>
+        <span class="token function">bfs</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">bfs</span><span class="token punctuation">(</span>Graph g<span class="token punctuation">,</span><span class="token keyword">int</span> s<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>s<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//标记</span>
+        ArrayDeque<span class="token operator">&lt;</span>Integer<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">//加入队列</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>queue<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//遍历队列,队列代替了深度优先搜索递归(栈)调用,变成广度优先搜索</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//出队并遍历没有被访问过的顶点</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> w <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                edgeTo<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> v<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//保存最短路径中与其相邻上一个的顶点</span>
+                marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//标记</span>
+                queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//入队</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">hasPathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">pathTo</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//获取与顶点v到起点s的一条路径,在edgeTo数组中从v找到s即可</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">hasPathTo</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token operator">=</span>v<span class="token punctuation">;</span>x<span class="token operator">!=</span>s<span class="token punctuation">;</span>x<span class="token operator">=</span>edgeTo<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span> stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -844,6 +856,10 @@ public class TwoColor {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E5%9B%BE/">
                                     <span class="chip bg-color">图</span>
@@ -957,6 +973,10 @@ public class TwoColor {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E5%9B%BE/">
                         <span class="chip bg-color">图</span>
                     </a>
@@ -1014,6 +1034,10 @@ public class TwoColor {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%9F%A5%E6%89%BE/">
                         <span class="chip bg-color">查找</span>
@@ -1215,7 +1239,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

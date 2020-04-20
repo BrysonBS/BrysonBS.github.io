@@ -430,6 +430,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E6%B1%89%E8%AF%BA%E5%A1%94/">
                                 <span class="chip bg-color">汉诺塔</span>
                             </a>
@@ -462,21 +466,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1k
+                    999
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    5 分
+                    4 分
                 </div>
                 
 
@@ -499,64 +503,66 @@
 <blockquote>
 <p> <strong>自定义一个栈</strong></p>
 </blockquote>
-<pre><code>public class Stack&lt;E&gt; implements Iterable&lt;E&gt;{
-    private LinkedList&lt;E&gt; stack = new LinkedList&lt;&gt;();
-    private String name;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">Iterable</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>E<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
 
-    public Stack() {}
+    <span class="token keyword">public</span> <span class="token function">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-    public Stack(String name) {
-        this.name = name;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name){
-        this.name = name;
-    }
+    <span class="token keyword">public</span> <span class="token function">Stack</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public void push(E e){
-        stack.push(e);
-    }
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public E pop(){
-        return stack.pop();
-    }
+    <span class="token keyword">public</span> E <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public E peek(){
-        return stack.peek();
-    }
+    <span class="token keyword">public</span> E <span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public void each(Consumer&lt;? super E&gt; consumer){
-        stack.stream().forEach(consumer);
-    }
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">each</span><span class="token punctuation">(</span>Consumer<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">super</span> E<span class="token operator">></span> consumer<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>consumer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public boolean isEmpty(){
-        return stack.isEmpty();
-    }
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public int size(){
-        return stack.size();
-    }
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public Iterator&lt;E&gt; iterator() {
-        return stack.iterator();
-    }
-}</code></pre><h4 id="1-递归实现"><a href="#1-递归实现" class="headerlink" title="1.递归实现"></a>1.递归实现</h4><pre><code>    /** 递归方式
-     */
-    public void hanoi(int n,Stack&lt;Integer&gt; a,Stack&lt;Integer&gt; b,Stack&lt;Integer&gt; c){
-        if(n == 1){
-            c.push(a.pop());
-            System.out.println(a.getName()+" -&gt; "+c.getName());
-        }
-        else{
-            hanoi(n-1,a,c,b);   //将n-1个圆盘 a -&gt; b,此时c作为辅助柱子
-            c.push(a.pop());       //将a上第n个圆盘移动到c  a -&gt; c
-            System.out.println(a.getName()+" -&gt; "+c.getName());
-            hanoi(n-1,b,a,c);   //将b上n-1个圆盘 b -&gt; c,此时a作为辅助柱子
-        }
-    }</code></pre><h4 id="2-非递归实现"><a href="#2-非递归实现" class="headerlink" title="2.非递归实现"></a>2.非递归实现</h4><pre><code>    /** 非递归方式
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Iterator<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-递归实现"><a href="#1-递归实现" class="headerlink" title="1.递归实现"></a>1.递归实现</h4><pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/** 递归方式
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">hanoi</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> a<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> b<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> c<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            c<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>c<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token function">hanoi</span><span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>a<span class="token punctuation">,</span>c<span class="token punctuation">,</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//将n-1个圆盘 a -> b,此时c作为辅助柱子</span>
+            c<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//将a上第n个圆盘移动到c  a -> c</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>c<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">hanoi</span><span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>b<span class="token punctuation">,</span>a<span class="token punctuation">,</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//将b上n-1个圆盘 b -> c,此时a作为辅助柱子</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-非递归实现"><a href="#2-非递归实现" class="headerlink" title="2.非递归实现"></a>2.非递归实现</h4><pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/** 非递归方式
      *
      * 概述: 根据美国学者总结的规律写即可
      * 1. 将最小圆盘移动到下一个柱子(next)上(顺序ABC循环)
@@ -564,69 +570,72 @@
      * 3. 循环步骤1,步骤2即可将一个柱子上圆盘移动到另一个柱子上
      *    如果初始时A为放圆盘柱子,B,C为空,当圆盘数量N为奇数时结果会移动到B上,N为偶数会移动到C上,
      *    因此起始时若N为奇数调换柱子B,C即可,最终会将圆盘移动到C上
-     */
-    public Stack&lt;Integer&gt; hanoiTower(int N,Stack&lt;Integer&gt; a,Stack&lt;Integer&gt; b,Stack&lt;Integer&gt; c){
-        if((N&amp;1) == 1){         //当n为奇数时调换b,c 柱子
-            b.setName("c");
-            c.setName("b");
-        }
-        Stack&lt;Integer&gt; realB = b.getName().equals("b")?b:c;    //获取到真正的b柱子
-        while(!(a.isEmpty() &amp;&amp; realB.isEmpty())) {      //当a,b柱子为空时移动完成
-            int topA = a.isEmpty()?Integer.MAX_VALUE:a.peek();
-            int topB = b.isEmpty()?Integer.MAX_VALUE:b.peek();
-            int topC = c.isEmpty()?Integer.MAX_VALUE:c.peek();
-            if(topA &lt; topB &amp;&amp; topA &lt; topC){
-                b.push(a.pop());    //1. 将最小圆盘移动到下一个柱子(next)上(顺序ABC循环)
-                System.out.println(a.getName()+" -&gt; "+b.getName());
-                compareAndMove(a,c);//2. 将除了next以外的2个柱子顶部圆盘比较,将小的移动到大的上面(如果为空则直接移动到空柱上)
-            }
-            else if(topB &lt; topA &amp;&amp; topB &lt; topC){
-                c.push(b.pop());
-                System.out.println(b.getName()+" -&gt; "+c.getName());
-                compareAndMove(b,a);
-            }
-            else if(topC &lt; topA &amp;&amp; topC &lt; topB){
-                a.push(c.pop());
-                System.out.println(c.getName()+" -&gt; "+a.getName());
-                compareAndMove(b,c);
-            }
+     */</span>
+    <span class="token keyword">public</span> Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> <span class="token function">hanoiTower</span><span class="token punctuation">(</span><span class="token keyword">int</span> N<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> a<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> b<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> c<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>N<span class="token operator">&amp;</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>         <span class="token comment" spellcheck="true">//当n为奇数时调换b,c 柱子</span>
+            b<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            c<span class="token punctuation">.</span><span class="token function">setName</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> realB <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token operator">?</span>b<span class="token operator">:</span>c<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//获取到真正的b柱子</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> realB<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>      <span class="token comment" spellcheck="true">//当a,b柱子为空时移动完成</span>
+            <span class="token keyword">int</span> topA <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token operator">:</span>a<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> topB <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token operator">:</span>b<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> topC <span class="token operator">=</span> c<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token operator">:</span>c<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>topA <span class="token operator">&lt;</span> topB <span class="token operator">&amp;&amp;</span> topA <span class="token operator">&lt;</span> topC<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                b<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//1. 将最小圆盘移动到下一个柱子(next)上(顺序ABC循环)</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>b<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">compareAndMove</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//2. 将除了next以外的2个柱子顶部圆盘比较,将小的移动到大的上面(如果为空则直接移动到空柱上)</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>topB <span class="token operator">&lt;</span> topA <span class="token operator">&amp;&amp;</span> topB <span class="token operator">&lt;</span> topC<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                c<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>c<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">compareAndMove</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>topC <span class="token operator">&lt;</span> topA <span class="token operator">&amp;&amp;</span> topC <span class="token operator">&lt;</span> topB<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                a<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">compareAndMove</span><span class="token punctuation">(</span>b<span class="token punctuation">,</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-        }
-        return c;
-    }</code></pre><pre><code>   public void compareAndMove(Stack&lt;Integer&gt; a,Stack&lt;Integer&gt; b){
-        if(a.isEmpty() &amp;&amp; b.isEmpty())
-            return;     //移动完成
-        int topA = a.isEmpty()?Integer.MAX_VALUE:a.peek();
-        int topB = b.isEmpty()?Integer.MAX_VALUE:b.peek();
-        if(topA &lt; topB) {
-            b.push(a.pop());
-            System.out.println(a.getName()+" -&gt; "+b.getName());
-        }
-        else {
-            a.push(b.pop());
-            System.out.println(b.getName()+" -&gt; "+a.getName());
-        }
-    }</code></pre><blockquote>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> c<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">   <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">compareAndMove</span><span class="token punctuation">(</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> a<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> b<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> b<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//移动完成</span>
+        <span class="token keyword">int</span> topA <span class="token operator">=</span> a<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token operator">:</span>a<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> topB <span class="token operator">=</span> b<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">?</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token operator">:</span>b<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>topA <span class="token operator">&lt;</span> topB<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            b<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>b<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            a<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">" -> "</span><span class="token operator">+</span>a<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>测试</strong></p>
 </blockquote>
-<pre><code>    @Test
-    public void testHanoi(){
-        Stack&lt;Integer&gt; stackA = new Stack&lt;&gt;("a");
-        Stack&lt;Integer&gt; stackB = new Stack&lt;&gt;("b");
-        Stack&lt;Integer&gt; stackC = new Stack&lt;&gt;("c");
-        int N = 4;
-        for(int i=N;i&gt;0;--i){
-            stackA.push(i);
-        }
-        hanoiTower(N,stackA,stackB,stackC);     //非递归方式
-        //hanoi(N,stackA,stackB,stackC);        //递归方式
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testHanoi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stackA <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"a"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stackB <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"b"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> stackC <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token string">"c"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>N<span class="token punctuation">;</span>i<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            stackA<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">hanoiTower</span><span class="token punctuation">(</span>N<span class="token punctuation">,</span>stackA<span class="token punctuation">,</span>stackB<span class="token punctuation">,</span>stackC<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//非递归方式</span>
+        <span class="token comment" spellcheck="true">//hanoi(N,stackA,stackB,stackC);        //递归方式</span>
 
-        //查看结果
-        if(stackC.isEmpty())
-            stackB.forEach(x -&gt; System.out.print(x+" "));
-        else
-            stackC.forEach(x -&gt; System.out.print(x+" "));
-    }</code></pre><script>
+        <span class="token comment" spellcheck="true">//查看结果</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>stackC<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            stackB<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>x<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            stackC<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>x<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -706,6 +715,10 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E6%B1%89%E8%AF%BA%E5%A1%94/">
                                     <span class="chip bg-color">汉诺塔</span>
@@ -820,6 +833,10 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/union-find/">
                         <span class="chip bg-color">union-find</span>
                     </a>
@@ -850,8 +867,8 @@
                             简单算术表达式求值(仅含() 与+ - * /)
 定义一个栈Stack类
 
-public class Stack&lt;E&gt; implements Iterable&lt;E&gt;{
-    private LinkedList&l
+public class Stack&lt;E> implements Iterable&lt;E>{
+    private LinkedList&lt;E> s
                         
                     </div>
                     <div class="publish-info">
@@ -872,6 +889,10 @@ public class Stack&lt;E&gt; implements Iterable&lt;E&gt;{
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
                         <span class="chip bg-color">算术表达式</span>
@@ -1073,7 +1094,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

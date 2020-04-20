@@ -430,6 +430,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E6%9F%A5%E6%89%BE/">
                                 <span class="chip bg-color">查找</span>
                             </a>
@@ -462,7 +466,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-12-20
+                    2020-04-20
                 </div>
                 
 
@@ -497,34 +501,34 @@
 <p><strong>优点:</strong> 作为一种有序符号表实现,支持高效的查找丶插入丶删除操作, 平均情况下1.39lgN</p>
 <p><strong>缺点:</strong>  在最坏况下(有序数据构建),二叉查找树会退化成链表,此时的变为o(n)级别,(为解决此问题出现平衡树)</p>
 </blockquote>
-<pre><code>
-/**
+<pre class="line-numbers language-java"><code class="language-java">
+<span class="token comment" spellcheck="true">/**
  * 二叉查找树
  * 性质:
  * 1.若它的左子树不为空，则左子树上的所有节点的值均小于根节点的值
  * 2.若它的右子树不为空，则右子树上的所有结点的值均大于根节点的值
  * 3.二叉查找树的左右子树也都是二叉查找树
- */
-public class BinarySearchTree&lt;Key,Value&gt; {
-    private Comparator comparator;
-    private Node root;
-    public BinarySearchTree(Comparator comparator) {
-        this.comparator = comparator;
-    }
-    private class Node{
-        private Key key;
-        private Value val;
-        private Node left;  //左子节点
-        private Node right; //右子节点
-        private int n; //以当前节点为根节点的二叉查找树总节点数(x.n = x.left.n + x.right.n + 1)
-        public Node(Key key, Value val, int n) {
-            this.key = key;
-            this.val = val;
-            this.n = n;
-        }
-    }
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BinarySearchTree</span><span class="token operator">&lt;</span>Key<span class="token punctuation">,</span>Value<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Comparator comparator<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Node root<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">BinarySearchTree</span><span class="token punctuation">(</span>Comparator comparator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+        <span class="token keyword">private</span> Key key<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> Value val<span class="token punctuation">;</span>
+        <span class="token keyword">private</span> Node left<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//左子节点</span>
+        <span class="token keyword">private</span> Node right<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//右子节点</span>
+        <span class="token keyword">private</span> <span class="token keyword">int</span> n<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//以当前节点为根节点的二叉查找树总节点数(x.n = x.left.n + x.right.n + 1)</span>
+        <span class="token keyword">public</span> <span class="token function">Node</span><span class="token punctuation">(</span>Key key<span class="token punctuation">,</span> Value val<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>key <span class="token operator">=</span> key<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>n <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //*************************************1.递归实现部分***************************************
+    <span class="token operator">/</span><span class="token comment" spellcheck="true">/*************************************1.递归实现部分***************************************
 
     /**
      *插入: 递归方式
@@ -532,448 +536,449 @@ public class BinarySearchTree&lt;Key,Value&gt; {
      *       如果一直到树的底部还没有找到则直接在底部正确位置插入新节点即可
      *      2. 查找过程中如果待插入节点比当前节点x大,则只需要在x节点右子树中查找
      *          如果比当前节点x小则只需要在x节点左子树中查找
-     */
-    public void put(Key key,Value val){
-        root = put(root,key,val);
-    }
-    private Node put(Node x,Key key,Value val){
-        if(x == null) return new Node(key,val,1); //查找树底还没找到,则插入新节点
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &gt; 0) x.right = put(x.right,key,val);
-        else if(cmp &lt; 0) x.left = put(x.left,key,val);
-        else x.val = val;
-        x.n = size(x.left) + size(x.right) + 1; //更新节点数
-        return x;
-    }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span>Key key<span class="token punctuation">,</span>Value val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        root <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">put</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">,</span>Value val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>val<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//查找树底还没找到,则插入新节点</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">put</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">,</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> x<span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>n <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//更新节点数</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      *获取键key对应的值(与put方式查找思路相同)
-     */
-    public Value get(Key key){ return get(root,key); }
-    private Value get(Node x,Key key){
-        if(x == null) return null;
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &gt; 0) return get(x.right,key);
-        else if(cmp &lt; 0) return get(x.left,key);
-        else return x.val;
-    }
+     */</span>
+    <span class="token keyword">public</span> Value <span class="token function">get</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Value <span class="token function">get</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>val<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      *删除节点: 递归
      * 概述: 1.从根节点往下进行查找(与get方法思路相同)
      *      2.找到时节点为x,此时只需要用x右子树中最小的节点把x节点替换掉即可
      *        (或用x左子树中最大的节点替换掉x节点)
-     */
-    public void delete(Key key){ root = delete(root,key); }
-    private Node delete(Node x,Key key){
-        if(x == null) return null;
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &gt; 0) x.right = delete(x.right,key);
-        else if(cmp &lt; 0) x.left = delete(x.left,key);
-        else {  //找到,使用x节点右子树中最小的节点替换掉x节点
-            if(x.left == null) return x.right;
-            if(x.right == null) return x.left;
-            Node t = x;
-            x = min(t.right);
-            x.right = deleteMin(t.right);
-            x.left = t.left;
-        }
-        x.n = size(x.left) + size(x.right) + 1;
-        return x;
-    }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">delete</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span> root <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">delete</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">delete</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//找到,使用x节点右子树中最小的节点替换掉x节点</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            Node t <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            x <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">deleteMin</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x<span class="token punctuation">.</span>left <span class="token operator">=</span> t<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        x<span class="token punctuation">.</span>n <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 删除最小节点
      * 概述: 找到最小节点x(与min方法思路相似),用x.right节点替换掉x节点即可
-     */
-    public void deleteMin(){ root = deleteMin(root); }
-    private Node deleteMin(Node x){
-        if(x.left == null) return x.right; //找到最小节点x,此时返回x.right,替换掉x节点
-        x.left = deleteMin(x.left);  //在左子树查找删除最小节点
-        x.n = size(x.left) + size(x.right) + 1;
-        return x;
-    }
-    public void deleteMax(){ root = deleteMax(root); }
-    private Node deleteMax(Node x){
-        if(x.right == null) return x.left;
-        x.right = deleteMax(x.right);
-        x.n = size(x.left) + size(x.right) + 1;
-        return x;
-    }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> root <span class="token operator">=</span> <span class="token function">deleteMin</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">deleteMin</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//找到最小节点x,此时返回x.right,替换掉x节点</span>
+        x<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token function">deleteMin</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//在左子树查找删除最小节点</span>
+        x<span class="token punctuation">.</span>n <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> root <span class="token operator">=</span> <span class="token function">deleteMax</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">deleteMax</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">deleteMax</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span>n <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 查找最小节点
      * 概述: 从根节点开始一直向底部查找每次都查找左节点即可
      *      当当前节点x没有左节点时,即为最小值
-     */
-    public Key min(){ return min(root).key; }
-    private Node min(Node x){
-        if(x.left == null) return x;
-        return min(x.left);
-    }
-    public Key max(){ return max(root).key; }
-    private Node max(Node x){
-        if(x.right == null) return x;
-        return max(x.right);
-    }
+     */</span>
+    <span class="token keyword">public</span> Key <span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">min</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">.</span>key<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">min</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">min</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Key <span class="token function">max</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">max</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">.</span>key<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">max</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">max</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 小于等于key的最大节点
      * 概述: 如果key小于当前节点,则一定在左子树
      *       如果key大于当前节点,则在右子树找,如果右子树没有找到,则当前节点即为所需结果
      *       如果相等,则当前节点为所需结果
-     */
-    public Key floor(Key key){
-        Node x = floor(root,key);
-        if(x == null) return null;
-        return x.key;
-    }
-    private Node floor(Node x,Key key){
-        if(x == null) return null; //结束条件,在子树中没有找到时返回null
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &lt; 0) return floor(x.left,key);
-        else if(cmp &gt;0){
-            Node t = floor(x.right,key);
-            if(t != null) return t; //右子树找到,返回找到的结果
-            //没有找到时返回x
-        }
-        return x; //cmp = 0; 或者 cmp &gt;0且右子树没有找到时x为所需结果
-    }
-    //大于等于key的最小节点
-    public Key ceiling(Key key){
-        Node x = ceiling(root,key);
-        if(x == null) return null;
-        return x.key;
-    }
-    private Node ceiling(Node x,Key key){
-        if(x == null) return null;
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &gt; 0) return ceiling(x.right,key);
-        else if(cmp &lt; 0){
-            Node t = ceiling(x.left,key);
-            if(t != null) return t;
-        }
-        return x;
-    }
+     */</span>
+    <span class="token keyword">public</span> Key <span class="token function">floor</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node x <span class="token operator">=</span> <span class="token function">floor</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">.</span>key<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">floor</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//结束条件,在子树中没有找到时返回null</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">floor</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Node t <span class="token operator">=</span> <span class="token function">floor</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> t<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//右子树找到,返回找到的结果</span>
+            <span class="token comment" spellcheck="true">//没有找到时返回x</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//cmp = 0; 或者 cmp >0且右子树没有找到时x为所需结果</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//大于等于key的最小节点</span>
+    <span class="token keyword">public</span> Key <span class="token function">ceiling</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node x <span class="token operator">=</span> <span class="token function">ceiling</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">.</span>key<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">ceiling</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">ceiling</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Node t <span class="token operator">=</span> <span class="token function">ceiling</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> t<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 小于键key的数量
      * 概述: 如果key小于当前节点,则在当前节点左子树查找小于key的数量即可
      *       如果key大于当前节点,则在右子树中查找小于key的数量然后加上左子树节点数和一个根节点
      *       如果相等,则左子树节点数即为所需结果
-     */
-    public int rank(Key key){ return rank(root,key); }
-    private int rank(Node x,Key key){
-        if(x == null) return 0;
-        int cmp = comparator.compare(key,x.key);
-        if(cmp &lt; 0) return rank(x.left,key);
-        else if(cmp &gt; 0) return rank(x.right,key) + size(x.left) + 1;
-        else return size(x.left);
-    }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">rank</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">rank</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">rank</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">rank</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">rank</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>key<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 排名为k的键(树中有k个小于它的键)
      * 概述: 先统计当前节点左子树节点数t
-     *      如果t &gt; k ,则在当前节点左子树中递归查找结果即可
+     *      如果t > k ,则在当前节点左子树中递归查找结果即可
      *      如果t &lt; k ,则在右子树查找即可,此时在右子树排名为 k-t-1
      *                 (k-t-1值为0时,会递归到右子树最小节点,此时size(x.left)=0,
      *                 返回右子树最小节点)
      *      如果t = k , 则返回当前节点即可
-     */
-    public Key select(int k){
-        Node x = select(root,k);
-        if(x == null) return null;
-        return x.key;
-    }
-    private Node select(Node x,int k){
-        if(x == null) return null;
-        int t = size(x.left);
-        if(t &gt; k) return select(x.left,k);
-        else if(t &lt; k) return select(x.right,k-t-1);
-        else return x;
-    }
+     */</span>
+    <span class="token keyword">public</span> Key <span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node x <span class="token operator">=</span> <span class="token function">select</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">.</span>key<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">select</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span><span class="token keyword">int</span> k<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> t <span class="token operator">=</span> <span class="token function">size</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">></span> k<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">select</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>k<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">&lt;</span> k<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">select</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>k<span class="token operator">-</span>t<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //二叉树中是否存在键key的节点
-    public boolean contains(Key key){ return get(key) != null; }
-    //是否为空
-    public boolean isEmpty(){ return size() == 0; }
-    //返回二叉树的节点总数
-    public int size(){ return size(root); }
-    private int size(Node x){
-        if(x == null) return 0;
-        return x.n;
-    }
+    <span class="token comment" spellcheck="true">//二叉树中是否存在键key的节点</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">contains</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">get</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">!=</span> null<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//是否为空</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//返回二叉树的节点总数</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">size</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">.</span>n<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public Iterable&lt;Key&gt; keys(){ return keys(min(),max()); }
-    public Iterable&lt;Key&gt; keys(Key lo,Key hi){
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        keys(deque,root,lo,hi);
-        return deque;
-    }
-    /**
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">keys</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">keys</span><span class="token punctuation">(</span><span class="token function">min</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">keys</span><span class="token punctuation">(</span>Key lo<span class="token punctuation">,</span>Key hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">keys</span><span class="token punctuation">(</span>deque<span class="token punctuation">,</span>root<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**
      * 范围查找:
-     * 中序遍历(递归): left -&gt; root -&gt; right
+     * 中序遍历(递归): left -> root -> right
      * 中序遍历节点key值在lo ~ hi之间的节点
      * 概述: 将中序遍历稍作修改即可,(增加判断条件只遍历符合的子树)
      * 即:  如果需要遍历当前节点x的左子树x.left, 则 lo &lt; x
-     *      如果需要遍历当前节点x的右子树x.right, 则 hi &gt; x
-     */
-    private void keys(Deque deque, Node x, Key lo, Key hi){
-        if(x == null) return;
-        int cmplo = comparator.compare(x.key,lo);
-        int cmphi = comparator.compare(x.key,hi);
-        if(cmplo &gt; 0) keys(deque,x.left,lo,hi);
-        if(cmplo &gt;=0 &amp;&amp; cmphi &lt;= 0) deque.offerLast(x.key);
-        if(cmphi &lt; 0) keys(deque,x.right,lo,hi);
-    }
+     *      如果需要遍历当前节点x的右子树x.right, 则 hi > x
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">keys</span><span class="token punctuation">(</span>Deque deque<span class="token punctuation">,</span> Node x<span class="token punctuation">,</span> Key lo<span class="token punctuation">,</span> Key hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmplo <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>lo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> cmphi <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmplo <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token function">keys</span><span class="token punctuation">(</span>deque<span class="token punctuation">,</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmplo <span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> cmphi <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmphi <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token function">keys</span><span class="token punctuation">(</span>deque<span class="token punctuation">,</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public Iterable&lt;Key&gt; keysLoop(Key lo,Key hi){
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        keysLoop(deque,root,lo,hi);
-        return deque;
-    }
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">keysLoop</span><span class="token punctuation">(</span>Key lo<span class="token punctuation">,</span>Key hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">keysLoop</span><span class="token punctuation">(</span>deque<span class="token punctuation">,</span>root<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
 
-    //***********************************2. 非递归实现部分*************************************
+    <span class="token operator">/</span><span class="token comment" spellcheck="true">/***********************************2. 非递归实现部分*************************************
     // 没有维护n的值
 
     /**
      * 范围查找: 非递归
      * 概述: 在非递归中序遍历基础上增加判断条件,不遍历不符合的子树
-     */
-    private void keysLoop(Deque deque,Node x,Key lo,Key hi){
-        ArrayDeque&lt;Node&gt; stack = new ArrayDeque&lt;&gt;();
-        while(x != null || !stack.isEmpty()) {
-            while (x != null) {
-                stack.push(x);
-                int cmplo = comparator.compare(x.key,lo);
-                if( cmplo &gt;= 0) x = x.left;
-                else x = null;
-            }
-            if(stack.isEmpty()) continue;
-            x = stack.pop();
-            int cmplo = comparator.compare(x.key,lo);
-            int cmphi = comparator.compare(x.key,hi);
-            if(cmplo &gt;=0 &amp;&amp; cmphi &lt;= 0) deque.offerLast(x.key);
-            if (x.right != null &amp;&amp;  cmphi &lt;= 0) x = x.right;
-            else x = null;
-        }
-    }
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">keysLoop</span><span class="token punctuation">(</span>Deque deque<span class="token punctuation">,</span>Node x<span class="token punctuation">,</span>Key lo<span class="token punctuation">,</span>Key hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Node<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null <span class="token operator">||</span> <span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">int</span> cmplo <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>lo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span> cmplo <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+                <span class="token keyword">else</span> x <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            x <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> cmplo <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>lo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> cmphi <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cmplo <span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> cmphi <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span>  cmphi <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> x <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 前序遍历: 非递归
-     * root -&gt; left -&gt; right
-     */
-    public Iterable&lt;Key&gt; preOrder(){
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        ArrayDeque&lt;Node&gt; stack = new ArrayDeque&lt;&gt;();
-        Node x = root;
-        while(x != null || !stack.isEmpty()) {
-            while (x != null) {
-                deque.offerLast(x.key);
-                stack.push(x);
-                x = x.left;
-            }
-            if(stack.isEmpty()) continue;
-            x = stack.pop();
-            x = x.right;
-        }
-        return deque;
-    }
-    /**
+     * root -> left -> right
+     */</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">preOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Node<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null <span class="token operator">||</span> <span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            x <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**
      * 中序遍历: 非递归
-     * left -&gt; root -&gt; right
-     */
-    public Iterable&lt;Key&gt; inOrder(){
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        ArrayDeque&lt;Node&gt; stack = new ArrayDeque&lt;&gt;();
-        Node x = root;
-        while(x != null || !stack.isEmpty()) {
-            while (x != null) {
-                stack.push(x);
-                x = x.left;
-            }
-            if(stack.isEmpty()) continue;
-            x = stack.pop();
-            deque.offerLast(x.key);
-            x = x.right;
-        }
-        return deque;
-    }
-    /**
+     * left -> root -> right
+     */</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">inOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Node<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null <span class="token operator">||</span> <span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            x <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**
      * 后序遍历: 非递归
-     * left -&gt; right -&gt; root
+     * left -> right -> root
      * 概述: 在中序遍历基础上做出修改即可
      *       在中序遍历中经过root时,如何存在right没有遍历则root不出栈;
      *       即如果上一个遍历节点pre不是当前root节点的right节点则需要先遍历right节点
-     */
-    public Iterable&lt;Key&gt; postOrder(){
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        ArrayDeque&lt;Node&gt; stack = new ArrayDeque&lt;&gt;();
-        Node x = root;
-        Node pre = null; //保存最新出栈节点
-        do {
-            while (x != null) {
-                if(pre == x) break; //已经遍历根节点,无需遍历子树
-                stack.push(x);
-                x = x.left;
-            }
-            x = stack.peek();
-            //当存在右节点且右节点没有遍历时(前一个遍历节点不是右节点),先遍历右节点(压栈)
-            if (x.right != null &amp;&amp; x.right != pre) {
-                x = x.right;
-                continue;
-            }
-            x = stack.pop();
-            deque.offerLast(x.key);
-            pre = x;  //保存最新出栈节点
-        } while(!stack.isEmpty());
-        return deque;
-    }
+     */</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">postOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Node<span class="token operator">></span> stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        Node pre <span class="token operator">=</span> null<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//保存最新出栈节点</span>
+        <span class="token keyword">do</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>pre <span class="token operator">==</span> x<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//已经遍历根节点,无需遍历子树</span>
+                stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            x <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//当存在右节点且右节点没有遍历时(前一个遍历节点不是右节点),先遍历右节点(压栈)</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> x<span class="token punctuation">.</span>right <span class="token operator">!=</span> pre<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+                <span class="token keyword">continue</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            x <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            pre <span class="token operator">=</span> x<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//保存最新出栈节点</span>
+        <span class="token punctuation">}</span> <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 层序遍历: 非递归
      * 概述: 利用队列先进先出的特点
      *       先将首层节点依次入队,然后出队时,如果有子节点则将子节点再依次入队
-     */
-    public Iterable&lt;Key&gt; levelOrder(){
-        ArrayDeque&lt;Node&gt; queue = new ArrayDeque&lt;&gt;();
-        ArrayDeque&lt;Key&gt; deque = new ArrayDeque&lt;&gt;();
-        Node x = root;
-        queue.offerLast(x);
-        while(!queue.isEmpty()){
-            Node t = queue.pollFirst();
-            if(t != null) deque.offerLast(t.key);
-            if(t.left != null) queue.offerLast(t.left);
-            if(t.right != null) queue.offerLast(t.right);
-        }
-        return deque;
-    }
+     */</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Key<span class="token operator">></span> <span class="token function">levelOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Node<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        ArrayDeque<span class="token operator">&lt;</span>Key<span class="token operator">></span> deque <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        queue<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>queue<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Node t <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">pollFirst</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t <span class="token operator">!=</span> null<span class="token punctuation">)</span> deque<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>left <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right <span class="token operator">!=</span> null<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offerLast</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> deque<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //插入: 非递归
-    public void putLoop(Key key,Value val){
-        if(root == null) {
-            root = new Node(key,val,1);
-            return;
-        }
-        Node x = root,parent = null;
-        while(x != null){
-            parent = x;
-            int cmp = comparator.compare(key,x.key);
-            if(cmp &gt; 0) x = x.right;
-            else if(cmp &lt; 0) x = x.left;
-            else {
-                x.val = val;
-                return;
-            }
-        }
-        //如果是新元素插入则更新n(或者直接更新,非新元素再撤回)
-        x = root;
-        while(x != null){
-            int cmp = comparator.compare(key,x.key);
-            if(cmp &gt; 0) {
-                x = x.right;
-                if(x != null) x.n ++;
-            }
-            else if(cmp &lt; 0) {
-                x = x.left;
-                if(x != null) x.n++;
-            }
-        }
-        int cmp = comparator.compare(key,parent.key);
-        if(cmp &gt; 0) parent.right = new Node(key,val,1);
-        else parent.left = new Node(key,val,1);
-    }
-    //获取: 非递归
-    public Value getLoop(Key key){
-        Node x = root;
-        while(x != null){
-            int cmp = comparator.compare(key,x.key);
-            if(cmp &gt; 0) x = x.right;
-            else if(cmp &lt; 0) x = x.left;
-            else return x.val;
-        }
-        return null;
-    }
-    //删除: 非递归
-    public void deleteLoop(Key key){ root = deleteLoop(root,key); }
-    private Node deleteLoop(Node x,Key key){
-        Node r = x;
-        Node pre = null;
-        while(x != null){
-            int cmp = comparator.compare(key,x.key);
-            if(cmp &gt; 0)
-            {
-                pre = x;
-                x = x.right;
-            }
-            else if(cmp &lt; 0)
-            {
-                pre = x;
-                x = x.left;
-            }
-            else{
-                Node t = x;
-                if(x.left == null) x = x.right;
-                else if(x.right == null) x = x.left;
-                else{
-                    x = minLoop(t.right);
-                    x.right = deleteMinLoop(t.right);
-                    x.left = t.left;
-                }
-                if(pre == null) r = x;
-                else if(pre.left == t) pre.left = x;
-                else pre.right = x;
-                break;
-            }
-        }
-        return r;
-    }
-    //最小值: 非递归
-    private Node minLoop(Node x){
-        if(x == null) return null;
-        while(x.left != null){
-            x = x.left;
-        }
-        return x;
-    }
-    //删除最小: 非递归
-    public void deleteMinLoop(){ root = deleteMinLoop(root); }
-    private Node deleteMinLoop(Node x){
-        Node r = x;
-        Node pre = x;
-        if(x == null) return null;
-        while (x.left != null) {
-            pre = x;
-            x = x.left;
-        }
-        if(pre == x) return pre.right;
-        pre.left = x.right;
-        return r;
-    }
+    <span class="token comment" spellcheck="true">//插入: 非递归</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">putLoop</span><span class="token punctuation">(</span>Key key<span class="token punctuation">,</span>Value val<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>root <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            root <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>val<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">,</span>parent <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            parent <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                x<span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//如果是新元素插入则更新n(或者直接更新,非新元素再撤回)</span>
+        x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> x<span class="token punctuation">.</span>n <span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span> x<span class="token punctuation">.</span>n<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>parent<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> parent<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>val<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> parent<span class="token punctuation">.</span>left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>val<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//获取: 非递归</span>
+    <span class="token keyword">public</span> Value <span class="token function">getLoop</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node x <span class="token operator">=</span> root<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">return</span> x<span class="token punctuation">.</span>val<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//删除: 非递归</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteLoop</span><span class="token punctuation">(</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span> root <span class="token operator">=</span> <span class="token function">deleteLoop</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">deleteLoop</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key key<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node r <span class="token operator">=</span> x<span class="token punctuation">;</span>
+        Node pre <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> cmp <span class="token operator">=</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                pre <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>cmp <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                pre <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                Node t <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">==</span> null<span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+                <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right <span class="token operator">==</span> null<span class="token punctuation">)</span> x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+                <span class="token keyword">else</span><span class="token punctuation">{</span>
+                    x <span class="token operator">=</span> <span class="token function">minLoop</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    x<span class="token punctuation">.</span>right <span class="token operator">=</span> <span class="token function">deleteMinLoop</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    x<span class="token punctuation">.</span>left <span class="token operator">=</span> t<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>pre <span class="token operator">==</span> null<span class="token punctuation">)</span> r <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pre<span class="token punctuation">.</span>left <span class="token operator">==</span> t<span class="token punctuation">)</span> pre<span class="token punctuation">.</span>left <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                <span class="token keyword">else</span> pre<span class="token punctuation">.</span>right <span class="token operator">=</span> x<span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小值: 非递归</span>
+    <span class="token keyword">private</span> Node <span class="token function">minLoop</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">!=</span> null<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//删除最小: 非递归</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deleteMinLoop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> root <span class="token operator">=</span> <span class="token function">deleteMinLoop</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> Node <span class="token function">deleteMinLoop</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Node r <span class="token operator">=</span> x<span class="token punctuation">;</span>
+        Node pre <span class="token operator">=</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span>left <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            pre <span class="token operator">=</span> x<span class="token punctuation">;</span>
+            x <span class="token operator">=</span> x<span class="token punctuation">.</span>left<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pre <span class="token operator">==</span> x<span class="token punctuation">)</span> <span class="token keyword">return</span> pre<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+        pre<span class="token punctuation">.</span>left <span class="token operator">=</span> x<span class="token punctuation">.</span>right<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> r<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 树高
      * 概述: 当前节点左子树和右子树中最大高度+1即为当前节点树高
-     */
-    public int height(){ return height(root); }
-    private int height(Node x){
-        if(x == null) return 0;  //假设叶子节点高度为1,若叶子节点高度为0则返回-1;
-        return Math.max(height(x.left),height(x.right)) + 1;
-    }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">height</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">height</span><span class="token punctuation">(</span>root<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">height</span><span class="token punctuation">(</span>Node x<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//假设叶子节点高度为1,若叶子节点高度为0则返回-1;</span>
+        <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token function">height</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token function">height</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //是否二叉查找树(根据二叉查找树性质判断)(也可以通过中序遍历判断)
-    public boolean isBST(){ return isBST(root,null,null); }
-    public boolean isBST(Node x,Key min,Key max){
-        if(x == null) return true;
-        if(min != null &amp;&amp; comparator.compare(x.key,min) &lt;= 0) return false;
-        if(max != null &amp;&amp; comparator.compare(x.key,max) &gt;= 0) return false;
-        //左子树上的所有节点的值均小于根节点的值,右子树上的所有结点的值均大于根节点的值
-        return isBST(x.left,min,x.key) &amp;&amp; isBST(x.right,x.key,max);
-    }
+    <span class="token comment" spellcheck="true">//是否二叉查找树(根据二叉查找树性质判断)(也可以通过中序遍历判断)</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isBST</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> <span class="token function">isBST</span><span class="token punctuation">(</span>root<span class="token punctuation">,</span>null<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isBST</span><span class="token punctuation">(</span>Node x<span class="token punctuation">,</span>Key min<span class="token punctuation">,</span>Key max<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>min <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>min<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>max <span class="token operator">!=</span> null <span class="token operator">&amp;&amp;</span> comparator<span class="token punctuation">.</span><span class="token function">compare</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>max<span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//左子树上的所有节点的值均小于根节点的值,右子树上的所有结点的值均大于根节点的值</span>
+        <span class="token keyword">return</span> <span class="token function">isBST</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>left<span class="token punctuation">,</span>min<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isBST</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span>right<span class="token punctuation">,</span>x<span class="token punctuation">.</span>key<span class="token punctuation">,</span>max<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-}
-</code></pre><script>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1053,6 +1058,10 @@ public class BinarySearchTree&lt;Key,Value&gt; {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E6%9F%A5%E6%89%BE/">
                                     <span class="chip bg-color">查找</span>
@@ -1165,6 +1174,10 @@ public class BinarySearchTree&lt;Key,Value&gt; {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%9F%A5%E6%89%BE/">
                         <span class="chip bg-color">查找</span>
                     </a>
@@ -1220,6 +1233,10 @@ public class BinarySearchTree&lt;Key,Value&gt; {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
@@ -1421,7 +1438,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

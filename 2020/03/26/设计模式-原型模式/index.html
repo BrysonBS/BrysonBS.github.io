@@ -466,7 +466,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-27
+                    2020-04-20
                 </div>
                 
 
@@ -525,46 +525,48 @@
 <li><p>*<em>深克隆: *</em>序列化实现深克隆,使用对象流把对象写入流中,再从流中读取实现复制对象,原型类需实现Serializable接口,对于不想被序列化的属性需要使用transient修饰</p>
 </li>
 </ol>
-<pre><code>//具体原型类
-class RealizeType implements Cloneable,Serializable{
-    //public Student student;//引用类型,如果Student类没有实现Cloneable接口,浅克隆不会复制
-    public RealizeType() {
-        System.out.println("原型对象创建成功!");
-    }
-    //浅克隆: 实现Cloneable接口,重写clone方法
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        System.out.println("原型对象浅克隆成功");
-        return super.clone();
-    }
-    //深克隆: 实现Serializable接口,将对象写入流中再取出
-    public RealizeType deepClone(){
-        //序列化
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try (ObjectOutputStream output = new ObjectOutputStream(byteArrayOutputStream)) {
-            output.writeObject(this);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        //反序列化
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-        RealizeType obj = null;
-        try (ObjectInputStream input = new ObjectInputStream(byteArrayInputStream)) {
-            obj = (RealizeType) input.readObject();
-        }catch (IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
-        System.out.println("原型对象深克隆成功");
-        return obj;
-    }
-}</code></pre><pre><code>    @Test //测试
-    public void prototype() throws CloneNotSupportedException {
-        //浅拷贝
-        RealizeType obj = new RealizeType();
-        RealizeType clone = (RealizeType) obj.clone();
-        //深拷贝
-        RealizeType deepClone = obj.deepClone();
-    }</code></pre><script>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//具体原型类</span>
+<span class="token keyword">class</span> <span class="token class-name">RealizeType</span> <span class="token keyword">implements</span> <span class="token class-name">Cloneable</span><span class="token punctuation">,</span>Serializable<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//public Student student;//引用类型,如果Student类没有实现Cloneable接口,浅克隆不会复制</span>
+    <span class="token keyword">public</span> <span class="token function">RealizeType</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原型对象创建成功!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//浅克隆: 实现Cloneable接口,重写clone方法</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Object <span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> CloneNotSupportedException <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原型对象浅克隆成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//深克隆: 实现Serializable接口,将对象写入流中再取出</span>
+    <span class="token keyword">public</span> RealizeType <span class="token function">deepClone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//序列化</span>
+        ByteArrayOutputStream byteArrayOutputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">(</span>ObjectOutputStream output <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectOutputStream</span><span class="token punctuation">(</span>byteArrayOutputStream<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            output<span class="token punctuation">.</span><span class="token function">writeObject</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>IOException e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//反序列化</span>
+        ByteArrayInputStream byteArrayInputStream <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayInputStream</span><span class="token punctuation">(</span>byteArrayOutputStream<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        RealizeType obj <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">(</span>ObjectInputStream input <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ObjectInputStream</span><span class="token punctuation">(</span>byteArrayInputStream<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            obj <span class="token operator">=</span> <span class="token punctuation">(</span>RealizeType<span class="token punctuation">)</span> input<span class="token punctuation">.</span><span class="token function">readObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> <span class="token operator">|</span> ClassNotFoundException e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"原型对象深克隆成功"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span> <span class="token comment" spellcheck="true">//测试</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">prototype</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> CloneNotSupportedException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//浅拷贝</span>
+        RealizeType obj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RealizeType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        RealizeType clone <span class="token operator">=</span> <span class="token punctuation">(</span>RealizeType<span class="token punctuation">)</span> obj<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//深拷贝</span>
+        RealizeType deepClone <span class="token operator">=</span> obj<span class="token punctuation">.</span><span class="token function">deepClone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1015,7 +1017,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

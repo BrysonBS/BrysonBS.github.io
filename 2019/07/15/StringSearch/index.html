@@ -432,6 +432,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                 <span class="chip bg-color">字符串</span>
                             </a>
@@ -464,7 +468,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-07-15
+                    2020-04-20
                 </div>
                 
 
@@ -497,84 +501,86 @@
                 <h3 id="子字符串查找"><a href="#子字符串查找" class="headerlink" title="子字符串查找"></a>子字符串查找</h3><blockquote>
 <p>给定一段长度为n的文本txt和一个长度为m的pattern模式串,在文本中找到和该模式匹配的字串</p>
 </blockquote>
-<h4 id="1-BruteForce算法-暴力子字符串查找算法"><a href="#1-BruteForce算法-暴力子字符串查找算法" class="headerlink" title="1.BruteForce算法(暴力子字符串查找算法)"></a>1.BruteForce算法(暴力子字符串查找算法)</h4><pre><code>/**
+<h4 id="1-BruteForce算法-暴力子字符串查找算法"><a href="#1-BruteForce算法-暴力子字符串查找算法" class="headerlink" title="1.BruteForce算法(暴力子字符串查找算法)"></a>1.BruteForce算法(暴力子字符串查找算法)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 暴力子字符串查找: 
  * 时间复杂度: 一般情况1.1N 最坏情况:MN
  * 概述:模式串与文本对齐开始查找匹配,失配时,模式串向后移动一位,重新开始查找匹配
- */
-public class BruteForce {
-    //方案一
-    public static int search(String pattern,String txt){
-        int m = pattern.length();
-        int n = txt.length();
-        for(int i=0;i&lt;=n-m;++i){
-            int j;
-            for(j=0;j&lt;m;++j)
-                if(txt.charAt(i+j) != pattern.charAt(j)) break; //失配
-            if(j == m) return i;
-        }
-        return -1;
-    }
-    //方案二
-    public static int searchB(String pattern,String txt){
-        int m = pattern.length();
-        int n = txt.length();
-        int i = 0,j = 0;
-        for(;i&lt;n &amp;&amp; j&lt;m;++i){
-            if(txt.charAt(i) == pattern.charAt(j)) j++;
-            else{ //失配
-                i -= j;
-                j = 0;
-            }
-        }
-        if(j == m) return i-j;
-        return -1;
-    }
-}</code></pre><h4 id="2-KMP算法"><a href="#2-KMP算法" class="headerlink" title="2.KMP算法"></a>2.KMP算法</h4><h5 id="2-1-基于DFA的KMP算法"><a href="#2-1-基于DFA的KMP算法" class="headerlink" title="2.1.基于DFA的KMP算法"></a>2.1.基于DFA的KMP算法</h5><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BruteForce</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//方案一</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token operator">-</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j<span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>j<span class="token punctuation">)</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span> <span class="token operator">!=</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//失配</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//方案二</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">searchB</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n <span class="token operator">&amp;&amp;</span> j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> j<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//失配</span>
+                i <span class="token operator">-=</span> j<span class="token punctuation">;</span>
+                j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token operator">-</span>j<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-KMP算法"><a href="#2-KMP算法" class="headerlink" title="2.KMP算法"></a>2.KMP算法</h4><h5 id="2-1-基于DFA的KMP算法"><a href="#2-1-基于DFA的KMP算法" class="headerlink" title="2.1.基于DFA的KMP算法"></a>2.1.基于DFA的KMP算法</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * Knuth-Morris-Pratt 子字符串查找算法
  * 时间复杂度: 一般情况1.1N 最坏情况:2N
  * 概述: 通过构造DFA方式实现,关键理解DFA的含义
  * 特点: 与next数组方式不同(另见本章)时,失配时不会停留在再较当前失配字符,会一直前进不断比较下一个字符
  *       dfa[i][j]中i为输入字符(将要与模式串比较的字符),j为当前状态(0~pattern.length()-1),值为比较后进入的下一个状态
  * 关键点: 状态也表示最大公共前后缀长度!,遇到失配时需要将模式串移动使公共前后缀对齐,继续比较下一个字符
- */
-public class KMP {
-    private String pattern; //模式串
-    private int[][] dfa;    //限定有限状态自动机,dfa[i][j]中i为将输入的字符,j为当前状态,值为将会进入的下一个状态
-    private int R; //字符编码表长度
-    public KMP(String pattern){
-        this.R = 256;
-        setPattern(pattern);
-    }
-    public KMP(String pattern,int R){
-        this.R = R;
-        setPattern(pattern);
-    }
-    public KMP setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        int m = pattern.length();
-        dfa = new int[R][m];
-        dfa[pattern.charAt(0)][0] = 1; // dfa[i][0] = 0,当匹配时进入下一个状态1
-        for(int k=0,j=1;j&lt;m;++j){
-            for(int c=0;c&lt;R;++c)
-                dfa[c][j] = dfa[c][k]; //失配时,k状态记录了到上一个字符为止匹配的最大公共前后缀长度,重新对齐后,输入当前字符匹配
-            dfa[pattern.charAt(j)][j] = j+1; //匹配时状态+1
-            k = dfa[pattern.charAt(j)][k]; //更新状态,即当前匹配的最大公共前后缀长度(关键)
-        }
-        return this;
-    }
-    public int search(String txt){
-        if(txt == null || "".equals(txt)) throw new RuntimeException("匹配字符串txt不能为空");
-        int m = pattern.length();
-        int n = txt.length();
-        int i = 0, j = 0;
-        for(;i&lt;n &amp;&amp; j&lt;m;++i)
-            j = dfa[txt.charAt(i)][j]; //失配时对齐到当前字符的最大公共前后缀,继续比较下一个字符(索引刚好=长度)
-        if(j == m) return i-m;
-        return -1;
-    }
-}</code></pre><h5 id="2-2-基于next数组的KMP算法"><a href="#2-2-基于next数组的KMP算法" class="headerlink" title="2.2.基于next数组的KMP算法"></a>2.2.基于next数组的KMP算法</h5><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KMP</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dfa<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//限定有限状态自动机,dfa[i][j]中i为将输入的字符,j为当前状态,值为将会进入的下一个状态</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> R<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//字符编码表长度</span>
+    <span class="token keyword">public</span> <span class="token function">KMP</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">KMP</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span><span class="token keyword">int</span> R<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> R<span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> KMP <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dfa <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        dfa<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// dfa[i][0] = 0,当匹配时进入下一个状态1</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>j<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span>
+                dfa<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dfa<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//失配时,k状态记录了到上一个字符为止匹配的最大公共前后缀长度,重新对齐后,输入当前字符匹配</span>
+            dfa<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//匹配时状态+1</span>
+            k <span class="token operator">=</span> dfa<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//更新状态,即当前匹配的最大公共前后缀长度(关键)</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>txt <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"匹配字符串txt不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n <span class="token operator">&amp;&amp;</span> j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            j <span class="token operator">=</span> dfa<span class="token punctuation">[</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//失配时对齐到当前字符的最大公共前后缀,继续比较下一个字符(索引刚好=长度)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token operator">-</span>m<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-2-基于next数组的KMP算法"><a href="#2-2-基于next数组的KMP算法" class="headerlink" title="2.2.基于next数组的KMP算法"></a>2.2.基于next数组的KMP算法</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * Knuth-Morris-Pratt 子字符串查找算法
  * 时间复杂度: 线性  一般情况1.1N 最坏情况:3N
  * 概述: 通过next数组(此处维护了最大公共前后缀长度)方式实现
@@ -582,179 +588,182 @@ public class KMP {
  *      求解next[i+1],将next[i]的最大公共前后缀与其对齐,比较i+1字符位置是否相同,即pattern[k] == pattern[i+1]
  *      如果相同则next[i+1] = k+1,否则将前k个字符的最大公共前后缀长度next[k]与其对齐,继续比较i+1字符即pattern[next[k]] == pattern[i+1]
  *      如果相同则next[i+1] = next[k]+1;以此类推,一直查找,如果当k=0时还没找到,则,next[i+1] = 0;
- */
-public class KMPSearch {
-    private int[] next; //维护了最大公共前后缀长度
-    private String pattern; //模式串
-    public KMPSearch(String pattern) {
-        setPattern(pattern);
-    }
-    public KMPSearch setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        next = new int[pattern.length()];
-        next[0] = 0;
-        for(int i = 1,k = 0; i &lt; pattern.length();++i){
-            while(k &gt; 0 &amp;&amp; pattern.charAt(i) != pattern.charAt(k))
-                k = next[k-1]; //失配时,将0~k子字符串的最大公共前后缀与其对齐,继续与i字符比较
-            if(pattern.charAt(i) == pattern.charAt(k)) ++k; //匹配成功时最大公共前后缀+1
-            next[i] = k; //更新当前的最大公共前后缀
-        }
-        return this;
-    }
-    public int search(String txt){
-        if(txt == null || "".equals(txt)) throw new RuntimeException("匹配字符串txt不能为空");
-        int m = pattern.length();
-        int n = txt.length();
-        int i = 0,j = 0;
-        for(;i&lt;n&amp;&amp;j&lt;m;++i){
-            if(txt.charAt(i) == pattern.charAt(j)) ++j;
-            else{//失配时,对齐最大公共前后缀,继续比较当前字符,会停留
-                if(j == 0) continue;
-                --i;
-                j = next[j-1];
-            }
-        }
-        if(j == m) return i-m;
-        return -1;
-    }
-}</code></pre><h4 id="3-BoyerMoore算法"><a href="#3-BoyerMoore算法" class="headerlink" title="3.BoyerMoore算法"></a>3.BoyerMoore算法</h4><h5 id="3-1-仅基于坏字符规则的BoyerMoore算法"><a href="#3-1-仅基于坏字符规则的BoyerMoore算法" class="headerlink" title="3.1.仅基于坏字符规则的BoyerMoore算法"></a>3.1.仅基于坏字符规则的BoyerMoore算法</h5><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KMPSearch</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> next<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//维护了最大公共前后缀长度</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串</span>
+    <span class="token keyword">public</span> <span class="token function">KMPSearch</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> KMPSearch <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        next <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        next<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>k <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">!=</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                k <span class="token operator">=</span> next<span class="token punctuation">[</span>k<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//失配时,将0~k子字符串的最大公共前后缀与其对齐,继续与i字符比较</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>k<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">++</span>k<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//匹配成功时最大公共前后缀+1</span>
+            next<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> k<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//更新当前的最大公共前后缀</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>txt <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>txt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"匹配字符串txt不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token operator">&amp;&amp;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">++</span>j<span class="token punctuation">;</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//失配时,对齐最大公共前后缀,继续比较当前字符,会停留</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                <span class="token operator">--</span>i<span class="token punctuation">;</span>
+                j <span class="token operator">=</span> next<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token operator">-</span>m<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-BoyerMoore算法"><a href="#3-BoyerMoore算法" class="headerlink" title="3.BoyerMoore算法"></a>3.BoyerMoore算法</h4><h5 id="3-1-仅基于坏字符规则的BoyerMoore算法"><a href="#3-1-仅基于坏字符规则的BoyerMoore算法" class="headerlink" title="3.1.仅基于坏字符规则的BoyerMoore算法"></a>3.1.仅基于坏字符规则的BoyerMoore算法</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * BoyerMoore 子字符串查找算法
  * 时间复杂度: 亚线性 一般情况N/M 最坏情况MN
  * 概述: 此处仅仅使用了坏字符规则,好后缀+坏字符规则另见本章
  *        整体从左向右,与模式串比较时,(模式串结束位置)从右向左(模式串开始位置)比较
  *       失配时,寻找模式串最右边与其相同的字符对齐(如果导致倒退就模式串向后移动一位),没找到则是模式串开始位置与下一个字符对齐,继续从右向左匹配,
- */
-public class BoyerMoore {
-    private String pattern;
-    private int R;
-    private int[] right;
-    public BoyerMoore(String pattern) {
-        this.R = 256;
-        setPattern(pattern);
-    }
-    public BoyerMoore(String pattern,int R) {
-        this.R = R;
-        setPattern(pattern);
-    }
-    public BoyerMoore setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        //坏字符规则
-        right = new int[R]; //键为任意字符,值为当前字符在模式串中出现的最大索引
-        for(int c=0;c&lt;R;++c) //默认没找到为-1
-            right[c] = -1;
-        for(int i=0;i&lt;pattern.length();++i)
-            right[pattern.charAt(i)] = i; //在模式串中出现的字符更新最大索引
-        return this;
-    }
-    public int search(String txt){
-        int m = pattern.length();
-        int n = txt.length();
-        int skip;
-        for(int i=0;i&lt;=n-m;i += skip){
-            int j;
-            for(j=m-1;j&gt;=0 &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);--j);
-            if(j&lt;0) return i;
-            else skip = Math.max(j-right[txt.charAt(i+j)],1); //如果导致倒退,就向后移动一位
-        }
-        return -1;
-    }
-}</code></pre><h5 id="3-2-基于坏字符与好后缀的BoyerMoore算法"><a href="#3-2-基于坏字符与好后缀的BoyerMoore算法" class="headerlink" title="3.2.基于坏字符与好后缀的BoyerMoore算法"></a>3.2.基于坏字符与好后缀的BoyerMoore算法</h5><pre><code>/**
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BoyerMoore</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> R<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> right<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">BoyerMoore</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">BoyerMoore</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span><span class="token keyword">int</span> R<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> R<span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> BoyerMoore <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//坏字符规则</span>
+        right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//键为任意字符,值为当前字符在模式串中出现的最大索引</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> c<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>c<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>c<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//默认没找到为-1</span>
+            right<span class="token punctuation">[</span>c<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            right<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//在模式串中出现的字符更新最大索引</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> skip<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token operator">-</span>m<span class="token punctuation">;</span>i <span class="token operator">+=</span> skip<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j<span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">==</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> skip <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>j<span class="token operator">-</span>right<span class="token punctuation">[</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//如果导致倒退,就向后移动一位</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="3-2-基于坏字符与好后缀的BoyerMoore算法"><a href="#3-2-基于坏字符与好后缀的BoyerMoore算法" class="headerlink" title="3.2.基于坏字符与好后缀的BoyerMoore算法"></a>3.2.基于坏字符与好后缀的BoyerMoore算法</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * BoyerMoore 子字符串查找算法
  * 时间复杂度: 亚线性  一般情况: N/M
  * 概述: 失配时,选取坏字符与好后缀规则中最大的跳跃距离进行模式串移动
  * 坏字符: 失配字符出现在模式串中的最大索引位置,下次比较对齐该字符重新进行比较
  * 好后缀: 记录模式串中与当前匹配的后缀相同的,或者模式串开始位置与该后缀部分相同的,
  *         则失配时对齐该相同部分,继续重新开始匹配
- */
-public class BoyerMooreSearch {
-    private String pattern;
-    private int R;
-    private int[] bad;    //bad character坏字符(值保存在模式串中找到的最大索引)
-    private int[] good;   //good suffix好后缀(值为下次比较模式串应该跳跃的距离)
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BoyerMooreSearch</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> R<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bad<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//bad character坏字符(值保存在模式串中找到的最大索引)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> good<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//good suffix好后缀(值为下次比较模式串应该跳跃的距离)</span>
 
-    public BoyerMooreSearch(String pattern) {
-        R = 256;
-        setPattern(pattern);
-    }
-    public BoyerMooreSearch(String pattern,int R){
-        this.R = R;
-        setPattern(pattern);
-    }
-    public BoyerMooreSearch setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        int m = pattern.length();
-        //坏字符(此处记录出现的最大索引)
-        bad = new int[R];
-        for(int i=0;i&lt;R;++i)
-            bad[i] = -1;
-        for(int i=0;i&lt;m;++i)
-            bad[pattern.charAt(i)] = i;
-        //好后缀
-        good = new int[m];
-        int[] suffix  = getSuffix();
-        //case1: 不存在和好后缀匹配的字符串
-        Arrays.fill(good,m);
-        //case2: 模式串开头部分匹配
-        int j=0;
-        for(int i=m-2;i&gt;=0;--i){
-            if(suffix[i] == i+1){
-                for(;j&lt;m-1-i;++j)
-                    if(good[j] == m) good[j] = m-1-i;
-            }
-        }
-        //case3: 存在与好后缀完全匹配的字符串
-        for(int i=0;i&lt;=m-2;++i)
-            good[m-1-suffix[i]] = m-1-i;
+    <span class="token keyword">public</span> <span class="token function">BoyerMooreSearch</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">BoyerMooreSearch</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span><span class="token keyword">int</span> R<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> R<span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> BoyerMooreSearch <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//坏字符(此处记录出现的最大索引)</span>
+        bad <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>R<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            bad<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            bad<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//好后缀</span>
+        good <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> suffix  <span class="token operator">=</span> <span class="token function">getSuffix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//case1: 不存在和好后缀匹配的字符串</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>good<span class="token punctuation">,</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//case2: 模式串开头部分匹配</span>
+        <span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>m<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>suffix<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">;</span><span class="token operator">++</span>j<span class="token punctuation">)</span>
+                    <span class="token keyword">if</span><span class="token punctuation">(</span>good<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">==</span> m<span class="token punctuation">)</span> good<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//case3: 存在与好后缀完全匹配的字符串</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>m<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            good<span class="token punctuation">[</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>suffix<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">;</span>
 
-        return this;
-    }
-    //计算后缀数组(暴力查找: 所有后缀情况全部查询一遍)
-    private int[] getSuffix_old(){
-        int m = pattern.length();
-        int[] suffix  = new int[m];
-        suffix[m-1] = m;
-        for(int i= m-2;i&gt;=0;--i){
-            int j = i;
-            while(j&gt;=0 &amp;&amp; pattern.charAt(j) == pattern.charAt(m-1-i+j)) --j;
-            suffix[i] = i-j;
-        }
-        return suffix;
-    }
-    //计算后缀数组,稍微改进
-    private int[] getSuffix(){
-        int m = pattern.length();
-        int[] suffix = new int[m];
-        suffix[m-1] = m;
-        int j = m-1,prei=0;
-        for(int i=m-2;i&gt;=0;--i){
-            if(i&gt;j &amp;&amp; suffix[m-1-prei+i] &lt; i-j) //与前面计算过的的后缀相同,无需计算,直接赋值为以前计算过的好后缀
-                suffix[i] = suffix[m-1-prei+i];
-            else {
-                if(i&lt;j) j = i;
-                while (j &gt;= 0 &amp;&amp; pattern.charAt(j) == pattern.charAt(m - 1 - i + j)) --j;
-                suffix[i] = i - j;
-                prei = i;
-            }
-        }
-        return suffix;
-    }
-    //BM算法查找字串
-    public int search(String txt){
-        int m = pattern.length();
-        int n = txt.length();
-        int skip;
-        for(int i=0;i&lt;=n-m;i+=skip){
-            int j;
-            for(j=m-1;j&gt;=0 &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);--j);
-            if(j&lt;0) return i;
-            else skip = Math.max(j-bad[txt.charAt(i+j)],good[j]); //取坏字符与好后缀中跳跃最大距离的
-        }
-        return -1;
-    }
-}</code></pre><h4 id="4-RabinKarp算法-指纹子字符串搜索算法"><a href="#4-RabinKarp算法-指纹子字符串搜索算法" class="headerlink" title="4.RabinKarp算法(指纹子字符串搜索算法)"></a>4.RabinKarp算法(指纹子字符串搜索算法)</h4><pre><code>/**
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//计算后缀数组(暴力查找: 所有后缀情况全部查询一遍)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getSuffix_old</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> suffix  <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        suffix<span class="token punctuation">[</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span> m<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>j<span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">--</span>j<span class="token punctuation">;</span>
+            suffix<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token operator">-</span>j<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> suffix<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//计算后缀数组,稍微改进</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getSuffix</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> suffix <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        suffix<span class="token punctuation">[</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> m<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> j <span class="token operator">=</span> m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>prei<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>m<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>j <span class="token operator">&amp;&amp;</span> suffix<span class="token punctuation">[</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>prei<span class="token operator">+</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> i<span class="token operator">-</span>j<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//与前面计算过的的后缀相同,无需计算,直接赋值为以前计算过的好后缀</span>
+                suffix<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> suffix<span class="token punctuation">[</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>prei<span class="token operator">+</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token punctuation">)</span> j <span class="token operator">=</span> i<span class="token punctuation">;</span>
+                <span class="token keyword">while</span> <span class="token punctuation">(</span>j <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">==</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>m <span class="token operator">-</span> <span class="token number">1</span> <span class="token operator">-</span> i <span class="token operator">+</span> j<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">--</span>j<span class="token punctuation">;</span>
+                suffix<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">-</span> j<span class="token punctuation">;</span>
+                prei <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> suffix<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//BM算法查找字串</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> skip<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token operator">-</span>m<span class="token punctuation">;</span>i<span class="token operator">+=</span>skip<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j<span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">>=</span><span class="token number">0</span> <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">==</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token punctuation">;</span>
+            <span class="token keyword">else</span> skip <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>j<span class="token operator">-</span>bad<span class="token punctuation">[</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>good<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//取坏字符与好后缀中跳跃最大距离的</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-RabinKarp算法-指纹子字符串搜索算法"><a href="#4-RabinKarp算法-指纹子字符串搜索算法" class="headerlink" title="4.RabinKarp算法(指纹子字符串搜索算法)"></a>4.RabinKarp算法(指纹子字符串搜索算法)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * Rabin-Karp 指纹字符串查找算法
  * 时间复杂度: 线性 7N
  * 概述: 按照暴力匹配的策略,但是比较的是与模式串相同长度的整个子串的hash值
@@ -762,127 +771,129 @@ public class BoyerMooreSearch {
  * 关键: 通过已经计算出当前子串的hash值快速计算下一个将要比较的字串的hash值
  *       如: 3123 第一次使用霍纳法则算出312的hash值,下次需要计算123的hash值,则为(312-300)*10+3的hash值
  *       然后使用同余定理对该式求解hash值(即余数)
- */
-public class RabinKarp {
-    private String pattern; //模式串
-    private long patternHash; //模式串hash值
-    private int m; //模式串长度
-    private long q; //一个大质数
-    private int R; //基数(字符集数),一个长度为m的字符串可以看做R进制m位数
-    private long RM; //R^(m-1) % q(即第m-1位数除以q的余数)
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RabinKarp</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> patternHash<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串hash值</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> m<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串长度</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> q<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//一个大质数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> R<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//基数(字符集数),一个长度为m的字符串可以看做R进制m位数</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> RM<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//R^(m-1) % q(即第m-1位数除以q的余数)</span>
 
-    public RabinKarp(String pattern) {
-        this.R = 256;
-        setPattern(pattern);
-    }
-    public RabinKarp(String pattern, int R) {
-        this.R = R;
-        setPattern(pattern);
-    }
-    public RabinKarp setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        this.m = pattern.length();
-        this.q = longRandomPrime(); //31位质数,q足够大时,几乎没有hash冲突,可以不再进行hash冲突验证
-        //预计算RM的值
-        RM = 1;
-        for(int i=1;i&lt;m;++i)
-            RM = (RM*R)%q;
-        patternHash = hash(pattern,m);
-        return this;
-    }
-    //Horner Rule(霍纳法则): 计算字符串[0...m-1]的hash值
-    private long hash(String key,int m){
-        long h = 0;
-        for(int i=0;i&lt;m;++i)
-            h = (R*h + key.charAt(i))%q;
-        return h;
-    }
-    //随机生成一个31位的质数
-    private long longRandomPrime(){
-        return BigInteger.probablePrime(31,new Random()).longValue();
-    }
-    /**
+    <span class="token keyword">public</span> <span class="token function">RabinKarp</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">RabinKarp</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span> <span class="token keyword">int</span> R<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> R<span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> RabinKarp <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>q <span class="token operator">=</span> <span class="token function">longRandomPrime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//31位质数,q足够大时,几乎没有hash冲突,可以不再进行hash冲突验证</span>
+        <span class="token comment" spellcheck="true">//预计算RM的值</span>
+        RM <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            RM <span class="token operator">=</span> <span class="token punctuation">(</span>RM<span class="token operator">*</span>R<span class="token punctuation">)</span><span class="token operator">%</span>q<span class="token punctuation">;</span>
+        patternHash <span class="token operator">=</span> <span class="token function">hash</span><span class="token punctuation">(</span>pattern<span class="token punctuation">,</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//Horner Rule(霍纳法则): 计算字符串[0...m-1]的hash值</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> <span class="token function">hash</span><span class="token punctuation">(</span>String key<span class="token punctuation">,</span><span class="token keyword">int</span> m<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">long</span> h <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            h <span class="token operator">=</span> <span class="token punctuation">(</span>R<span class="token operator">*</span>h <span class="token operator">+</span> key<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">%</span>q<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> h<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//随机生成一个31位的质数</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> <span class="token function">longRandomPrime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> BigInteger<span class="token punctuation">.</span><span class="token function">probablePrime</span><span class="token punctuation">(</span><span class="token number">31</span><span class="token punctuation">,</span><span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">longValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">/**
      * 正确性验证: 可能存在hash冲突
      * 1.蒙特卡罗算法: 采样越多，越逼近最优解
      *   策略: q的取值越大,hash冲突的可能性越小,使用非常大的q值时几乎不可能发生hash冲突,在实际应用中寻找匹配是可靠的
      * 2.拉斯维加斯算法: 采样越多，越有可能找到最优解
      *   策略: 对RK算法找到的匹配字串再进行验证
-     */
-    //拉斯维加斯算法验证正确性
-    private boolean check(String txt,int i){
-        for(int j=0;j&lt;m;++j)
-            if(pattern.charAt(j) != txt.charAt(i+j))
-                return false;
-        return true;
-    }
+     */</span>
+    <span class="token comment" spellcheck="true">//拉斯维加斯算法验证正确性</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">check</span><span class="token punctuation">(</span>String txt<span class="token punctuation">,</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m<span class="token punctuation">;</span><span class="token operator">++</span>j<span class="token punctuation">)</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">!=</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 同余定理
      * (A*B) mod m = ((A mod m) * (B mod m)) mod m
      * (A+B) mod m = ((A mod m) + (B mod m)) mod m
      * (A-B) mod m = ((A mod m) - (B mod m)+ m) mod m
-     */
-    public int search(String txt){
-        int n = txt.length();
-        if(n &lt; m) return -1;
-        long txtHash = hash(txt,m);
-        if(txtHash == patternHash &amp;&amp; check(txt,0))
-            return 0;
-        for(int i = m;i&lt;n;++i){
-            //同余定理,Horner Rule(霍纳法则)
-            //(A-B) mod m = ((A mod m) - (B mod m)+ m) mod m
-            txtHash = (txtHash - RM * txt.charAt(i - m) % q + q) % q;
-            txtHash = (txtHash * R + txt.charAt(i)) % q;
-            int offset = i-m+1;
-            if(txtHash == patternHash &amp;&amp; check(txt,offset)) //可以不验证,Q值足够大: 蒙特卡罗算法
-                return offset;
-        }
-        return -1;
-    }
-}</code></pre><h4 id="5-Sunday算法"><a href="#5-Sunday算法" class="headerlink" title="5.Sunday算法"></a>5.Sunday算法</h4><pre><code>/**
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">&lt;</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">long</span> txtHash <span class="token operator">=</span> <span class="token function">hash</span><span class="token punctuation">(</span>txt<span class="token punctuation">,</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>txtHash <span class="token operator">==</span> patternHash <span class="token operator">&amp;&amp;</span> <span class="token function">check</span><span class="token punctuation">(</span>txt<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> m<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//同余定理,Horner Rule(霍纳法则)</span>
+            <span class="token comment" spellcheck="true">//(A-B) mod m = ((A mod m) - (B mod m)+ m) mod m</span>
+            txtHash <span class="token operator">=</span> <span class="token punctuation">(</span>txtHash <span class="token operator">-</span> RM <span class="token operator">*</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i <span class="token operator">-</span> m<span class="token punctuation">)</span> <span class="token operator">%</span> q <span class="token operator">+</span> q<span class="token punctuation">)</span> <span class="token operator">%</span> q<span class="token punctuation">;</span>
+            txtHash <span class="token operator">=</span> <span class="token punctuation">(</span>txtHash <span class="token operator">*</span> R <span class="token operator">+</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">%</span> q<span class="token punctuation">;</span>
+            <span class="token keyword">int</span> offset <span class="token operator">=</span> i<span class="token operator">-</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>txtHash <span class="token operator">==</span> patternHash <span class="token operator">&amp;&amp;</span> <span class="token function">check</span><span class="token punctuation">(</span>txt<span class="token punctuation">,</span>offset<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//可以不验证,Q值足够大: 蒙特卡罗算法</span>
+                <span class="token keyword">return</span> offset<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="5-Sunday算法"><a href="#5-Sunday算法" class="headerlink" title="5.Sunday算法"></a>5.Sunday算法</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * Sunday算法
  * 概述: 与BM算法思路相似,只是从左向右进行比较,匹配随机字符串最快
  * 时间复杂度: o(n)-o(n*m)
  * 思路: 将文本与字符串对齐从左向右比较,失配时,找到文本中与模式串对齐的末尾的下一个字符,
  *       同时找到该字符出现在模式串中最大索引位置,然后将该字符与模式串中相同的那个最大索引字符对齐,继续比较
- */
-public class Sunday {
-    private String pattern; //模式串
-    private int R;          //字符表长度
-    private int[] right;    //维护字符在模式串中出现的最大索引
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Sunday</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String pattern<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//模式串</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> R<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//字符表长度</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> right<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//维护字符在模式串中出现的最大索引</span>
 
-    public Sunday(String pattern) {
-        this.R = 256;
-        setPattern(pattern);
-    }
-    public Sunday(String pattern, int R) {
-        this.R = R;
-        setPattern(pattern);
-    }
-    public Sunday setPattern(String pattern){
-        if(pattern == null || "".equals(pattern)) throw new RuntimeException("pattern模式字符串不能为空");
-        this.pattern = pattern;
-        //记录字符在模式串中出现的最大索引
-        right = new int[R];
-        Arrays.fill(right,-1);
-        for(int i=0;i&lt;pattern.length();++i)
-            right[pattern.charAt(i)] = i;
-        return this;
-    }
-    public int search(String txt){
-        int m = pattern.length();
-        int n = txt.length();
-        int skip;
-        for(int i=0;i&lt;=n-m;i+=skip){
-            int j;
-            for(j=0;j&lt;m &amp;&amp; pattern.charAt(j) == txt.charAt(i+j);++j);
-            if(j == m) return i; //完全匹配
-            else skip = m - right[txt.charAt(i+m)]; //失配时,模式串移动距离,与模式串匹配字符越多,移动距离越小
-        }
-        return -1;
-    }
-}</code></pre><script>
+    <span class="token keyword">public</span> <span class="token function">Sunday</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> <span class="token number">256</span><span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">Sunday</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">,</span> <span class="token keyword">int</span> R<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>R <span class="token operator">=</span> R<span class="token punctuation">;</span>
+        <span class="token function">setPattern</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> Sunday <span class="token function">setPattern</span><span class="token punctuation">(</span>String pattern<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>pattern <span class="token operator">==</span> null <span class="token operator">||</span> <span class="token string">""</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"pattern模式字符串不能为空"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>pattern <span class="token operator">=</span> pattern<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//记录字符在模式串中出现的最大索引</span>
+        right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>R<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        Arrays<span class="token punctuation">.</span><span class="token function">fill</span><span class="token punctuation">(</span>right<span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            right<span class="token punctuation">[</span>pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">search</span><span class="token punctuation">(</span>String txt<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> pattern<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> n <span class="token operator">=</span> txt<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> skip<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token operator">-</span>m<span class="token punctuation">;</span>i<span class="token operator">+=</span>skip<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> j<span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>m <span class="token operator">&amp;&amp;</span> pattern<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>j<span class="token punctuation">)</span> <span class="token operator">==</span> txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token operator">++</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">==</span> m<span class="token punctuation">)</span> <span class="token keyword">return</span> i<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//完全匹配</span>
+            <span class="token keyword">else</span> skip <span class="token operator">=</span> m <span class="token operator">-</span> right<span class="token punctuation">[</span>txt<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">+</span>m<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//失配时,模式串移动距离,与模式串匹配字符越多,移动距离越小</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -962,6 +973,10 @@ public class Sunday {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                                     <span class="chip bg-color">字符串</span>
@@ -1075,6 +1090,10 @@ public class Sunday {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
                     </a>
@@ -1130,6 +1149,10 @@ public class Sunday {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
@@ -1331,7 +1354,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

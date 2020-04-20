@@ -8,8 +8,8 @@
     <meta name="description" content="简单算术表达式求值(仅含() 与+ - * /)
 定义一个栈Stack类
 
-public class Stack&amp;lt;E&amp;gt; implements Iterable&amp;lt;E&amp;gt;{
-    private LinkedList&amp;l">
+public class Stack&amp;lt;E&gt; implements Iterable&amp;lt;E&gt;{
+    private LinkedList&amp;lt;E&gt; s">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -431,6 +431,10 @@ public class Stack&amp;lt;E&amp;gt; implements Iterable&amp;lt;E&amp;gt;{
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
                                 <span class="chip bg-color">算术表达式</span>
                             </a>
@@ -463,7 +467,7 @@ public class Stack&amp;lt;E&amp;gt; implements Iterable&amp;lt;E&amp;gt;{
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
@@ -496,42 +500,43 @@ public class Stack&amp;lt;E&amp;gt; implements Iterable&amp;lt;E&amp;gt;{
                 <h3 id="简单算术表达式求值-仅含-与"><a href="#简单算术表达式求值-仅含-与" class="headerlink" title="简单算术表达式求值(仅含() 与+ - * /)"></a>简单算术表达式求值(仅含() 与+ - * /)</h3><blockquote>
 <p><strong>定义一个栈Stack类</strong></p>
 </blockquote>
-<pre><code>public class Stack&lt;E&gt; implements Iterable&lt;E&gt;{
-    private LinkedList&lt;E&gt; stack;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">Iterable</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>E<span class="token operator">></span> stack<span class="token punctuation">;</span>
 
-    public Stack() {
-        this.stack = new LinkedList&lt;&gt;();
-    }
+    <span class="token keyword">public</span> <span class="token function">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>stack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public void push(E e){
-        stack.push(e);
-    }
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>E e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public E pop(){
-        return stack.pop();
-    }
+    <span class="token keyword">public</span> E <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public E peek(){
-        return stack.peek();
-    }
+    <span class="token keyword">public</span> E <span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public void each(Consumer&lt;? super E&gt; consumer){
-        stack.stream().forEach(consumer);
-    }
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">each</span><span class="token punctuation">(</span>Consumer<span class="token operator">&lt;</span><span class="token operator">?</span> <span class="token keyword">super</span> E<span class="token operator">></span> consumer<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        stack<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>consumer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public boolean isEmpty(){
-        return stack.isEmpty();
-    }
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public int size(){
-        return stack.size();
-    }
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public Iterator&lt;E&gt; iterator() {
-        return stack.iterator();
-    }
-}</code></pre><h4 id="1-中序表达式求值"><a href="#1-中序表达式求值" class="headerlink" title="1.中序表达式求值"></a>1.中序表达式求值</h4><pre><code>/**
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Iterator<span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> stack<span class="token punctuation">.</span><span class="token function">iterator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-中序表达式求值"><a href="#1-中序表达式求值" class="headerlink" title="1.中序表达式求值"></a>1.中序表达式求值</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 1.创建2个栈: 操作数栈dataStack 操作符栈optStack
  * 2.从左至右一次扫描表达式
  * 3.遇到操作数时,压入dataStack
@@ -547,84 +552,85 @@ public class Stack&amp;lt;E&amp;gt; implements Iterable&amp;lt;E&amp;gt;{
  * 7.扫描结束后依次取出optStack栈顶操作符与dataStack栈顶2个对应操作数,
  *   将计算结果存入dataStack,重复此步骤,直到optStack栈为空,
  *   此时dataStack(仅剩一个操作数)栈顶操作数即为计算结果
- */
-@Test
-public void expression(){
-    String[] exp = {
-            "( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )",
-            "2 + 3 * 4 + 5",
-            "100 * ( 2 + 12 )",
-            "100 * ( 2 + 12 ) / 14",
-            "(100/(3+7)+10)*(10-2)",
-            "5+(3+5)/4*12",
-            "5-2+3"
-    };
-    StringBuffer str = new StringBuffer(exp[6].replace(" ",""));
-    System.out.println(str);
-    char[] ch = str.toString().toCharArray();
-    Stack&lt;Character&gt; optStack = new Stack&lt;&gt;();
-    Stack&lt;Integer&gt; dataStack = new Stack&lt;&gt;();
-    for(int i=0,len=ch.length;i&lt;len;++i){
-        if(ch[i] == '(')
-            optStack.push(ch[i]);
-        if("*/".contains(Character.toString(ch[i]))) {
-            while(!optStack.isEmpty() &amp;&amp; "*/".contains(Character.toString(optStack.peek()))){
-                getResult(dataStack,optStack,optStack.peek());
-            }
-            optStack.push(ch[i]);
-        }
-        if("0123456789".contains(Character.toString(ch[i]))){
-            String dig = ""+ch[i++];
-            while(i&lt;len &amp;&amp; "0123456789".contains(Character.toString(ch[i]))){
-                dig += ch[i++];
-            }
-            i--;
-            dataStack.push(Integer.parseInt(dig));
-        }
-        if("+-".contains(Character.toString(ch[i]))){
-            while(!optStack.isEmpty() &amp;&amp; !"(".contains(optStack.peek().toString())) {
-                getResult(dataStack,optStack,optStack.peek());
-            }
-            optStack.push(ch[i]);
-        }
-        if(')' == ch[i]){
-            Character cur = null;
-            while((cur = optStack.peek())!='('){
-                getResult(dataStack,optStack,cur);
-            }
-            if(optStack.peek() == '(')
-                optStack.pop();
-        }
-    }
-    while(!optStack.isEmpty() &amp;&amp; !dataStack.isEmpty())
-        getResult(dataStack,optStack,optStack.peek());
-        System.out.print(dataStack.pop()+ " ");
-}
+ */</span>
+<span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">expression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    String<span class="token punctuation">[</span><span class="token punctuation">]</span> exp <span class="token operator">=</span> <span class="token punctuation">{</span>
+            <span class="token string">"( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )"</span><span class="token punctuation">,</span>
+            <span class="token string">"2 + 3 * 4 + 5"</span><span class="token punctuation">,</span>
+            <span class="token string">"100 * ( 2 + 12 )"</span><span class="token punctuation">,</span>
+            <span class="token string">"100 * ( 2 + 12 ) / 14"</span><span class="token punctuation">,</span>
+            <span class="token string">"(100/(3+7)+10)*(10-2)"</span><span class="token punctuation">,</span>
+            <span class="token string">"5+(3+5)/4*12"</span><span class="token punctuation">,</span>
+            <span class="token string">"5-2+3"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    StringBuffer str <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuffer</span><span class="token punctuation">(</span>exp<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ch <span class="token operator">=</span> str<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Stack<span class="token operator">&lt;</span>Character<span class="token operator">></span> optStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> dataStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token operator">=</span>ch<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'('</span><span class="token punctuation">)</span>
+            optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"*/"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"*/"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">getResult</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">,</span>optStack<span class="token punctuation">,</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String dig <span class="token operator">=</span> <span class="token string">""</span><span class="token operator">+</span>ch<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>len <span class="token operator">&amp;&amp;</span> <span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                dig <span class="token operator">+=</span> ch<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            i<span class="token operator">--</span><span class="token punctuation">;</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>dig<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">"("</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token function">getResult</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">,</span>optStack<span class="token punctuation">,</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">')'</span> <span class="token operator">==</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Character cur <span class="token operator">=</span> null<span class="token punctuation">;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span>cur <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">!=</span><span class="token string">'('</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">getResult</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">,</span>optStack<span class="token punctuation">,</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token string">'('</span><span class="token punctuation">)</span>
+                optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>dataStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token function">getResult</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">,</span>optStack<span class="token punctuation">,</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
 
-public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optStack,Character cur){
-    optStack.pop();
-    switch(cur){
-        case '+':
-            dataStack.push(dataStack.pop()+dataStack.pop());
-            break;
-        case '-':
-            dataStack.push(-dataStack.pop()+dataStack.pop());
-            break;
-        case '*':
-            dataStack.push(dataStack.pop()*dataStack.pop());
-            break;
-        case '/':
-            Integer top = dataStack.pop();
-            dataStack.push(dataStack.pop()/top);
-            break;
-        default:
-            break;
-    }
-}</code></pre><h4 id="2-中序表达式转后序表达式再求值"><a href="#2-中序表达式转后序表达式再求值" class="headerlink" title="2.中序表达式转后序表达式再求值"></a>2.中序表达式转后序表达式再求值</h4><blockquote>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getResult</span><span class="token punctuation">(</span>Stack<span class="token operator">&lt;</span>Integer<span class="token operator">></span> dataStack<span class="token punctuation">,</span>Stack<span class="token operator">&lt;</span>Character<span class="token operator">></span> optStack<span class="token punctuation">,</span>Character cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">switch</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">case</span> <span class="token string">'+'</span><span class="token operator">:</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'-'</span><span class="token operator">:</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">-</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'*'</span><span class="token operator">:</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">case</span> <span class="token string">'/'</span><span class="token operator">:</span>
+            Integer top <span class="token operator">=</span> dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>top<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token operator">:</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-中序表达式转后序表达式再求值"><a href="#2-中序表达式转后序表达式再求值" class="headerlink" title="2.中序表达式转后序表达式再求值"></a>2.中序表达式转后序表达式再求值</h4><blockquote>
 <p><strong>中序表达式转后序表达式</strong></p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 1.创建2个栈: 中间结果栈resultStack 与 操作符栈optStack
      * 2.从左至右扫描中序表达式
      * 3.遇到操作数时压入resultStack栈
@@ -638,118 +644,120 @@ public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optS
      *   2).如果为")"则取出optStack栈顶元素压入resultStack栈,重复此步骤直到遇到"("结束,此时丢弃"("
      *  6.扫描结束后将optStack栈中运算符压入resultStack栈
      *  7.依次弹出resultStack栈元素,结果的逆序即为对应的后序表达式
-     */
-    @Test
-    public void backExpression(){
-        String[] exp = {
-                "( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )",
-                "2 + 3 * 4 + 5",
-                "100 * ( 2 + 12 )",
-                "100 * ( 2 + 12 ) / 14",
-                "(100/(3+7)+10)*(10-2)",
-                "5+(3+5)/4*12",
-                "5-2+3"
-        };
-        char[] ch = exp[0].replace(" ","").toCharArray();
-        Stack&lt;Character&gt; optStack = new Stack&lt;&gt;();
-        Stack&lt;String&gt; resultStack = new Stack&lt;&gt;();
-        for(int i=0,len=ch.length;i&lt;len;++i){
-            String curChar = Character.toString(ch[i]);
-            if('(' == ch[i])
-                optStack.push(ch[i]);
-            else if("*/".contains(curChar)){
-                Character cur = null;
-                while(!(optStack.isEmpty() || "(+-".contains((cur = optStack.peek()).toString()))){
-                    Character curOpt = optStack.pop();
-                    resultStack.push(curOpt+"");
-                }
-                optStack.push(ch[i]);
-            }
-            else if("+-".contains(curChar)){
-                Character cur = null;
-                while(!(optStack.isEmpty() || "(".contains((cur = optStack.peek()).toString()))){
-                    Character curOpt = optStack.pop();
-                    resultStack.push(curOpt+"");
-                }
-                optStack.push(ch[i]);
-            }
-            else if(')' == ch[i]){
-                Character cur = null;
-                while(!optStack.isEmpty() &amp;&amp; '(' != (cur = optStack.pop())){
-                    resultStack.push(cur+"");
-                }
-            }
-            else if("0123456789".contains(curChar)){
-                while(++i&lt;ch.length &amp;&amp; "0123456789".contains(Character.toString(ch[i]))){
-                    curChar += ch[i];
-                }
-                resultStack.push(curChar);
-                --i;
-            }
-            else{
-                throw new RuntimeException("含有无法处理操作符");
-            }
-        }
+     */</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">backExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> exp <span class="token operator">=</span> <span class="token punctuation">{</span>
+                <span class="token string">"( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )"</span><span class="token punctuation">,</span>
+                <span class="token string">"2 + 3 * 4 + 5"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 )"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 ) / 14"</span><span class="token punctuation">,</span>
+                <span class="token string">"(100/(3+7)+10)*(10-2)"</span><span class="token punctuation">,</span>
+                <span class="token string">"5+(3+5)/4*12"</span><span class="token punctuation">,</span>
+                <span class="token string">"5-2+3"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ch <span class="token operator">=</span> exp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>Character<span class="token operator">></span> optStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> resultStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token operator">=</span>ch<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String curChar <span class="token operator">=</span> Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">'('</span> <span class="token operator">==</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"*/"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>curChar<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                Character cur <span class="token operator">=</span> null<span class="token punctuation">;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">"(+-"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token punctuation">(</span>cur <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    Character curOpt <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>curOpt<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>curChar<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                Character cur <span class="token operator">=</span> null<span class="token punctuation">;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">"("</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span><span class="token punctuation">(</span>cur <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    Character curOpt <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>curOpt<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">')'</span> <span class="token operator">==</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                Character cur <span class="token operator">=</span> null<span class="token punctuation">;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">'('</span> <span class="token operator">!=</span> <span class="token punctuation">(</span>cur <span class="token operator">=</span> optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>curChar<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">++</span>i<span class="token operator">&lt;</span>ch<span class="token punctuation">.</span>length <span class="token operator">&amp;&amp;</span> <span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    curChar <span class="token operator">+=</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>curChar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token operator">--</span>i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"含有无法处理操作符"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        while(!optStack.isEmpty()){
-            resultStack.push(optStack.pop()+"");
-        }
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        //生成后续表达式
-        Stack&lt;String&gt; back = new Stack&lt;&gt;();
-        while(!resultStack.isEmpty()){
-            back.push(resultStack.pop());
-        }
-        //测试
-        back.forEach(x -&gt; System.out.print(x+" "));
+        <span class="token comment" spellcheck="true">//生成后续表达式</span>
+        Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> back <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>resultStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            back<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>resultStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//测试</span>
+        back<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>x<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Double result = calcBackExpression(back);
-        String resultStr = result+"";
-        if(resultStr.length()-2 == resultStr.indexOf(".") &amp;&amp; resultStr.charAt(resultStr.length()-1) =='0'){
-            resultStr = resultStr.split("\\.")[0];
-        }
-        System.out.println(resultStr);
-    }</code></pre><blockquote>
+        Double result <span class="token operator">=</span> <span class="token function">calcBackExpression</span><span class="token punctuation">(</span>back<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String resultStr <span class="token operator">=</span> result<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>resultStr<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">2</span> <span class="token operator">==</span> resultStr<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> resultStr<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>resultStr<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">==</span><span class="token string">'0'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            resultStr <span class="token operator">=</span> resultStr<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">"\\."</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>resultStr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>后序表达式求值</strong></p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 1.从左至右扫描后序表达式
      * 2.遇到操作数压入栈中
      * 3.遇到运算符,从栈中弹出2个对应操作数计算结果并压入该栈
      * 4.扫描到结尾栈中的值即为计算结果
-     */
-    public Double calcBackExpression(Stack&lt;String&gt; stack){
-        Stack&lt;Double&gt; dataStack = new Stack&lt;&gt;();
-        while(!stack.isEmpty()){
-            String cur = stack.pop();
-            if("+-*/".contains(cur)){
-                switch(cur){
-                    case "+":
-                        dataStack.push(dataStack.pop()+dataStack.pop());
-                        break;
-                    case "-":
-                        dataStack.push(-dataStack.pop()+dataStack.pop());
-                        break;
-                    case "*":
-                        dataStack.push(dataStack.pop()*dataStack.pop());
-                        break;
-                    case "/":
-                        dataStack.push(1/dataStack.pop()*dataStack.pop());
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else{
-                dataStack.push(Double.parseDouble(cur));
-            }
-        }
+     */</span>
+    <span class="token keyword">public</span> Double <span class="token function">calcBackExpression</span><span class="token punctuation">(</span>Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Stack<span class="token operator">&lt;</span>Double<span class="token operator">></span> dataStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String cur <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-*/"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">switch</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token keyword">case</span> <span class="token string">"+"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"-"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">-</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"*"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"/"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">/</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">default</span><span class="token operator">:</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Double<span class="token punctuation">.</span><span class="token function">parseDouble</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        return dataStack.pop();
-    }</code></pre><h4 id="3-中序表达式转前序表达式再求值"><a href="#3-中序表达式转前序表达式再求值" class="headerlink" title="3.中序表达式转前序表达式再求值"></a>3.中序表达式转前序表达式再求值</h4><blockquote>
+        <span class="token keyword">return</span> dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-中序表达式转前序表达式再求值"><a href="#3-中序表达式转前序表达式再求值" class="headerlink" title="3.中序表达式转前序表达式再求值"></a>3.中序表达式转前序表达式再求值</h4><blockquote>
 <p><strong>中序表达式转前序表达式</strong></p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 1.创建2个栈: 中间结果栈resultStack 与 操作符栈optStack
      * 2.从右至左扫描中序表达式
      * 3.遇到操作数压入resultStack栈
@@ -763,98 +771,100 @@ public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optS
      *  2).如果为"(",则依次弹出optStack栈顶元素压入resultStack栈,直到遇到")"为止,此时丢弃"(";
      * 6.扫描结束后,依次弹出optStack栈中操作符压入resultStack栈
      * 7.依次弹出resultStack栈元素,其结果即为前序表达式
-     */
-    @Test
-    public void preOrderExpression(){
-        String[] exp = {
-                "( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )",
-                "2 + 3 * 4 + 5",
-                "100 * ( 2 + 12 )",
-                "100 * ( 2 + 12 ) / 14",
-                "(100/(3+7)+10)*(10-2)",
-                "5+(3+5)/4*12",
-                "5-2+3"
-        };
-        char[] ch = exp[0].replace(" ","").toCharArray();
-        Stack&lt;Character&gt; optStack = new Stack&lt;&gt;();
-        Stack&lt;String&gt; resultStack = new Stack&lt;&gt;();
-        for(int i=ch.length-1;i&gt;=0;--i){
-            Character cur = ch[i];
-            if(')' == cur || "/*".contains(cur+""))
-                optStack.push(cur);
-            else if("+-".contains(Character.toString(cur))){
-                while(!optStack.isEmpty() &amp;&amp; "/*".contains(optStack.peek()+"")){
-                    resultStack.push(optStack.pop()+"");
-                }
-                optStack.push(cur);
-            }
-            else if("0123456789".contains(Character.toString(cur))){
-                String temp = cur+"";
-                while(--i &gt;= 0 &amp;&amp; "0123456789".contains(ch[i]+"")){
-                    temp += ch[i];
-                }
-                resultStack.push(new StringBuilder(temp).reverse().toString());
-                ++i;
-            }
-            else if('(' == cur){
-                while(!optStack.isEmpty() &amp;&amp; ')' != optStack.peek()){
-                    resultStack.push(optStack.pop()+"");
-                }
-                optStack.pop();
-            }
-            else{
-                throw new RuntimeException("未知运算符");
-            }
-        }
+     */</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">preOrderExpression</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> exp <span class="token operator">=</span> <span class="token punctuation">{</span>
+                <span class="token string">"( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )"</span><span class="token punctuation">,</span>
+                <span class="token string">"2 + 3 * 4 + 5"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 )"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 ) / 14"</span><span class="token punctuation">,</span>
+                <span class="token string">"(100/(3+7)+10)*(10-2)"</span><span class="token punctuation">,</span>
+                <span class="token string">"5+(3+5)/4*12"</span><span class="token punctuation">,</span>
+                <span class="token string">"5-2+3"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ch <span class="token operator">=</span> exp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>Character<span class="token operator">></span> optStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> resultStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>ch<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Character cur <span class="token operator">=</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">')'</span> <span class="token operator">==</span> cur <span class="token operator">||</span> <span class="token string">"/*"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>cur<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"/*"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                String temp <span class="token operator">=</span> cur<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">--</span>i <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"0123456789"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    temp <span class="token operator">+=</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token operator">++</span>i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">'('</span> <span class="token operator">==</span> cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">')'</span> <span class="token operator">!=</span> optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"未知运算符"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        while(!optStack.isEmpty())
-            resultStack.push(optStack.pop()+"");
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Stack&lt;String&gt; preOrder = new Stack&lt;&gt;();
-        //resultStack.forEach(x -&gt; System.out.print(x+" "));
-        while(!resultStack.isEmpty())
-            preOrder.push(resultStack.pop());
-        //preOrder.forEach(x -&gt; System.out.print(x+" "));
-        System.out.print(calcPreOrder(preOrder));
-    }</code></pre><blockquote>
+        Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> preOrder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//resultStack.forEach(x -> System.out.print(x+" "));</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>resultStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            preOrder<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>resultStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//preOrder.forEach(x -> System.out.print(x+" "));</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token function">calcPreOrder</span><span class="token punctuation">(</span>preOrder<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>前序表达式求值</strong></p>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 1.从右至左扫描前序表达式
      * 2.遇到操作数压入栈
      * 3.遇到运算符时从栈中弹出2个对应操作数并将计算结果入栈
      *   注意: 依次弹出a1 a2 ,若运算符为"-"则计算为 a1-a2, 如果为"/" 为a1/a2
      * 4.扫描结束后栈中的值即为前序表达式值
-     */
-    public Double calcPreOrder(Stack&lt;String&gt; stack){
-        Stack&lt;Double&gt; dataStack = new Stack&lt;&gt;();
-        while(!stack.isEmpty()){
-            String cur = stack.pop();
-            if("+-*/".contains(cur)){
-                switch(cur){
-                    case "+":
-                        dataStack.push(dataStack.pop()+dataStack.pop());
-                        break;
-                    case "-":
-                        dataStack.push(dataStack.pop()-dataStack.pop());
-                        break;
-                    case "*":
-                        dataStack.push(dataStack.pop()*dataStack.pop());
-                        break;
-                    case "/":
-                        dataStack.push(dataStack.pop()/dataStack.pop());
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else{
-                dataStack.push(Double.parseDouble(cur));
-            }
-        }
+     */</span>
+    <span class="token keyword">public</span> Double <span class="token function">calcPreOrder</span><span class="token punctuation">(</span>Stack<span class="token operator">&lt;</span>String<span class="token operator">></span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Stack<span class="token operator">&lt;</span>Double<span class="token operator">></span> dataStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Stack</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String cur <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-*/"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">switch</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    <span class="token keyword">case</span> <span class="token string">"+"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"-"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"*"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">*</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">case</span> <span class="token string">"/"</span><span class="token operator">:</span>
+                        dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">/</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                    <span class="token keyword">default</span><span class="token operator">:</span>
+                        <span class="token keyword">break</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>Double<span class="token punctuation">.</span><span class="token function">parseDouble</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
 
-        return dataStack.pop();
-    }</code></pre><script>
+        <span class="token keyword">return</span> dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -934,6 +944,10 @@ public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optS
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
                                     <span class="chip bg-color">算术表达式</span>
@@ -1044,6 +1058,10 @@ public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optS
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%B1%89%E8%AF%BA%E5%A1%94/">
                         <span class="chip bg-color">汉诺塔</span>
                     </a>
@@ -1096,6 +1114,10 @@ public void getResult(Stack&lt;Integer&gt; dataStack,Stack&lt;Character&gt; optS
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E8%BF%9B%E5%88%B6/">
                         <span class="chip bg-color">进制</span>
@@ -1297,7 +1319,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

@@ -462,14 +462,14 @@ java类库中有很多线程封闭示例: Collections.synchronizedList及其类�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-08-18
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    880
+                    865
                 </div>
                 
 
@@ -498,121 +498,127 @@ java类库中有很多线程封闭示例: Collections.synchronizedList及其类�
 <li>java类库中有很多线程封闭示例: Collections.synchronizedList及其类似方法,这些工厂方法通过装饰器(Decorator)设计模式将容器类封装在一个同步的包装容器对象中</li>
 </ul>
 </blockquote>
-<pre><code>//通过封闭机制来确保线程安全
-public class PersonSet {
-    //将数据封装在对象内部
-    private final Set&lt;Person&gt; mySet = new HashSet&lt;Person&gt;();
-    //数据访问只能通过此同步方法进行
-    public synchronized void addPerson(Person p) {
-        mySet.add(p);
-    }
-    //数据访问只能通过此同步方法进行
-    public synchronized boolean containsPerson(Person p) {
-        return mySet.contains(p);
-    }
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过封闭机制来确保线程安全</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PersonSet</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//将数据封装在对象内部</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Set<span class="token operator">&lt;</span>Person<span class="token operator">></span> mySet <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Person<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//数据访问只能通过此同步方法进行</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">addPerson</span><span class="token punctuation">(</span>Person p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mySet<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//数据访问只能通过此同步方法进行</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">containsPerson</span><span class="token punctuation">(</span>Person p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> mySet<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    interface Person {
-    }
-}</code></pre><ol>
+    <span class="token keyword">interface</span> <span class="token class-name">Person</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
 <li><p><strong>监视器模式</strong></p>
 <blockquote>
 <p>遵循java监视器模式的对象会把对象的所有可变状态都封装起来,并由对象自己的内置锁来保护,例如Vector和HashTable</p>
 </blockquote>
 </li>
 </ol>
-<pre><code>//监视器模式: 通过一个私有锁来保护状态
-public class PrivateLock {
-    private final Object myLock = new Object();
-    Widget widget; //要封装的对象widget
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//监视器模式: 通过一个私有锁来保护状态</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrivateLock</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Object myLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Widget widget<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//要封装的对象widget</span>
 
-    void someMethod() {
-        synchronized (myLock) { //由内置锁(监视器)保护
-            // 访问或修改widget对象状态
-        }
-    }
-}</code></pre><ol start="2">
+    <span class="token keyword">void</span> <span class="token function">someMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>myLock<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//由内置锁(监视器)保护</span>
+            <span class="token comment" spellcheck="true">// 访问或修改widget对象状态</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
 <li><p><strong>线程安全性的委托</strong></p>
 <blockquote>
 <p>如果一个类是由多个独立且线程安全的状态变量组成,并且在所有的操作中都不包含无效状态转换,那么可以将线程安全性委托给底层的状态变量</p>
 </blockquote>
 </li>
 </ol>
-<pre><code>//将线程安全性委托给多个状态变量
-public class VisualComponent {
-    //两个事件监听器之间不存在任何关联,将VisualComponent类的线程安全性委托给这两个线程安全的监听器列表
-    //由CopyOnWriteArrayList管理保证线程安全性
-    private final List&lt;KeyListener&gt; keyListeners = new CopyOnWriteArrayList&lt;KeyListener&gt;();
-    private final List&lt;MouseListener&gt; mouseListeners = new CopyOnWriteArrayList&lt;MouseListener&gt;();
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//将线程安全性委托给多个状态变量</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">VisualComponent</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//两个事件监听器之间不存在任何关联,将VisualComponent类的线程安全性委托给这两个线程安全的监听器列表</span>
+    <span class="token comment" spellcheck="true">//由CopyOnWriteArrayList管理保证线程安全性</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span>KeyListener<span class="token operator">></span> keyListeners <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token operator">&lt;</span>KeyListener<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span>MouseListener<span class="token operator">></span> mouseListeners <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CopyOnWriteArrayList</span><span class="token operator">&lt;</span>MouseListener<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    public void addKeyListener(KeyListener listener) {
-        keyListeners.add(listener);
-    }
-    public void addMouseListener(MouseListener listener) {
-        mouseListeners.add(listener);
-    }
-    public void removeKeyListener(KeyListener listener) {
-        keyListeners.remove(listener);
-    }
-    public void removeMouseListener(MouseListener listener) {
-        mouseListeners.remove(listener);
-    }
-}</code></pre><h4 id="现有的线程安全类中添加功能"><a href="#现有的线程安全类中添加功能" class="headerlink" title="现有的线程安全类中添加功能"></a>现有的线程安全类中添加功能</h4><ol>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addKeyListener</span><span class="token punctuation">(</span>KeyListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        keyListeners<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addMouseListener</span><span class="token punctuation">(</span>MouseListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mouseListeners<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">removeKeyListener</span><span class="token punctuation">(</span>KeyListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        keyListeners<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">removeMouseListener</span><span class="token punctuation">(</span>MouseListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mouseListeners<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="现有的线程安全类中添加功能"><a href="#现有的线程安全类中添加功能" class="headerlink" title="现有的线程安全类中添加功能"></a>现有的线程安全类中添加功能</h4><ol>
 <li><strong>扩展类</strong></li>
 </ol>
-<pre><code>//没有则添加: 继承然后扩展类
-public class BetterVector &lt;E&gt; extends Vector&lt;E&gt; {
-    //对于一个继承了serializable的类,应该重新定义其serialVersionUID
-    static final long serialVersionUID = -3963416950630760754L;
-    //不存在时添加: 增加一个原子方法(使用同步锁)
-    public synchronized boolean putIfAbsent(E x) {
-        boolean absent = !contains(x);
-        if (absent)
-            add(x);
-        return absent;
-    }
-}</code></pre><ol start="2">
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//没有则添加: 继承然后扩展类</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BetterVector</span> <span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Vector</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//对于一个继承了serializable的类,应该重新定义其serialVersionUID</span>
+    <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">long</span> serialVersionUID <span class="token operator">=</span> <span class="token operator">-</span>3963416950630760754L<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//不存在时添加: 增加一个原子方法(使用同步锁)</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">putIfAbsent</span><span class="token punctuation">(</span>E x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">boolean</span> absent <span class="token operator">=</span> <span class="token operator">!</span><span class="token function">contains</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>absent<span class="token punctuation">)</span>
+            <span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> absent<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
 <li><strong>客户端加锁机制</strong></li>
 </ol>
-<pre><code>//没有则添加: 通过客户端加锁方式实现
-class GoodListHelper &lt;E&gt; {
-    public List&lt;E&gt; list = Collections.synchronizedList(new ArrayList&lt;E&gt;());
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//没有则添加: 通过客户端加锁方式实现</span>
+<span class="token keyword">class</span> <span class="token class-name">GoodListHelper</span> <span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> List<span class="token operator">&lt;</span>E<span class="token operator">></span> list <span class="token operator">=</span> Collections<span class="token punctuation">.</span><span class="token function">synchronizedList</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    public boolean putIfAbsent(E x) {
-        synchronized (list) { //锁对象必须和list对象内部方法使用的锁对象为同一个
-            boolean absent = !list.contains(x);
-            if (absent)
-                list.add(x);
-            return absent;
-        }
-    }
-}</code></pre><ol start="3">
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">putIfAbsent</span><span class="token punctuation">(</span>E x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>list<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//锁对象必须和list对象内部方法使用的锁对象为同一个</span>
+            <span class="token keyword">boolean</span> absent <span class="token operator">=</span> <span class="token operator">!</span>list<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>absent<span class="token punctuation">)</span>
+                list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> absent<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="3">
 <li><strong>组合</strong></li>
 </ol>
-<pre><code>//没有则添加: 通过组合实现(该方式更加健壮)
-//实际上就是java监视器模式
-public class ImprovedList&lt;T&gt; implements List&lt;T&gt; {
-    //维护一个list对象,将实现委托给list对象的方法
-    private final List&lt;T&gt; list;
-    public ImprovedList(List&lt;T&gt; list) {
-        this.list = list;
-    }
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//没有则添加: 通过组合实现(该方式更加健壮)</span>
+<span class="token comment" spellcheck="true">//实际上就是java监视器模式</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ImprovedList</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">List</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//维护一个list对象,将实现委托给list对象的方法</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span>T<span class="token operator">></span> list<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">ImprovedList</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>T<span class="token operator">></span> list<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>list <span class="token operator">=</span> list<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //没有则添加
-    public synchronized boolean putIfAbsent(T x) {
-        boolean contains = list.contains(x);
-        if (contains)
-            list.add(x);
-        return !contains;
-    }
+    <span class="token comment" spellcheck="true">//没有则添加</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">putIfAbsent</span><span class="token punctuation">(</span>T x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">boolean</span> contains <span class="token operator">=</span> list<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>contains<span class="token punctuation">)</span>
+            list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token operator">!</span>contains<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //方法实现委托给list对象的方法,其他方法使用同样方式即可
-    public synchronized boolean add(T e) {
-        return list.add(e);
-    }
-    public synchronized boolean remove(Object o) {
-        return list.remove(o);
-    }
-}</code></pre><script>
+    <span class="token comment" spellcheck="true">//方法实现委托给list对象的方法,其他方法使用同样方式即可</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">add</span><span class="token punctuation">(</span>T e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">boolean</span> <span class="token function">remove</span><span class="token punctuation">(</span>Object o<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> list<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>o<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1054,7 +1060,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

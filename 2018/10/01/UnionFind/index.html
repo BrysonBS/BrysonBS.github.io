@@ -434,6 +434,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/union-find/">
                                 <span class="chip bg-color">union-find</span>
                             </a>
@@ -466,7 +470,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
@@ -505,250 +509,255 @@
 <blockquote>
 <p> <strong>定义union-find算法的接口UF</strong></p>
 </blockquote>
-<pre><code>public interface UF {
-    void union(int p,int q);    //在p与q之间添加一条连接
-    int find(int p);            //返回p所在的分量的标识符(0~N-1)
-    boolean connected(int p,int q); //如果p与q存在同一个分量中则返回true;
-    int count();    //连通分量的数量
-}</code></pre><h4 id="1-第一版-quick-find"><a href="#1-第一版-quick-find" class="headerlink" title="1.第一版 : quick-find"></a>1.第一版 : quick-find</h4><pre><code>/**
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">UF</span> <span class="token punctuation">{</span>
+    <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//在p与q之间添加一条连接</span>
+    <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">//返回p所在的分量的标识符(0~N-1)</span>
+    <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> q<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//如果p与q存在同一个分量中则返回true;</span>
+    <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//连通分量的数量</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-第一版-quick-find"><a href="#1-第一版-quick-find" class="headerlink" title="1.第一版 : quick-find"></a>1.第一版 : quick-find</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 思路: 使用数组表示所有触点,连通的触点设置相同值即可
  * 特点: 使用该算法解决动态连通性问题并且最后只得到一个连通分量,
  *        则至少需要调用n-1次union(),每次都要遍历数组,即至少(n+3)(n-1) ~ N*N次数组访问,
  *        算法时间复杂度为平方级别的
- */
-public class QuickFind implements UF{
-    private int[] id;   //分量id,以触点作为索引
-    private int count;  //分量数量
-    //初始化N(0 ~ n-1)个触点
-    public QuickFind(int N) {
-        count = N;
-        id = new int[N];
-        for(int i=0;i&lt;N;++i)
-            id[i] = i;
-    }
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QuickFind</span> <span class="token keyword">implements</span> <span class="token class-name">UF</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> id<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//分量id,以触点作为索引</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//分量数量</span>
+    <span class="token comment" spellcheck="true">//初始化N(0 ~ n-1)个触点</span>
+    <span class="token keyword">public</span> <span class="token function">QuickFind</span><span class="token punctuation">(</span><span class="token keyword">int</span> N<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        count <span class="token operator">=</span> N<span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //在p与q之间添加一条连接
-    @Override
-    public void union(int p,int q){
-        int idp = find(p);
-        int idq = find(q);
-        if(idp == idq)
-            return;
-        for(int i=0;i&lt;id.length;++i){
-            if(id[i] == idq)
-                id[i] = idp;
-        }
-        count--;
-    }
-    //p所在分量的标识符
-    @Override
-    public int find(int p){
-        return id[p];
-    }
+    <span class="token comment" spellcheck="true">//在p与q之间添加一条连接</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span><span class="token keyword">int</span> q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> idp <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> idq <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>idp <span class="token operator">==</span> idq<span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>id<span class="token punctuation">.</span>length<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> idq<span class="token punctuation">)</span>
+                id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> idp<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//p所在分量的标识符</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //判断是否连接
-    @Override
-    public boolean connected(int p, int q){
-        return find(p) == find(q);
-    }
+    <span class="token comment" spellcheck="true">//判断是否连接</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //连通分量数量
-    @Override
-    public int count(){
-        return count;
-    }
+    <span class="token comment" spellcheck="true">//连通分量数量</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //打印结果
-    public void print(){
-        for(int i:id){
-            System.out.print(i+" ");
-        }
-    }
-}</code></pre><h4 id="2-改进1-quick-union"><a href="#2-改进1-quick-union" class="headerlink" title="2.改进1: quick-union"></a>2.改进1: quick-union</h4><pre><code>/**
+    <span class="token comment" spellcheck="true">//打印结果</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span>id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-改进1-quick-union"><a href="#2-改进1-quick-union" class="headerlink" title="2.改进1: quick-union"></a>2.改进1: quick-union</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  *  思路: 每个触点值记录下一个触点数组索引
  *  特点: 执行union()方法时不需要遍历整个数组, 只需要遍历同一分量的触点(与树高成正比)
  *        假设输入整数对为0-1 0-2 0-3 ... 0-(n-1),此时为最坏情况,时间复杂度为平方级别
- */
-public class QuickUnion implements UF{
-    private int[] id;   //父连接数组,以触点作为索引
-    private int count;  //分量数量
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">QuickUnion</span> <span class="token keyword">implements</span> <span class="token class-name">UF</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> id<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//父连接数组,以触点作为索引</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> count<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//分量数量</span>
 
-    public QuickUnion(int n){
-        count = n;
-        id = new int[n];
-        for(int i=0;i&lt;n;++i)
-            id[i] = i;
-    }
-    @Override
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if(rootP == rootQ)
-            return;
-        id[rootP] = rootQ;
-        count--;
+    <span class="token keyword">public</span> <span class="token function">QuickUnion</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        count <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> rootP <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> rootQ <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>rootP <span class="token operator">==</span> rootQ<span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        id<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">=</span> rootQ<span class="token punctuation">;</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
 
-    }
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int find(int p) {
-        while(p != id[p])
-            p = id[p];
-        return p;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            p <span class="token operator">=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int count() {
-        return count;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //打印结果
-    public void print(){
-        for(int i:id)
-            System.out.print(i + " ");
-    }
-}</code></pre><h4 id="3-改进2-加权quick-union"><a href="#3-改进2-加权quick-union" class="headerlink" title="3.改进2: 加权quick-union"></a>3.改进2: 加权quick-union</h4><pre><code>/**
+    <span class="token comment" spellcheck="true">//打印结果</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span>id<span class="token punctuation">)</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-改进2-加权quick-union"><a href="#3-改进2-加权quick-union" class="headerlink" title="3.改进2: 加权quick-union"></a>3.改进2: 加权quick-union</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 概述: 通过quick-union中union()方法可以发现,每次执行union()时,需要找到树根节点,
  *       因此考虑降低同一分量生成的树高,但同时节点多的树(大树)更容易被union()方法使用到,
  *       所以,在2个树合并时,优先选择降低大树的高度,即直接将小树(节点少)根节点指向大树(节点多)根节点.
  * 思路: 每个触点的值记录下一个触点数组索引,生成树形结构合并时,将小树根节点指向大树根节点
  *
- */
-public class WeightedQuickUnion implements UF {
-    int[] id;  //父连接数组,以触点作为索引
-    int count; //分量数量
-    int[] sz;  //记录触点所在树的节点个数
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WeightedQuickUnion</span> <span class="token keyword">implements</span> <span class="token class-name">UF</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> id<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//父连接数组,以触点作为索引</span>
+    <span class="token keyword">int</span> count<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//分量数量</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sz<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//记录触点所在树的节点个数</span>
 
-    public WeightedQuickUnion(int n) {
-        count = n;
-        id = new int[n];
-        sz = new int[n];
-        for(int i=0;i&lt;n;++i) {
-            id[i] = i;
-            sz[i] = 1;
-        }
-    }
+    <span class="token keyword">public</span> <span class="token function">WeightedQuickUnion</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        count <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        sz <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if(rootP == rootQ)
-            return;
-        //连通规则: 将小树(节点少)根节点指向大树(节点多)根节点
-        if(sz[rootP] &gt; sz[rootQ]) {
-            id[rootQ] = rootP;
-            sz[rootP] += sz[rootQ];
-        }
-        else{
-            id[rootP] = rootQ;
-            sz[rootQ] += sz[rootP];
-        }
-        count--;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> rootP <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> rootQ <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>rootP <span class="token operator">==</span> rootQ<span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//连通规则: 将小树(节点少)根节点指向大树(节点多)根节点</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">></span> sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">=</span> rootP<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">+=</span> sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">=</span> rootQ<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">+=</span> sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int find(int p) {
-        while(p != id[p])
-            p = id[p];
-        return p;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            p <span class="token operator">=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int count() {
-        return count;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //打印结果
-    public void print(){
-        for(int i:id){
-            System.out.print(i+" ");
-        }
-    }
-}</code></pre><h4 id="4-改进3-路径压缩加权quick-union"><a href="#4-改进3-路径压缩加权quick-union" class="headerlink" title="4.改进3: 路径压缩加权quick-union"></a>4.改进3: 路径压缩加权quick-union</h4><pre><code>package cn.com.lock;
+    <span class="token comment" spellcheck="true">//打印结果</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span>id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-改进3-路径压缩加权quick-union"><a href="#4-改进3-路径压缩加权quick-union" class="headerlink" title="4.改进3: 路径压缩加权quick-union"></a>4.改进3: 路径压缩加权quick-union</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">package</span> cn<span class="token punctuation">.</span>com<span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
 
-/**
+<span class="token comment" spellcheck="true">/**
  * 思路: 在加权quick-union算法基础上,在find()方法中直接将节点连接到根节点(压缩搜索路径)
- */
-public class PathCompressionWQU implements UF{
-    int[] id;  //父连接数组,以触点作为索引
-    int count; //分量数量
-    int[] sz;  //记录触点所在树的节点个数
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PathCompressionWQU</span> <span class="token keyword">implements</span> <span class="token class-name">UF</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> id<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//父连接数组,以触点作为索引</span>
+    <span class="token keyword">int</span> count<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//分量数量</span>
+    <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> sz<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//记录触点所在树的节点个数</span>
 
-    public PathCompressionWQU(int n) {
-        count = n;
-        id = new int[n];
-        sz = new int[n];
-        for(int i=0;i&lt;n;++i) {
-            id[i] = i;
-            sz[i] = 1;
-        }
-    }
+    <span class="token keyword">public</span> <span class="token function">PathCompressionWQU</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        count <span class="token operator">=</span> n<span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        sz <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public void union(int p, int q) {
-        int rootP = find(p);
-        int rootQ = find(q);
-        if(rootP == rootQ)
-            return;
-        //连通规则: 将小树(节点少)根节点指向大树(节点多)根节点
-        if(sz[rootP] &gt; sz[rootQ]) {
-            id[rootQ] = rootP;
-            sz[rootP] += sz[rootQ];
-        }
-        else{
-            id[rootP] = rootQ;
-            sz[rootQ] += sz[rootP];
-        }
-        count--;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">union</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> rootP <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> rootQ <span class="token operator">=</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>rootP <span class="token operator">==</span> rootQ<span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//连通规则: 将小树(节点少)根节点指向大树(节点多)根节点</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">></span> sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">=</span> rootP<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">+=</span> sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            id<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span> <span class="token operator">=</span> rootQ<span class="token punctuation">;</span>
+            sz<span class="token punctuation">[</span>rootQ<span class="token punctuation">]</span> <span class="token operator">+=</span> sz<span class="token punctuation">[</span>rootP<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        count<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int find(int p) {
-        int start = p;  //记录开始节点的值
-        while(p != id[p]) //1. 循环结束后根节点为p
-            p = id[p];
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">find</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> start <span class="token operator">=</span> p<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//记录开始节点的值</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>p <span class="token operator">!=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//1. 循环结束后根节点为p</span>
+            p <span class="token operator">=</span> id<span class="token punctuation">[</span>p<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-        //将节点连接到根节点,压缩搜索路径
-        //2. 再次循环,将节点都指向根节点p (除了开始节点,无法获取到索引)
-        while(start != p){  //处理没有指向根节点的节点,将其指向根节点 (不含开始节点)
-            int next = id[start];
-            id[start] = p;
-            start = next;
-        }
+        <span class="token comment" spellcheck="true">//将节点连接到根节点,压缩搜索路径</span>
+        <span class="token comment" spellcheck="true">//2. 再次循环,将节点都指向根节点p (除了开始节点,无法获取到索引)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>start <span class="token operator">!=</span> p<span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//处理没有指向根节点的节点,将其指向根节点 (不含开始节点)</span>
+            <span class="token keyword">int</span> next <span class="token operator">=</span> id<span class="token punctuation">[</span>start<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            id<span class="token punctuation">[</span>start<span class="token punctuation">]</span> <span class="token operator">=</span> p<span class="token punctuation">;</span>
+            start <span class="token operator">=</span> next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        //返回根节点
-        return p;
-    }
+        <span class="token comment" spellcheck="true">//返回根节点</span>
+        <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public boolean connected(int p, int q) {
-        return find(p) == find(q);
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">connected</span><span class="token punctuation">(</span><span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> q<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">find</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">find</span><span class="token punctuation">(</span>q<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    public int count() {
-        return count;
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //打印结果
-    public void print(){
-        for(int i:id){
-            System.out.print(i+" ");
-        }
-    }
-}
-</code></pre><script>
+    <span class="token comment" spellcheck="true">//打印结果</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">:</span>id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -828,6 +837,10 @@ public class PathCompressionWQU implements UF{
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/union-find/">
                                     <span class="chip bg-color">union-find</span>
@@ -942,6 +955,10 @@ V1.0
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
                     </a>
@@ -993,6 +1010,10 @@ V1.0
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%B1%89%E8%AF%BA%E5%A1%94/">
                         <span class="chip bg-color">汉诺塔</span>
@@ -1194,7 +1215,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

@@ -435,6 +435,10 @@ eg: 1.线程A持有锁L并想获得锁M,同时线程B持有锁M并尝试获取�
                                 <span class="chip bg-color">并发</span>
                             </a>
                         
+                            <a href="/tags/%E9%94%81/">
+                                <span class="chip bg-color">锁</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -463,14 +467,14 @@ eg: 1.线程A持有锁L并想获得锁M,同时线程B持有锁M并尝试获取�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-01
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.1k
+                    2k
                 </div>
                 
 
@@ -507,129 +511,134 @@ eg: 1.线程A持有锁L并想获得锁M,同时线程B持有锁M并尝试获取�
 <li><p>两个线程试图以不同的顺序来获得相同的锁,即上面抱死形式</p>
 </li>
 <li><p>所有线程以固定的顺序来获得锁,就不会出现锁顺序死锁</p>
-<pre><code>//简单的锁顺序死锁
-class LeftRightDeadLock{
-  private final Object left = new Object();
-  private final Object right = new Object();
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//简单的锁顺序死锁</span>
+<span class="token keyword">class</span> <span class="token class-name">LeftRightDeadLock</span><span class="token punctuation">{</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> Object left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">final</span> Object right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  public void leftRight(){ //获取锁顺序 left -&gt; right
-      synchronized (left){
-          synchronized (right){
-              doSomething();
-          }
-      }
-  }
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">leftRight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//获取锁顺序 left -> right</span>
+      <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">{</span>
+              <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
 
-  public void rightLeft(){ //获取锁顺序 right -&gt; left
-      synchronized (right){
-          synchronized (left){
-              doSomething();
-          }
-      }
-  }
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">rightLeft</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//获取锁顺序 right -> left</span>
+      <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>right<span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">synchronized</span> <span class="token punctuation">(</span>left<span class="token punctuation">)</span><span class="token punctuation">{</span>
+              <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
 
-  public void doSomething(){}
-}</code></pre></li>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>动态锁顺序死锁</strong></p>
-<pre><code> //动态的锁顺序死锁(A-&gt;B转账,同时B-&gt;转账容易死锁(抱死))
- public void transferMoney(Account fromAccount,Account toAccount,DollarAmount amount){
-     synchronized(fromAccount){
-         synchronized(toAccount){
-             //转账操作
-         }
-     }
- }</code></pre><pre><code> //通过锁顺序来避免死锁
- private static final Object tieLock = new Object();//额外添加一个锁,只有当获取到这个锁时才能获取其他锁(等同于只有一个锁,极少数情况使用,会影响并发性能)
- public void transferMoney(final Account fromAcct,final Account toAcct,final DollarAmount amount){
-     int fromHash = System.identityHashCode(fromAcct);
-     int toHash = System.identityHashCode(toAcct);
-     if(fromHash &lt; toHash){//加锁顺序(hash: 小-&gt;大)
-         synchronized(fromAcct){
-             synchronized(toAcct){
-                 //转账操作
-             }
-         }
-     }
-     else if(fromHash &gt; toHash){//加锁顺序(hash: 小-&gt;大)
-         synchronized(toAcct){
-             synchronized(fromAcct){
-                 //转账操作
-             }
-         }
-     }
-     else{//hash冲突(极少数情况):额外增加一个锁,获取该锁后才能获取其他锁,等同于只有一个锁
-         synchronized(tieLock){
-             synchronized(fromAcct){
-                 synchronized(toAcct){
-                     //转账操作
-                 }
-             }
-         }
-     }
- }</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//动态的锁顺序死锁(A->B转账,同时B->转账容易死锁(抱死))</span>
+ <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">transferMoney</span><span class="token punctuation">(</span>Account fromAccount<span class="token punctuation">,</span>Account toAccount<span class="token punctuation">,</span>DollarAmount amount<span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">synchronized</span><span class="token punctuation">(</span>fromAccount<span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token keyword">synchronized</span><span class="token punctuation">(</span>toAccount<span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token comment" spellcheck="true">//转账操作</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//通过锁顺序来避免死锁</span>
+ <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Object tieLock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//额外添加一个锁,只有当获取到这个锁时才能获取其他锁(等同于只有一个锁,极少数情况使用,会影响并发性能)</span>
+ <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">transferMoney</span><span class="token punctuation">(</span><span class="token keyword">final</span> Account fromAcct<span class="token punctuation">,</span><span class="token keyword">final</span> Account toAcct<span class="token punctuation">,</span><span class="token keyword">final</span> DollarAmount amount<span class="token punctuation">)</span><span class="token punctuation">{</span>
+     <span class="token keyword">int</span> fromHash <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">identityHashCode</span><span class="token punctuation">(</span>fromAcct<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">int</span> toHash <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">identityHashCode</span><span class="token punctuation">(</span>toAcct<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">if</span><span class="token punctuation">(</span>fromHash <span class="token operator">&lt;</span> toHash<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//加锁顺序(hash: 小->大)</span>
+         <span class="token keyword">synchronized</span><span class="token punctuation">(</span>fromAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token keyword">synchronized</span><span class="token punctuation">(</span>toAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                 <span class="token comment" spellcheck="true">//转账操作</span>
+             <span class="token punctuation">}</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>fromHash <span class="token operator">></span> toHash<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//加锁顺序(hash: 小->大)</span>
+         <span class="token keyword">synchronized</span><span class="token punctuation">(</span>toAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token keyword">synchronized</span><span class="token punctuation">(</span>fromAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                 <span class="token comment" spellcheck="true">//转账操作</span>
+             <span class="token punctuation">}</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">else</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//hash冲突(极少数情况):额外增加一个锁,获取该锁后才能获取其他锁,等同于只有一个锁</span>
+         <span class="token keyword">synchronized</span><span class="token punctuation">(</span>tieLock<span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token keyword">synchronized</span><span class="token punctuation">(</span>fromAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                 <span class="token keyword">synchronized</span><span class="token punctuation">(</span>toAcct<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                     <span class="token comment" spellcheck="true">//转账操作</span>
+                 <span class="token punctuation">}</span>
+             <span class="token punctuation">}</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p>** 在协作对象之间发生死锁**</p>
-<pre><code> //在相互协作对象之间的锁顺序死锁
- //并行的调用setLocation与getImage方法可能会导致锁顺序死锁
- class Taxi{
-     //...其他内容
-     public synchronized Point getLocation(){
-         return location;
-     }
-     public synchronized void setLocation(Point location){
-         this.location = location;
-         if(location.equals(destination))
-             dispatcher.notifyAvailable(this);//调用Dispatcher类方法(隐式的获取另一个锁)
-     }
- }
- class Dispatcher{
-     //...其他内容
-     public synchronized void notifyAvailable(Taxi taxi){
-         //更新
-     }
-     public synchronized Image getImage(){
-         Image image = new Image();
-         for(Taxi t : taxis)
-             //隐式获取另一个锁
-             image.drawMarker(t.getLocation);
-         return image;
-     }
- }</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//在相互协作对象之间的锁顺序死锁</span>
+ <span class="token comment" spellcheck="true">//并行的调用setLocation与getImage方法可能会导致锁顺序死锁</span>
+ <span class="token keyword">class</span> <span class="token class-name">Taxi</span><span class="token punctuation">{</span>
+     <span class="token comment" spellcheck="true">//...其他内容</span>
+     <span class="token keyword">public</span> <span class="token keyword">synchronized</span> Point <span class="token function">getLocation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token keyword">return</span> location<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">setLocation</span><span class="token punctuation">(</span>Point location<span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token keyword">this</span><span class="token punctuation">.</span>location <span class="token operator">=</span> location<span class="token punctuation">;</span>
+         <span class="token keyword">if</span><span class="token punctuation">(</span>location<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>destination<span class="token punctuation">)</span><span class="token punctuation">)</span>
+             dispatcher<span class="token punctuation">.</span><span class="token function">notifyAvailable</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//调用Dispatcher类方法(隐式的获取另一个锁)</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">class</span> <span class="token class-name">Dispatcher</span><span class="token punctuation">{</span>
+     <span class="token comment" spellcheck="true">//...其他内容</span>
+     <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">notifyAvailable</span><span class="token punctuation">(</span>Taxi taxi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+         <span class="token comment" spellcheck="true">//更新</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">public</span> <span class="token keyword">synchronized</span> Image <span class="token function">getImage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+         Image image <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">for</span><span class="token punctuation">(</span>Taxi t <span class="token operator">:</span> taxis<span class="token punctuation">)</span>
+             <span class="token comment" spellcheck="true">//隐式获取另一个锁</span>
+             image<span class="token punctuation">.</span><span class="token function">drawMarker</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>getLocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">return</span> image<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>开放调用</strong></p>
 <ul>
 <li><p>调用某个方法是不需要持有锁,这种调用被称为开放调用</p>
 </li>
 <li><p>在程序中应尽量使用开放调用,与那些持有锁时调用外部方法的程序相比,更易于对依赖于开放调用的程序进行死锁分析</p>
-<pre><code>//通过开放调用来避免在相互协作的对象之间产生死锁
-class Taxi{
-  public synchronized Point getLocation(){ return location; }
-  public void setLocation(Point location){
-      boolean reachedDestination;
-      synchronized(this){
-          this.location = location;
-          reachedDestination = location.equals(destination);
-      }
-      if(reachedDestination)
-          dispatcher.notifyAvailable(this)//开放调用,调用时不需要持有锁,执行此方法只会在方法内部隐式的获取一个锁
-  }
-}
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过开放调用来避免在相互协作的对象之间产生死锁</span>
+<span class="token keyword">class</span> <span class="token class-name">Taxi</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">synchronized</span> Point <span class="token function">getLocation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> location<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setLocation</span><span class="token punctuation">(</span>Point location<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      <span class="token keyword">boolean</span> reachedDestination<span class="token punctuation">;</span>
+      <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span>location <span class="token operator">=</span> location<span class="token punctuation">;</span>
+          reachedDestination <span class="token operator">=</span> location<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>destination<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>reachedDestination<span class="token punctuation">)</span>
+          dispatcher<span class="token punctuation">.</span><span class="token function">notifyAvailable</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//开放调用,调用时不需要持有锁,执行此方法只会在方法内部隐式的获取一个锁</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-class Dispatcher{
-  public synchronized void notifyAvailable(Taxi taxi){
-      avilableTaxis.add(taxi);
-  }
-  public Image getImage(){
-      Set&lt;Taxi&gt; copy;
-      synchronized(this){
-          copy = new HashSet&lt;Taxi&gt;(taxis);
-      }
-      Image image = new Image();
-      for(Taxi t : copy)
-          image.drawMarker(t.getLocation);//开放调用,调用时不需要获取锁
-      return image
-  }
-}</code></pre></li>
+<span class="token keyword">class</span> <span class="token class-name">Dispatcher</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">notifyAvailable</span><span class="token punctuation">(</span>Taxi taxi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      avilableTaxis<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>taxi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">public</span> Image <span class="token function">getImage</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+      Set<span class="token operator">&lt;</span>Taxi<span class="token operator">></span> copy<span class="token punctuation">;</span>
+      <span class="token keyword">synchronized</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          copy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashSet</span><span class="token operator">&lt;</span>Taxi<span class="token operator">></span><span class="token punctuation">(</span>taxis<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+      Image image <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">for</span><span class="token punctuation">(</span>Taxi t <span class="token operator">:</span> copy<span class="token punctuation">)</span>
+          image<span class="token punctuation">.</span><span class="token function">drawMarker</span><span class="token punctuation">(</span>t<span class="token punctuation">.</span>getLocation<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//开放调用,调用时不需要获取锁</span>
+      <span class="token keyword">return</span> image
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>资源死锁</strong></p>
@@ -762,6 +771,10 @@ class Dispatcher{
                                     <span class="chip bg-color">并发</span>
                                 </a>
                             
+                                <a href="/tags/%E9%94%81/">
+                                    <span class="chip bg-color">锁</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -844,11 +857,13 @@ class Dispatcher{
                         
                             影响性能的因素
 性能与可伸缩性
+
 可伸缩性指的是: 当增加计算资源时(如CPU丶内存丶存储容量或I/O带宽),程序的吞吐量或处理能力相应地增加
 
 
 线程引入的开销
-在多线程的调度和协调过程中都需要一定的性能开销: 对于为了提升性能而引入的线程
+
+在多线程的调度和协调过程中都需要一定的性能开销: 对于为了提升性能而引入的
                         
                     </div>
                     <div class="publish-info">
@@ -899,9 +914,12 @@ class Dispatcher{
                         
                             线程饥饿死锁
 在线程池中,如果任务依赖于其他任务,那么可能产生死锁
+
 饥饿: 一个线程在无限的等待另外一个或多个线程相互传递使用并且永不会释放的资源
-死锁: 可以认为是两个线程或者进程在请求对方占有的资源运行时间较长的任务
-如果任务阻塞的时间
+
+死锁: 可以认为是两个线程或者进程在请求对方占有的资源
+运行时间较长的任务
+如果任务阻塞
                         
                     </div>
                     <div class="publish-info">
@@ -925,6 +943,14 @@ class Dispatcher{
                     
                     <a href="/tags/%E5%B9%B6%E5%8F%91/">
                         <span class="chip bg-color">并发</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%94%81/">
+                        <span class="chip bg-color">锁</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">线程</span>
                     </a>
                     
                 </div>
@@ -1123,7 +1149,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

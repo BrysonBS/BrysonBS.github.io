@@ -465,7 +465,7 @@ abst">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-03-25
+                    2020-04-20
                 </div>
                 
 
@@ -501,16 +501,17 @@ abst">
 <h3 id="简单实例-计算程序运行时间的模版"><a href="#简单实例-计算程序运行时间的模版" class="headerlink" title="简单实例: 计算程序运行时间的模版"></a>简单实例: 计算程序运行时间的模版</h3><ul>
 <li>注意: 一般模版方法都会加上final关键字,不允许被重写</li>
 </ul>
-<pre><code>abstract class TimeTempalte{
-    //模版方法
-    public final void getMillis(){    //计算运行时间的框架
-        long startTime = System.currentTimeMillis();    //记录开始时间
-        code();        //程序代码
-        long endTime = System.currentTimeMillis();        //记录结束时间
-        System.out.println("运行时间: "+ (endTime - startTime));
-    }
-    public abstract void code();    //通过抽象方法交给子类具体定义需要计算的程序代码
-}</code></pre><h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">TimeTempalte</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//模版方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">getMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//计算运行时间的框架</span>
+        <span class="token keyword">long</span> startTime <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//记录开始时间</span>
+        <span class="token function">code</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//程序代码</span>
+        <span class="token keyword">long</span> endTime <span class="token operator">=</span> System<span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//记录结束时间</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"运行时间: "</span><span class="token operator">+</span> <span class="token punctuation">(</span>endTime <span class="token operator">-</span> startTime<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">code</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//通过抽象方法交给子类具体定义需要计算的程序代码</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
 <li><strong>优点</strong><ol>
 <li>具体细节步骤实现定义在子类中,不会改变整体的结构</li>
 <li>代码复用的基本技术,在数据库设计中尤为重要</li>
@@ -984,7 +985,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

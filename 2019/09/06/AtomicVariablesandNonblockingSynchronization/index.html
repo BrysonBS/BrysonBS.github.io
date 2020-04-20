@@ -434,6 +434,10 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
                                 <span class="chip bg-color">并发</span>
                             </a>
                         
+                            <a href="/tags/%E5%8E%9F%E5%AD%90%E7%B1%BB/">
+                                <span class="chip bg-color">原子类</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -462,7 +466,7 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-07
+                    2020-04-20
                 </div>
                 
 
@@ -503,36 +507,39 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
 <li><p><strong>原子变量类型</strong></p>
 <ul>
 <li><p>原子变量比锁的粒度更细,将发生竞争的范围缩小到单个变量上</p>
-<pre><code>计数器: AtomicInteger AtomicLong AtomicBoolean AtomicReference
-域更新器: AtomicIntegerFieldUpdater AtomicLongFieldUpdater AtomicReferenceFieldUpdater
-数组: AtomicIntegerArray AtomicLongArray AtomicReferenceArray
-复合变量: AtomicMarkableReference AtomicStampedReference</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java">计数器<span class="token operator">:</span> AtomicInteger AtomicLong AtomicBoolean AtomicReference
+域更新器<span class="token operator">:</span> AtomicIntegerFieldUpdater AtomicLongFieldUpdater AtomicReferenceFieldUpdater
+数组<span class="token operator">:</span> AtomicIntegerArray AtomicLongArray AtomicReferenceArray
+复合变量<span class="token operator">:</span> AtomicMarkableReference AtomicStampedReference<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p>原子引用(AtomicReference),底层采用compareAndSwapObject实现CAS,比较的是两个对象地址是否相等,仅保证修改对象引用的原子性</p>
-<pre><code>@Test
-public void ReferenceTest(){
-  People p1 = new People("Tom");
-  People p2 = new People("Jerry");
-  //原子引用
-  AtomicReference&lt;People&gt; reference = new AtomicReference&lt;&gt;(p1);
-  p1.name = "Tom1";
-  System.out.println(reference.get().name); //Tom1
-  reference.compareAndSet(p1,p2);//原子的更新引用: 将reference引用由p1变为p2
-  System.out.println(reference.get().name); //Jerry
-}</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ReferenceTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  People p1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">People</span><span class="token punctuation">(</span><span class="token string">"Tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  People p2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">People</span><span class="token punctuation">(</span><span class="token string">"Jerry"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//原子引用</span>
+  AtomicReference<span class="token operator">&lt;</span>People<span class="token operator">></span> reference <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicReference</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  p1<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"Tom1"</span><span class="token punctuation">;</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>reference<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//Tom1</span>
+  reference<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>p1<span class="token punctuation">,</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//原子的更新引用: 将reference引用由p1变为p2</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>reference<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//Jerry</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p>操作非原子变量的字段属性,XXXFieldUpdater是基于反射的工具类,它能对指定类的指定volatile引用字段进行原子更新(这个字段不能是private的)</p>
-<pre><code>@Test
-public void atomicTest(){
-  AtomicReferenceFieldUpdater&lt;People,String&gt; updater = AtomicReferenceFieldUpdater.newUpdater(People.class,String.class,"name");
-  People p = new People();
-  //原子更新操作
-  updater.compareAndSet(p,p.name,"Tom");
-  System.out.println(p.name);//Tom
-}
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">atomicTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  AtomicReferenceFieldUpdater<span class="token operator">&lt;</span>People<span class="token punctuation">,</span>String<span class="token operator">></span> updater <span class="token operator">=</span> AtomicReferenceFieldUpdater<span class="token punctuation">.</span><span class="token function">newUpdater</span><span class="token punctuation">(</span>People<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span>String<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  People p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">People</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//原子更新操作</span>
+  updater<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>p<span class="token punctuation">,</span>p<span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token string">"Tom"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//Tom</span>
+<span class="token punctuation">}</span>
 
-class People{
-  //要更新的非原子变量(必须volatile修饰)
-  volatile String name;
-}</code></pre></li>
+<span class="token keyword">class</span> <span class="token class-name">People</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//要更新的非原子变量(必须volatile修饰)</span>
+  <span class="token keyword">volatile</span> String name<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p>复合变量: 解决CAS操作的ABA问题,<strong>AtomicStampedReference</strong>内部额外增加int类型时间戳(一般自增)记录变量的修改次数,可以知道引用变量中途被修改了几次;<strong>AtomicMarkableReference</strong>内部使用的是boolean变量,用来表示变量是否被修改过,适用于单纯的关心是否被更改过,不关系更新次数</p>
 </li>
 </ul>
@@ -549,72 +556,74 @@ class People{
 </blockquote>
 <ol>
 <li><p><strong>非阻塞的栈</strong></p>
-<pre><code>//非阻塞的链式栈
-public class ConcurrentStack&lt;E&gt; {
- private AtomicReference&lt;Node&lt;E&gt;&gt; top = new AtomicReference&lt;&gt;();
- //非static的内部类对象会隐式的在外部类中保存一个引用,指向创建它的外部类对象
- private static class Node&lt;E&gt;{
-     public final E item;
-     public Node&lt;E&gt; next;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//非阻塞的链式栈</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ConcurrentStack</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+ <span class="token keyword">private</span> AtomicReference<span class="token operator">&lt;</span>Node<span class="token operator">&lt;</span>E<span class="token operator">>></span> top <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicReference</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token comment" spellcheck="true">//非static的内部类对象会隐式的在外部类中保存一个引用,指向创建它的外部类对象</span>
+ <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">{</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> E item<span class="token punctuation">;</span>
+     <span class="token keyword">public</span> Node<span class="token operator">&lt;</span>E<span class="token operator">></span> next<span class="token punctuation">;</span>
 
-     public Node(E item) {
-         this.item = item;
-     }
- }
- public void push(E item){
-     Node&lt;E&gt; newHead = new Node&lt;&gt;(item);
-     Node&lt;E&gt; oldHead;
-     do{
-         oldHead = top.get();
-         newHead.next = oldHead;
-     } while(!top.compareAndSet(oldHead,newHead));//自旋
- }
- public E pop(){
-     Node&lt;E&gt; oldHead;
-     Node&lt;E&gt; newHead;
-     do{
-         oldHead = top.get();
-         if(oldHead == null) return null;
-         newHead = oldHead.next;
-     } while(!top.compareAndSet(oldHead,newHead));//自旋
-     return oldHead.item;
- }
-}</code></pre></li>
+     <span class="token keyword">public</span> <span class="token function">Node</span><span class="token punctuation">(</span>E item<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token keyword">this</span><span class="token punctuation">.</span>item <span class="token operator">=</span> item<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>E item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+     Node<span class="token operator">&lt;</span>E<span class="token operator">></span> newHead <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     Node<span class="token operator">&lt;</span>E<span class="token operator">></span> oldHead<span class="token punctuation">;</span>
+     <span class="token keyword">do</span><span class="token punctuation">{</span>
+         oldHead <span class="token operator">=</span> top<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         newHead<span class="token punctuation">.</span>next <span class="token operator">=</span> oldHead<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span> <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>top<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>oldHead<span class="token punctuation">,</span>newHead<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//自旋</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">public</span> E <span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+     Node<span class="token operator">&lt;</span>E<span class="token operator">></span> oldHead<span class="token punctuation">;</span>
+     Node<span class="token operator">&lt;</span>E<span class="token operator">></span> newHead<span class="token punctuation">;</span>
+     <span class="token keyword">do</span><span class="token punctuation">{</span>
+         oldHead <span class="token operator">=</span> top<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">if</span><span class="token punctuation">(</span>oldHead <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+         newHead <span class="token operator">=</span> oldHead<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span> <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>top<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>oldHead<span class="token punctuation">,</span>newHead<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//自旋</span>
+     <span class="token keyword">return</span> oldHead<span class="token punctuation">.</span>item<span class="token punctuation">;</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>非阻塞链表</strong></p>
-<pre><code>//非阻塞链表的插入算法
-public class LinkedQueue&lt;E&gt; {
- private static class Node&lt;E&gt;{
-     final E item;
-     final AtomicReference&lt;Node&lt;E&gt;&gt; next;
-     public Node(E item, AtomicReference&lt;Node&lt;E&gt;&gt; next) {
-         this.item = item;
-         this.next = next;
-     }
- }
- private final Node&lt;E&gt; dummy = new Node&lt;&gt;(null,null);
- private final AtomicReference&lt;Node&lt;E&gt;&gt; head = new AtomicReference&lt;&gt;(dummy);
- private final AtomicReference&lt;Node&lt;E&gt;&gt; tail = new AtomicReference&lt;&gt;(dummy);
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//非阻塞链表的插入算法</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LinkedQueue</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token punctuation">{</span>
+ <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span>E<span class="token operator">></span><span class="token punctuation">{</span>
+     <span class="token keyword">final</span> E item<span class="token punctuation">;</span>
+     <span class="token keyword">final</span> AtomicReference<span class="token operator">&lt;</span>Node<span class="token operator">&lt;</span>E<span class="token operator">>></span> next<span class="token punctuation">;</span>
+     <span class="token keyword">public</span> <span class="token function">Node</span><span class="token punctuation">(</span>E item<span class="token punctuation">,</span> AtomicReference<span class="token operator">&lt;</span>Node<span class="token operator">&lt;</span>E<span class="token operator">>></span> next<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token keyword">this</span><span class="token punctuation">.</span>item <span class="token operator">=</span> item<span class="token punctuation">;</span>
+         <span class="token keyword">this</span><span class="token punctuation">.</span>next <span class="token operator">=</span> next<span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+ <span class="token keyword">private</span> <span class="token keyword">final</span> Node<span class="token operator">&lt;</span>E<span class="token operator">></span> dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>null<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicReference<span class="token operator">&lt;</span>Node<span class="token operator">&lt;</span>E<span class="token operator">>></span> head <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicReference</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>dummy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ <span class="token keyword">private</span> <span class="token keyword">final</span> AtomicReference<span class="token operator">&lt;</span>Node<span class="token operator">&lt;</span>E<span class="token operator">>></span> tail <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicReference</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>dummy<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
- //插入: 先更新next,再更新tail,可能状态: 开始-&gt;中间状态(next完成)-&gt;结束(tail完成)
- public boolean put(E item){
-     Node&lt;E&gt; newNode = new Node&lt;&gt;(item,null);
-     while(true) {//自旋
-         Node&lt;E&gt; curTail = tail.get();//获取当前尾节点
-         Node&lt;E&gt; tailNext = curTail.next.get();
-         if (curTail == tail.get()) { //需要处理的状态: 开始状态(准备插入操作)丶中间状态(帮助完成)
-             if (tailNext != null) //有其他线程正在执行插入操作: 中间状态
-                 tail.compareAndSet(curTail, tailNext);//尝试帮助其他线程推进尾节点
-             else {//没有其他线程执行插入操作,尝试插入新节点: 开始状态
-                 if (curTail.next.compareAndSet(null, newNode)) {//1.尝试更新next
-                     //更新next成功,2.尝试推进尾节点(可能失败,其他线程帮助推进好了)
-                     tail.compareAndSet(curTail, newNode);
-                     return true;
-                 }//否则更新next失败,自旋重新尝试插入操作
-             }
-         }//否则: 结束状态,无需处理,重新尝试插入操作
-     }
- }
-}</code></pre></li>
+ <span class="token comment" spellcheck="true">//插入: 先更新next,再更新tail,可能状态: 开始->中间状态(next完成)->结束(tail完成)</span>
+ <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">put</span><span class="token punctuation">(</span>E item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+     Node<span class="token operator">&lt;</span>E<span class="token operator">></span> newNode <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>item<span class="token punctuation">,</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//自旋</span>
+         Node<span class="token operator">&lt;</span>E<span class="token operator">></span> curTail <span class="token operator">=</span> tail<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//获取当前尾节点</span>
+         Node<span class="token operator">&lt;</span>E<span class="token operator">></span> tailNext <span class="token operator">=</span> curTail<span class="token punctuation">.</span>next<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">if</span> <span class="token punctuation">(</span>curTail <span class="token operator">==</span> tail<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//需要处理的状态: 开始状态(准备插入操作)丶中间状态(帮助完成)</span>
+             <span class="token keyword">if</span> <span class="token punctuation">(</span>tailNext <span class="token operator">!=</span> null<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//有其他线程正在执行插入操作: 中间状态</span>
+                 tail<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>curTail<span class="token punctuation">,</span> tailNext<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//尝试帮助其他线程推进尾节点</span>
+             <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//没有其他线程执行插入操作,尝试插入新节点: 开始状态</span>
+                 <span class="token keyword">if</span> <span class="token punctuation">(</span>curTail<span class="token punctuation">.</span>next<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>null<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token comment" spellcheck="true">//1.尝试更新next</span>
+                     <span class="token comment" spellcheck="true">//更新next成功,2.尝试推进尾节点(可能失败,其他线程帮助推进好了)</span>
+                     tail<span class="token punctuation">.</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>curTail<span class="token punctuation">,</span> newNode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                     <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+                 <span class="token punctuation">}</span><span class="token comment" spellcheck="true">//否则更新next失败,自旋重新尝试插入操作</span>
+             <span class="token punctuation">}</span>
+         <span class="token punctuation">}</span><span class="token comment" spellcheck="true">//否则: 结束状态,无需处理,重新尝试插入操作</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -699,6 +708,10 @@ public class LinkedQueue&lt;E&gt; {
                             
                                 <a href="/tags/%E5%B9%B6%E5%8F%91/">
                                     <span class="chip bg-color">并发</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%8E%9F%E5%AD%90%E7%B1%BB/">
+                                    <span class="chip bg-color">原子类</span>
                                 </a>
                             
                         </div>
@@ -1065,7 +1078,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

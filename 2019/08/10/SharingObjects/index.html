@@ -460,7 +460,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-08-18
+                    2020-04-20
                 </div>
                 
 
@@ -502,54 +502,57 @@
 <ul>
 <li><strong>不安全的发布</strong></li>
 </ul>
-<pre><code>/**
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 私有的数组states已经逸出了它所在的作用域,致使调用者可以修改这个数组的内容
- */
-class UnsafeStates{
-    private String[] states = new String[]{"A","B"};
-    public String[] getStates(){ return states; }
-}</code></pre><ul>
+ */</span>
+<span class="token keyword">class</span> <span class="token class-name">UnsafeStates</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> states <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token string">"A"</span><span class="token punctuation">,</span><span class="token string">"B"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getStates</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> states<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li><strong>this引用逸出</strong></li>
 </ul>
-<pre><code>public class ThisEscape{
-    public ThisEscape(EventSource source){
-        source.registerListener(
-            new EventListener(Event e){
-                //this对象(ThisEscape)逸出,仅当ThisEscape构造函数返回时this对象才算完整,
-                //此处发布不完整的this对象(对象可能没有构造完成,就共享给其他线程使用)
-                doSomething(e);
-            }
-        );
-    }
-    void doSomething(Event e){}
-}</code></pre><ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ThisEscape</span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">ThisEscape</span><span class="token punctuation">(</span>EventSource source<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        source<span class="token punctuation">.</span><span class="token function">registerListener</span><span class="token punctuation">(</span>
+            <span class="token keyword">new</span> <span class="token class-name">EventListener</span><span class="token punctuation">(</span>Event e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//this对象(ThisEscape)逸出,仅当ThisEscape构造函数返回时this对象才算完整,</span>
+                <span class="token comment" spellcheck="true">//此处发布不完整的this对象(对象可能没有构造完成,就共享给其他线程使用)</span>
+                <span class="token function">doSomething</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>Event e<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li><strong>使用工厂方法防止this引用在构造过程中逸出</strong></li>
 </ul>
-<pre><code>/**
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 使用工厂方法防止this引用在构造过程中逸出
- */
-public class SafeListener{
-    //必须用final修饰
-    private final EventListener listener;
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SafeListener</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//必须用final修饰</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> EventListener listener<span class="token punctuation">;</span>
 
-    private SafeListener() {
-        listener = new EventListener() {
-            public void onEvent(Event e){
-                doSomething(e);
-            }
-        };
-    }
-    void doSomething(Event e){}
+    <span class="token keyword">private</span> <span class="token function">SafeListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        listener <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EventListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onEvent</span><span class="token punctuation">(</span>Event e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token function">doSomething</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">void</span> <span class="token function">doSomething</span><span class="token punctuation">(</span>Event e<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-    //工厂方法
-    public static SafeListener newInstance(){
-        //先创建完整的对象(this)
-        SafeListener safe = new SafeListener();
-        //再将(this)发布使用
-        source.registerListener(safe.listener);
-        return safe;
-    }
-}</code></pre><h4 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h4><blockquote>
+    <span class="token comment" spellcheck="true">//工厂方法</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> SafeListener <span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//先创建完整的对象(this)</span>
+        SafeListener safe <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SafeListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//再将(this)发布使用</span>
+        source<span class="token punctuation">.</span><span class="token function">registerListener</span><span class="token punctuation">(</span>safe<span class="token punctuation">.</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> safe<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h4><blockquote>
 <p>多线程间不共享数据,就不需要同步,称为线程封闭</p>
 </blockquote>
 <ol>
@@ -563,20 +566,21 @@ public class SafeListener{
 <p>使用ThreadLocal类可以实现线程封闭,ThredLocal使得各个线程都能够保持各自独立的一个对象,每个线程都会重新创建一个对象与线程绑定(以空间换时间),而线程是否安全取决于初始化方法中你如何创建该对象.(使用ThreadLocal可以达到线程内全局变量效果)</p>
 </li>
 </ol>
-<pre><code>    private static ThreadLocal&lt;Connection&gt; connectionHolder = new ThreadLocal&lt;Connection&gt;(){
-        //重写初始化方法(为每个线程创建单独对象进行绑定时调用,
-        //是否线程安全(达到线程封闭效果)取决于初始化方法如何创建对象)
-        @Override
-        protected Connection initialValue() {
-            //返回一个新的数据库链接(Connection)对象
-            return DriverManager.getConnection(DB_URL);
-        }
-    };
-    //获取连接对象,在多线程中使用同一个对象调用该方法,
-    //则会每个线程获取一个独立的Connection对象与线程绑定(K,V)形式绑定
-    public static Connection getConnection(){
-        return connectionHolder.get();
-    }</code></pre><h4 id="不可变"><a href="#不可变" class="headerlink" title="不可变"></a>不可变</h4><ol>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">private</span> <span class="token keyword">static</span> ThreadLocal<span class="token operator">&lt;</span>Connection<span class="token operator">></span> connectionHolder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ThreadLocal</span><span class="token operator">&lt;</span>Connection<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//重写初始化方法(为每个线程创建单独对象进行绑定时调用,</span>
+        <span class="token comment" spellcheck="true">//是否线程安全(达到线程封闭效果)取决于初始化方法如何创建对象)</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">protected</span> Connection <span class="token function">initialValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//返回一个新的数据库链接(Connection)对象</span>
+            <span class="token keyword">return</span> DriverManager<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>DB_URL<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//获取连接对象,在多线程中使用同一个对象调用该方法,</span>
+    <span class="token comment" spellcheck="true">//则会每个线程获取一个独立的Connection对象与线程绑定(K,V)形式绑定</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> Connection <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> connectionHolder<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="不可变"><a href="#不可变" class="headerlink" title="不可变"></a>不可变</h4><ol>
 <li><strong>不可变对象一定是线程安全的</strong><ul>
 <li>对象创建后其状态就不能修改</li>
 <li>对象的所有域是final类型</li>
@@ -587,26 +591,28 @@ public class SafeListener{
 <h4 id="安全发布"><a href="#安全发布" class="headerlink" title="安全发布"></a>安全发布</h4><ul>
 <li><strong>不安全的发布</strong></li>
 </ul>
-<pre><code>    //不安全的发布(由于可能指令重排序,不能保证发布时对象的完整性)
-    //1.可使用final修饰解决,参考final内存语义
-    //2.或者保证Holder类不可变,也可以安全发布
-    public Holder holder;
-    public void initialize(){
-        //创建对象时,可能存在指令重排序
-        holder = new Holder(42);
-    }</code></pre><pre><code>public class Holder {
-    //问题并不在本类,但是解决不安全发布导致的问题的另一种方式就是该类对象不可变,
-    //因此使用final修饰n即可,(参考final内存语义)
-    private int n;
-    public Holder(int n) {
-        this.n = n;
-    }
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">//不安全的发布(由于可能指令重排序,不能保证发布时对象的完整性)</span>
+    <span class="token comment" spellcheck="true">//1.可使用final修饰解决,参考final内存语义</span>
+    <span class="token comment" spellcheck="true">//2.或者保证Holder类不可变,也可以安全发布</span>
+    <span class="token keyword">public</span> Holder holder<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//创建对象时,可能存在指令重排序</span>
+        holder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Holder</span><span class="token punctuation">(</span><span class="token number">42</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Holder</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//问题并不在本类,但是解决不安全发布导致的问题的另一种方式就是该类对象不可变,</span>
+    <span class="token comment" spellcheck="true">//因此使用final修饰n即可,(参考final内存语义)</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> n<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">Holder</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>n <span class="token operator">=</span> n<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    public void assertSanity() {
-        if (n != n)
-            throw new AssertionError("This statement is false.");
-    }
-}</code></pre><ul>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">assertSanity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">!=</span> n<span class="token punctuation">)</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">AssertionError</span><span class="token punctuation">(</span><span class="token string">"This statement is false."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li><strong>安全发布的常用模式</strong><ul>
 <li>在静态初始化函数中初始化一个对象引用(JVM在类初始化阶段创建,JVM内部存在着同步机制,由jvm保证安全发布)</li>
 <li>将对象的引用保存到volatile类型的域或者AtomicReferance对象中(可见性,原子性)</li>
@@ -841,10 +847,10 @@ java类库中有很多线程封闭示例: Collections.synchronizedList及其类�
                         
                             数据压缩
 在此主要介绍使用Huffman编码压缩和LZW压缩算法
+地址: 整合为JUI程序(Java 8+)
 
 1.Huffman压缩(霍夫曼压缩)1.1.BitBuffer辅助类 - 按bit位处理字节数组/**
- * BitterBuffer
- * 按bit位处理字节数组,在此仅
+ * BitterBuf
                         
                     </div>
                     <div class="publish-info">
@@ -865,6 +871,10 @@ java类库中有很多线程封闭示例: Collections.synchronizedList及其类�
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
                         <span class="chip bg-color">字符串</span>
@@ -1066,7 +1076,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

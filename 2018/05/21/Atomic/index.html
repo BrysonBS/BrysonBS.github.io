@@ -438,6 +438,10 @@ AtomicBoolean     ">
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E5%B9%B6%E5%8F%91/">
+                                <span class="chip bg-color">并发</span>
+                            </a>
+                        
                             <a href="/tags/%E5%8E%9F%E5%AD%90%E7%B1%BB/">
                                 <span class="chip bg-color">原子类</span>
                             </a>
@@ -470,14 +474,14 @@ AtomicBoolean     ">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    585
+                    584
                 </div>
                 
 
@@ -536,14 +540,15 @@ AtomicBoolean     ">
 </li>
 </ol>
 </blockquote>
-<h3 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3.实现原理"></a>3.实现原理</h3><pre><code>    public final int incrementAndGet() {
-        for (;;) {
-            int current = get();    //第一步
-            int next = current + 1;    //第二步
-            if (compareAndSet(current, next))    //第三步
-                return next;
-        }
-    }</code></pre><ul>
+<h3 id="3-实现原理"><a href="#3-实现原理" class="headerlink" title="3.实现原理"></a>3.实现原理</h3><pre class="line-numbers language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> current <span class="token operator">=</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//第一步</span>
+            <span class="token keyword">int</span> next <span class="token operator">=</span> current <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//第二步</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">compareAndSet</span><span class="token punctuation">(</span>current<span class="token punctuation">,</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//第三步</span>
+                <span class="token keyword">return</span> next<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li><p>逻辑分析</p>
 <ul>
 <li>第一步获取当前的value值current</li>
@@ -552,72 +557,75 @@ AtomicBoolean     ">
 </ul>
 </li>
 </ul>
-<h3 id="4-简单实例"><a href="#4-简单实例" class="headerlink" title="4.简单实例"></a>4.简单实例</h3><h4 id="4-1简单类型"><a href="#4-1简单类型" class="headerlink" title="4.1简单类型"></a>4.1简单类型</h4><pre><code>//获取自增值的类
-class Increase{
-    //public Integer i = 0; //不使用原子类,赋初始值为0
-    public AtomicInteger i = new AtomicInteger(0);  //使用原子类,赋初始值为0
-    public Integer getIncrease(){
-        //return i++;   //非原子性操作,多线程情况下会出现线程安全问题
-        return i.getAndIncrement(); //原子性操作,不会出现线程安全问题
-    }
-}
+<h3 id="4-简单实例"><a href="#4-简单实例" class="headerlink" title="4.简单实例"></a>4.简单实例</h3><h4 id="4-1简单类型"><a href="#4-1简单类型" class="headerlink" title="4.1简单类型"></a>4.1简单类型</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//获取自增值的类</span>
+<span class="token keyword">class</span> <span class="token class-name">Increase</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//public Integer i = 0; //不使用原子类,赋初始值为0</span>
+    <span class="token keyword">public</span> AtomicInteger i <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使用原子类,赋初始值为0</span>
+    <span class="token keyword">public</span> Integer <span class="token function">getIncrease</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//return i++;   //非原子性操作,多线程情况下会出现线程安全问题</span>
+        <span class="token keyword">return</span> i<span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//原子性操作,不会出现线程安全问题</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-//测试类
-public class AtomicTest {
-    public static void main(String[] args){
-        Increase inc = new Increase();
-        //线程1
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    System.out.println("result1: "+inc.getIncrease());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-        //线程2
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    System.out.println("result2: "+inc.getIncrease());
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }).start();
-    }
-}</code></pre><h4 id="4-2-原子类更新字段"><a href="#4-2-原子类更新字段" class="headerlink" title="4.2.原子类更新字段"></a>4.2.原子类更新字段</h4><ul>
+<span class="token comment" spellcheck="true">//测试类</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AtomicTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Increase inc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Increase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//线程1</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result1: "</span><span class="token operator">+</span>inc<span class="token punctuation">.</span><span class="token function">getIncrease</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//线程2</span>
+        <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result2: "</span><span class="token operator">+</span>inc<span class="token punctuation">.</span><span class="token function">getIncrease</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                        e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-2-原子类更新字段"><a href="#4-2-原子类更新字段" class="headerlink" title="4.2.原子类更新字段"></a>4.2.原子类更新字段</h4><ul>
 <li>对象所属类</li>
 </ul>
-<pre><code>public class User {
-    public volatile int age;    //必须使用volatile关键字
-    public int getAge() {
-        return age;
-    }
-    public void setAge(int age) {
-        this.age = age;
-    }
-}</code></pre><ul>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//必须使用volatile关键字</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getAge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> age<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setAge</span><span class="token punctuation">(</span><span class="token keyword">int</span> age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>测试类</li>
 </ul>
-<pre><code>public class AtomicTest {
-    public static void main(String[] args){
-        AtomicIntegerFieldUpdater&lt;User&gt; field = AtomicIntegerFieldUpdater.newUpdater(User.class,"age");
-        User user = new User();
-        user.setAge(0);
-        field.getAndIncrement(user);    //更新age值(自增1),此操作为原子操作
-        System.out.println(user.age);   //输出age值为1
-    }
-}</code></pre><script>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AtomicTest</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        AtomicIntegerFieldUpdater<span class="token operator">&lt;</span>User<span class="token operator">></span> field <span class="token operator">=</span> AtomicIntegerFieldUpdater<span class="token punctuation">.</span><span class="token function">newUpdater</span><span class="token punctuation">(</span>User<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token string">"age"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        User user <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">User</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        user<span class="token punctuation">.</span><span class="token function">setAge</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        field<span class="token punctuation">.</span><span class="token function">getAndIncrement</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//更新age值(自增1),此操作为原子操作</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>user<span class="token punctuation">.</span>age<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//输出age值为1</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -697,6 +705,10 @@ public class AtomicTest {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E5%B9%B6%E5%8F%91/">
+                                    <span class="chip bg-color">并发</span>
+                                </a>
                             
                                 <a href="/tags/%E5%8E%9F%E5%AD%90%E7%B1%BB/">
                                     <span class="chip bg-color">原子类</span>
@@ -1069,7 +1081,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

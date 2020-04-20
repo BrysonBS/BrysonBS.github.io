@@ -8,7 +8,8 @@
     <meta name="description" content="1.简单连接池实例
 
 public class DataSourcePool {
-    private LinkedList&amp;lt;Connection&amp;gt; pool = new LinkedList&amp;lt;Connection&amp;gt">
+    private LinkedList&amp;lt;Connection&gt; pool = new LinkedList&amp;lt;Connection&gt;();
+ ">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -462,14 +463,14 @@ public class DataSourcePool {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    293
+                    290
                 </div>
                 
 
@@ -494,85 +495,86 @@ public class DataSourcePool {
             <div id="articleContent">
                 <h3 id="1-简单连接池实例"><a href="#1-简单连接池实例" class="headerlink" title="1.简单连接池实例"></a>1.简单连接池实例</h3><a id="more"></a>
 
-<pre><code>public class DataSourcePool {
-    private LinkedList&lt;Connection&gt; pool = new LinkedList&lt;Connection&gt;();
-    private int COUNT_INIT;          //初始化连接数
-    private int COUNT_MAX;          //最大连接数
-    private volatile int COUNT_CURRENT = 0;       //当前连接数量
-    private String DRIVER_CLASS;
-    private String URL;
-    private String USER_NAME;
-    private String PASSWORD;
-    private Lock lock = new ReentrantLock();
-    private Condition c = lock.newCondition();
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DataSourcePool</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>Connection<span class="token operator">></span> pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span>Connection<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> COUNT_INIT<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//初始化连接数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> COUNT_MAX<span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//最大连接数</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token keyword">int</span> COUNT_CURRENT <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>       <span class="token comment" spellcheck="true">//当前连接数量</span>
+    <span class="token keyword">private</span> String DRIVER_CLASS<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String URL<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String USER_NAME<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String PASSWORD<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Lock lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Condition c <span class="token operator">=</span> lock<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    public DataSourcePool(Properties properties) {
-        COUNT_INIT = Integer.parseInt(properties.getProperty("initialSize"));
-        COUNT_MAX = Integer.parseInt(properties.getProperty("maxActive"));
-        DRIVER_CLASS = properties.getProperty("driverClass");
-        URL = properties.getProperty("url");
-        USER_NAME = properties.getProperty("userName");
-        PASSWORD = properties.getProperty("password");
-        try {
-            Class.forName(DRIVER_CLASS);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        for(int i=0;i&lt;COUNT_INIT;i++){
-            try {
-                pool.add(DriverManager.getConnection(URL,USER_NAME,PASSWORD));
-                COUNT_CURRENT++;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+    <span class="token keyword">public</span> <span class="token function">DataSourcePool</span><span class="token punctuation">(</span>Properties properties<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        COUNT_INIT <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"initialSize"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        COUNT_MAX <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"maxActive"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        DRIVER_CLASS <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"driverClass"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        URL <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"url"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        USER_NAME <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"userName"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        PASSWORD <span class="token operator">=</span> properties<span class="token punctuation">.</span><span class="token function">getProperty</span><span class="token punctuation">(</span><span class="token string">"password"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            Class<span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span>DRIVER_CLASS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ClassNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>COUNT_INIT<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                pool<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>DriverManager<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>URL<span class="token punctuation">,</span>USER_NAME<span class="token punctuation">,</span>PASSWORD<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                COUNT_CURRENT<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">SQLException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //获取连接
-    public Connection getConnection(){
-        Connection result = null;
-        lock.lock();
-        try {
-            while (pool.isEmpty() &amp;&amp; COUNT_CURRENT &gt;= COUNT_MAX) {
-                c.await();          //如果连接池为空且连接数已经达到最大则等待
-            }
-            if (pool.isEmpty()&amp;&amp;COUNT_CURRENT &lt; COUNT_MAX) {
-                result = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
-                COUNT_CURRENT++;
-            }
-            else{
-                result = pool.removeLast();
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            lock.unlock();
-        }
-        return result;
-    }
+    <span class="token comment" spellcheck="true">//获取连接</span>
+    <span class="token keyword">public</span> Connection <span class="token function">getConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Connection result <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>pool<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> COUNT_CURRENT <span class="token operator">>=</span> COUNT_MAX<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                c<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//如果连接池为空且连接数已经达到最大则等待</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>pool<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&amp;&amp;</span>COUNT_CURRENT <span class="token operator">&lt;</span> COUNT_MAX<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                result <span class="token operator">=</span> DriverManager<span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>URL<span class="token punctuation">,</span> USER_NAME<span class="token punctuation">,</span> PASSWORD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                COUNT_CURRENT<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                result <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">removeLast</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">finally</span><span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //释放连接
-    public void release(Connection connection){
-        lock.lock();
-        try {
-            if(pool.size()&lt;COUNT_INIT){
-                pool.push(connection);
-                c.signal();
-            }
-            else{
-                connection.close();
-                COUNT_CURRENT--;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            lock.unlock();
-        }
-    }
-}
-</code></pre><script>
+    <span class="token comment" spellcheck="true">//释放连接</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">release</span><span class="token punctuation">(</span>Connection connection<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>pool<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&lt;</span>COUNT_INIT<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                pool<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>connection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                c<span class="token punctuation">.</span><span class="token function">signal</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                connection<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                COUNT_CURRENT<span class="token operator">--</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>Exception e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">finally</span><span class="token punctuation">{</span>
+            lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -763,6 +765,10 @@ public class DataSourcePool {
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E8%BF%9B%E5%88%B6/">
                         <span class="chip bg-color">进制</span>
                     </a>
@@ -795,8 +801,9 @@ public class Product {
     public Product(){
         System.out.print("生产了一个产品");
     }
-}2.生产者类//生产者
-public cl
+}
+2.生产者类//生产者
+public c
                         
                     </div>
                     <div class="publish-info">
@@ -1018,7 +1025,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

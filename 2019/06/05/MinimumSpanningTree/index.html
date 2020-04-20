@@ -9,8 +9,9 @@
 加权无向图的最小生成树
 
 1.加权边API//加权边API
-public class Edge implements Comparable&amp;lt;Edge&amp;gt;{
-    private final int v; //边的一个">
+public class Edge implements Comparable&amp;lt;Edge&gt;{
+    private final int v; //边的一个顶点
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -432,6 +433,10 @@ public class Edge implements Comparable&amp;lt;Edge&amp;gt;{
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E5%9B%BE/">
                                 <span class="chip bg-color">图</span>
                             </a>
@@ -464,7 +469,7 @@ public class Edge implements Comparable&amp;lt;Edge&amp;gt;{
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-06-05
+                    2020-04-20
                 </div>
                 
 
@@ -497,100 +502,102 @@ public class Edge implements Comparable&amp;lt;Edge&amp;gt;{
                 <h3 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h3><blockquote>
 <p>加权无向图的最小生成树</p>
 </blockquote>
-<h4 id="1-加权边API"><a href="#1-加权边API" class="headerlink" title="1.加权边API"></a>1.加权边API</h4><pre><code>//加权边API
-public class Edge implements Comparable&lt;Edge&gt;{
-    private final int v; //边的一个顶点
-    private final int w; //边的另一个顶点
-    private final double weight;    //边的权重
-    public Edge(int v,int w,double weight) {
-        this.v = v;
-        this.w = w;
-        this.weight = weight;
-    }
-    public double weight(){ return weight; }
-    public int either(){ return v; }    //获取其中一个顶点
-    public int other(int vertex){       //获取另一个顶点
-        if(vertex == v) return w;
-        else if(vertex == w) return v;
-        else throw new RuntimeException("不包含顶点"+v);
-    } //方便遍历所有边
-    public int compareTo(Edge that) {   //可比较
-        if(weight-that.weight &lt; 0) return -1;
-        else if(weight-that.weight &gt; 0) return 1;
-        else return 0;
-    }
-    public String toString() {  //字符串表示
-        return v + "-" + w +" " + weight;
-    }
-}</code></pre><h4 id="2-加权无向图API"><a href="#2-加权无向图API" class="headerlink" title="2.加权无向图API"></a>2.加权无向图API</h4><pre><code>//加权无向图API
-public class EdgeWeightedGraph {
-    private int v;    //顶点数
-    private int e;    //边数
-    private LinkedList&lt;Edge&gt;[] adj;   //邻接表
-    public EdgeWeightedGraph(int v) {   //创建一副含有v个顶点的空图
-        this.v = v;
-        e = 0;
-        adj = new LinkedList[v];
-        for(int i=0;i&lt;v;++i)
-            adj[i] = new LinkedList&lt;&gt;();
-    }
-    public EdgeWeightedGraph(InputStream input) {   //从输入流中读取一幅图
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String value = null;
-        try {
-            int v = Integer.parseInt(reader.readLine());
-            this.v = v;
-            adj = (LinkedList&lt;Edge&gt;[]) new LinkedList[v];
-            for(int i = 0 ; i &lt; v;i++)
-                adj[i] = new LinkedList&lt;&gt;();
-            int e = Integer.parseInt(reader.readLine());
-            for(int i=0; i&lt;e; i++){
-                String[] str = reader.readLine().split(" +");
-                addEdge(new Edge(Integer.parseInt(str[0]),Integer.parseInt(str[1]),Double.parseDouble(str[2])));
-            }
+<h4 id="1-加权边API"><a href="#1-加权边API" class="headerlink" title="1.加权边API"></a>1.加权边API</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//加权边API</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Edge</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token operator">&lt;</span>Edge<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> v<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//边的一个顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> w<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//边的另一个顶点</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">double</span> weight<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//边的权重</span>
+    <span class="token keyword">public</span> <span class="token function">Edge</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">,</span><span class="token keyword">int</span> w<span class="token punctuation">,</span><span class="token keyword">double</span> weight<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>w <span class="token operator">=</span> w<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>weight <span class="token operator">=</span> weight<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> weight<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">either</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> v<span class="token punctuation">;</span> <span class="token punctuation">}</span>    <span class="token comment" spellcheck="true">//获取其中一个顶点</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">other</span><span class="token punctuation">(</span><span class="token keyword">int</span> vertex<span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token comment" spellcheck="true">//获取另一个顶点</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>vertex <span class="token operator">==</span> v<span class="token punctuation">)</span> <span class="token keyword">return</span> w<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>vertex <span class="token operator">==</span> w<span class="token punctuation">)</span> <span class="token keyword">return</span> v<span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"不包含顶点"</span><span class="token operator">+</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token comment" spellcheck="true">//方便遍历所有边</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compareTo</span><span class="token punctuation">(</span>Edge that<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//可比较</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>weight<span class="token operator">-</span>that<span class="token punctuation">.</span>weight <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>weight<span class="token operator">-</span>that<span class="token punctuation">.</span>weight <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//字符串表示</span>
+        <span class="token keyword">return</span> v <span class="token operator">+</span> <span class="token string">"-"</span> <span class="token operator">+</span> w <span class="token operator">+</span><span class="token string">" "</span> <span class="token operator">+</span> weight<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-加权无向图API"><a href="#2-加权无向图API" class="headerlink" title="2.加权无向图API"></a>2.加权无向图API</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//加权无向图API</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EdgeWeightedGraph</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> v<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//顶点数</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> e<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//边数</span>
+    <span class="token keyword">private</span> LinkedList<span class="token operator">&lt;</span>Edge<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span> adj<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//邻接表</span>
+    <span class="token keyword">public</span> <span class="token function">EdgeWeightedGraph</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//创建一副含有v个顶点的空图</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
+        e <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        adj <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>v<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">EdgeWeightedGraph</span><span class="token punctuation">(</span>InputStream input<span class="token punctuation">)</span> <span class="token punctuation">{</span>   <span class="token comment" spellcheck="true">//从输入流中读取一幅图</span>
+        BufferedReader reader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">BufferedReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">InputStreamReader</span><span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        String value <span class="token operator">=</span> null<span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
+            adj <span class="token operator">=</span> <span class="token punctuation">(</span>LinkedList<span class="token operator">&lt;</span>Edge<span class="token operator">></span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">;</span> i <span class="token operator">&lt;</span> v<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+                adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LinkedList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> e <span class="token operator">=</span> Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>e<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                String<span class="token punctuation">[</span><span class="token punctuation">]</span> str <span class="token operator">=</span> reader<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">" +"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">addEdge</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Edge</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>str<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>Integer<span class="token punctuation">.</span><span class="token function">parseInt</span><span class="token punctuation">(</span>str<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>Double<span class="token punctuation">.</span><span class="token function">parseDouble</span><span class="token punctuation">(</span>str<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
-    //顶点数
-    public int V(){ return v; }
-    //边数
-    public int E(){ return e; }
-    //向图中添加一条边e
-    public void addEdge(Edge e){
-        adj[e.either()].add(e);
-        adj[e.other(e.either())].add(e);
-        this.e++;
-    }
-    //和v相连的所有边
-    public Iterable&lt;Edge&gt; adj(int v){ return adj[v]; }
-    //图的所有边
-    public Iterable&lt;Edge&gt; edges(){
-        ArrayDeque&lt;Edge&gt; queue = new ArrayDeque&lt;&gt;();
-        for(int i=0;i&lt;v;++i)    //按照顶点从小到大顺序遍历
-            for(Edge e : adj[i])
-                if(e.other(i) &gt; i) queue.offer(e);  //大顶点-小顶点的边肯定在之前被遍历过
-        return queue;
-    }
-    //图的字符串表示
-    public String toString() {
-        String s = V() + "vertices, " + E() + " edges\n";
-        for(int v = 0;v &lt; V();v++){
-            s += v + ": ";
-            for(Edge e : adj(v))
-                s += e.toString() + " ";
-            s += "\n";
-        }
-        return s;
-    }
-}</code></pre><h4 id="3-Prim算法延时版本-最小生成树"><a href="#3-Prim算法延时版本-最小生成树" class="headerlink" title="3.Prim算法延时版本(最小生成树)"></a>3.Prim算法延时版本(最小生成树)</h4><pre><code>/**
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e1<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
+            <span class="token keyword">try</span> <span class="token punctuation">{</span>
+                reader<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e1<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                e1<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//顶点数</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> v<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//边数</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">E</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> e<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//向图中添加一条边e</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addEdge</span><span class="token punctuation">(</span>Edge e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        adj<span class="token punctuation">[</span>e<span class="token punctuation">.</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        adj<span class="token punctuation">[</span>e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>e<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//和v相连的所有边</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Edge<span class="token operator">></span> <span class="token function">adj</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> adj<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//图的所有边</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Edge<span class="token operator">></span> <span class="token function">edges</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ArrayDeque<span class="token operator">&lt;</span>Edge<span class="token operator">></span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>v<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//按照顶点从小到大顺序遍历</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>Edge e <span class="token operator">:</span> adj<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span> <span class="token operator">></span> i<span class="token punctuation">)</span> queue<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//大顶点-小顶点的边肯定在之前被遍历过</span>
+        <span class="token keyword">return</span> queue<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//图的字符串表示</span>
+    <span class="token keyword">public</span> String <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        String s <span class="token operator">=</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"vertices, "</span> <span class="token operator">+</span> <span class="token function">E</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" edges\n"</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> v <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>v <span class="token operator">&lt;</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>v<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            s <span class="token operator">+=</span> v <span class="token operator">+</span> <span class="token string">": "</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>Edge e <span class="token operator">:</span> <span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                s <span class="token operator">+=</span> e<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">;</span>
+            s <span class="token operator">+=</span> <span class="token string">"\n"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-Prim算法延时版本-最小生成树"><a href="#3-Prim算法延时版本-最小生成树" class="headerlink" title="3.Prim算法延时版本(最小生成树)"></a>3.Prim算法延时版本(最小生成树)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * 最小生成树的Prim延时算法
  *    (假设为连通图,非连通时取每个连通分量的最小生成树合并为森林即可)
  * 概述: 将图所有顶点分为两个非空且不重复的两个集合,横切边是连接两个属于不同集合的边,
@@ -598,106 +605,109 @@ public class EdgeWeightedGraph {
  * 实现: 以任意一个顶点开始,作为最小生成树的初始阶段,将图分为2部分(一个顶点为一部分(最小生成树起始阶段),剩余顶点为一部分)
  *       获取连接这两个集合的所有横切边的最小者,加入最小生成树中,此时最小生成树的2个顶点和其余顶点作为图的两部分,
  *       重复上面的步骤继续取横切边中最小的边加入最小生成树,直到得到v-1条边为止
- */
-public class LazyPrimMST {
-    private boolean[] marked;   //标记是否已加入到最小生成树中
-    private Queue&lt;Edge&gt; mst;    //维护最小生成树的边
-    private PriorityQueue&lt;Edge&gt; pq; //使用优先队列保存横切边(包含失效的),每次可取出最小的横切边
-    private double weight;
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">LazyPrimMST</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//标记是否已加入到最小生成树中</span>
+    <span class="token keyword">private</span> Queue<span class="token operator">&lt;</span>Edge<span class="token operator">></span> mst<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//维护最小生成树的边</span>
+    <span class="token keyword">private</span> PriorityQueue<span class="token operator">&lt;</span>Edge<span class="token operator">></span> pq<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//使用优先队列保存横切边(包含失效的),每次可取出最小的横切边</span>
+    <span class="token keyword">private</span> <span class="token keyword">double</span> weight<span class="token punctuation">;</span>
 
-    public LazyPrimMST(EdgeWeightedGraph g) {
-        marked = new boolean[g.V()];
-        mst = new ArrayDeque&lt;&gt;();
-        pq = new PriorityQueue&lt;&gt;();
-        visit(g,0);     //假设g连通
-        while(!pq.isEmpty()){
-            Edge e = pq.poll(); //取出最小的横切边
-            int v = e.either(), w = e.other(v); //横切边的两个顶点v-w
-            if(marked[v] &amp;&amp; marked[w]) continue; //顶点都在树中,失效的横切边跳过
-            mst.offer(e);   //有效的最小横切边加入最小生成树中
-            weight += e.weight();   //更新总权重
-            if(marked[v]) visit(g,w); //将刚加入的顶点加入树中,并遍历相连的边
-            if(marked[w]) visit(g,v);
-        }
-    }
-    private void visit(EdgeWeightedGraph g,int v){
-        marked[v] = true;   //标记顶点V已经加入树中
-        for(Edge e : g.adj(v))  //遍历新加入顶点相连的所有边
-            if(!marked[e.other(v)]) pq.offer(e); //将加入顶点后新增加的横切边加入优先队列
-        /**
+    <span class="token keyword">public</span> <span class="token function">LazyPrimMST</span><span class="token punctuation">(</span>EdgeWeightedGraph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        mst <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pq <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">visit</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//假设g连通</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>pq<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            Edge e <span class="token operator">=</span> pq<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//取出最小的横切边</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> w <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//横切边的两个顶点v-w</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//顶点都在树中,失效的横切边跳过</span>
+            mst<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//有效的最小横切边加入最小生成树中</span>
+            weight <span class="token operator">+=</span> e<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//更新总权重</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">visit</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将刚加入的顶点加入树中,并遍历相连的边</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token function">visit</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">visit</span><span class="token punctuation">(</span>EdgeWeightedGraph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//标记顶点V已经加入树中</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>Edge e <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment" spellcheck="true">//遍历新加入顶点相连的所有边</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>marked<span class="token punctuation">[</span>e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span> pq<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将加入顶点后新增加的横切边加入优先队列</span>
+        <span class="token comment" spellcheck="true">/**
         * 可在此进行优化,只加入有效的横切边,变成及时Prim算法
-        */
-    }
-    //最小生成树所有边
-    public Iterable&lt;Edge&gt; edges(){ return mst; }
-    //最小生成树的权重
-    public double weight(){ return weight; }
-}</code></pre><h4 id="4-Prim算法及时版本-最小生成树"><a href="#4-Prim算法及时版本-最小生成树" class="headerlink" title="4.Prim算法及时版本(最小生成树)"></a>4.Prim算法及时版本(最小生成树)</h4><pre><code>/**
+        */</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小生成树所有边</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Edge<span class="token operator">></span> <span class="token function">edges</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> mst<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小生成树的权重</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> weight<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-Prim算法及时版本-最小生成树"><a href="#4-Prim算法及时版本-最小生成树" class="headerlink" title="4.Prim算法及时版本(最小生成树)"></a>4.Prim算法及时版本(最小生成树)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  *  Prim算法及时版本(最小生成树)
  *  概述: 只需对延时版本的Prim算法稍作更改即可,只将有效的横切边加入优先队列
  *        此处使用索引优先队列,索引为顶点,按权重(到达顶点的边的权重)构造优先队列
  *        生成的索引优先队列可获取最小权重的顶点,还可以取出指定顶点的权重
  *        索引优先队列api在以前博客记录
- */
-public class PrimMST {
-    private boolean[] marked;   //标记是否已加入最小生成树
-    private Edge[] edgeTo;      //索引为顶点,值为到达该顶点的边,最后保存了最小生成树的边
-    private IndexMaxPQ&lt;Double&gt; pq; //索引优先队列(见堆排序)维护有效的横切边
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PrimMST</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span><span class="token punctuation">[</span><span class="token punctuation">]</span> marked<span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//标记是否已加入最小生成树</span>
+    <span class="token keyword">private</span> Edge<span class="token punctuation">[</span><span class="token punctuation">]</span> edgeTo<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//索引为顶点,值为到达该顶点的边,最后保存了最小生成树的边</span>
+    <span class="token keyword">private</span> IndexMaxPQ<span class="token operator">&lt;</span>Double<span class="token operator">></span> pq<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//索引优先队列(见堆排序)维护有效的横切边</span>
 
-    public PrimMST(EdgeWeightedGraph g) {
-        marked = new boolean[g.V()];
-        edgeTo = new Edge[g.V()];
-        pq = new IndexMaxPQ&lt;&gt;(g.V(),(x,y) -&gt; -x.compareTo(y));
-        pq.insert(0,0.0);   //起始顶点
-        while(!pq.isEmpty())
-            visit(g,pq.delMax());
-    }
-    private void visit(EdgeWeightedGraph g,int v){
-        marked[v] = true;
-        for(Edge e : g.adj(v)){
-            int w = e.other(v);
-            if(marked[w]) continue;     //如果另一个顶点已经加入最小生成树,则跳过
-            if(!pq.contains(w)) pq.insert(w,e.weight()); //与新顶点构成的横切边,直接加入
-            else if(pq.peek(w) &lt; e.weight()) continue;   //无效横切边跳过:以前记录的到达w顶点的横切边权重更小
-            else pq.change(w,e.weight());   //新的横切边权重更小,更新权重
-            edgeTo[w] = e;  //执行到此为有效横切边,加入或者替换
-        }
-    }
-    //最小生成树的边
-    public Iterable&lt;Edge&gt; edges(){ return Arrays.stream(edgeTo).skip(1).collect(Collectors.toList()); }
-    //最小生成树的权重
-    public double weight(){ return Arrays.stream(edgeTo).skip(1).mapToDouble(x -&gt; x.weight()).sum(); }
-}</code></pre><h4 id="5-Kruskal算法-最小生成树"><a href="#5-Kruskal算法-最小生成树" class="headerlink" title="5.Kruskal算法(最小生成树)"></a>5.Kruskal算法(最小生成树)</h4><pre><code>/**
+    <span class="token keyword">public</span> <span class="token function">PrimMST</span><span class="token punctuation">(</span>EdgeWeightedGraph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        marked <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">boolean</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        edgeTo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Edge</span><span class="token punctuation">[</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        pq <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">IndexMaxPQ</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">-</span>x<span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        pq<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//起始顶点</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>pq<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token function">visit</span><span class="token punctuation">(</span>g<span class="token punctuation">,</span>pq<span class="token punctuation">.</span><span class="token function">delMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">visit</span><span class="token punctuation">(</span>EdgeWeightedGraph g<span class="token punctuation">,</span><span class="token keyword">int</span> v<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        marked<span class="token punctuation">[</span>v<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span>Edge e <span class="token operator">:</span> g<span class="token punctuation">.</span><span class="token function">adj</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">int</span> w <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>marked<span class="token punctuation">[</span>w<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>     <span class="token comment" spellcheck="true">//如果另一个顶点已经加入最小生成树,则跳过</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>pq<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span><span class="token punctuation">)</span> pq<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span>e<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//与新顶点构成的横切边,直接加入</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>pq<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token operator">&lt;</span> e<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//无效横切边跳过:以前记录的到达w顶点的横切边权重更小</span>
+            <span class="token keyword">else</span> pq<span class="token punctuation">.</span><span class="token function">change</span><span class="token punctuation">(</span>w<span class="token punctuation">,</span>e<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//新的横切边权重更小,更新权重</span>
+            edgeTo<span class="token punctuation">[</span>w<span class="token punctuation">]</span> <span class="token operator">=</span> e<span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//执行到此为有效横切边,加入或者替换</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小生成树的边</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Edge<span class="token operator">></span> <span class="token function">edges</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>edgeTo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">skip</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小生成树的权重</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>edgeTo<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">skip</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToDouble</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> x<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="5-Kruskal算法-最小生成树"><a href="#5-Kruskal算法-最小生成树" class="headerlink" title="5.Kruskal算法(最小生成树)"></a>5.Kruskal算法(最小生成树)</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
  * Kruskal算法
  * 概述: 将所有边按照边的权重加入优先队列,每次取出一个最小的边,该边不会与已经加入的边构成环,
  *       则加入最小生成树,直到含有v-1条边为止
  * 实现: 使用union-find数据结构维护顶点的连通性,可以判断两个顶点是否连通,
  *       如果在加入一条边时,此边的两个顶点已经连通, 则会构成环,此时为无效边
- */
-public class KruskalMST {
-    private Queue&lt;Edge&gt; mst;    //维护最小生成树的边
-    private double weight;      //维护权重
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">KruskalMST</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> Queue<span class="token operator">&lt;</span>Edge<span class="token operator">></span> mst<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//维护最小生成树的边</span>
+    <span class="token keyword">private</span> <span class="token keyword">double</span> weight<span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//维护权重</span>
 
-    public KruskalMST(EdgeWeightedGraph g) {
-        mst = new ArrayDeque&lt;&gt;();
-        PriorityQueue&lt;Edge&gt; minPQ = new PriorityQueue&lt;&gt;();
-        g.edges().forEach(minPQ::offer);    //将所有边按照边的权重加入优先队列
-        WeightedQuickUnion un = new WeightedQuickUnion(g.V());//union-find(见union-find算法)
-        while(!minPQ.isEmpty() &amp;&amp; mst.size() &lt; g.V()-1){    //v-1条边为止
-            Edge e = minPQ.poll();  //取出最小边
-            int v = e.either(),w = e.other(v);
-            if(un.connected(v,w)) continue; //跳过无效边: v与w已经连通,此时再加入该边会构成环
-            un.union(v,w);  //加入新的边,更新连通性
-            mst.offer(e);   //加入新边
-            weight += e.weight(); //更新总权重
-        }
-    }
+    <span class="token keyword">public</span> <span class="token function">KruskalMST</span><span class="token punctuation">(</span>EdgeWeightedGraph g<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        mst <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        PriorityQueue<span class="token operator">&lt;</span>Edge<span class="token operator">></span> minPQ <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PriorityQueue</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        g<span class="token punctuation">.</span><span class="token function">edges</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>minPQ<span class="token operator">:</span><span class="token operator">:</span>offer<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//将所有边按照边的权重加入优先队列</span>
+        WeightedQuickUnion un <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WeightedQuickUnion</span><span class="token punctuation">(</span>g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//union-find(见union-find算法)</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>minPQ<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> mst<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> g<span class="token punctuation">.</span><span class="token function">V</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//v-1条边为止</span>
+            Edge e <span class="token operator">=</span> minPQ<span class="token punctuation">.</span><span class="token function">poll</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//取出最小边</span>
+            <span class="token keyword">int</span> v <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">either</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>w <span class="token operator">=</span> e<span class="token punctuation">.</span><span class="token function">other</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>un<span class="token punctuation">.</span><span class="token function">connected</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">continue</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//跳过无效边: v与w已经连通,此时再加入该边会构成环</span>
+            un<span class="token punctuation">.</span><span class="token function">union</span><span class="token punctuation">(</span>v<span class="token punctuation">,</span>w<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//加入新的边,更新连通性</span>
+            mst<span class="token punctuation">.</span><span class="token function">offer</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//加入新边</span>
+            weight <span class="token operator">+=</span> e<span class="token punctuation">.</span><span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//更新总权重</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //最小生成树的所有边
-    public Iterable&lt;Edge&gt; edges(){ return mst; }
-    //最小生成树的权重
-    public double weight(){ return weight; }
-}</code></pre><script>
+    <span class="token comment" spellcheck="true">//最小生成树的所有边</span>
+    <span class="token keyword">public</span> Iterable<span class="token operator">&lt;</span>Edge<span class="token operator">></span> <span class="token function">edges</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> mst<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//最小生成树的权重</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">weight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token keyword">return</span> weight<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -777,6 +787,10 @@ public class KruskalMST {
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E5%9B%BE/">
                                     <span class="chip bg-color">图</span>
@@ -864,13 +878,14 @@ public class KruskalMST {
                         
                             最短路径
 加权有向图的最短路径
+地址: 整合为JUI程序(Java 8+)
 
 1. 加权有向边API/**
  * 加权有向边API
- * v -&gt; w
+ * v -> w
  */
 public class DirectedEdge {
-    private double weight;  //边
+    private 
                         
                     </div>
                     <div class="publish-info">
@@ -891,6 +906,10 @@ public class DirectedEdge {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%9B%BE/">
                         <span class="chip bg-color">图</span>
@@ -946,6 +965,10 @@ public class DirectedEdge {
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E5%9B%BE/">
                         <span class="chip bg-color">图</span>
@@ -1147,7 +1170,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

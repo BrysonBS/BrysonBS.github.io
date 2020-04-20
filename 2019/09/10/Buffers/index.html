@@ -468,7 +468,7 @@ Capacity(容量): 缓冲区大小,创建时设定,不能更改">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-10
+                    2020-04-20
                 </div>
                 
 
@@ -515,29 +515,31 @@ Capacity(容量): 缓冲区大小,创建时设定,不能更改">
 </ul>
 </li>
 <li><p><strong>缓冲区API</strong></p>
-<pre><code> public abstract class Buffer {
-     public final int capacity()//容量
-     public final int position()//返回下一个将要被读写的元素索引
-     public final Buffer position (int newPosition)//设置下一个被读写元素的索引
-     public final int limit()//返回缓冲区上界
-     public final Buffer limit (int newLimit)//设置缓冲区上界
-     public final Buffer mark()//设置标记mark=position
-     public final Buffer reset()//重置读写位置position=mark
-     public final Buffer clear()//重置为0,即limit=capacity,position=0
-     public final Buffer flip()//翻转,将添加元素状态翻转成读取元素状态(相当于limit = position,然后position = 0然后开始读取写入的元素)
-     public final Buffer rewind()//position=0,mark=-1
-     public final int remaining()//返回剩余可读元素数量,当前位置到上界还剩余的元素数量
-     public final boolean hasRemaining()//是否有剩余可读元素,即是否到达上界(limit)
-     public abstract boolean isReadOnly();//是否只读
- }</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Buffer</span> <span class="token punctuation">{</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">capacity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//容量</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">position</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回下一个将要被读写的元素索引</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">position</span> <span class="token punctuation">(</span><span class="token keyword">int</span> newPosition<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//设置下一个被读写元素的索引</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">limit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回缓冲区上界</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">limit</span> <span class="token punctuation">(</span><span class="token keyword">int</span> newLimit<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//设置缓冲区上界</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">mark</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//设置标记mark=position</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">reset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//重置读写位置position=mark</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//重置为0,即limit=capacity,position=0</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//翻转,将添加元素状态翻转成读取元素状态(相当于limit = position,然后position = 0然后开始读取写入的元素)</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> Buffer <span class="token function">rewind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//position=0,mark=-1</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">remaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回剩余可读元素数量,当前位置到上界还剩余的元素数量</span>
+     <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">hasRemaining</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//是否有剩余可读元素,即是否到达上界(limit)</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isReadOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//是否只读</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>存取</strong></p>
-<pre><code> public abstract class ByteBuffer extends Buffer implements Comparable{
-     public abstract byte get();//取position位置
-     public abstract byte get (int index);//取index位置
-     public abstract ByteBuffer put (byte b);//存position位置开始
-     public abstract ByteBuffer put (int index, byte b);//存index位置开始
-     //...批量存取
- }</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token punctuation">{</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">byte</span> <span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取position位置</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">byte</span> <span class="token function">get</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//取index位置</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">put</span> <span class="token punctuation">(</span><span class="token keyword">byte</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存position位置开始</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">put</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">byte</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//存index位置开始</span>
+     <span class="token comment" spellcheck="true">//...批量存取</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>翻转</strong></p>
 <ul>
 <li>filp() : 翻转,将继续添加元素状态翻转成一个准备读取元素状态</li>
@@ -551,85 +553,93 @@ Capacity(容量): 缓冲区大小,创建时设定,不能更改">
 </ul>
 </li>
 <li><p><strong>压缩/比较</strong></p>
-<pre><code> public abstract class ByteBuffer extends Buffer implements Comparable{
-     public abstract ByteBuffer compact();//将未读元素移动到数组首
-     public boolean equals (Object ob)//比较每个缓冲区剩余的内容是否相同(对象类型必须相同)
-     public int compareTo (Object ob)//以字典顺序比较,可以比较大小
- }</code></pre></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token punctuation">{</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">compact</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//将未读元素移动到数组首</span>
+     <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">equals</span> <span class="token punctuation">(</span>Object ob<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//比较每个缓冲区剩余的内容是否相同(对象类型必须相同)</span>
+     <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compareTo</span> <span class="token punctuation">(</span>Object ob<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//以字典顺序比较,可以比较大小</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>创建缓冲区</strong></p>
 <ul>
 <li><p>CharBuffer,IntBuffer,DoubleBuffer,ShortBuffer,LongBuffer,FloatBuffer,ByteBuffer七种缓冲区创建方式相同,(MappedByteBuffer特殊)</p>
-<pre><code>//以CharBuffer为例
-public abstract class CharBuffer extends Buffer implements CharSequence, Comparable{
-  public static CharBuffer allocate (int capacity)//分配一个固定容量的缓冲区
-  public static CharBuffer wrap (char [] array)//使用自定义的数组作为缓冲区
-  public static CharBuffer wrap (char [] array, int offset,int length)//使用自定义数组作为缓冲区,并设置初始化位置(position)和长度(limit-position)
-  public final boolean hasArray()//是否存在底层数组(allocate或wrap()创建的间接缓冲区底层都是数组)
-  public final char [] array()//获取缓冲区底层数组(hasArray()返回false时不要使用,会抛异常)
-  public final int arrayOffset()//返回缓冲区数据在数组中存储的开始位置偏移量
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//以CharBuffer为例</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">CharBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">CharSequence</span><span class="token punctuation">,</span> Comparable<span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> CharBuffer <span class="token function">allocate</span> <span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//分配一个固定容量的缓冲区</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> CharBuffer <span class="token function">wrap</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//使用自定义的数组作为缓冲区</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> CharBuffer <span class="token function">wrap</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span> <span class="token keyword">int</span> offset<span class="token punctuation">,</span><span class="token keyword">int</span> length<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//使用自定义数组作为缓冲区,并设置初始化位置(position)和长度(limit-position)</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">boolean</span> <span class="token function">hasArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//是否存在底层数组(allocate或wrap()创建的间接缓冲区底层都是数组)</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">char</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">array</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//获取缓冲区底层数组(hasArray()返回false时不要使用,会抛异常)</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">arrayOffset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//返回缓冲区数据在数组中存储的开始位置偏移量</span>
 
-  //特有的
-  public static CharBuffer wrap (CharSequence csq)//通过可读字符流创建缓冲区(实现Charsequence接口的类: String,StringBuffer等)
-  public static CharBuffer wrap (CharSequence csq, int start,int end) //通过字符流的子序列创建缓冲区
-}</code></pre></li>
+  <span class="token comment" spellcheck="true">//特有的</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> CharBuffer <span class="token function">wrap</span> <span class="token punctuation">(</span>CharSequence csq<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//通过可读字符流创建缓冲区(实现Charsequence接口的类: String,StringBuffer等)</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> CharBuffer <span class="token function">wrap</span> <span class="token punctuation">(</span>CharSequence csq<span class="token punctuation">,</span> <span class="token keyword">int</span> start<span class="token punctuation">,</span><span class="token keyword">int</span> end<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//通过字符流的子序列创建缓冲区</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>复制缓冲区</strong></p>
-<pre><code> public abstract class CharBuffer extends Buffer implements CharSequence, Comparable{
-     //创建一个与原始缓冲区相似的新缓冲区,两个缓冲区共享数据元素,拥有同样容量,(相当于底层共用一个数组)
-     //但拥有各自的position,limit,mark属性,一个缓冲区改变会反映到另一个缓冲区上,会继承只读或直接缓冲区属性
-     public abstract CharBuffer duplicate();
-     public abstract CharBuffer asReadOnlyBuffer();//同duplicate,不同的是改缓冲区只读,不能使用put()
-     public abstract CharBuffer slice();
-     //分割缓冲区,从源缓冲区position位置开始到limit位置结束创建一个新缓冲区
-     //新缓冲区与原始缓冲区共享元素子序列,会继承只读和直接属性
- }</code></pre><h4 id="字节缓冲区"><a href="#字节缓冲区" class="headerlink" title="字节缓冲区"></a>字节缓冲区</h4></li>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">CharBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">CharSequence</span><span class="token punctuation">,</span> Comparable<span class="token punctuation">{</span>
+     <span class="token comment" spellcheck="true">//创建一个与原始缓冲区相似的新缓冲区,两个缓冲区共享数据元素,拥有同样容量,(相当于底层共用一个数组)</span>
+     <span class="token comment" spellcheck="true">//但拥有各自的position,limit,mark属性,一个缓冲区改变会反映到另一个缓冲区上,会继承只读或直接缓冲区属性</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> CharBuffer <span class="token function">duplicate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> CharBuffer <span class="token function">asReadOnlyBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//同duplicate,不同的是改缓冲区只读,不能使用put()</span>
+     <span class="token keyword">public</span> <span class="token keyword">abstract</span> CharBuffer <span class="token function">slice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token comment" spellcheck="true">//分割缓冲区,从源缓冲区position位置开始到limit位置结束创建一个新缓冲区</span>
+     <span class="token comment" spellcheck="true">//新缓冲区与原始缓冲区共享元素子序列,会继承只读和直接属性</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="字节缓冲区"><a href="#字节缓冲区" class="headerlink" title="字节缓冲区"></a>字节缓冲区</h4></li>
 <li><p><strong>字节顺序:</strong></p>
 <ul>
-<li>BIG_ENDIAN(大端字节顺序: 数字<strong>高-&gt;低</strong>位,存储内存地址<strong>低-&gt;高</strong>) , LITTLE_ENDIAN(小端字节顺序,Intel处理器使用小端字节顺序)<pre><code>public final class ByteOrder{
-  public static final ByteOrder BIG_ENDIAN//大端字节顺序
-  public static final ByteOrder LITTLE_ENDIAN//小端字节顺序
-  public static ByteOrder nativeOrder()//获取本地字节顺序
-}</code></pre><pre><code>public abstract class ByteBuffer extends Buffer implements Comparable{
-  public final ByteOrder order()//查询字节顺序
-  public final ByteBuffer order (ByteOrder bo)//设置字节顺序
-}</code></pre></li>
+<li>BIG_ENDIAN(大端字节顺序: 数字<strong>高-&gt;低</strong>位,存储内存地址<strong>低-&gt;高</strong>) , LITTLE_ENDIAN(小端字节顺序,Intel处理器使用小端字节顺序)<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">ByteOrder</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> ByteOrder BIG_ENDIAN<span class="token comment" spellcheck="true">//大端字节顺序</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">final</span> ByteOrder LITTLE_ENDIAN<span class="token comment" spellcheck="true">//小端字节顺序</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> ByteOrder <span class="token function">nativeOrder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//获取本地字节顺序</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> ByteOrder <span class="token function">order</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//查询字节顺序</span>
+  <span class="token keyword">public</span> <span class="token keyword">final</span> ByteBuffer <span class="token function">order</span> <span class="token punctuation">(</span>ByteOrder bo<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//设置字节顺序</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>直接缓冲区</strong></p>
 <ul>
-<li>直接缓冲区被用于与通道和固有I/O例程交互,它们通过使用固有代码来告诉操作系统直接释放或填充内存区域<pre><code>public abstract class ByteBuffer extends Buffer implements Comparable{
-  public static ByteBuffer allocateDirect (int capacity)//分配直接字节缓冲区
-  public abstract boolean isDirect();//是否直接缓冲区,如果底层是基于直接字节缓冲区的包装(wrap)缓冲区则也是true
-}</code></pre></li>
+<li>直接缓冲区被用于与通道和固有I/O例程交互,它们通过使用固有代码来告诉操作系统直接释放或填充内存区域<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> ByteBuffer <span class="token function">allocateDirect</span> <span class="token punctuation">(</span><span class="token keyword">int</span> capacity<span class="token punctuation">)</span><span class="token comment" spellcheck="true">//分配直接字节缓冲区</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">boolean</span> <span class="token function">isDirect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//是否直接缓冲区,如果底层是基于直接字节缓冲区的包装(wrap)缓冲区则也是true</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>视图缓冲区</strong></p>
 <ul>
-<li>视图缓冲区对象维护了自己的属性丶容量丶位置丶上界和标记,但是和原来的缓冲区共享数据元素<pre><code>//基于ByteBuffer缓冲区创建其视图缓冲区
-public abstract class ByteBuffer extends Buffer implements Comparable{
-  public abstract CharBuffer asCharBuffer();
-  public abstract ShortBuffer asShortBuffer();
-  public abstract IntBuffer asIntBuffer();
-  public abstract LongBuffer asLongBuffer();
-  public abstract FloatBuffer asFloatBuffer();
-  public abstract DoubleBuffer asDoubleBuffer();
-}</code></pre></li>
+<li>视图缓冲区对象维护了自己的属性丶容量丶位置丶上界和标记,但是和原来的缓冲区共享数据元素<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//基于ByteBuffer缓冲区创建其视图缓冲区</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span><span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> CharBuffer <span class="token function">asCharBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ShortBuffer <span class="token function">asShortBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> IntBuffer <span class="token function">asIntBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> LongBuffer <span class="token function">asLongBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> FloatBuffer <span class="token function">asFloatBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> DoubleBuffer <span class="token function">asDoubleBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>数据元素视图</strong></p>
 <ul>
-<li>ByteBuffer类提供了以多字节数据类型的形式存取byte数据组<pre><code>public abstract class ByteBuffer extends Buffer implements Comparable {
-  public abstract char getChar();
-  public abstract char getChar (int index);//从index位置开始取2字节char值
-  public abstract int getInt();//从position位置开始取4字节int值
-  public abstract int getInt (int index);
-  //...等等
-  public abstract ByteBuffer putFloat (float value);
-  public abstract ByteBuffer putFloat (int index, float value);
-  public abstract ByteBuffer putDouble (double value);
-  public abstract ByteBuffer putDouble (int index, double value);
-}</code></pre></li>
+<li>ByteBuffer类提供了以多字节数据类型的形式存取byte数据组<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">ByteBuffer</span> <span class="token keyword">extends</span> <span class="token class-name">Buffer</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">char</span> <span class="token function">getChar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">char</span> <span class="token function">getChar</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//从index位置开始取2字节char值</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">getInt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//从position位置开始取4字节int值</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">int</span> <span class="token function">getInt</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">//...等等</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">putFloat</span> <span class="token punctuation">(</span><span class="token keyword">float</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">putFloat</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">float</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">putDouble</span> <span class="token punctuation">(</span><span class="token keyword">double</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">public</span> <span class="token keyword">abstract</span> ByteBuffer <span class="token function">putDouble</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">double</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>内存映射缓冲区</strong></p>
@@ -885,6 +895,10 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
                         <span class="chip bg-color">并发</span>
                     </a>
                     
+                    <a href="/tags/%E5%8E%9F%E5%AD%90%E7%B1%BB/">
+                        <span class="chip bg-color">原子类</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1081,7 +1095,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

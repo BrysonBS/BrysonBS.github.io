@@ -464,14 +464,14 @@ select">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    828
+                    827
                 </div>
                 
 
@@ -502,54 +502,61 @@ select">
 <p><code>select id from stops where name = 'Craiglockhart'</code></p>
 </li>
 <li><p>Give the id and the name for the stops on the ‘4’ ‘LRT’ service. </p>
-<pre><code>select a.id,a.name from stops as a
- inner join route as b on a.id = b.stop
-where b.company = 'LRT' and b.num = 4</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token number">a</span><span class="token punctuation">.</span>id<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>name <span class="token keyword">from</span> stops <span class="token keyword">as</span> <span class="token number">a</span>
+ <span class="token keyword">inner</span> <span class="token keyword">join</span> route <span class="token keyword">as</span> <span class="token number">b</span> <span class="token keyword">on</span> <span class="token number">a</span><span class="token punctuation">.</span>id <span class="token operator">=</span> <span class="token number">b</span><span class="token punctuation">.</span>stop
+<span class="token keyword">where</span> <span class="token number">b</span><span class="token punctuation">.</span>company <span class="token operator">=</span> <span class="token string">'LRT'</span> <span class="token operator">and</span> <span class="token number">b</span><span class="token punctuation">.</span>num <span class="token operator">=</span> <span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="4">
 <li><p>The query shown gives the number of routes that visit either London Road (149) or Craiglockhart (53). Run the query and notice the two services that link these stops have a count of 2. Add a HAVING clause to restrict the output to these two routes. </p>
-<pre><code>SELECT company, num, COUNT(*)
-FROM route WHERE stop=149 OR stop=53
-GROUP BY company, num having count(*) &gt; 1</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> company<span class="token punctuation">,</span> num<span class="token punctuation">,</span> <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span>
+<span class="token keyword">FROM</span> route <span class="token keyword">WHERE</span> stop<span class="token operator">=</span><span class="token number">149</span> <span class="token operator">OR</span> stop<span class="token operator">=</span><span class="token number">53</span>
+<span class="token keyword">GROUP</span> <span class="token keyword">BY</span> company<span class="token punctuation">,</span> num <span class="token keyword">having</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="5">
 <li><p>Execute the self join shown and observe that b.stop gives all the places you can get to from Craiglockhart, without changing routes. Change the query so that it shows the services from Craiglockhart to London Road. </p>
-<pre><code>SELECT a.company, a.num, a.stop, b.stop FROM route a 
- JOIN route b ON (a.company=b.company AND a.num=b.num)
- join stops c on b.stop = c.id
-WHERE a.stop=53 and c.name = 'London Road'</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span> <span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span> <span class="token number">a</span><span class="token punctuation">.</span>stop<span class="token punctuation">,</span> <span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token keyword">FROM</span> route <span class="token number">a</span> 
+ <span class="token keyword">JOIN</span> route <span class="token number">b</span> <span class="token keyword">ON</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token operator">=</span><span class="token number">b</span><span class="token punctuation">.</span>company <span class="token operator">AND</span> <span class="token number">a</span><span class="token punctuation">.</span>num<span class="token operator">=</span><span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span>
+ <span class="token keyword">join</span> stops <span class="token number">c</span> <span class="token keyword">on</span> <span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">c</span><span class="token punctuation">.</span>id
+<span class="token keyword">WHERE</span> <span class="token number">a</span><span class="token punctuation">.</span>stop<span class="token operator">=</span><span class="token number">53</span> <span class="token operator">and</span> <span class="token number">c</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'London Road'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="6">
 <li><p>The query shown is similar to the previous one, however by joining two copies of the stops table we can refer to stops by name rather than by number. Change the query so that the services between ‘Craiglockhart’ and ‘London Road’ are shown. If you are tired of these places try ‘Fairmilehead’ against ‘Tollcross’ </p>
-<pre><code>SELECT a.company, a.num, stopa.name, stopb.name
-FROM route a JOIN route b ON
-  (a.company=b.company AND a.num=b.num)
-  JOIN stops stopa ON (a.stop=stopa.id)
-  JOIN stops stopb ON (b.stop=stopb.id)
-WHERE stopa.name='Craiglockhart' and stopb.name = 'London Road'
--- stopa.name='Fairmilehead' and stopb.name = 'Tollcross'</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span> <span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span> stopa<span class="token punctuation">.</span>name<span class="token punctuation">,</span> stopb<span class="token punctuation">.</span>name
+<span class="token keyword">FROM</span> route <span class="token number">a</span> <span class="token keyword">JOIN</span> route <span class="token number">b</span> <span class="token keyword">ON</span>
+  <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token operator">=</span><span class="token number">b</span><span class="token punctuation">.</span>company <span class="token operator">AND</span> <span class="token number">a</span><span class="token punctuation">.</span>num<span class="token operator">=</span><span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> stops stopa <span class="token keyword">ON</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>stop<span class="token operator">=</span>stopa<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+  <span class="token keyword">JOIN</span> stops stopb <span class="token keyword">ON</span> <span class="token punctuation">(</span><span class="token number">b</span><span class="token punctuation">.</span>stop<span class="token operator">=</span>stopb<span class="token punctuation">.</span>id<span class="token punctuation">)</span>
+<span class="token keyword">WHERE</span> stopa<span class="token punctuation">.</span>name<span class="token operator">=</span><span class="token string">'Craiglockhart'</span> <span class="token operator">and</span> stopb<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'London Road'</span>
+<span class="token comment" spellcheck="true">-- stopa.name='Fairmilehead' and stopb.name = 'Tollcross'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="7">
 <li><p>Give a list of all the services which connect stops 115 and 137 (‘Haymarket’ and ‘Leith’) </p>
-<pre><code>select distinct a.company,a.num from route a
- join route b on (a.company = b.company and a.num = b.num)
-where a.stop = 115 and b.stop = 137</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token keyword">distinct</span> <span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num <span class="token keyword">from</span> route <span class="token number">a</span>
+ <span class="token keyword">join</span> route <span class="token number">b</span> <span class="token keyword">on</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company <span class="token operator">=</span> <span class="token number">b</span><span class="token punctuation">.</span>company <span class="token operator">and</span> <span class="token number">a</span><span class="token punctuation">.</span>num <span class="token operator">=</span> <span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span>
+<span class="token keyword">where</span> <span class="token number">a</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">115</span> <span class="token operator">and</span> <span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">137</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="8">
 <li><p>Give a list of the services which connect the stops ‘Craiglockhart’ and ‘Tollcross’ </p>
-<pre><code>select distinct a.company,a.num from route a
- inner join route b on (a.company,a.num) = (b.company,b.num)
- inner join stops c on a.stop = c.id
- inner join stops d on b.stop = d.id
-where c.name = 'Craiglockhart' and d.name = 'Tollcross' </code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token keyword">distinct</span> <span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num <span class="token keyword">from</span> route <span class="token number">a</span>
+ <span class="token keyword">inner</span> <span class="token keyword">join</span> route <span class="token number">b</span> <span class="token keyword">on</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">b</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span>
+ <span class="token keyword">inner</span> <span class="token keyword">join</span> stops <span class="token number">c</span> <span class="token keyword">on</span> <span class="token number">a</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">c</span><span class="token punctuation">.</span>id
+ <span class="token keyword">inner</span> <span class="token keyword">join</span> stops <span class="token number">d</span> <span class="token keyword">on</span> <span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">d</span><span class="token punctuation">.</span>id
+<span class="token keyword">where</span> <span class="token number">c</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Craiglockhart'</span> <span class="token operator">and</span> <span class="token number">d</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Tollcross'</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="9">
 <li><p>Give a distinct list of the stops which may be reached from ‘Craiglockhart’ by taking one bus, including ‘Craiglockhart’ itself, offered by the LRT company. Include the company and bus no. of the relevant services. </p>
-<pre><code>select d.name,a.company,a.num from route as a
- join route as b on (a.company,a.num) = (b.company,b.num)
- join stops as c on a.stop = c.id
- join stops as d on b.stop = d.id
-where c.name = 'Craiglockhart'</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token number">d</span><span class="token punctuation">.</span>name<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num <span class="token keyword">from</span> route <span class="token keyword">as</span> <span class="token number">a</span>
+ <span class="token keyword">join</span> route <span class="token keyword">as</span> <span class="token number">b</span> <span class="token keyword">on</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">b</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span>
+ <span class="token keyword">join</span> stops <span class="token keyword">as</span> <span class="token number">c</span> <span class="token keyword">on</span> <span class="token number">a</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">c</span><span class="token punctuation">.</span>id
+ <span class="token keyword">join</span> stops <span class="token keyword">as</span> <span class="token number">d</span> <span class="token keyword">on</span> <span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token number">d</span><span class="token punctuation">.</span>id
+<span class="token keyword">where</span> <span class="token number">c</span><span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">'Craiglockhart'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <ol start="10">
 <li><p>Find the routes involving two buses that can go from Craiglockhart to Sighthill.<br>  Show the bus no. and company for the first bus, the name of the stop for the transfer,<br>  and the bus no. and company for the second bus.</p>
@@ -563,21 +570,22 @@ where c.name = 'Craiglockhart'</code></pre></li>
 <li>连接2个结果集(连接条件: 结束站(start.stop)与开始站(end.start)相同此时成为中间转一次车的一条线路)</li>
 </ul>
 </blockquote>
-<pre><code>select distinct start.num,start.company,name,end.num,end.company from (
-   select a.num,a.company,b.stop from route as a
-   join route as b on (a.company,a.num) = (b.company,b.num) and a.stop != b.stop
-   where a.stop = (
-       select id from stops where name = 'Craiglockhart'
-   )
-) as start
-join (
-   select c.num,c.company,c.stop from route as c
-   join route as d on (c.company,c.num) = (d.company,d.num) and c.stop != d.stop
-   where d.stop = (
-       select id from stops where name = 'Sighthill'
-   )
-) as end on start.stop = end.stop
-join stops on start.stop = stops.id</code></pre></li>
+<pre class="line-numbers language-sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token keyword">distinct</span> <span class="token keyword">start</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span><span class="token keyword">start</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span>name<span class="token punctuation">,</span><span class="token keyword">end</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span><span class="token keyword">end</span><span class="token punctuation">.</span>company <span class="token keyword">from</span> <span class="token punctuation">(</span>
+   <span class="token keyword">select</span> <span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">.</span>stop <span class="token keyword">from</span> route <span class="token keyword">as</span> <span class="token number">a</span>
+   <span class="token keyword">join</span> route <span class="token keyword">as</span> <span class="token number">b</span> <span class="token keyword">on</span> <span class="token punctuation">(</span><span class="token number">a</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">a</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">b</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">b</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">and</span> <span class="token number">a</span><span class="token punctuation">.</span>stop <span class="token operator">!=</span> <span class="token number">b</span><span class="token punctuation">.</span>stop
+   <span class="token keyword">where</span> <span class="token number">a</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token punctuation">(</span>
+       <span class="token keyword">select</span> id <span class="token keyword">from</span> stops <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'Craiglockhart'</span>
+   <span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">start</span>
+<span class="token keyword">join</span> <span class="token punctuation">(</span>
+   <span class="token keyword">select</span> <span class="token number">c</span><span class="token punctuation">.</span>num<span class="token punctuation">,</span><span class="token number">c</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">c</span><span class="token punctuation">.</span>stop <span class="token keyword">from</span> route <span class="token keyword">as</span> <span class="token number">c</span>
+   <span class="token keyword">join</span> route <span class="token keyword">as</span> <span class="token number">d</span> <span class="token keyword">on</span> <span class="token punctuation">(</span><span class="token number">c</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">c</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">d</span><span class="token punctuation">.</span>company<span class="token punctuation">,</span><span class="token number">d</span><span class="token punctuation">.</span>num<span class="token punctuation">)</span> <span class="token operator">and</span> <span class="token number">c</span><span class="token punctuation">.</span>stop <span class="token operator">!=</span> <span class="token number">d</span><span class="token punctuation">.</span>stop
+   <span class="token keyword">where</span> <span class="token number">d</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token punctuation">(</span>
+       <span class="token keyword">select</span> id <span class="token keyword">from</span> stops <span class="token keyword">where</span> name <span class="token operator">=</span> <span class="token string">'Sighthill'</span>
+   <span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">end</span> <span class="token keyword">on</span> <span class="token keyword">start</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> <span class="token keyword">end</span><span class="token punctuation">.</span>stop
+<span class="token keyword">join</span> stops <span class="token keyword">on</span> <span class="token keyword">start</span><span class="token punctuation">.</span>stop <span class="token operator">=</span> stops<span class="token punctuation">.</span>id<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -1035,7 +1043,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

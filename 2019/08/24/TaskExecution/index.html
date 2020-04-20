@@ -463,14 +463,14 @@ newFixedThreadPool创建一个可重用的固定线程数的线程池,以共享�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-10
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.6k
+                    2.5k
                 </div>
                 
 
@@ -507,60 +507,63 @@ newFixedThreadPool创建一个可重用的固定线程数的线程池,以共享�
 <li><p><strong>ExecutorService</strong></p>
 <ul>
 <li><p>ExecutorService是一个接口,继承了Executor接口,该接口扩展了一些生命周期的方法</p>
-<pre><code>public interface ExecutorService extends Executor {
-  void shutdown(); //平缓的关闭,停止接收新的任务,等待已经提交的任务执行结束(包括还未执行的任务)再关闭
-  List&lt;Runnable&gt; shutdownNow();//粗暴的关闭,停止接收新的任务,并尝试停止所有运行中的任务,不在启动队列中尚未开始执行的任务
-  boolean isShutdown(); //是否已经关闭
-  boolean isTerminated();//若关闭后所有任务都已完成,则返回true;注意除非首先调用shutdown或shutdownNow,否则isTerminated永不为true
-  /**
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ExecutorService</span> <span class="token keyword">extends</span> <span class="token class-name">Executor</span> <span class="token punctuation">{</span>
+  <span class="token keyword">void</span> <span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//平缓的关闭,停止接收新的任务,等待已经提交的任务执行结束(包括还未执行的任务)再关闭</span>
+  List<span class="token operator">&lt;</span>Runnable<span class="token operator">></span> <span class="token function">shutdownNow</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//粗暴的关闭,停止接收新的任务,并尝试停止所有运行中的任务,不在启动队列中尚未开始执行的任务</span>
+  <span class="token keyword">boolean</span> <span class="token function">isShutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//是否已经关闭</span>
+  <span class="token keyword">boolean</span> <span class="token function">isTerminated</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//若关闭后所有任务都已完成,则返回true;注意除非首先调用shutdown或shutdownNow,否则isTerminated永不为true</span>
+  <span class="token comment" spellcheck="true">/**
    * @param timeout 超时时间
    * @param unit 时间单位
    * 使线程等待timeout时长,当超过timeout时间后,会监测ExecutorService是否已经关闭,
    * 若关闭则返回true,否则返回false.一般情况下会和shutdown方法组合使用.
    * (awaitTermination不会关闭ExecutorService,只是定时检测一下他是否关闭)
-   */
-  boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException;
+   */</span>
+  <span class="token keyword">boolean</span> <span class="token function">awaitTermination</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span> TimeUnit unit<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">;</span>
 
-  //...其他用于任务提交的便利方法
-}</code></pre></li>
+  <span class="token comment" spellcheck="true">//...其他用于任务提交的便利方法</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>示例</strong></p>
-<pre><code> //基于线程池的web服务器
- class TaskExecutionWebServer{
-     private static final int NTHREADS = 100;
-     //创建固定线程数的线程池
-     private static final Executor exec = Executors.newFixedThreadPool(NTHREADS);
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//基于线程池的web服务器</span>
+ <span class="token keyword">class</span> <span class="token class-name">TaskExecutionWebServer</span><span class="token punctuation">{</span>
+     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> NTHREADS <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+     <span class="token comment" spellcheck="true">//创建固定线程数的线程池</span>
+     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Executor exec <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span>NTHREADS<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-     public static void main(String[] args) throws IOException{
-         ServerSocket socket = new ServerSocket(80);
-         while(true){
-             final Socket connection = socket.accept();
-             Runnable task = () -&gt; handleRequest(connection);
-             exec.execute(task); //将请求任务加入线程池,超过线程数的线程会被加入队列中等待
-         }
-     }
-     private static void handleRequest(Socket connection) {
-         // 请求处理
-     }
- }</code></pre></li>
+     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">{</span>
+         ServerSocket socket <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ServerSocket</span><span class="token punctuation">(</span><span class="token number">80</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+         <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+             <span class="token keyword">final</span> Socket connection <span class="token operator">=</span> socket<span class="token punctuation">.</span><span class="token function">accept</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+             Runnable task <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token function">handleRequest</span><span class="token punctuation">(</span>connection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+             exec<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span>task<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//将请求任务加入线程池,超过线程数的线程会被加入队列中等待</span>
+         <span class="token punctuation">}</span>
+     <span class="token punctuation">}</span>
+     <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">handleRequest</span><span class="token punctuation">(</span>Socket connection<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+         <span class="token comment" spellcheck="true">// 请求处理</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 <li><p><strong>延迟任务与周期任务</strong></p>
 <ul>
 <li><p>Timer(存在缺陷,不推荐使用)负责管理延迟任务以及周期任务,然而Timer存在一些缺陷,<strong>执行所有定时任务时只会创建一个线程</strong>,Timer线程不会捕获异常,如果抛出了未检查异常则会导致线程终止,导致整个Timer线程任务取消;<strong>Timer对调度的支持是基于绝对时间的</strong>,而不是相对时间,所以对系统时间的改变非常敏感</p>
 </li>
 <li><p>ShceduledThreadPoolExecutor用来替代Timer,它基于相对时间(基于System.nanoTime实现相对时间,不会因系统时间的改变而改变)</p>
-<pre><code>//错误的Timer行为(所有定时任务只会创建一个线程)
-public void timerTest() throws Exception {
-  Timer timer = new Timer();
-  timer.schedule(new ThrowTask(), 1); //定时任务1抛出异常
-  Thread.sleep(1000);
-  timer.schedule(new ThrowTask(), 1); //整个Timer线程终止(Timer already cancelled),定时任务2不在执行
-  Thread.sleep(5000);
-}
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//错误的Timer行为(所有定时任务只会创建一个线程)</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">timerTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+  Timer timer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  timer<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThrowTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//定时任务1抛出异常</span>
+  Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  timer<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThrowTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//整个Timer线程终止(Timer already cancelled),定时任务2不在执行</span>
+  Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-class ThrowTask extends TimerTask { //执行任务,抛出异常
-  public void run() { throw new RuntimeException(); }
-}</code></pre></li>
+<span class="token keyword">class</span> <span class="token class-name">ThrowTask</span> <span class="token keyword">extends</span> <span class="token class-name">TimerTask</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//执行任务,抛出异常</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 <li><p><strong>携带结果的任务Callable与Future</strong></p>
@@ -587,209 +590,211 @@ class ThrowTask extends TimerTask { //执行任务,抛出异常
 <ol>
 <li><strong>示例: 多线程归并排序</strong></li>
 </ol>
-<pre><code>@Test
-public void forkJoinTest() throws Exception{
-    //创建数组
-    Integer[] array = new Random().ints(100000000,0,Integer.MAX_VALUE)
-            .boxed().toArray(Integer[]::new);
-    new Merge&lt;&gt;(array).parallelSort();
-    //new Merge&lt;&gt;(array).sort();
-    System.out.println(SortTemplate.isSorted(array));//判断是否有序
-}
-//使用Fork/Join进行归并排序
-class Merge&lt;E&gt; extends RecursiveAction{
-    private E[] elements;
-    private E[] aux;//辅助数组
-    private Comparator&lt;E&gt; comparator; //比较器
-    private int lo;
-    private int hi;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">forkJoinTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//创建数组</span>
+    Integer<span class="token punctuation">[</span><span class="token punctuation">]</span> array <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ints</span><span class="token punctuation">(</span><span class="token number">100000000</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>Integer<span class="token punctuation">.</span>MAX_VALUE<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">boxed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span>Integer<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">:</span><span class="token operator">:</span><span class="token keyword">new</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">new</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">parallelSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//new Merge&lt;>(array).sort();</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>SortTemplate<span class="token punctuation">.</span><span class="token function">isSorted</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//判断是否有序</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//使用Fork/Join进行归并排序</span>
+<span class="token keyword">class</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">RecursiveAction</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//辅助数组</span>
+    <span class="token keyword">private</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较器</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> lo<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> hi<span class="token punctuation">;</span>
 
-    public Merge(E[] elements, Comparator&lt;E&gt; comparator) {
-        this.elements = elements;
-        this.aux = (E[])new Object[elements.length];
-        this.comparator = comparator;
-        //准备数据
-        this.lo = 0;
-        this.hi = elements.length-1;
-    }
-    public Merge(E[] elements){
-        this.elements = elements;
-        this.aux = (E[])new Object[elements.length];
-        this.comparator = (E x,E y) -&gt; {
-            if(x instanceof Comparable) return ((Comparable) x).compareTo(y);
-            else throw new RuntimeException("需要传入Comparator或者实现Comparable");
-        };
-        //准备数据
-        this.lo = 0;
-        this.hi = elements.length-1;
-    }
-    //私有构造方法用于分支调用
-    private Merge(E[] elements, E[] aux, Comparator&lt;E&gt; comparator, int lo, int hi) {
-        this.elements = elements;
-        this.aux = aux;
-        this.comparator = comparator;
-        this.lo = lo;
-        this.hi = hi;
-    }
+    <span class="token keyword">public</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">[</span>elements<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//准备数据</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">[</span>elements<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> <span class="token punctuation">(</span>E x<span class="token punctuation">,</span>E y<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Comparable</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"需要传入Comparator或者实现Comparable"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//准备数据</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//私有构造方法用于分支调用</span>
+    <span class="token keyword">private</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">,</span> <span class="token keyword">int</span> lo<span class="token punctuation">,</span> <span class="token keyword">int</span> hi<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> aux<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> lo<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> hi<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //单线程归并
-    public void sort(){
-        merge(elements,aux,lo,hi);
-    }
-    //多线程并行归并
-    public void parallelSort(){
-        ForkJoinPool forkJoin = (ForkJoinPool) Executors.newWorkStealingPool();
-        try {
-            forkJoin.submit(this).get();//提交任务并获取等待结束
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        forkJoin.shutdown();
-    }
+    <span class="token comment" spellcheck="true">//单线程归并</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//多线程并行归并</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">parallelSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ForkJoinPool forkJoin <span class="token operator">=</span> <span class="token punctuation">(</span>ForkJoinPool<span class="token punctuation">)</span> Executors<span class="token punctuation">.</span><span class="token function">newWorkStealingPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            forkJoin<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//提交任务并获取等待结束</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ExecutionException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        forkJoin<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    protected void compute() {
-        if(hi - lo &lt;= 10000) merge(elements,aux,lo,hi);
-        else{
-            //分成两部分,分别进行归并操作
-            int mid = lo + (hi-lo)/2;
-            Merge&lt;E&gt; mergeTask1 = new Merge&lt;&gt;(elements,aux,comparator,lo,mid);
-            Merge&lt;E&gt; mergeTask2 = new Merge&lt;&gt;(elements,aux,comparator,mid+1,hi);
-            //mergeTask1.fork(); //分支(异步): 子任务交给其他线程处理
-            //mergeTask2.fork();
-            //mergeTask1.join(); //获取(同步): 阻塞当前线程并等待获取结果
-            //mergeTask2.join();
-            invokeAll(mergeTask1,mergeTask2); //批量提交子任务,会阻塞到结果返回: 与fork不同,mergeTask1会分配给当前线程
-            inPlaceMerge(elements,lo,mid,hi);
-        }
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>hi <span class="token operator">-</span> lo <span class="token operator">&lt;=</span> <span class="token number">10000</span><span class="token punctuation">)</span> <span class="token function">merge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//分成两部分,分别进行归并操作</span>
+            <span class="token keyword">int</span> mid <span class="token operator">=</span> lo <span class="token operator">+</span> <span class="token punctuation">(</span>hi<span class="token operator">-</span>lo<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+            Merge<span class="token operator">&lt;</span>E<span class="token operator">></span> mergeTask1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>comparator<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Merge<span class="token operator">&lt;</span>E<span class="token operator">></span> mergeTask2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>comparator<span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//mergeTask1.fork(); //分支(异步): 子任务交给其他线程处理</span>
+            <span class="token comment" spellcheck="true">//mergeTask2.fork();</span>
+            <span class="token comment" spellcheck="true">//mergeTask1.join(); //获取(同步): 阻塞当前线程并等待获取结果</span>
+            <span class="token comment" spellcheck="true">//mergeTask2.join();</span>
+            <span class="token function">invokeAll</span><span class="token punctuation">(</span>mergeTask1<span class="token punctuation">,</span>mergeTask2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//批量提交子任务,会阻塞到结果返回: 与fork不同,mergeTask1会分配给当前线程</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //归并排序(对arr数组[lo,hi]部分进行归并排序)
-    private void merge(E[] arr,E[] aux,int lo,int hi){
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = arr[i];
-        for(int i=1,len=hi-lo+1;i&lt;len;i&lt;&lt;=1)
-            for(int j = lo;j&lt;=hi-i;j += i&lt;&lt;1)
-                inPlaceMerge(arr,j,j+i-1,Math.min(j+(i&lt;&lt;1)-1,hi));
+    <span class="token comment" spellcheck="true">//归并排序(对arr数组[lo,hi]部分进行归并排序)</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token operator">=</span>hi<span class="token operator">-</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">&lt;&lt;=</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> lo<span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>hi<span class="token operator">-</span>i<span class="token punctuation">;</span>j <span class="token operator">+=</span> i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>j<span class="token punctuation">,</span>j<span class="token operator">+</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>j<span class="token operator">+</span><span class="token punctuation">(</span>i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    }
-    private void inPlaceMerge(E[] elements,int lo,int mid,int hi){
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = elements[i];
-        int i = lo,j = mid+1;
-        for(int k=lo;k&lt;=hi;++k) {
-            if (i &gt; mid) elements[k] = aux[j++];
-            else if (j &gt; hi) elements[k] = aux[i++];
-            else if (((Comparable)aux[i]).compareTo(aux[j]) &gt; 0) elements[k] = aux[j++];
-            else elements[k] = aux[i++];
-        }
-    }
-}</code></pre><ol start="2">
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> elements<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span>j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">></span> mid<span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">></span> hi<span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol start="2">
 <li><strong>示例: 多线程快排</strong></li>
 </ol>
-<pre><code>public class Quick&lt;E&gt; extends RecursiveAction{
-    private E[] elements;
-    private Comparator&lt;E&gt; comparator; //比较器
-    private int lo;
-    private int hi;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Quick</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">RecursiveAction</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较器</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> lo<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> hi<span class="token punctuation">;</span>
 
-    public Quick(E[] elements, Comparator&lt;E&gt; comparator) {
-        this.elements = elements;
-        this.comparator = comparator;
-        this.lo = 0;
-        this.hi = elements.length - 1;
-    }
-    public Quick(E[] elements) {
-        this.elements = elements;
-        this.comparator = (E x,E y) -&gt; {
-            if(x instanceof Comparable) return ((Comparable) x).compareTo(y);
-            else throw new RuntimeException("需要传入Comparator或者实现Comparable");
-        };
-        this.lo = 0;
-        this.hi = elements.length - 1;
-    }
-    private Quick(E[] elements,int lo,int hi){
-        this.elements = elements;
-        this.lo = lo;
-        this.hi = hi;
-    }
+    <span class="token keyword">public</span> <span class="token function">Quick</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">Quick</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> <span class="token punctuation">(</span>E x<span class="token punctuation">,</span>E y<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Comparable</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"需要传入Comparator或者实现Comparable"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token function">Quick</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> lo<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> hi<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //快排:单线程
-    public void sort(){ quickMedian(elements,lo,hi); }
-    //快排:多线程并行
-    public void parallelSort(){
-        ForkJoinPool forkJoin = (ForkJoinPool) Executors.newWorkStealingPool();
-        try {
-            forkJoin.submit(this).get();//提交任务并获取等待结束
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        forkJoin.shutdown();
-    }
+    <span class="token comment" spellcheck="true">//快排:单线程</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token function">quickMedian</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//快排:多线程并行</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">parallelSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ForkJoinPool forkJoin <span class="token operator">=</span> <span class="token punctuation">(</span>ForkJoinPool<span class="token punctuation">)</span> Executors<span class="token punctuation">.</span><span class="token function">newWorkStealingPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            forkJoin<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//提交任务并获取等待结束</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ExecutionException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        forkJoin<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    protected void compute() {
-        if(hi - lo &lt;= 10000) quickMedian(elements,lo,hi);
-        else{
-            //分切
-            int j = partitionMedian(elements,lo,hi);
-            //剩余两部分作为两个分支任务放入ForkJoinPool
-            Quick&lt;E&gt; left = new Quick&lt;&gt;(elements,lo,j-1);
-            Quick&lt;E&gt; right = new Quick&lt;&gt;(elements,j+1,hi);
-            invokeAll(left,right);
-        }
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>hi <span class="token operator">-</span> lo <span class="token operator">&lt;=</span> <span class="token number">10000</span><span class="token punctuation">)</span> <span class="token function">quickMedian</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//分切</span>
+            <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token function">partitionMedian</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//剩余两部分作为两个分支任务放入ForkJoinPool</span>
+            Quick<span class="token operator">&lt;</span>E<span class="token operator">></span> left <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Quick</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Quick<span class="token operator">&lt;</span>E<span class="token operator">></span> right <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Quick</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token function">invokeAll</span><span class="token punctuation">(</span>left<span class="token punctuation">,</span>right<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //快速排序: 对[lo,hi]部分进行快速排序
-    private void quickMedian(E[] arr,int lo,int hi){
-        int len = hi-lo+1;
-        if(len &lt;= 10){ //1. 数组规模小于10时使用插入排序
-            insertion(arr,lo,hi);
-            return;
-        }
-        int j = partitionMedian(arr,lo,hi);
-        quickMedian(arr,lo,j-1);
-        quickMedian(arr,j+1,hi);
-    }
-    private int partitionMedian(E[] arr,int lo,int hi){
-        int len = hi-lo+1;
-        setMedian(arr,lo,hi); //2. 从lo,hi,中间处mid三个数中找出中位数与lo交换,最大数与hi交换
-        E v = arr[lo]; //分切元素
-        int i = lo, j = hi+1;
-        while(true){
-            while(((Comparable)v).compareTo(arr[--j]) &lt; 0);
-            while(((Comparable)arr[++i]).compareTo(v) &lt; 0); // if(i == j) break; 取中位数时,每次最大数与hi交换,因此不需要进行边界判断
-            if(i &gt;= j) break;
-            //交换
-            exch(arr,i,j);
-        }
-        exch(arr,lo,j);
-        return j;
-    }
-    private void setMedian(E[] arr,int lo,int hi){
-        int mid = (lo+hi)/2;
-        int max = lo;
-        if(((Comparable)arr[max]).compareTo(arr[mid]) &lt; 0) max = mid;
-        if(((Comparable)arr[max]).compareTo(arr[hi]) &lt; 0) max = hi;
-        exch(arr,max,hi);
-        if(((Comparable)arr[lo]).compareTo(arr[mid]) &lt; 0) exch(arr,lo,mid);
-    }
-    private void exch(E[] arr,int i,int j){
-        if(i == j) return;
-        E temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    private void insertion(E[] arr,int lo,int hi){
-        for(int i=lo+1;i&lt;=hi;++i)
-            for(int j=i;j&gt;lo &amp;&amp; ((Comparable)arr[j]).compareTo(arr[j-1]) &lt; 0;--j)
-                exch(arr,j,j-1);
-    }
-}</code></pre><script>
+    <span class="token comment" spellcheck="true">//快速排序: 对[lo,hi]部分进行快速排序</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">quickMedian</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> hi<span class="token operator">-</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>len <span class="token operator">&lt;=</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//1. 数组规模小于10时使用插入排序</span>
+            <span class="token function">insertion</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token function">partitionMedian</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">quickMedian</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">quickMedian</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> <span class="token function">partitionMedian</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> len <span class="token operator">=</span> hi<span class="token operator">-</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token function">setMedian</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//2. 从lo,hi,中间处mid三个数中找出中位数与lo交换,最大数与hi交换</span>
+        E v <span class="token operator">=</span> arr<span class="token punctuation">[</span>lo<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//分切元素</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span> j <span class="token operator">=</span> hi<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>v<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token operator">--</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>arr<span class="token punctuation">[</span><span class="token operator">++</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// if(i == j) break; 取中位数时,每次最大数与hi交换,因此不需要进行边界判断</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">>=</span> j<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//交换</span>
+            <span class="token function">exch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>i<span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">exch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> j<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">setMedian</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>lo<span class="token operator">+</span>hi<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> max <span class="token operator">=</span> lo<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>arr<span class="token punctuation">[</span>max<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> max <span class="token operator">=</span> mid<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>arr<span class="token punctuation">[</span>max<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>hi<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> max <span class="token operator">=</span> hi<span class="token punctuation">;</span>
+        <span class="token function">exch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>max<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>arr<span class="token punctuation">[</span>lo<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>mid<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token function">exch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">exch</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> i<span class="token punctuation">,</span><span class="token keyword">int</span> j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i <span class="token operator">==</span> j<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        E temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">insertion</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">></span>lo <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>j<span class="token punctuation">)</span>
+                <span class="token function">exch</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>j<span class="token punctuation">,</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -956,9 +961,12 @@ class Merge&lt;E&gt; extends RecursiveAction{
                         
                             线程饥饿死锁
 在线程池中,如果任务依赖于其他任务,那么可能产生死锁
+
 饥饿: 一个线程在无限的等待另外一个或多个线程相互传递使用并且永不会释放的资源
-死锁: 可以认为是两个线程或者进程在请求对方占有的资源运行时间较长的任务
-如果任务阻塞的时间
+
+死锁: 可以认为是两个线程或者进程在请求对方占有的资源
+运行时间较长的任务
+如果任务阻塞
                         
                     </div>
                     <div class="publish-info">
@@ -982,6 +990,14 @@ class Merge&lt;E&gt; extends RecursiveAction{
                     
                     <a href="/tags/%E5%B9%B6%E5%8F%91/">
                         <span class="chip bg-color">并发</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%94%81/">
+                        <span class="chip bg-color">锁</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%BA%BF%E7%A8%8B/">
+                        <span class="chip bg-color">线程</span>
                     </a>
                     
                 </div>
@@ -1233,7 +1249,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

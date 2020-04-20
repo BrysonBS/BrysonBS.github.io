@@ -433,6 +433,10 @@
                     
                     <div class="article-tag">
                         
+                            <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a>
+                        
                             <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                 <span class="chip bg-color">排序</span>
                             </a>
@@ -465,21 +469,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-10
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.3k
+                    2.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    11 分
+                    10 分
                 </div>
                 
 
@@ -498,45 +502,48 @@
                 <h3 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h3><blockquote>
 <p>概述: 主要思想是将2个已经有序的数组归并为一个有序数组</p>
 </blockquote>
-<h4 id="1-自顶向下归并排序"><a href="#1-自顶向下归并排序" class="headerlink" title="1.自顶向下归并排序"></a>1.自顶向下归并排序</h4><pre><code>    /**
+<h4 id="1-自顶向下归并排序"><a href="#1-自顶向下归并排序" class="headerlink" title="1.自顶向下归并排序"></a>1.自顶向下归并排序</h4><pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 自顶向下归并排序(递归)
-     */
-    public void merge(int[] arr,int lo,int hi){
-        if(lo&gt;=hi)
-            return;
-        int mid = (lo+hi)/2;
-        merge(arr,lo,mid);
-        merge(arr,mid+1,hi);
-        inPlaceMerge(arr,lo,mid,hi);
-    }</code></pre><pre><code>    /**
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>lo<span class="token operator">>=</span>hi<span class="token punctuation">)</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>lo<span class="token operator">+</span>hi<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 归并操作(将2个有序数组归并为一个有序数组)
      * @param arr  数组(包含2个有序数组)
      * @param lo   第一个数组起始索引
      * @param mid  第一个数组结束索引
      * @param hi   第二个数组结束索引
-     */
-    public static int[] aux;    //辅助数组,最开始初始化与数组arr一致
-    public void inPlaceMerge(int[] arr,int lo,int mid,int hi){
-        //将[lo...hi]复制到数组aux中对应位置
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = arr[i];
-        //merge(归并)
-        int i = lo,j = mid+1;   //记录2个有序数组起始索引
-        for(int k=lo;k&lt;=hi;k++){     //每次确定arr[k]的值即可
-            if(i&gt;mid) arr[k] = aux[j++];
-            else if(j&gt;hi) arr[k] = aux[i++];
-            else if(aux[i]&gt;aux[j]) arr[k] = aux[j++];
-            else arr[k] = aux[i++];
-        }
-    }</code></pre><ul>
-<li>测试<pre><code>  @Test
-  public void testMerge() {
-      //创建数组
-      int[] arr = Arrays.stream(SortTemplate.getArray(111)).mapToInt(x -&gt; (int) x).toArray();
-      aux = arr.clone(); //辅助数组初始化,与arr相同
-      merge(arr, 0, arr.length - 1); //归并排序
-      System.out.println("\n" + SortTemplate.isSorted(arr)); //是否有序
-  }</code></pre></li>
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//辅助数组,最开始初始化与数组arr一致</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//将[lo...hi]复制到数组aux中对应位置</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//merge(归并)</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span>j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//记录2个有序数组起始索引</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//每次确定arr[k]的值即可</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>mid<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">></span>hi<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">></span>aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>测试<pre class="line-numbers language-java"><code class="language-java">  <span class="token annotation punctuation">@Test</span>
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testMerge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">//创建数组</span>
+      <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>SortTemplate<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token number">111</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      aux <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//辅助数组初始化,与arr相同</span>
+      <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> arr<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//归并排序</span>
+      System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n"</span> <span class="token operator">+</span> SortTemplate<span class="token punctuation">.</span><span class="token function">isSorted</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//是否有序</span>
+  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <blockquote>
 <ul>
@@ -549,134 +556,141 @@
 <li>方案一: 递归中传入一个标志参数,从而实现每次交替使用arr与aux作为辅助数组</li>
 </ul>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
     * 归并排序优化
-    */
-    public void merge(int[] arr,int[] aux,int lo,int hi,boolean flag){
-        int mid = (lo+hi)/2;
-        if(hi-lo&lt;=15){  //优化1.数组规模小于15时使用插入排序
-            if(flag)
-                insertion(aux,lo,hi);
-            else
-                insertion(arr,lo,hi);
-            return;
-        }
-        merge(arr,aux,lo,mid,!flag);
-        merge(arr,aux,mid+1,hi,!flag);
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">,</span><span class="token keyword">boolean</span> flag<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>lo<span class="token operator">+</span>hi<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>hi<span class="token operator">-</span>lo<span class="token operator">&lt;=</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//优化1.数组规模小于15时使用插入排序</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+                <span class="token function">insertion</span><span class="token punctuation">(</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span>
+                <span class="token function">insertion</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span><span class="token operator">!</span>flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">,</span><span class="token operator">!</span>flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-/*        if(arr[mid]&lt;arr[mid+1]) {   //优化2.已经有序,无需进行归并操作
+<span class="token comment" spellcheck="true">/*        if(arr[mid]&lt;arr[mid+1]) {   //优化2.已经有序,无需进行归并操作
             return;                //注意: 交替使用arr与aux作为辅助数组时,不能使用此方法
-        }*/     //因为每次必须进行归并,如果不归并操作可能会造成[lo...mid]在arr上,而[mid+1...hi]在aux上
-        if(flag)    //优化3.交替使用arr与aux作为辅助数组(初始传入false时,最终排序结果会在arr上,true时在aux上)
-            inPlaceMerge(aux,arr,lo,mid,hi);
-        else
-            inPlaceMerge(arr,aux,lo,mid,hi);
-
-    }</code></pre><pre><code>    /**
+        }*/</span>     <span class="token comment" spellcheck="true">//因为每次必须进行归并,如果不归并操作可能会造成[lo...mid]在arr上,而[mid+1...hi]在aux上</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>    <span class="token comment" spellcheck="true">//优化3.交替使用arr与aux作为辅助数组(初始传入false时,最终排序结果会在arr上,true时在aux上)</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>aux<span class="token punctuation">,</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
     * 归并操作
-    */
-    public static int[] aux;    //辅助数组,最开始初始化与数组arr一致
-    public void inPlaceMerge(int[] arr,int[] aux,int lo,int mid,int hi){
-        //arr为排序后结果数组,aux为归并辅助数组
-        //无需再将arr[lo...hi]复制到aux辅助数组上,减少了复制次数
-        int i = lo, j = mid+1;
-        for(int k=lo;k&lt;=hi;++k){
-            if(i&gt;mid) arr[k] = aux[j++];
-            else if(j&gt;hi) arr[k] = aux[i++];
-            else if(aux[i] &gt; aux[j]) arr[k] = aux[j++];
-            else arr[k] = aux[i++];
-        }
-    }</code></pre><pre><code>    /**
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//辅助数组,最开始初始化与数组arr一致</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//arr为排序后结果数组,aux为归并辅助数组</span>
+        <span class="token comment" spellcheck="true">//无需再将arr[lo...hi]复制到aux辅助数组上,减少了复制次数</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span> j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>k<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>mid<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">></span>hi<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 插入排序: 对数组arr [lo...hi]部分进行插入排序
-     */
-    public void insertion(int[] arr,int lo,int hi){
-        for(int i=lo+1;i&lt;=hi;++i)
-            for(int j=i;j&gt;lo &amp;&amp; arr[j]&lt;arr[j-1];--j){
-                //交换
-                arr[j] = arr[j]^arr[j-1];
-                arr[j-1] = arr[j]^arr[j-1];
-                arr[j] = arr[j]^arr[j-1];
-            }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insertion</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">></span>lo <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&lt;</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//交换</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-    }</code></pre><ul>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>测试</li>
 </ul>
-<pre><code>    @Test
-    public void testMerge() {
-        //创建数组
-        int[] arr = Arrays.stream(SortTemplate.getArray(111)).mapToInt(x -&gt; (int) x).toArray();
-        aux = arr.clone(); //辅助数组初始化,与arr相同
-        merge(arr,aux,0,arr.length-1,false); //优化后的归并排序
-        System.out.println("\n" + SortTemplate.isSorted(arr)); //是否有序
-    }</code></pre><blockquote>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testMerge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//创建数组</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>SortTemplate<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token number">111</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aux <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//辅助数组初始化,与arr相同</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//优化后的归并排序</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n"</span> <span class="token operator">+</span> SortTemplate<span class="token punctuation">.</span><span class="token function">isSorted</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//是否有序</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <ul>
 <li>方案二:使用全局变量作为标志,实现交替使用arr与aux作为辅助数组</li>
 </ul>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
     * 归并排序优化
-    */
-    public static boolean flag = true; //静态变量,根据静态变量值确定辅助数组
-    public void merge(int[] arr,int[] aux,int lo,int hi){
-        if(lo&gt;=hi) return;
-        int mid = (lo+hi)/2;
-        flag = !flag;
-        if(hi-lo&lt;=15){  //数组规模小于15时使用插入排序
-            if(flag)
-                insertion(aux,lo,hi); //插入排序
-            else
-                insertion(arr,lo,hi);
-            flag = !flag;
-            return;
-        }
-        merge(arr,aux,lo,mid);
-        merge(arr,aux,mid+1,hi);
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> flag <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//静态变量,根据静态变量值确定辅助数组</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>lo<span class="token operator">>=</span>hi<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> mid <span class="token operator">=</span> <span class="token punctuation">(</span>lo<span class="token operator">+</span>hi<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+        flag <span class="token operator">=</span> <span class="token operator">!</span>flag<span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>hi<span class="token operator">-</span>lo<span class="token operator">&lt;=</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">//数组规模小于15时使用插入排序</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+                <span class="token function">insertion</span><span class="token punctuation">(</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//插入排序</span>
+            <span class="token keyword">else</span>
+                <span class="token function">insertion</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            flag <span class="token operator">=</span> <span class="token operator">!</span>flag<span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-/*        if(arr[mid]&lt;arr[mid+1]) {   //已经有序,无需进行归并操作(交替使用arr与aux作为辅助数组时无法使用方式)
+<span class="token comment" spellcheck="true">/*        if(arr[mid]&lt;arr[mid+1]) {   //已经有序,无需进行归并操作(交替使用arr与aux作为辅助数组时无法使用方式)
             return;
-        }*/
-        if(flag)
-            inPlaceMerge(aux,arr,lo,mid,hi);
-        else
-            inPlaceMerge(arr,aux,lo,mid,hi);
-        flag = !flag;
-    }</code></pre><pre><code>    /**
+        }*/</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>flag<span class="token punctuation">)</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>aux<span class="token punctuation">,</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        flag <span class="token operator">=</span> <span class="token operator">!</span>flag<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
     * 归并操作
-    */
-    public static int[] aux;    //辅助数组,最开始初始化与数组arr一致
-    public void inPlaceMerge(int[] arr,int[] aux,int lo,int mid,int hi){
-        //arr为排序后结果数组,aux为归并辅助数组
-        //无需再将arr[lo...hi]复制到aux辅助数组上,减少了复制次数
-        int i = lo, j = mid+1;
-        for(int k=lo;k&lt;=hi;++k){
-            if(i&gt;mid) arr[k] = aux[j++];
-            else if(j&gt;hi) arr[k] = aux[i++];
-            else if(aux[i] &gt; aux[j]) arr[k] = aux[j++];
-            else arr[k] = aux[i++];
-        }
-    }</code></pre><pre><code>    /**
+    */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//辅助数组,最开始初始化与数组arr一致</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//arr为排序后结果数组,aux为归并辅助数组</span>
+        <span class="token comment" spellcheck="true">//无需再将arr[lo...hi]复制到aux辅助数组上,减少了复制次数</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span> j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>k<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span>mid<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">></span>hi<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 插入排序: 对数组arr [lo...hi]部分进行插入排序
-     */
-    public void insertion(int[] arr,int lo,int hi){
-        for(int i=lo+1;i&lt;=hi;++i)
-            for(int j=i;j&gt;lo &amp;&amp; arr[j]&lt;arr[j-1];--j){
-                //交换
-                arr[j] = arr[j]^arr[j-1];
-                arr[j-1] = arr[j]^arr[j-1];
-                arr[j] = arr[j]^arr[j-1];
-            }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">insertion</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span>i<span class="token punctuation">;</span>j<span class="token operator">></span>lo <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&lt;</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token comment" spellcheck="true">//交换</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">^</span>arr<span class="token punctuation">[</span>j<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-    }</code></pre><ul>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>测试</li>
 </ul>
-<pre><code>    @Test
-    public void testMerge() {
-        //创建数组
-        int[] arr = Arrays.stream(SortTemplate.getArray(111)).mapToInt(x -&gt; (int) x).toArray();
-        aux = arr.clone(); //辅助数组初始化,与arr相同
-        merge(arr,aux,0,arr.length-1); //优化后的归并排序
-        System.out.println("\n" + SortTemplate.isSorted(arr)); //是否有序
-    }</code></pre><h4 id="2-自底向上的归并排序"><a href="#2-自底向上的归并排序" class="headerlink" title="2.自底向上的归并排序"></a>2.自底向上的归并排序</h4><blockquote>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testMerge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//创建数组</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>SortTemplate<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token number">111</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        aux <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//辅助数组初始化,与arr相同</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>aux<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//优化后的归并排序</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n"</span> <span class="token operator">+</span> SortTemplate<span class="token punctuation">.</span><span class="token function">isSorted</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//是否有序</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-自底向上的归并排序"><a href="#2-自底向上的归并排序" class="headerlink" title="2.自底向上的归并排序"></a>2.自底向上的归并排序</h4><blockquote>
 <p>概述: </p>
 <ol>
 <li><p>对于需要排序的数组先取子序列长度为1进行两两归并,归并后成为子序列长度为2的多个有序序列(最后一个子序列长度小于等于2)</p>
@@ -687,122 +701,125 @@
 </li>
 </ol>
 </blockquote>
-<pre><code>    /**
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 自底向上的归并排序
-     */
-    public static int[] aux; //辅助数组
-    public void merge(int[] arr){
-        aux = arr.clone();
-        for(int i=1,len=arr.length;i&lt;len;i&lt;&lt;=1)
-            for(int lo =0;lo&lt;len-i;lo += i&lt;&lt;1)
-                inPlaceMerge(arr,lo,lo+i-1,Math.min(lo+(i&lt;&lt;1)-1,len-1));
-    }</code></pre><pre><code>    /**
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//辅助数组</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        aux <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token operator">=</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">&lt;&lt;=</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> lo <span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>lo<span class="token operator">&lt;</span>len<span class="token operator">-</span>i<span class="token punctuation">;</span>lo <span class="token operator">+=</span> i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>lo<span class="token operator">+</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>lo<span class="token operator">+</span><span class="token punctuation">(</span>i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token comment" spellcheck="true">/**
      * 将2个有序序列归并为一个有序序列
-     */
-    public void inPlaceMerge(int[] arr,int lo,int mid,int hi){
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = arr[i];
-        int i = lo,j = mid+1;
-        for(int k=lo;k&lt;=hi;++k) {
-            if (i &gt; mid) arr[k] = aux[j++];
-            else if (j &gt; hi) arr[k] = aux[i++];
-            else if (aux[i] &gt; aux[j]) arr[k] = aux[j++];
-            else arr[k] = aux[i++];
-        }
-    }</code></pre><h4 id="3-多线程并行归并排序"><a href="#3-多线程并行归并排序" class="headerlink" title="3.多线程并行归并排序"></a>3.多线程并行归并排序</h4><blockquote>
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span>j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">></span> mid<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">></span> hi<span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> arr<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-多线程并行归并排序"><a href="#3-多线程并行归并排序" class="headerlink" title="3.多线程并行归并排序"></a>3.多线程并行归并排序</h4><blockquote>
 <p>利用Fork/Join框架多线程并行归并</p>
 </blockquote>
-<pre><code>//使用Fork/Join进行归并排序
-class Merge&lt;E&gt; extends RecursiveAction{
-    private E[] elements;
-    private E[] aux;//辅助数组
-    private Comparator&lt;E&gt; comparator; //比较器
-    private int lo;
-    private int hi;
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//使用Fork/Join进行归并排序</span>
+<span class="token keyword">class</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span>E<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">RecursiveAction</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">;</span><span class="token comment" spellcheck="true">//辅助数组</span>
+    <span class="token keyword">private</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//比较器</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> lo<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> hi<span class="token punctuation">;</span>
 
-    public Merge(E[] elements, Comparator&lt;E&gt; comparator) {
-        this.elements = elements;
-        this.aux = (E[])new Object[elements.length];
-        this.comparator = comparator;
-        //准备数据
-        this.lo = 0;
-        this.hi = elements.length-1;
-    }
-    public Merge(E[] elements){
-        this.elements = elements;
-        this.aux = (E[])new Object[elements.length];
-        this.comparator = (E x,E y) -&gt; {
-            if(x instanceof Comparable) return ((Comparable) x).compareTo(y);
-            else throw new RuntimeException("需要传入Comparator或者实现Comparable");
-        };
-        //准备数据
-        this.lo = 0;
-        this.hi = elements.length-1;
-    }
-    //私有构造方法用于分支调用
-    private Merge(E[] elements, E[] aux, Comparator&lt;E&gt; comparator, int lo, int hi) {
-        this.elements = elements;
-        this.aux = aux;
-        this.comparator = comparator;
-        this.lo = lo;
-        this.hi = hi;
-    }
+    <span class="token keyword">public</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">[</span>elements<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//准备数据</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> <span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token keyword">new</span> <span class="token class-name">Object</span><span class="token punctuation">[</span>elements<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> <span class="token punctuation">(</span>E x<span class="token punctuation">,</span>E y<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>x <span class="token keyword">instanceof</span> <span class="token class-name">Comparable</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"需要传入Comparator或者实现Comparable"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//准备数据</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> elements<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//私有构造方法用于分支调用</span>
+    <span class="token keyword">private</span> <span class="token function">Merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span> E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span> Comparator<span class="token operator">&lt;</span>E<span class="token operator">></span> comparator<span class="token punctuation">,</span> <span class="token keyword">int</span> lo<span class="token punctuation">,</span> <span class="token keyword">int</span> hi<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>elements <span class="token operator">=</span> elements<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>aux <span class="token operator">=</span> aux<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>comparator <span class="token operator">=</span> comparator<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lo <span class="token operator">=</span> lo<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>hi <span class="token operator">=</span> hi<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    //单线程归并
-    public void sort(){
-        merge(elements,aux,lo,hi);
-    }
-    //多线程并行归并
-    public void parallelSort(){
-        ForkJoinPool forkJoin = (ForkJoinPool) Executors.newWorkStealingPool();
-        try {
-            forkJoin.submit(this).get();//提交任务并获取等待结束
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        forkJoin.shutdown();
-    }
+    <span class="token comment" spellcheck="true">//单线程归并</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token function">merge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//多线程并行归并</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">parallelSort</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        ForkJoinPool forkJoin <span class="token operator">=</span> <span class="token punctuation">(</span>ForkJoinPool<span class="token punctuation">)</span> Executors<span class="token punctuation">.</span><span class="token function">newWorkStealingPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            forkJoin<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//提交任务并获取等待结束</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ExecutionException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        forkJoin<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    @Override
-    protected void compute() {
-        if(hi - lo &lt;= 10000) merge(elements,aux,lo,hi);
-        else{
-            //分成两部分,分别进行归并操作
-            int mid = lo + (hi-lo)/2;
-            Merge&lt;E&gt; mergeTask1 = new Merge&lt;&gt;(elements,aux,comparator,lo,mid);
-            Merge&lt;E&gt; mergeTask2 = new Merge&lt;&gt;(elements,aux,comparator,mid+1,hi);
-            //mergeTask1.fork(); //分支(异步): 子任务交给其他线程处理
-            //mergeTask2.fork();
-            //mergeTask1.join(); //获取(同步): 阻塞当前线程并等待获取结果
-            //mergeTask2.join();
-            invokeAll(mergeTask1,mergeTask2); //批量提交子任务,会阻塞到结果返回: 与fork不同,mergeTask1会分配给当前线程
-            inPlaceMerge(elements,lo,mid,hi);
-        }
-    }
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">compute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>hi <span class="token operator">-</span> lo <span class="token operator">&lt;=</span> <span class="token number">10000</span><span class="token punctuation">)</span> <span class="token function">merge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//分成两部分,分别进行归并操作</span>
+            <span class="token keyword">int</span> mid <span class="token operator">=</span> lo <span class="token operator">+</span> <span class="token punctuation">(</span>hi<span class="token operator">-</span>lo<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">;</span>
+            Merge<span class="token operator">&lt;</span>E<span class="token operator">></span> mergeTask1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>comparator<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            Merge<span class="token operator">&lt;</span>E<span class="token operator">></span> mergeTask2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Merge</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>aux<span class="token punctuation">,</span>comparator<span class="token punctuation">,</span>mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//mergeTask1.fork(); //分支(异步): 子任务交给其他线程处理</span>
+            <span class="token comment" spellcheck="true">//mergeTask2.fork();</span>
+            <span class="token comment" spellcheck="true">//mergeTask1.join(); //获取(同步): 阻塞当前线程并等待获取结果</span>
+            <span class="token comment" spellcheck="true">//mergeTask2.join();</span>
+            <span class="token function">invokeAll</span><span class="token punctuation">(</span>mergeTask1<span class="token punctuation">,</span>mergeTask2<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//批量提交子任务,会阻塞到结果返回: 与fork不同,mergeTask1会分配给当前线程</span>
+            <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>elements<span class="token punctuation">,</span>lo<span class="token punctuation">,</span>mid<span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
 
-    //归并排序(对arr数组[lo,hi]部分进行归并排序)
-    private void merge(E[] arr,E[] aux,int lo,int hi){
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = arr[i];
-        for(int i=1,len=hi-lo+1;i&lt;len;i&lt;&lt;=1)
-            for(int j = lo;j&lt;=hi-i;j += i&lt;&lt;1)
-                inPlaceMerge(arr,j,j+i-1,Math.min(j+(i&lt;&lt;1)-1,hi));
+    <span class="token comment" spellcheck="true">//归并排序(对arr数组[lo,hi]部分进行归并排序)</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> arr<span class="token punctuation">,</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> aux<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span>len<span class="token operator">=</span>hi<span class="token operator">-</span>lo<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">&lt;&lt;=</span><span class="token number">1</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> lo<span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>hi<span class="token operator">-</span>i<span class="token punctuation">;</span>j <span class="token operator">+=</span> i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>arr<span class="token punctuation">,</span>j<span class="token punctuation">,</span>j<span class="token operator">+</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>Math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>j<span class="token operator">+</span><span class="token punctuation">(</span>i<span class="token operator">&lt;&lt;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span>hi<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    }
-    private void inPlaceMerge(E[] elements,int lo,int mid,int hi){
-        for(int i=lo;i&lt;=hi;++i)
-            aux[i] = elements[i];
-        int i = lo,j = mid+1;
-        for(int k=lo;k&lt;=hi;++k) {
-            if (i &gt; mid) elements[k] = aux[j++];
-            else if (j &gt; hi) elements[k] = aux[i++];
-            else if (((Comparable)aux[i]).compareTo(aux[j]) &gt; 0) elements[k] = aux[j++];
-            else elements[k] = aux[i++];
-        }
-    }
-}</code></pre><script>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">inPlaceMerge</span><span class="token punctuation">(</span>E<span class="token punctuation">[</span><span class="token punctuation">]</span> elements<span class="token punctuation">,</span><span class="token keyword">int</span> lo<span class="token punctuation">,</span><span class="token keyword">int</span> mid<span class="token punctuation">,</span><span class="token keyword">int</span> hi<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>lo<span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+            aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> elements<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> lo<span class="token punctuation">,</span>j <span class="token operator">=</span> mid<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k<span class="token operator">=</span>lo<span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>hi<span class="token punctuation">;</span><span class="token operator">++</span>k<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">></span> mid<span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">></span> hi<span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Comparable<span class="token punctuation">)</span>aux<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>aux<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>j<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> elements<span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> aux<span class="token punctuation">[</span>i<span class="token operator">++</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -882,6 +899,10 @@ class Merge&lt;E&gt; extends RecursiveAction{
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
+                                </a>
                             
                                 <a href="/tags/%E6%8E%92%E5%BA%8F/">
                                     <span class="chip bg-color">排序</span>
@@ -995,6 +1016,10 @@ class Merge&lt;E&gt; extends RecursiveAction{
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
+                    
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
                     </a>
@@ -1048,6 +1073,10 @@ class Merge&lt;E&gt; extends RecursiveAction{
                 </div>
                 
                 <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
+                    </a>
                     
                     <a href="/tags/%E6%8E%92%E5%BA%8F/">
                         <span class="chip bg-color">排序</span>
@@ -1249,7 +1278,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

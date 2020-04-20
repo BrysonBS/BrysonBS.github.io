@@ -7,8 +7,9 @@
     <meta name="keywords" content="并发-显式锁, java,web">
     <meta name="description" content="Lock与ReentrantLock
 Lock接口
+
 Lock提供了一种无条件的丶可轮询的丶可定时的以及可中断的锁获取操作,所有加锁和解锁的方法都是显式的public interface Lock{
-  void lock(); //阻塞的获">
+  void lock(); //阻塞的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -462,7 +463,7 @@ Lock提供了一种无条件的丶可轮询的丶可定时的以及可中断的�
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2019-09-01
+                    2020-04-20
                 </div>
                 
 
@@ -493,76 +494,89 @@ Lock提供了一种无条件的丶可轮询的丶可定时的以及可中断的�
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h4 id="Lock与ReentrantLock"><a href="#Lock与ReentrantLock" class="headerlink" title="Lock与ReentrantLock"></a>Lock与ReentrantLock</h4><ol>
-<li><strong>Lock接口</strong><ul>
-<li>Lock提供了一种无条件的丶可轮询的丶可定时的以及可中断的锁获取操作,所有加锁和解锁的方法都是显式的<pre><code>public interface Lock{
-  void lock(); //阻塞的获取锁,知道获取到锁才返回且不可中断
-  void lockInterruptibly();//可中断的获取锁,在阻塞等待过程中可响应中断
-  boolean tryLock();//尝试非阻塞的获取锁,调用方法后立即返回,获取锁成功返回true,失败返回false
-  boolean tryLock(long timeout,TimeUnit unit);//限定了一个尝试获取锁的时间,在该时间内会尝试获取锁(成功true,失败false),超出时间后直接返回false
-  void unlock();//释放锁
-  Condition newCondition();//Condition对象:维护一个条件队列,await() singal()方法可以对其进行操作
-}</code></pre></li>
+<li><p><strong>Lock接口</strong></p>
+<ul>
+<li>Lock提供了一种无条件的丶可轮询的丶可定时的以及可中断的锁获取操作,所有加锁和解锁的方法都是显式的<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Lock</span><span class="token punctuation">{</span>
+  <span class="token keyword">void</span> <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//阻塞的获取锁,知道获取到锁才返回且不可中断</span>
+  <span class="token keyword">void</span> <span class="token function">lockInterruptibly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//可中断的获取锁,在阻塞等待过程中可响应中断</span>
+  <span class="token keyword">boolean</span> <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//尝试非阻塞的获取锁,调用方法后立即返回,获取锁成功返回true,失败返回false</span>
+  <span class="token keyword">boolean</span> <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span>TimeUnit unit<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//限定了一个尝试获取锁的时间,在该时间内会尝试获取锁(成功true,失败false),超出时间后直接返回false</span>
+  <span class="token keyword">void</span> <span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁</span>
+  Condition <span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//Condition对象:维护一个条件队列,await() singal()方法可以对其进行操作</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
-<li><strong>ReentrantLock类</strong><ul>
-<li>ReentrantLock类实现了Lock接口,并提供了与synchronized相同的互斥性和内存可见性,还提供了可重入的加锁语义,提供了更高的灵活性<pre><code>//Lock接口的标准使用形式
-Lock lock = new ReentrantLock();
-//...
-lock.lock();//获取锁
-try{
-  //处理
-} finally{
-  lock.unlock();//释放锁一定要在finally块中
-}</code></pre></li>
+<li><p><strong>ReentrantLock类</strong></p>
+<ul>
+<li>ReentrantLock类实现了Lock接口,并提供了与synchronized相同的互斥性和内存可见性,还提供了可重入的加锁语义,提供了更高的灵活性<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Lock接口的标准使用形式</span>
+Lock lock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//...</span>
+lock<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//获取锁</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//处理</span>
+<span class="token punctuation">}</span> <span class="token keyword">finally</span><span class="token punctuation">{</span>
+  lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//释放锁一定要在finally块中</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
-<li><strong>轮询锁与定时锁</strong><ul>
-<li>可定时的与可轮询的锁获取模式是由tryLock方法实现的,可以避免死锁的发生<pre><code>//通过tryLock来避免锁顺序死锁(非阻塞避免死锁)
-try{
-  if(fromAcct.lock.tryLock()){ //尝试获取锁,直接返回结果,非阻塞(true,false)
-      try{
-          if(toAcct.lock.tryLock()){//尝试获取锁,直接返回结果,非阻塞
-              //其他
-          }
-      } finally{
-          toAcct.lock.unlock();
-      }
-  }
-} finally{
-  fromAcct.lock.unlock();
-}</code></pre><pre><code>//带有时间限制的加锁(在timeout时间内没有获取到锁就返回false)
-if(!lock.tryLock(timeout,unit)) 
-  return false;
-try{
-  //获取锁成功时操作
-  return doSomething();
-} finally{
-  lock.unlock();
-}</code></pre></li>
+<li><p><strong>轮询锁与定时锁</strong></p>
+<ul>
+<li>可定时的与可轮询的锁获取模式是由tryLock方法实现的,可以避免死锁的发生<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过tryLock来避免锁顺序死锁(非阻塞避免死锁)</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>fromAcct<span class="token punctuation">.</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//尝试获取锁,直接返回结果,非阻塞(true,false)</span>
+      <span class="token keyword">try</span><span class="token punctuation">{</span>
+          <span class="token keyword">if</span><span class="token punctuation">(</span>toAcct<span class="token punctuation">.</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//尝试获取锁,直接返回结果,非阻塞</span>
+              <span class="token comment" spellcheck="true">//其他</span>
+          <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span> <span class="token keyword">finally</span><span class="token punctuation">{</span>
+          toAcct<span class="token punctuation">.</span>lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span class="token keyword">finally</span><span class="token punctuation">{</span>
+  fromAcct<span class="token punctuation">.</span>lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//带有时间限制的加锁(在timeout时间内没有获取到锁就返回false)</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>lock<span class="token punctuation">.</span><span class="token function">tryLock</span><span class="token punctuation">(</span>timeout<span class="token punctuation">,</span>unit<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+  <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span><span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">//获取锁成功时操作</span>
+  <span class="token keyword">return</span> <span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">finally</span><span class="token punctuation">{</span>
+  lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
-<li><strong>可中断的获取锁操作</strong><pre><code> //可中断的锁获取操作
- public boolean sendOnSharedLine(String message) throws InterruptedException{//中断会抛出InterruptedException异常
-     lock.lockInterruptibly();   //可中断的获取锁
-     try{
-         return cancellableSendOnShareLine(message);
-     } finally{
-         lock.unlock();
-     }
- }</code></pre></li>
-<li><strong>公平锁与非公平锁</strong><ul>
+<li><p><strong>可中断的获取锁操作</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token comment" spellcheck="true">//可中断的锁获取操作</span>
+ <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">sendOnSharedLine</span><span class="token punctuation">(</span>String message<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">{</span><span class="token comment" spellcheck="true">//中断会抛出InterruptedException异常</span>
+     lock<span class="token punctuation">.</span><span class="token function">lockInterruptibly</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//可中断的获取锁</span>
+     <span class="token keyword">try</span><span class="token punctuation">{</span>
+         <span class="token keyword">return</span> <span class="token function">cancellableSendOnShareLine</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span> <span class="token keyword">finally</span><span class="token punctuation">{</span>
+         lock<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <span class="token punctuation">}</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>公平锁与非公平锁</strong></p>
+<ul>
 <li>ReentrantLock构造函数中提供了两种公平性选择: 创建一个非公平锁(默认)或一个公平锁</li>
 <li>公平锁上,线程将按照他们发出请求的顺序来获取锁,非公平锁则允许插队</li>
 </ul>
 </li>
-<li><strong>synchronized与ReentrantLock之间的选择</strong><ul>
+<li><p><strong>synchronized与ReentrantLock之间的选择</strong></p>
+<ul>
 <li>在一些内置锁无法满足需求的情况下,ReentrantLock可以作为一种高级工具,当需要一些高级功能时才应该使用ReentrantLock,这些功能包括: 可定时的丶可轮询丶与可中断的锁获取操作,公平队列,以及非块结构的锁,否则还是应该优先使用synchronized</li>
 </ul>
 </li>
-<li><strong>读写锁</strong><pre><code> public interface ReadWriteLock{
-     Lock readLock();    //获取读锁
-     Lock writeLock();   //获取写锁
- }</code></pre><ul>
+<li><p><strong>读写锁</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"> <span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ReadWriteLock</span><span class="token punctuation">{</span>
+     Lock <span class="token function">readLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//获取读锁</span>
+     Lock <span class="token function">writeLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//获取写锁</span>
+ <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
 <li>读写锁加锁策略中,允许多个读操作同时进行,但是每次只允许一个写操作</li>
 </ul>
 </li>
@@ -787,11 +801,13 @@ try{
                         
                             影响性能的因素
 性能与可伸缩性
+
 可伸缩性指的是: 当增加计算资源时(如CPU丶内存丶存储容量或I/O带宽),程序的吞吐量或处理能力相应地增加
 
 
 线程引入的开销
-在多线程的调度和协调过程中都需要一定的性能开销: 对于为了提升性能而引入的线程
+
+在多线程的调度和协调过程中都需要一定的性能开销: 对于为了提升性能而引入的
                         
                     </div>
                     <div class="publish-info">
@@ -1013,7 +1029,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

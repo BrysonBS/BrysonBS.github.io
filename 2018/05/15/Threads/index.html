@@ -464,14 +464,14 @@ class ThreadTest extends Thread{
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    767
+                    759
                 </div>
                 
 
@@ -497,125 +497,137 @@ class ThreadTest extends Thread{
                 <h3 id="1-方式一-继承Thread类"><a href="#1-方式一-继承Thread类" class="headerlink" title="1.方式一: 继承Thread类"></a>1.方式一: 继承Thread类</h3><blockquote>
 <p><strong>实现:</strong> 自定义类继承Thread类,重写其run方法,将需要执行的代码放到run方法中去<a id="more"></a></p>
 </blockquote>
-<pre><code>class ThreadTest extends Thread{
-    @Override
-    public void run() {
-        //线程代码
-        System.out.println("线程执行了...");
-    }
-}</code></pre><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">ThreadTest</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//线程代码</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>使用:</strong> 创建对象并调用其start方法</p>
 </blockquote>
-<pre><code>new ThreadTest().start()</code></pre><h3 id="2-方式二-实现Runnable接口"><a href="#2-方式二-实现Runnable接口" class="headerlink" title="2.方式二: 实现Runnable接口"></a>2.方式二: 实现Runnable接口</h3><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">new</span> <span class="token class-name">ThreadTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="2-方式二-实现Runnable接口"><a href="#2-方式二-实现Runnable接口" class="headerlink" title="2.方式二: 实现Runnable接口"></a>2.方式二: 实现Runnable接口</h3><blockquote>
 <p><strong>实现:</strong> 自定义类实现Runnable接口,实现其run方法,将需要执行代码放到run方法中去</p>
 </blockquote>
-<pre><code>class ThreadTest implements Runnable{
-    @Override
-    public void run() {
-        //线程代码
-        System.out.println("线程执行了...");
-    }
-} </code></pre><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">ThreadTest</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//线程代码</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>使用:</strong> 将自定义类对象作为参数传入Thread类对象中去,然后调用Thread类对象的start方法</p>
 </blockquote>
-<pre><code>new Thread(new ThreadTest()).start()</code></pre><h3 id="3-方式三-匿名内部类"><a href="#3-方式三-匿名内部类" class="headerlink" title="3.方式三: 匿名内部类"></a>3.方式三: 匿名内部类</h3><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="3-方式三-匿名内部类"><a href="#3-方式三-匿名内部类" class="headerlink" title="3.方式三: 匿名内部类"></a>3.方式三: 匿名内部类</h3><blockquote>
 <p><strong>实现:</strong> 本质同1,2</p>
 </blockquote>
-<pre><code>//1.继承Thread方式
-new Thread(){
-    @Override
-    public void run() {
-        while(true){
-          System.out.println("Thread Success!");  
-        }
-    }
-}.start();</code></pre><pre><code>//2.实现Runnable接口方式
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        while(true){
-            System.out.println("Runnable Success!");
-        }
-    }
-}).start();</code></pre><h3 id="4-方式四-带返回值的线程"><a href="#4-方式四-带返回值的线程" class="headerlink" title="4.方式四: 带返回值的线程"></a>4.方式四: 带返回值的线程</h3><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//1.继承Thread方式</span>
+<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Thread Success!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//2.实现Runnable接口方式</span>
+<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Runnable Success!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="4-方式四-带返回值的线程"><a href="#4-方式四-带返回值的线程" class="headerlink" title="4.方式四: 带返回值的线程"></a>4.方式四: 带返回值的线程</h3><blockquote>
 <p><strong>实现:</strong> 自定义类实现Callable接口,实现其call方法,可带返回值</p>
 </blockquote>
-<pre><code>class CallableTask implements Callable&lt;Integer&gt;{
-    @Override
-    public Integer call() throws Exception {
-        System.out.println("正在计算...");
-        return 1;
-    }
-}</code></pre><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">CallableTask</span> <span class="token keyword">implements</span> <span class="token class-name">Callable</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Integer <span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"正在计算..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>使用:</strong> 将自定义类对象作为参数传递</p>
 </blockquote>
-<pre><code>CallableTask ct = new CallableTask();
-FutureTask&lt;Integer&gt; ft = new FutureTask&lt;Integer&gt;(ct);
-new Thread(ft).start();  //执行线程
-Integer result = null;
-try {
-     result = ft.get();   //获取线程执行的返回值
-}catch (Exception e){
-}
-System.out.println("计算结果为: "+ result);</code></pre><h3 id="5-方式五-Timer-定时器"><a href="#5-方式五-Timer-定时器" class="headerlink" title="5.方式五: Timer(定时器)"></a>5.方式五: Timer(定时器)</h3><blockquote>
+<pre class="line-numbers language-java"><code class="language-java">CallableTask ct <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CallableTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+FutureTask<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ft <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FutureTask</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span>ct<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>ft<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//执行线程</span>
+Integer result <span class="token operator">=</span> null<span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+     result <span class="token operator">=</span> ft<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//获取线程执行的返回值</span>
+<span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>
+<span class="token punctuation">}</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"计算结果为: "</span><span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5-方式五-Timer-定时器"><a href="#5-方式五-Timer-定时器" class="headerlink" title="5.方式五: Timer(定时器)"></a>5.方式五: Timer(定时器)</h3><blockquote>
 <p><strong>使用:</strong> 创建Timer对象,然后执行其schedule(时刻表)方法</p>
 </blockquote>
-<pre><code>public void TimerTest(){
-    Timer timer = new Timer(); //创建一个定时器对象
-    timer.schedule(new TimerTask() {
-        @Override
-        public void run() {     //线程任务
-            System.out.println("TImerTask is run ...");
-        }
-    },0,1000);    //0秒后执行,毎1000毫秒执行一次线程任务
-}</code></pre><h3 id="6-方式六-线程池"><a href="#6-方式六-线程池" class="headerlink" title="6.方式六: 线程池"></a>6.方式六: 线程池</h3><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">TimerTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Timer timer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//创建一个定时器对象</span>
+    timer<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TimerTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token annotation punctuation">@Override</span>
+        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//线程任务</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"TImerTask is run ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//0秒后执行,毎1000毫秒执行一次线程任务</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="6-方式六-线程池"><a href="#6-方式六-线程池" class="headerlink" title="6.方式六: 线程池"></a>6.方式六: 线程池</h3><blockquote>
 <p><strong>使用:</strong> 根据不同需求创建不同的线程池对象, 例如:</p>
 <ul>
 <li><code>Executors.newFixedThreadPool(10)</code>创建固定线程数的线程池</li>
 <li><code>Executors.newCachedThreadPool()</code>创建一个运行时自动扩充线程数的线程池</li>
 </ul>
 </blockquote>
-<pre><code>public void ThreadPoolTest(){
-    Executor threadPool = Executors.newCachedThreadPool();  //创建一个线程池(自动分配线程个数,不够用时自动创建)
-    //Executor threadPools = Executors.newFixedThreadPool(10);  //创建一个线程数固定大小(10)的线程池
-    for(int i=0;i&lt;100;i++){
-        threadPool.execute(new Runnable() {         //将线程任务分配给线程池中的线程执行
-            @Override
-            public void run() {
-                System.out.println(Thread.currentThread().getName()+"执行了...");
-            }
-        });
-    }
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ThreadPoolTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    Executor threadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//创建一个线程池(自动分配线程个数,不够用时自动创建)</span>
+    <span class="token comment" spellcheck="true">//Executor threadPools = Executors.newFixedThreadPool(10);  //创建一个线程数固定大小(10)的线程池</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        threadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>         <span class="token comment" spellcheck="true">//将线程任务分配给线程池中的线程执行</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-}</code></pre><h3 id="7-方式七-spring对多线程的支持"><a href="#7-方式七-spring对多线程的支持" class="headerlink" title="7.方式七: spring对多线程的支持"></a>7.方式七: spring对多线程的支持</h3><blockquote>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="7-方式七-spring对多线程的支持"><a href="#7-方式七-spring对多线程的支持" class="headerlink" title="7.方式七: spring对多线程的支持"></a>7.方式七: spring对多线程的支持</h3><blockquote>
 <p><a href="/2018/05/16/ThreadSpring/index.html"><strong>连接地址</strong></a></p>
 </blockquote>
 <h3 id="8-方式八-lambda表达式-jdk8"><a href="#8-方式八-lambda表达式-jdk8" class="headerlink" title="8.方式八: lambda表达式(jdk8)"></a>8.方式八: lambda表达式(jdk8)</h3><blockquote>
 <p>简单介绍</p>
 </blockquote>
-<pre><code>//并行计算
-public int lambdaAdd(ArrayList&lt;Integer&gt; nums){
-    //并行计算集合nums进行求和
-    return nums.parallelStream().mapToInt(i -&gt; i).sum();
-    //parallelStream为并发流
-}
-//并行输出
-public void lambdPrint(ArrayList&lt;Integer&gt; nums){
-   //并行输出集合nums的值
-   nums.parallelStream().forEach(System.out::println);
-}</code></pre><blockquote>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//并行计算</span>
+<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">lambdaAdd</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">//并行计算集合nums进行求和</span>
+    <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>i <span class="token operator">-</span><span class="token operator">></span> i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//parallelStream为并发流</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//并行输出</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lambdPrint</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token comment" spellcheck="true">//并行输出集合nums的值</span>
+   nums<span class="token punctuation">.</span><span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p>测试</p>
 </blockquote>
-<pre><code>@Test
-public void test(){
-    ArrayList&lt;Integer&gt; values = new ArrayList&lt;Integer&gt;();
-    values.add(10);
-    values.add(20);
-    values.add(40);
-    values.add(30);
-    lambdPrint(values);
-    System.out.println("result: "+ lambdaAdd(values));
-}</code></pre><script>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
+<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> values <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">lambdPrint</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result: "</span><span class="token operator">+</span> <span class="token function">lambdaAdd</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -1065,7 +1077,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             

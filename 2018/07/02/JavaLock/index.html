@@ -463,7 +463,7 @@ ReentrantLock是可重入锁">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2018-10-09
+                    2020-04-20
                 </div>
                 
 
@@ -536,180 +536,185 @@ ReentrantLock是可重入锁">
 <li><strong>通过简化实例简单了解锁降级</strong></li>
 </ul>
 </blockquote>
-<pre><code>//主要代码
-public class Degrade {
-    volatile int value = 0;
-    public void getAndSetValue(){
-        Thread.sleep(100);    //便于测试
-        value++;                            //写操作
-        Thread.sleep(100);    //便于测试
-        System.out.println(value);          //读操作
-    }
-    public void getValue(){
-        Thread.sleep(100);    //便于测试
-        System.out.println("get:"+value);      //读操作
-    }       
-}</code></pre><pre><code>//测试代码
-      @Test
-    public void test(){
-        Degrade deGrade = new Degrade();
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//主要代码</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Degrade</span> <span class="token punctuation">{</span>
+    <span class="token keyword">volatile</span> <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getAndSetValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        value<span class="token operator">++</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//写操作</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//读操作</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"get:"</span><span class="token operator">+</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//读操作</span>
+    <span class="token punctuation">}</span>       
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//测试代码</span>
+      <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Degrade deGrade <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Degrade</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        for(int i=0;i&lt;2;i++){       //创建2个读写线程
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for(;;){
-                        deGrade.getAndSetValue();
-                    }
-                }
-            }).start();
-        }
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token comment" spellcheck="true">//创建2个读写线程</span>
+            <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                        deGrade<span class="token punctuation">.</span><span class="token function">getAndSetValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        for (int i=0;i&lt;5;i++){      //创建5个读线程
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (;;){
-                        deGrade.getValue();
-                    }
-                }
-            }).start();
-        }</code></pre><blockquote>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">5</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>      <span class="token comment" spellcheck="true">//创建5个读线程</span>
+            <span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                        deGrade<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>现在我们要完成每一次value值更新,都会至少被一个读操作读取到,显然不加锁的情况下,是不行的</strong></p>
 </blockquote>
 <ol>
 <li><p>测试方式1,改写如下</p>
-<pre><code>//主要代码
-public class Degrade {
-    volatile int value = 0;
-    final ReentrantReadWriteLock rwlock = new ReentrantReadWriteLock();
-    Lock read = rwlock.readLock();
-    Lock write = rwlock.writeLock();
-    public void getAndSetValue(){
-        Thread.sleep(100);    //便于测试
-        write.lock();
-        value++;                            //写操作
-        write.unlock();                    //写锁释放
-        Thread.sleep(100);    //便于测试
-        read.lock();
-        System.out.println(value);          //读操作
-        read.unlock();
-    }
-    public void getValue(){
-        Thread.sleep(100);    //便于测试
-        read.lock();
-        System.out.println("get:"+value);      //读操作
-        read.unlock();
-    }       
-}
+<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//主要代码</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Degrade</span> <span class="token punctuation">{</span>
+    <span class="token keyword">volatile</span> <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> ReentrantReadWriteLock rwlock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantReadWriteLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock read <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">readLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock write <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">writeLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getAndSetValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        write<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        value<span class="token operator">++</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//写操作</span>
+        write<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment" spellcheck="true">//写锁释放</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        read<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//读操作</span>
+        read<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        read<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"get:"</span><span class="token operator">+</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//读操作</span>
+        read<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>       
+<span class="token punctuation">}</span>
 
-输出结果片段:
-2
-get:2
-get:4
+输出结果片段<span class="token operator">:</span>
+<span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">4</span>
 
-//显然此时不能满足条件,因为当写锁释放时,此时可能由其他读写线程先执行,这样value刚更改过还没有被读取输出过就又没修改了,因此输出结果不续性</code></pre></li>
+<span class="token comment" spellcheck="true">//显然此时不能满足条件,因为当写锁释放时,此时可能由其他读写线程先执行,这样value刚更改过还没有被读取输出过就又没修改了,因此输出结果不续性</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ol>
 <blockquote>
 <ol start="2">
 <li>测试方式2,改写如下</li>
 </ol>
 </blockquote>
-<pre><code>```
-//主要代码
-public class Degrade {
-    volatile int value = 0;
-    final ReentrantReadWriteLock rwlock = new ReentrantReadWriteLock();
-    Lock read = rwlock.readLock();
-    Lock write = rwlock.writeLock();
-    public void getAndSetValue(){
-        Thread.sleep(100);    //便于测试
-        write.lock();
-        value++;                            //写操作
-        Thread.sleep(100);    //便于测试
-        System.out.println(value);          //读操作
-        write.unlock();
-    }
-    public void getValue(){
-        Thread.sleep(100);    //便于测试
-        read.lock();
-        System.out.println("get:"+value);      //读操作
-        read.unlock();
-    }       
-}
+<pre class="line-numbers language-java"><code class="language-java">```
+<span class="token comment" spellcheck="true">//主要代码</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Degrade</span> <span class="token punctuation">{</span>
+    <span class="token keyword">volatile</span> <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> ReentrantReadWriteLock rwlock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantReadWriteLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock read <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">readLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock write <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">writeLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getAndSetValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        write<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        value<span class="token operator">++</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//写操作</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//读操作</span>
+        write<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        read<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"get:"</span><span class="token operator">+</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//读操作</span>
+        read<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>       
+<span class="token punctuation">}</span>
 
-输出结果为: 
-1
-2
-get:2
-get:2
-get:2
-get:2
-get:2
-3
-get:3
-get:3
-get:3
-4
-get:4
-get:4
-//可以看到满足要求,输出结果连续,但是这种方式,将一个读操作也放入写锁中,每次写操作完成后必定执行此读操作,从而实现每次更新value值后,都至少有一个读操作读取到value值输出
-//现在如果要写操作执行完成后,其他读操作都有机会先执行,该怎么实现?
-```</code></pre><blockquote>
+输出结果为<span class="token operator">:</span> 
+<span class="token number">1</span>
+<span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+<span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">3</span>
+<span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+<span class="token comment" spellcheck="true">//可以看到满足要求,输出结果连续,但是这种方式,将一个读操作也放入写锁中,每次写操作完成后必定执行此读操作,从而实现每次更新value值后,都至少有一个读操作读取到value值输出</span>
+<span class="token comment" spellcheck="true">//现在如果要写操作执行完成后,其他读操作都有机会先执行,该怎么实现?</span>
+```<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <ol start="3">
 <li>测试方式3(<strong>写锁降级</strong>),修改如下</li>
 </ol>
 </blockquote>
-<pre><code>~~~
-//主要代码
-public class Degrade {
-    volatile int value = 0;
-    final ReentrantReadWriteLock rwlock = new ReentrantReadWriteLock();
-    Lock read = rwlock.readLock();
-    Lock write = rwlock.writeLock();
-    public void getAndSetValue(){
-        Thread.sleep(100);    //便于测试
-        write.lock();    //获取写锁
-        value++;                            //写操作
-        read.lock();    //已经有写锁的情况下可直接获取到读锁(无需竞争)
-        write.unlock();    //释放写锁,此时锁降级为读锁(其他读线程可以并行)
-        Thread.sleep(100);    //便于测试
-        System.out.println(value);          //读操作
-        read.unlock();    //释放读锁        
-    }
-    public void getValue(){
-        Thread.sleep(100);    //便于测试
-        read.lock();
-        System.out.println("get:"+value);      //读操作
-        read.unlock();
-    }       
-}
+<pre class="line-numbers language-java"><code class="language-java"><span class="token operator">~</span><span class="token operator">~</span><span class="token operator">~</span>
+<span class="token comment" spellcheck="true">//主要代码</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Degrade</span> <span class="token punctuation">{</span>
+    <span class="token keyword">volatile</span> <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> ReentrantReadWriteLock rwlock <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ReentrantReadWriteLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock read <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">readLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lock write <span class="token operator">=</span> rwlock<span class="token punctuation">.</span><span class="token function">writeLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getAndSetValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        write<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//获取写锁</span>
+        value<span class="token operator">++</span><span class="token punctuation">;</span>                            <span class="token comment" spellcheck="true">//写操作</span>
+        read<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//已经有写锁的情况下可直接获取到读锁(无需竞争)</span>
+        write<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//释放写锁,此时锁降级为读锁(其他读线程可以并行)</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">//读操作</span>
+        read<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//释放读锁        </span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//便于测试</span>
+        read<span class="token punctuation">.</span><span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"get:"</span><span class="token operator">+</span>value<span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">//读操作</span>
+        read<span class="token punctuation">.</span><span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>       
+<span class="token punctuation">}</span>
 
-输出结果:
-1
-get:2
-get:2
-get:2
-get:2
-get:2
-get:2
-2
-get:2
-get:2
-get:2
-get:2
-3
-get:3
-get:3
-get:4
-get:4
-get:4
-4
-get:4
-get:4
+输出结果<span class="token operator">:</span>
+<span class="token number">1</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+<span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+get<span class="token operator">:</span><span class="token number">2</span>
+<span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">3</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+<span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
+get<span class="token operator">:</span><span class="token number">4</span>
 
-//可以看到写操作执行完成之后,其他的读操作都有机会先执行,因为写操作完成后写锁降级为读锁,此时所有读线程都有机会抢到cpu执行权,例如先输出get:4,后输出4
-~~~</code></pre><blockquote>
+<span class="token comment" spellcheck="true">//可以看到写操作执行完成之后,其他的读操作都有机会先执行,因为写操作完成后写锁降级为读锁,此时所有读线程都有机会抢到cpu执行权,例如先输出get:4,后输出4</span>
+<span class="token operator">~</span><span class="token operator">~</span><span class="token operator">~</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<blockquote>
 <p><strong>显然通过上面的对比可以发现,写锁降级为读锁后,其他读锁都可以并发执行了,从侧面提升了读的效率,同时也使读线程可以更加敏感的感知到数据的更新</strong></p>
 </blockquote>
 <script>
@@ -882,8 +887,9 @@ public class Product {
     public Product(){
         System.out.print("生产了一个产品");
     }
-}2.生产者类//生产者
-public cl
+}
+2.生产者类//生产者
+public c
                         
                     </div>
                     <div class="publish-info">
@@ -1154,7 +1160,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">109.3k</span>&nbsp;字
+                class="white-color">108.4k</span>&nbsp;字
             
             
             
