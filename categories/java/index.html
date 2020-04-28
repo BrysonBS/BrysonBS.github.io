@@ -332,17 +332,9 @@
 
 
     
-        <script src="/customJs/random_img.js"></script>
         <script>
-            var randomImg = {}
-            randomImg.enable = true;
-            randomImg.count = 50;
-            randomImg.pageCount = 8;
-            randomImg.second = 20;
-            var current = new Date();
-            randomImg.title = (current.getDate()+1)+"2r5n6hxsXez4P"+(current.getDate()-1)+"Rgiu2JOlnnxThC"+ current .    getDate();
-            var $node = $('.bg-cover');
-            getImgInfo(randomImg,$node);
+            // 每天切换 banner 图.  Switch banner image every day.
+            $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay()+ '.jpg)');
         </script>
     
 
@@ -364,20 +356,20 @@
                 
                 
                 
-                <a href="/categories/%E5%B9%B6%E5%8F%91/" title="并发: 11">
+                <a href="/categories/java/" title="java: 2">
                     <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">并发
-                        <span class="tag-length">11</span>
+                             chip-active "
+                            style="background-color: #F9EBEA;">java
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/java/" title="java: 2">
+                <a href="/categories/%E5%B9%B6%E5%8F%91/" title="并发: 11">
                     <span class="chip center-align waves-effect waves-light
-                             chip-active "
-                            style="background-color: #F5EEF8;">java
-                        <span class="tag-length">2</span>
+                             chip-default "
+                            style="background-color: #F5EEF8;">并发
+                        <span class="tag-length">11</span>
                     </span>
                 </a>
                 
@@ -409,20 +401,20 @@
                 </a>
                 
                 
-                <a href="/categories/JVM/" title="JVM: 2">
+                <a href="/categories/json/" title="json: 1">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F8F9F9;">JVM
-                        <span class="tag-length">2</span>
+                            style="background-color: #F8F9F9;">json
+                        <span class="tag-length">1</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/json/" title="json: 1">
+                <a href="/categories/JVM/" title="JVM: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #82E0AA;">json
-                        <span class="tag-length">1</span>
+                            style="background-color: #82E0AA;">JVM
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
