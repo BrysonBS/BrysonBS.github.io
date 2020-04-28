@@ -14,17 +14,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>归档 | Bryson</title>
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/favicon.png">
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/css/my.css">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
     
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/jquery/jquery.min.js"></script>
+    <script src="/libs/jquery/jquery.min.js"></script>
     
 <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
 <link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
@@ -38,7 +38,7 @@
             <div class="brand-logo">
                 <a href="/" class="waves-effect waves-light">
                     
-                    <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/logo.png" class="logo-img" alt="LOGO">
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
                     
                     <span class="logo-span">Bryson</span>
                 </a>
@@ -136,7 +136,7 @@
 
     <div class="mobile-head bg-color">
         
-        <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/logo.png" class="logo-img circle responsive-img">
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
         
         <div class="logo-name">Bryson</div>
         <div class="logo-desc">
@@ -316,7 +316,7 @@
                 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
                 <script>
                     var typed = new Typed("#subtitle", {
-                        strings: ['不积跬步，无以至千里；不积小流，无以成江海。',''],
+                        strings: ['不积跬步，无以至千里；不积小流，无以成江海','Rome was not built in one day'],
                         startDelay: 300,
                         typeSpeed: 100,
                         loop: true,
@@ -331,10 +331,20 @@
 </div>
 
 
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    $('.bg-cover').css('background-image', 'url(https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/banner/' + new Date().getDay() + '.jpg)');
-</script>
+    
+        <script src="/customJs/random_img.js"></script>
+        <script>
+            var randomImg = {}
+            randomImg.enable = true;
+            randomImg.count = 50;
+            randomImg.pageCount = 8;
+            randomImg.second = 20;
+            var current = new Date();
+            randomImg.title = (current.getDate()+1)+"2r5n6hxsXez4P"+(current.getDate()-1)+"Rgiu2JOlnnxThC"+ current .    getDate();
+            var $node = $('.bg-cover');
+            getImgInfo(randomImg,$node);
+        </script>
+    
 
 
     </div>
@@ -349,7 +359,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="/libs/echarts/echarts.min.js"></script>
 <script type="text/javascript">
     let myChart = echarts.init(document.getElementById('post-calendar'));
 
@@ -391,7 +401,7 @@
         },
         calendar: [{
             left: 'center',
-            range: ["2019-04-24", "2020-04-24"],
+            range: ["2019-04-29", "2020-04-29"],
             cellSize: [13, 13],
             splitLine: {
                 show: false
@@ -418,7 +428,7 @@
             type: 'heatmap',
             coordinateSystem: 'calendar',
             calendarIndex: 0,
-            data: [["2019-04-24", 0], ["2019-04-25", 0], ["2019-04-26", 0], ["2019-04-27", 0], ["2019-04-28", 0], ["2019-04-29", 0], ["2019-04-30", 0], ["2019-05-01", 0], ["2019-05-02", 0], ["2019-05-03", 0], ["2019-05-04", 0], ["2019-05-05", 0], ["2019-05-06", 0], ["2019-05-07", 0], ["2019-05-08", 0], ["2019-05-09", 0], ["2019-05-10", 0], ["2019-05-11", 0], ["2019-05-12", 0], ["2019-05-13", 0], ["2019-05-14", 1], ["2019-05-15", 0], ["2019-05-16", 0], ["2019-05-17", 0], ["2019-05-18", 0], ["2019-05-19", 0], ["2019-05-20", 0], ["2019-05-21", 0], ["2019-05-22", 1], ["2019-05-23", 0], ["2019-05-24", 0], ["2019-05-25", 0], ["2019-05-26", 0], ["2019-05-27", 0], ["2019-05-28", 0], ["2019-05-29", 0], ["2019-05-30", 0], ["2019-05-31", 0], ["2019-06-01", 0], ["2019-06-02", 0], ["2019-06-03", 0], ["2019-06-04", 0], ["2019-06-05", 1], ["2019-06-06", 0], ["2019-06-07", 0], ["2019-06-08", 0], ["2019-06-09", 0], ["2019-06-10", 0], ["2019-06-11", 1], ["2019-06-12", 0], ["2019-06-13", 0], ["2019-06-14", 0], ["2019-06-15", 0], ["2019-06-16", 0], ["2019-06-17", 0], ["2019-06-18", 0], ["2019-06-19", 0], ["2019-06-20", 0], ["2019-06-21", 1], ["2019-06-22", 0], ["2019-06-23", 0], ["2019-06-24", 1], ["2019-06-25", 0], ["2019-06-26", 0], ["2019-06-27", 0], ["2019-06-28", 0], ["2019-06-29", 0], ["2019-06-30", 0], ["2019-07-01", 0], ["2019-07-02", 0], ["2019-07-03", 0], ["2019-07-04", 0], ["2019-07-05", 0], ["2019-07-06", 0], ["2019-07-07", 0], ["2019-07-08", 0], ["2019-07-09", 0], ["2019-07-10", 0], ["2019-07-11", 0], ["2019-07-12", 0], ["2019-07-13", 0], ["2019-07-14", 0], ["2019-07-15", 1], ["2019-07-16", 1], ["2019-07-17", 0], ["2019-07-18", 0], ["2019-07-19", 0], ["2019-07-20", 0], ["2019-07-21", 0], ["2019-07-22", 0], ["2019-07-23", 0], ["2019-07-24", 0], ["2019-07-25", 0], ["2019-07-26", 0], ["2019-07-27", 0], ["2019-07-28", 0], ["2019-07-29", 0], ["2019-07-30", 1], ["2019-07-31", 0], ["2019-08-01", 0], ["2019-08-02", 0], ["2019-08-03", 0], ["2019-08-04", 0], ["2019-08-05", 0], ["2019-08-06", 0], ["2019-08-07", 0], ["2019-08-08", 0], ["2019-08-09", 0], ["2019-08-10", 1], ["2019-08-11", 0], ["2019-08-12", 0], ["2019-08-13", 0], ["2019-08-14", 0], ["2019-08-15", 0], ["2019-08-16", 0], ["2019-08-17", 0], ["2019-08-18", 1], ["2019-08-19", 0], ["2019-08-20", 1], ["2019-08-21", 0], ["2019-08-22", 1], ["2019-08-23", 0], ["2019-08-24", 1], ["2019-08-25", 0], ["2019-08-26", 1], ["2019-08-27", 1], ["2019-08-28", 1], ["2019-08-29", 0], ["2019-08-30", 1], ["2019-08-31", 0], ["2019-09-01", 0], ["2019-09-02", 1], ["2019-09-03", 0], ["2019-09-04", 0], ["2019-09-05", 0], ["2019-09-06", 1], ["2019-09-07", 0], ["2019-09-08", 0], ["2019-09-09", 0], ["2019-09-10", 1], ["2019-09-11", 0], ["2019-09-12", 1], ["2019-09-13", 0], ["2019-09-14", 0], ["2019-09-15", 0], ["2019-09-16", 0], ["2019-09-17", 0], ["2019-09-18", 0], ["2019-09-19", 0], ["2019-09-20", 0], ["2019-09-21", 0], ["2019-09-22", 0], ["2019-09-23", 0], ["2019-09-24", 0], ["2019-09-25", 0], ["2019-09-26", 0], ["2019-09-27", 0], ["2019-09-28", 0], ["2019-09-29", 0], ["2019-09-30", 0], ["2019-10-01", 0], ["2019-10-02", 0], ["2019-10-03", 0], ["2019-10-04", 0], ["2019-10-05", 0], ["2019-10-06", 0], ["2019-10-07", 0], ["2019-10-08", 0], ["2019-10-09", 0], ["2019-10-10", 0], ["2019-10-11", 0], ["2019-10-12", 0], ["2019-10-13", 0], ["2019-10-14", 0], ["2019-10-15", 0], ["2019-10-16", 0], ["2019-10-17", 0], ["2019-10-18", 0], ["2019-10-19", 0], ["2019-10-20", 0], ["2019-10-21", 0], ["2019-10-22", 0], ["2019-10-23", 0], ["2019-10-24", 0], ["2019-10-25", 0], ["2019-10-26", 0], ["2019-10-27", 0], ["2019-10-28", 0], ["2019-10-29", 0], ["2019-10-30", 0], ["2019-10-31", 0], ["2019-11-01", 0], ["2019-11-02", 0], ["2019-11-03", 0], ["2019-11-04", 0], ["2019-11-05", 0], ["2019-11-06", 0], ["2019-11-07", 0], ["2019-11-08", 0], ["2019-11-09", 0], ["2019-11-10", 0], ["2019-11-11", 0], ["2019-11-12", 0], ["2019-11-13", 0], ["2019-11-14", 0], ["2019-11-15", 0], ["2019-11-16", 0], ["2019-11-17", 0], ["2019-11-18", 0], ["2019-11-19", 0], ["2019-11-20", 0], ["2019-11-21", 0], ["2019-11-22", 0], ["2019-11-23", 0], ["2019-11-24", 0], ["2019-11-25", 0], ["2019-11-26", 0], ["2019-11-27", 0], ["2019-11-28", 0], ["2019-11-29", 0], ["2019-11-30", 0], ["2019-12-01", 0], ["2019-12-02", 0], ["2019-12-03", 0], ["2019-12-04", 0], ["2019-12-05", 0], ["2019-12-06", 0], ["2019-12-07", 0], ["2019-12-08", 0], ["2019-12-09", 0], ["2019-12-10", 0], ["2019-12-11", 0], ["2019-12-12", 0], ["2019-12-13", 0], ["2019-12-14", 0], ["2019-12-15", 0], ["2019-12-16", 0], ["2019-12-17", 0], ["2019-12-18", 0], ["2019-12-19", 0], ["2019-12-20", 0], ["2019-12-21", 0], ["2019-12-22", 0], ["2019-12-23", 0], ["2019-12-24", 0], ["2019-12-25", 0], ["2019-12-26", 0], ["2019-12-27", 0], ["2019-12-28", 0], ["2019-12-29", 0], ["2019-12-30", 0], ["2019-12-31", 0], ["2020-01-01", 0], ["2020-01-02", 0], ["2020-01-03", 0], ["2020-01-04", 0], ["2020-01-05", 0], ["2020-01-06", 0], ["2020-01-07", 0], ["2020-01-08", 0], ["2020-01-09", 0], ["2020-01-10", 0], ["2020-01-11", 0], ["2020-01-12", 0], ["2020-01-13", 0], ["2020-01-14", 0], ["2020-01-15", 0], ["2020-01-16", 0], ["2020-01-17", 0], ["2020-01-18", 0], ["2020-01-19", 0], ["2020-01-20", 0], ["2020-01-21", 0], ["2020-01-22", 0], ["2020-01-23", 0], ["2020-01-24", 0], ["2020-01-25", 0], ["2020-01-26", 0], ["2020-01-27", 0], ["2020-01-28", 0], ["2020-01-29", 0], ["2020-01-30", 0], ["2020-01-31", 0], ["2020-02-01", 0], ["2020-02-02", 0], ["2020-02-03", 0], ["2020-02-04", 0], ["2020-02-05", 0], ["2020-02-06", 0], ["2020-02-07", 0], ["2020-02-08", 0], ["2020-02-09", 0], ["2020-02-10", 0], ["2020-02-11", 0], ["2020-02-12", 0], ["2020-02-13", 0], ["2020-02-14", 0], ["2020-02-15", 0], ["2020-02-16", 0], ["2020-02-17", 0], ["2020-02-18", 0], ["2020-02-19", 0], ["2020-02-20", 0], ["2020-02-21", 0], ["2020-02-22", 0], ["2020-02-23", 0], ["2020-02-24", 0], ["2020-02-25", 1], ["2020-02-26", 0], ["2020-02-27", 0], ["2020-02-28", 0], ["2020-02-29", 0], ["2020-03-01", 0], ["2020-03-02", 0], ["2020-03-03", 1], ["2020-03-04", 0], ["2020-03-05", 0], ["2020-03-06", 0], ["2020-03-07", 0], ["2020-03-08", 0], ["2020-03-09", 1], ["2020-03-10", 0], ["2020-03-11", 0], ["2020-03-12", 0], ["2020-03-13", 0], ["2020-03-14", 0], ["2020-03-15", 0], ["2020-03-16", 0], ["2020-03-17", 0], ["2020-03-18", 0], ["2020-03-19", 1], ["2020-03-20", 0], ["2020-03-21", 0], ["2020-03-22", 0], ["2020-03-23", 0], ["2020-03-24", 1], ["2020-03-25", 1], ["2020-03-26", 1], ["2020-03-27", 1], ["2020-03-28", 1], ["2020-03-29", 0], ["2020-03-30", 1], ["2020-03-31", 0], ["2020-04-01", 0], ["2020-04-02", 1], ["2020-04-03", 0], ["2020-04-04", 0], ["2020-04-05", 0], ["2020-04-06", 0], ["2020-04-07", 1], ["2020-04-08", 1], ["2020-04-09", 0], ["2020-04-10", 0], ["2020-04-11", 0], ["2020-04-12", 0], ["2020-04-13", 1], ["2020-04-14", 0], ["2020-04-15", 1], ["2020-04-16", 0], ["2020-04-17", 1], ["2020-04-18", 1], ["2020-04-19", 0], ["2020-04-20", 1], ["2020-04-21", 1], ["2020-04-22", 0], ["2020-04-23", 0], ["2020-04-24", 1]]
+            data: [["2019-04-29", 0], ["2019-04-30", 0], ["2019-05-01", 0], ["2019-05-02", 0], ["2019-05-03", 0], ["2019-05-04", 0], ["2019-05-05", 0], ["2019-05-06", 0], ["2019-05-07", 0], ["2019-05-08", 0], ["2019-05-09", 0], ["2019-05-10", 0], ["2019-05-11", 0], ["2019-05-12", 0], ["2019-05-13", 0], ["2019-05-14", 1], ["2019-05-15", 0], ["2019-05-16", 0], ["2019-05-17", 0], ["2019-05-18", 0], ["2019-05-19", 0], ["2019-05-20", 0], ["2019-05-21", 0], ["2019-05-22", 1], ["2019-05-23", 0], ["2019-05-24", 0], ["2019-05-25", 0], ["2019-05-26", 0], ["2019-05-27", 0], ["2019-05-28", 0], ["2019-05-29", 0], ["2019-05-30", 0], ["2019-05-31", 0], ["2019-06-01", 0], ["2019-06-02", 0], ["2019-06-03", 0], ["2019-06-04", 0], ["2019-06-05", 1], ["2019-06-06", 0], ["2019-06-07", 0], ["2019-06-08", 0], ["2019-06-09", 0], ["2019-06-10", 0], ["2019-06-11", 1], ["2019-06-12", 0], ["2019-06-13", 0], ["2019-06-14", 0], ["2019-06-15", 0], ["2019-06-16", 0], ["2019-06-17", 0], ["2019-06-18", 0], ["2019-06-19", 0], ["2019-06-20", 0], ["2019-06-21", 1], ["2019-06-22", 0], ["2019-06-23", 0], ["2019-06-24", 1], ["2019-06-25", 0], ["2019-06-26", 0], ["2019-06-27", 0], ["2019-06-28", 0], ["2019-06-29", 0], ["2019-06-30", 0], ["2019-07-01", 0], ["2019-07-02", 0], ["2019-07-03", 0], ["2019-07-04", 0], ["2019-07-05", 0], ["2019-07-06", 0], ["2019-07-07", 0], ["2019-07-08", 0], ["2019-07-09", 0], ["2019-07-10", 0], ["2019-07-11", 0], ["2019-07-12", 0], ["2019-07-13", 0], ["2019-07-14", 0], ["2019-07-15", 1], ["2019-07-16", 1], ["2019-07-17", 0], ["2019-07-18", 0], ["2019-07-19", 0], ["2019-07-20", 0], ["2019-07-21", 0], ["2019-07-22", 0], ["2019-07-23", 0], ["2019-07-24", 0], ["2019-07-25", 0], ["2019-07-26", 0], ["2019-07-27", 0], ["2019-07-28", 0], ["2019-07-29", 0], ["2019-07-30", 1], ["2019-07-31", 0], ["2019-08-01", 0], ["2019-08-02", 0], ["2019-08-03", 0], ["2019-08-04", 0], ["2019-08-05", 0], ["2019-08-06", 0], ["2019-08-07", 0], ["2019-08-08", 0], ["2019-08-09", 0], ["2019-08-10", 1], ["2019-08-11", 0], ["2019-08-12", 0], ["2019-08-13", 0], ["2019-08-14", 0], ["2019-08-15", 0], ["2019-08-16", 0], ["2019-08-17", 0], ["2019-08-18", 1], ["2019-08-19", 0], ["2019-08-20", 1], ["2019-08-21", 0], ["2019-08-22", 1], ["2019-08-23", 0], ["2019-08-24", 1], ["2019-08-25", 0], ["2019-08-26", 1], ["2019-08-27", 1], ["2019-08-28", 1], ["2019-08-29", 0], ["2019-08-30", 1], ["2019-08-31", 0], ["2019-09-01", 0], ["2019-09-02", 1], ["2019-09-03", 0], ["2019-09-04", 0], ["2019-09-05", 0], ["2019-09-06", 1], ["2019-09-07", 0], ["2019-09-08", 0], ["2019-09-09", 0], ["2019-09-10", 1], ["2019-09-11", 0], ["2019-09-12", 1], ["2019-09-13", 0], ["2019-09-14", 0], ["2019-09-15", 0], ["2019-09-16", 0], ["2019-09-17", 0], ["2019-09-18", 0], ["2019-09-19", 0], ["2019-09-20", 0], ["2019-09-21", 0], ["2019-09-22", 0], ["2019-09-23", 0], ["2019-09-24", 0], ["2019-09-25", 0], ["2019-09-26", 0], ["2019-09-27", 0], ["2019-09-28", 0], ["2019-09-29", 0], ["2019-09-30", 0], ["2019-10-01", 0], ["2019-10-02", 0], ["2019-10-03", 0], ["2019-10-04", 0], ["2019-10-05", 0], ["2019-10-06", 0], ["2019-10-07", 0], ["2019-10-08", 0], ["2019-10-09", 0], ["2019-10-10", 0], ["2019-10-11", 0], ["2019-10-12", 0], ["2019-10-13", 0], ["2019-10-14", 0], ["2019-10-15", 0], ["2019-10-16", 0], ["2019-10-17", 0], ["2019-10-18", 0], ["2019-10-19", 0], ["2019-10-20", 0], ["2019-10-21", 0], ["2019-10-22", 0], ["2019-10-23", 0], ["2019-10-24", 0], ["2019-10-25", 0], ["2019-10-26", 0], ["2019-10-27", 0], ["2019-10-28", 0], ["2019-10-29", 0], ["2019-10-30", 0], ["2019-10-31", 0], ["2019-11-01", 0], ["2019-11-02", 0], ["2019-11-03", 0], ["2019-11-04", 0], ["2019-11-05", 0], ["2019-11-06", 0], ["2019-11-07", 0], ["2019-11-08", 0], ["2019-11-09", 0], ["2019-11-10", 0], ["2019-11-11", 0], ["2019-11-12", 0], ["2019-11-13", 0], ["2019-11-14", 0], ["2019-11-15", 0], ["2019-11-16", 0], ["2019-11-17", 0], ["2019-11-18", 0], ["2019-11-19", 0], ["2019-11-20", 0], ["2019-11-21", 0], ["2019-11-22", 0], ["2019-11-23", 0], ["2019-11-24", 0], ["2019-11-25", 0], ["2019-11-26", 0], ["2019-11-27", 0], ["2019-11-28", 0], ["2019-11-29", 0], ["2019-11-30", 0], ["2019-12-01", 0], ["2019-12-02", 0], ["2019-12-03", 0], ["2019-12-04", 0], ["2019-12-05", 0], ["2019-12-06", 0], ["2019-12-07", 0], ["2019-12-08", 0], ["2019-12-09", 0], ["2019-12-10", 0], ["2019-12-11", 0], ["2019-12-12", 0], ["2019-12-13", 0], ["2019-12-14", 0], ["2019-12-15", 0], ["2019-12-16", 0], ["2019-12-17", 0], ["2019-12-18", 0], ["2019-12-19", 0], ["2019-12-20", 0], ["2019-12-21", 0], ["2019-12-22", 0], ["2019-12-23", 0], ["2019-12-24", 0], ["2019-12-25", 0], ["2019-12-26", 0], ["2019-12-27", 0], ["2019-12-28", 0], ["2019-12-29", 0], ["2019-12-30", 0], ["2019-12-31", 0], ["2020-01-01", 0], ["2020-01-02", 0], ["2020-01-03", 0], ["2020-01-04", 0], ["2020-01-05", 0], ["2020-01-06", 0], ["2020-01-07", 0], ["2020-01-08", 0], ["2020-01-09", 0], ["2020-01-10", 0], ["2020-01-11", 0], ["2020-01-12", 0], ["2020-01-13", 0], ["2020-01-14", 0], ["2020-01-15", 0], ["2020-01-16", 0], ["2020-01-17", 0], ["2020-01-18", 0], ["2020-01-19", 0], ["2020-01-20", 0], ["2020-01-21", 0], ["2020-01-22", 0], ["2020-01-23", 0], ["2020-01-24", 0], ["2020-01-25", 0], ["2020-01-26", 0], ["2020-01-27", 0], ["2020-01-28", 0], ["2020-01-29", 0], ["2020-01-30", 0], ["2020-01-31", 0], ["2020-02-01", 0], ["2020-02-02", 0], ["2020-02-03", 0], ["2020-02-04", 0], ["2020-02-05", 0], ["2020-02-06", 0], ["2020-02-07", 0], ["2020-02-08", 0], ["2020-02-09", 0], ["2020-02-10", 0], ["2020-02-11", 0], ["2020-02-12", 0], ["2020-02-13", 0], ["2020-02-14", 0], ["2020-02-15", 0], ["2020-02-16", 0], ["2020-02-17", 0], ["2020-02-18", 0], ["2020-02-19", 0], ["2020-02-20", 0], ["2020-02-21", 0], ["2020-02-22", 0], ["2020-02-23", 0], ["2020-02-24", 0], ["2020-02-25", 1], ["2020-02-26", 0], ["2020-02-27", 0], ["2020-02-28", 0], ["2020-02-29", 0], ["2020-03-01", 0], ["2020-03-02", 0], ["2020-03-03", 1], ["2020-03-04", 0], ["2020-03-05", 0], ["2020-03-06", 0], ["2020-03-07", 0], ["2020-03-08", 0], ["2020-03-09", 1], ["2020-03-10", 0], ["2020-03-11", 0], ["2020-03-12", 0], ["2020-03-13", 0], ["2020-03-14", 0], ["2020-03-15", 0], ["2020-03-16", 0], ["2020-03-17", 0], ["2020-03-18", 0], ["2020-03-19", 1], ["2020-03-20", 0], ["2020-03-21", 0], ["2020-03-22", 0], ["2020-03-23", 0], ["2020-03-24", 1], ["2020-03-25", 1], ["2020-03-26", 1], ["2020-03-27", 1], ["2020-03-28", 1], ["2020-03-29", 0], ["2020-03-30", 1], ["2020-03-31", 0], ["2020-04-01", 0], ["2020-04-02", 1], ["2020-04-03", 0], ["2020-04-04", 0], ["2020-04-05", 0], ["2020-04-06", 0], ["2020-04-07", 1], ["2020-04-08", 1], ["2020-04-09", 0], ["2020-04-10", 0], ["2020-04-11", 0], ["2020-04-12", 0], ["2020-04-13", 1], ["2020-04-14", 0], ["2020-04-15", 1], ["2020-04-16", 0], ["2020-04-17", 1], ["2020-04-18", 1], ["2020-04-19", 0], ["2020-04-20", 1], ["2020-04-21", 1], ["2020-04-22", 0], ["2020-04-23", 0], ["2020-04-24", 1], ["2020-04-25", 0], ["2020-04-26", 0], ["2020-04-27", 1], ["2020-04-28", 0], ["2020-04-29", 0]]
         }]
 
     };
@@ -451,6 +461,68 @@
 
             
             <div class="cd-timeline-img day" data-aos="zoom-in-up">
+                <span>28</span>
+            </div>
+            <article class="cd-timeline-content" data-aos="fade-up">
+                <div class="article col s12 m6">
+                    <div class="card">
+                        <a href="/2020/03/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">
+                            <div class="card-image">
+                                
+                                
+                                <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="设计模式-抽象工厂模式">
+                                
+                                <span class="card-title">设计模式-抽象工厂模式</span>
+                            </div>
+                        </a>
+                        <div class="card-content article-content">
+                            <div class="summary block-with-text">
+                                
+                                    抽象工厂模式的定义
+抽象工厂(Abstract Factory)模式: 是一种为访问类提供一个创建一组相关或相互依赖对象的接口,且访问类无需指定所要产品的具体类就能得到同族的不同等级的产品的模式结构
+
+抽象工厂模式是工厂方法模式的升级版本,
+                                
+                            </div>
+                            <div class="publish-info">
+                                <span class="publish-date">
+                                    <i class="far fa-clock fa-fw icon-date"></i>2020-03-28
+                                </span>
+                                <span class="publish-author">
+                                    
+                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                    
+                                    <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                    </a>
+                                    
+                                    
+                                </span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="card-action article-tags">
+                            
+                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"><span class="chip bg-color">设计模式</span></a>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+            </article>
+        </div>
+        
+        <div class="cd-timeline-block">
+
+            
+            
+
+            
+            
+
+            
+            <div class="cd-timeline-img day" data-aos="zoom-in-up">
                 <span>27</span>
             </div>
             <article class="cd-timeline-content" data-aos="fade-up">
@@ -460,7 +532,7 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/5.jpg" class="responsive-img" alt="设计模式-工厂方法模式">
+                                <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="设计模式-工厂方法模式">
                                 
                                 <span class="card-title">设计模式-工厂方法模式</span>
                             </div>
@@ -522,7 +594,7 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-原型模式">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-原型模式">
                                 
                                 <span class="card-title">设计模式-原型模式</span>
                             </div>
@@ -588,7 +660,7 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/8.jpg" class="responsive-img" alt="设计模式-面向对象设计原则">
+                                <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="设计模式-面向对象设计原则">
                                 
                                 <span class="card-title">设计模式-面向对象设计原则</span>
                             </div>
@@ -659,7 +731,7 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-概述">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="设计模式-概述">
                                 
                                 <span class="card-title">设计模式-概述</span>
                             </div>
@@ -727,7 +799,7 @@
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/8.jpg" class="responsive-img" alt="Java Swing">
+                                <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Java Swing">
                                 
                                 <span class="card-title">Java Swing</span>
                             </div>
@@ -790,7 +862,7 @@ BorderLayout
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/16.jpg" class="responsive-img" alt="JVM-Java垃圾收集器与内存分配策略">
+                                <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="JVM-Java垃圾收集器与内存分配策略">
                                 
                                 <span class="card-title">JVM-Java垃圾收集器与内存分配策略</span>
                             </div>
@@ -852,7 +924,7 @@ Java语言没有选用引用计数算法来管理内存,
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/11.jpg" class="responsive-img" alt="JVM-Java内存区域与内存溢出">
+                                <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="JVM-Java内存区域与内存溢出">
                                 
                                 <span class="card-title">JVM-Java内存区域与内存溢出</span>
                             </div>
@@ -918,7 +990,7 @@ java虚拟机运行时数据区可分为: 方法区(Method Area)丶虚拟机栈(
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="NIO-选择器">
+                                <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="NIO-选择器">
                                 
                                 <span class="card-title">NIO-选择器</span>
                             </div>
@@ -990,7 +1062,7 @@ java虚拟机运行时数据区可分为: 方法区(Method Area)丶虚拟机栈(
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/22.jpg" class="responsive-img" alt="NIO-通道">
+                                <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="NIO-通道">
                                 
                                 <span class="card-title">NIO-通道</span>
                             </div>
@@ -1053,7 +1125,7 @@ java虚拟机运行时数据区可分为: 方法区(Method Area)丶虚拟机栈(
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="NIO-缓冲区">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="NIO-缓冲区">
                                 
                                 <span class="card-title">NIO-缓冲区</span>
                             </div>
@@ -1121,7 +1193,7 @@ Capacity(容量): 缓冲区大小,创建时设定,不能更改
                             <div class="card-image">
                                 
                                 
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/6.jpg" class="responsive-img" alt="并发-原子变量与非阻塞同步机制">
+                                <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="并发-原子变量与非阻塞同步机制">
                                 
                                 <span class="card-title">并发-原子变量与非阻塞同步机制</span>
                             </div>
@@ -1166,69 +1238,6 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
             </article>
         </div>
         
-        <div class="cd-timeline-block">
-
-            
-            
-
-            
-            
-
-            
-            <div class="cd-timeline-img day" data-aos="zoom-in-up">
-                <span>02</span>
-            </div>
-            <article class="cd-timeline-content" data-aos="fade-up">
-                <div class="article col s12 m6">
-                    <div class="card">
-                        <a href="/2019/09/02/BuildingCustomSynchronizers/">
-                            <div class="card-image">
-                                
-                                
-                                <img src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/medias/featureimages/10.jpg" class="responsive-img" alt="并发-构建自定义的同步工具">
-                                
-                                <span class="card-title">并发-构建自定义的同步工具</span>
-                            </div>
-                        </a>
-                        <div class="card-content article-content">
-                            <div class="summary block-with-text">
-                                
-                                    构建自定义的同步工具
-现有类库不能提供足够的功能时,可以使用内置的条件队列丶显示的Condition对象或者AbstractQueuedSynchronizer来构建自己的同步器
-
-内置的条件队列
-条件队列是指一组在等待某个条件变成真的线程
-                                
-                            </div>
-                            <div class="publish-info">
-                                <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2019-09-02
-                                </span>
-                                <span class="publish-author">
-                                    
-                                    <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                    
-                                    <a href="/categories/%E5%B9%B6%E5%8F%91/" class="post-category">
-                                    并发
-                                    </a>
-                                    
-                                    
-                                </span>
-                            </div>
-                        </div>
-
-                        
-                        <div class="card-action article-tags">
-                            
-                            <a href="/tags/%E5%B9%B6%E5%8F%91/"><span class="chip bg-color">并发</span></a>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
-            </article>
-        </div>
-        
     </div>
 
 </main>
@@ -1263,7 +1272,7 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
 
     <footer class="page-footer bg-color">
     
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/aplayer/APlayer.min.css">
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
 <style>
     .aplayer .aplayer-list ol li .aplayer-list-title {
         color: rgb(0,0,0);
@@ -1306,7 +1315,7 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/APlayer.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 
     
@@ -1320,7 +1329,7 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">112.2k</span>&nbsp;字
+                class="white-color">115.8k</span>&nbsp;字
             
             
             
@@ -1433,10 +1442,10 @@ CAS(比较并交换)包含三个操作,需要读写的内存位置V丶进行比�
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/js/search.js"></script>
+<script src="/js/search.js"></script>
 <script type="text/javascript">
 $(function () {
-    searchFunc("https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/" + "search.xml", 'searchInput', 'searchResult');
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
 });
 </script>
     <!-- 回到顶部按钮 -->
@@ -1447,12 +1456,12 @@ $(function () {
 </div>
 
 
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/materialize/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/aos/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/js/matery.js"></script>
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
 
     <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
     <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
@@ -1482,7 +1491,7 @@ $(function () {
 
     
     
-    <script async src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
     
 
     
@@ -1493,7 +1502,7 @@ $(function () {
     <script type="text/javascript" color="0,0,255"
         pointColor="0,0,255" opacity='0.7'
         zIndex="-1" count="99"
-        src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/background/canvas-nest.js"></script>
+        src="/libs/background/canvas-nest.js"></script>
     
 
     
@@ -1501,7 +1510,7 @@ $(function () {
     
 
     
-    <script src="https://cdn.jsdelivr.net/gh/BrysonBS/BrysonBS.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
     
 </body>
 

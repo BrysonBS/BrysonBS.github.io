@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-04-24T12:43:20.490Z</updated>
+  <updated>2020-04-28T09:58:21.089Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jackson-注解使用</title>
+    <link href="https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/"/>
+    <id>https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/</id>
+    <published>2020-04-27T02:11:11.000Z</published>
+    <updated>2020-04-28T09:58:21.089Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;1-Jackson序列化注解-java-gt-json&quot;&gt;&lt;a href=&quot;#1-Jackson序列化注解-java-gt-json&quot; class=&quot;headerlink&quot; title=&quot;1. Jackson序列化注解(java -&gt; json)&quot;&gt;&lt;/a&gt;1.
+        
+      
+    
+    </summary>
+    
+    
+      <category term="json" scheme="https://brysonbs.github.io/categories/json/"/>
+    
+    
+      <category term="Jackson" scheme="https://brysonbs.github.io/tags/Jackson/"/>
+    
+      <category term="json" scheme="https://brysonbs.github.io/tags/json/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-策略模式</title>
@@ -543,33 +572,6 @@
     
     
       <category term="JVM" scheme="https://brysonbs.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>NIO-选择器</title>
-    <link href="https://brysonbs.github.io/2020/02/25/Selector/"/>
-    <id>https://brysonbs.github.io/2020/02/25/Selector/</id>
-    <published>2020-02-25T02:55:32.000Z</published>
-    <updated>2020-04-20T10:49:07.613Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;选择器&quot;&gt;&lt;a href=&quot;#选择器&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="NIO" scheme="https://brysonbs.github.io/categories/NIO/"/>
-    
-    
-      <category term="NIO" scheme="https://brysonbs.github.io/tags/NIO/"/>
     
   </entry>
   
