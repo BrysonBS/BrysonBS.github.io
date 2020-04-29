@@ -332,9 +332,17 @@
 
 
     
+        <script src="/customJs/random_img.js"></script>
         <script>
-            // 每天切换 banner 图.  Switch banner image every day.
-            $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay()+ '.jpg)');
+            var randomImg = {}
+            randomImg.enable = true;
+            randomImg.count = 50;
+            randomImg.pageCount = 8;
+            randomImg.second = 20;
+            var current = new Date();
+            randomImg.title = (current.getDate()+1)+"2r5n6hxsXez4P"+(current.getDate()-1)+"Rgiu2JOlnnxThC"+ current .    getDate();
+            var $node = $('.bg-cover');
+            getImgInfo(randomImg,$node);
         </script>
     
 

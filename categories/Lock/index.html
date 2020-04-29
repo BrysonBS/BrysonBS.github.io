@@ -332,9 +332,17 @@
 
 
     
+        <script src="/customJs/random_img.js"></script>
         <script>
-            // 每天切换 banner 图.  Switch banner image every day.
-            $('.bg-cover').css('background-image', 'url(/medias/banner/' + new Date().getDay()+ '.jpg)');
+            var randomImg = {}
+            randomImg.enable = true;
+            randomImg.count = 50;
+            randomImg.pageCount = 8;
+            randomImg.second = 20;
+            var current = new Date();
+            randomImg.title = (current.getDate()+1)+"2r5n6hxsXez4P"+(current.getDate()-1)+"Rgiu2JOlnnxThC"+ current .    getDate();
+            var $node = $('.bg-cover');
+            getImgInfo(randomImg,$node);
         </script>
     
 
@@ -356,20 +364,20 @@
                 
                 
                 
-                <a href="/categories/java/" title="java: 2">
+                <a href="/categories/%E5%B9%B6%E5%8F%91/" title="并发: 11">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F9EBEA;">java
-                        <span class="tag-length">2</span>
+                            style="background-color: #F9EBEA;">并发
+                        <span class="tag-length">11</span>
                     </span>
                 </a>
                 
                 
-                <a href="/categories/%E5%B9%B6%E5%8F%91/" title="并发: 11">
+                <a href="/categories/java/" title="java: 2">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
-                            style="background-color: #F5EEF8;">并发
-                        <span class="tag-length">11</span>
+                            style="background-color: #F5EEF8;">java
+                        <span class="tag-length">2</span>
                     </span>
                 </a>
                 
