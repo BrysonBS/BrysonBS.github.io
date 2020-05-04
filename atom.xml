@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-04-28T09:58:21.089Z</updated>
+  <updated>2020-05-04T10:17:18.551Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>设计模式-责任链模式</title>
+    <link href="https://brysonbs.github.io/2020/05/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://brysonbs.github.io/2020/05/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-05-04T08:09:12.000Z</published>
+    <updated>2020-05-04T10:17:18.551Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;责任链模式的定义&quot;&gt;&lt;a href=&quot;#责任链模式的定义&quot; class=&quot;headerlink&quot; title=&quot;责任链模式的定义&quot;&gt;&lt;/a&gt;责任链模式的定义&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;责任链(Chain of
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Jackson-注解使用</title>
     <link href="https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/"/>
     <id>https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/</id>
     <published>2020-04-27T02:11:11.000Z</published>
-    <updated>2020-04-28T09:58:21.089Z</updated>
+    <updated>2020-05-04T10:08:56.785Z</updated>
     
     <summary type="html">
     
@@ -50,7 +78,7 @@
     <link href="https://brysonbs.github.io/2020/04/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-24T06:04:33.000Z</published>
-    <updated>2020-04-24T12:43:20.490Z</updated>
+    <updated>2020-05-04T10:17:54.864Z</updated>
     
     <summary type="html">
     
@@ -78,7 +106,7 @@
     <link href="https://brysonbs.github.io/2020/04/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/21/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-21T06:03:13.000Z</published>
-    <updated>2020-04-22T10:14:41.119Z</updated>
+    <updated>2020-05-04T10:23:52.744Z</updated>
     
     <summary type="html">
     
@@ -161,7 +189,7 @@
     <link href="https://brysonbs.github.io/2020/04/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/17/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-17T05:33:26.000Z</published>
-    <updated>2020-04-17T11:15:59.854Z</updated>
+    <updated>2020-05-04T10:22:09.690Z</updated>
     
     <summary type="html">
     
@@ -189,7 +217,7 @@
     <link href="https://brysonbs.github.io/2020/04/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-15T06:00:13.000Z</published>
-    <updated>2020-04-15T09:58:07.078Z</updated>
+    <updated>2020-05-04T10:21:53.490Z</updated>
     
     <summary type="html">
     
@@ -217,7 +245,7 @@
     <link href="https://brysonbs.github.io/2020/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-13T05:44:30.000Z</published>
-    <updated>2020-04-13T14:13:27.897Z</updated>
+    <updated>2020-05-04T10:22:57.696Z</updated>
     
     <summary type="html">
     
@@ -245,7 +273,7 @@
     <link href="https://brysonbs.github.io/2020/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-08T01:25:05.000Z</published>
-    <updated>2020-04-08T10:38:58.054Z</updated>
+    <updated>2020-05-04T10:20:42.797Z</updated>
     
     <summary type="html">
     
@@ -273,7 +301,7 @@
     <link href="https://brysonbs.github.io/2020/04/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-07T02:25:55.000Z</published>
-    <updated>2020-04-07T13:18:37.807Z</updated>
+    <updated>2020-05-04T10:21:10.895Z</updated>
     
     <summary type="html">
     
@@ -301,7 +329,7 @@
     <link href="https://brysonbs.github.io/2020/04/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/04/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-04-02T05:00:16.000Z</published>
-    <updated>2020-04-02T10:01:13.342Z</updated>
+    <updated>2020-05-04T10:18:27.514Z</updated>
     
     <summary type="html">
     
@@ -329,7 +357,7 @@
     <link href="https://brysonbs.github.io/2020/03/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/03/30/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-03-30T01:57:16.000Z</published>
-    <updated>2020-04-12T10:54:18.805Z</updated>
+    <updated>2020-05-04T10:20:14.333Z</updated>
     
     <summary type="html">
     
@@ -357,7 +385,7 @@
     <link href="https://brysonbs.github.io/2020/03/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/03/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-03-28T03:26:13.000Z</published>
-    <updated>2020-03-28T10:28:22.182Z</updated>
+    <updated>2020-05-04T10:18:12.314Z</updated>
     
     <summary type="html">
     
@@ -385,7 +413,7 @@
     <link href="https://brysonbs.github.io/2020/03/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/03/27/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-03-27T01:29:33.000Z</published>
-    <updated>2020-03-27T10:28:58.265Z</updated>
+    <updated>2020-05-04T10:19:57.438Z</updated>
     
     <summary type="html">
     
@@ -413,7 +441,7 @@
     <link href="https://brysonbs.github.io/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
     <id>https://brysonbs.github.io/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-03-26T05:05:20.000Z</published>
-    <updated>2020-04-20T10:57:25.818Z</updated>
+    <updated>2020-05-04T10:22:29.494Z</updated>
     
     <summary type="html">
     
@@ -535,33 +563,6 @@
           &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;&lt;strong&gt;概述&lt;/strong&gt;&lt;/h4&gt;&lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;引用计数算法&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;判断对象是否存活的一种算法:
-        
-      
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="https://brysonbs.github.io/categories/JVM/"/>
-    
-    
-      <category term="JVM" scheme="https://brysonbs.github.io/tags/JVM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM-Java内存区域与内存溢出</title>
-    <link href="https://brysonbs.github.io/2020/03/03/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/"/>
-    <id>https://brysonbs.github.io/2020/03/03/Java%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/</id>
-    <published>2020-03-03T06:21:32.000Z</published>
-    <updated>2020-03-05T10:29:03.914Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;运行时数据区域&quot;&gt;&lt;a href=&quot;#运行时数据区域&quot; class=&quot;headerlink&quot;
         
       
     

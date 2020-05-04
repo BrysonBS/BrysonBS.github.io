@@ -484,7 +484,7 @@ public class ExtendableBean {
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-28
+                    2020-05-04
                 </div>
                 
 
@@ -498,7 +498,7 @@ public class ExtendableBean {
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    17 分
+                    18 分
                 </div>
                 
 
@@ -552,7 +552,7 @@ public class ExtendableBean {
 </li>
 </ul>
 <h4 id="1-2-JsonGetter"><a href="#1-2-JsonGetter" class="headerlink" title="1.2 @JsonGetter"></a>1.2 @JsonGetter</h4><blockquote>
-<p>不推荐使用,改用<strong>@JsonProperty</strong> ,标记字段的getter方法,同时可以指定序列化后json属性名</p>
+<p>标记字段的getter方法,同时可以指定序列化后json属性名</p>
 </blockquote>
 <ul>
 <li><p>bean</p>
@@ -836,7 +836,7 @@ public class ExtendableBean {
 <pre><code>AnySetterBean(name=AnySetter bean, properties={attr2=val2, attr1=val1})</code></pre></li>
 </ul>
 <h4 id="2-4-JsonSetter"><a href="#2-4-JsonSetter" class="headerlink" title="2.4 @JsonSetter"></a>2.4 @JsonSetter</h4><blockquote>
-<p>不推荐使用,改用<strong>@JsonProperty</strong> ,可以设置setter方法,指定与json不匹配的属性名赋值</p>
+<p>可以设置setter方法,指定与json不匹配的属性名赋值</p>
 </blockquote>
 <ul>
 <li><p>bean</p>
@@ -1173,7 +1173,11 @@ PropertyBean(id=<span class="token number">1</span><span class="token punctuatio
 </blockquote>
 <ul>
 <li><p>bean</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@AllArgsConstructor</span>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Views</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Public</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Internal</span> <span class="token keyword">extends</span> <span class="token class-name">Public</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
 <span class="token keyword">class</span> <span class="token class-name">ViewBean</span> <span class="token punctuation">{</span>
     <span class="token annotation punctuation">@JsonView</span><span class="token punctuation">(</span>Views<span class="token punctuation">.</span>Public<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
     <span class="token keyword">public</span> <span class="token keyword">int</span> id<span class="token punctuation">;</span>
@@ -1182,7 +1186,7 @@ PropertyBean(id=<span class="token number">1</span><span class="token punctuatio
 
     <span class="token annotation punctuation">@JsonView</span><span class="token punctuation">(</span>Views<span class="token punctuation">.</span>Internal<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span>
     <span class="token keyword">public</span> String ownerName<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>测试</p>
 <pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
@@ -1579,78 +1583,68 @@ PropertyBean(id=<span class="token number">1</span><span class="token punctuatio
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/">
+                <a href="/2020/05/04/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">
                     <div class="card-image">
                         
                             
                             
                         
 
-                        <img id="id_181588166869040" src="" class="responsive-img" alt="Jackson-注解使用">
 
-                            
-                                <script>
-                                    (function(){
-                                        var randomImg = {}
-                                        randomImg.enable = true;
-                                        randomImg.count = 50;
-                                        randomImg.pageCount = 8;
-                                        randomImg.second = 10;
-                                        randomImg.title = 'Jackson-注解使用';
-                                        var len = 24
-                                        var idn = "id_181588166869040";
-                                        var $node = $('#'+idn);
-                                        getImgInfo(randomImg,$node);
-                                    })();
-                                </script>
-                            
 
-                        <span class="card-title">Jackson-注解使用</span>
+                        <img id="id_01588587862886" src="" class="responsive-img" alt="设计模式-责任链模式">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = '设计模式-责任链模式';
+                                    var len = 24
+                                    var idn = "id_01588587862886";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+                        <span class="card-title">设计模式-责任链模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1. Jackson序列化注解(java -&gt; json)1.1 @JsonAnyGetter
-可以灵活的将Map类型字段转换为标准的键值属性
-
-
-bean
-public class ExtendableBean {
-    publ
+                            责任链模式的定义
+责任链(Chain of Responsibility)模式: ** 也叫 **职责链模式 为了避免请求发送者与多个请求处理者耦合在一起,将所有请求的处理者通过前一对象记住其下一个对象的引用而连成一条链,当请求发生时,可将
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-27
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-04
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/json/" class="post-category">
-                                    json
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Jackson/">
-                        <span class="chip bg-color">Jackson</span>
-                    </a>
-                    
-                    <a href="/tags/json/">
-                        <span class="chip bg-color">json</span>
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
                     </a>
                     
                 </div>
@@ -1671,7 +1665,7 @@ public class ExtendableBean {
                             
                         
 
-                        <img id="id_11588166869044" src="" class="responsive-img" alt="设计模式-策略模式">
+                        <img id="id_11588587862889" src="" class="responsive-img" alt="设计模式-策略模式">
 
                         
                             <script>
@@ -1683,7 +1677,7 @@ public class ExtendableBean {
                                     randomImg.second = 10;
                                     randomImg.title = '设计模式-策略模式';
                                     var len = 24
-                                    var idn = "id_11588166869044";
+                                    var idn = "id_11588587862889";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -1919,7 +1913,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">115.8k</span>&nbsp;字
+                class="white-color">116.7k</span>&nbsp;字
             
             
             
