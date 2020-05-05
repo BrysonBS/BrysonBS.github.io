@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-05-04T10:17:18.551Z</updated>
+  <updated>2020-05-05T10:55:30.744Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式-状态模式</title>
+    <link href="https://brysonbs.github.io/2020/05/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://brysonbs.github.io/2020/05/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-05-05T09:32:10.000Z</published>
+    <updated>2020-05-05T10:55:30.744Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;状态模式的定义&quot;&gt;&lt;a href=&quot;#状态模式的定义&quot; class=&quot;headerlink&quot; title=&quot;状态模式的定义&quot;&gt;&lt;/a&gt;状态模式的定义&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;*&lt;em&gt;状态(State)模式: *&lt;/em&gt;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-责任链模式</title>
@@ -544,35 +572,6 @@
     
     
       <category term="JUI" scheme="https://brysonbs.github.io/tags/JUI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JVM-Java垃圾收集器与内存分配策略</title>
-    <link href="https://brysonbs.github.io/2020/03/09/Java%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/"/>
-    <id>https://brysonbs.github.io/2020/03/09/Java%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E4%B8%8E%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5/</id>
-    <published>2020-03-09T06:21:32.000Z</published>
-    <updated>2020-03-09T09:55:08.315Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;&lt;strong&gt;概述&lt;/strong&gt;&lt;/h4&gt;&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;引用计数算法&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;判断对象是否存活的一种算法:
-        
-      
-    
-    </summary>
-    
-    
-      <category term="JVM" scheme="https://brysonbs.github.io/categories/JVM/"/>
-    
-    
-      <category term="JVM" scheme="https://brysonbs.github.io/tags/JVM/"/>
     
   </entry>
   
