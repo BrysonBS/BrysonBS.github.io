@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-05-05T10:55:30.744Z</updated>
+  <updated>2020-05-07T09:29:56.825Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式-观察者模式</title>
+    <link href="https://brysonbs.github.io/2020/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://brysonbs.github.io/2020/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-05-07T00:45:12.000Z</published>
+    <updated>2020-05-07T09:29:56.825Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;观察者模式的定义&quot;&gt;&lt;a href=&quot;#观察者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;观察者模式的定义&quot;&gt;&lt;/a&gt;观察者模式的定义&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;观察者(Observer)模式: **
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-状态模式</title>
@@ -534,33 +562,6 @@
         
         
           &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-概述</title>
-    <link href="https://brysonbs.github.io/2020/03/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A6%82%E8%BF%B0/"/>
-    <id>https://brysonbs.github.io/2020/03/24/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%A6%82%E8%BF%B0/</id>
-    <published>2020-03-24T02:55:32.000Z</published>
-    <updated>2020-03-25T10:41:58.752Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;23种设计模式概述&quot;&gt;&lt;a href=&quot;#23种设计模式概述&quot; class=&quot;headerlink&quot; title=&quot;23种设计模式概述&quot;&gt;&lt;/a&gt;23种设计模式概述&lt;/h3&gt;&lt;h4 id=&quot;分类&quot;&gt;&lt;a href=&quot;#分类&quot; class=&quot;headerlink&quot;
         
       
     
