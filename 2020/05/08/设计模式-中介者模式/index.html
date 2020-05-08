@@ -1,0 +1,1271 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="设计模式-中介者模式, java,web">
+    <meta name="description" content="中介者模式的定义
+*中介者(Mediator)模式: * 定义一个中介对象来封装一系列对象之间的交互,使原有对象之间的耦合松散,且可以独立地改变他们之间的交互,中介者模式又叫调停模式,是迪米特法则的典型应用
+
+特点1. 优点
+降低了对象之间">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>设计模式-中介者模式 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div id="bgc-post-cover" class="bg-cover pd-header post-cover" style="background-image: url('')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">设计模式-中介者模式</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+    <script src="/customJs/random_img.js"></script>
+    <script>
+        var randomImg = {}
+        randomImg.enable = true;
+        randomImg.count = 50;
+        randomImg.pageCount = 8;
+        randomImg.second = 10;
+        randomImg.title = '设计模式-中介者模式';
+        var $node = $("#bgc-post-cover");
+        getImgInfo(randomImg,$node);
+    </script>
+
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">设计模式</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                设计模式
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-08
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-05-08
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    687
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    2 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="中介者模式的定义"><a href="#中介者模式的定义" class="headerlink" title="中介者模式的定义"></a>中介者模式的定义</h3><blockquote>
+<p>*<em>中介者(Mediator)模式: *</em> 定义一个中介对象来封装一系列对象之间的交互,使原有对象之间的耦合松散,且可以独立地改变他们之间的交互,中介者模式又叫调停模式,是迪米特法则的典型应用</p>
+</blockquote>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><h4 id="1-优点"><a href="#1-优点" class="headerlink" title="1. 优点"></a>1. 优点</h4><ul>
+<li>降低了对象之间的耦合性,使得对象仪玉独立地被复用</li>
+<li>将对象间的一对多关联转变为一对一的关联,提高系统的灵活性,使得系统易于维护和扩展</li>
+</ul>
+<h4 id="2-缺点"><a href="#2-缺点" class="headerlink" title="2. 缺点"></a>2. 缺点</h4><ul>
+<li>当同类太多时,中介者职责将很大,它会变得复杂而庞大,以至于系统难以维护</li>
+</ul>
+<h3 id="模式的结构与实现"><a href="#模式的结构与实现" class="headerlink" title="模式的结构与实现"></a>模式的结构与实现</h3><h4 id="1-模式的结构"><a href="#1-模式的结构" class="headerlink" title="1. 模式的结构"></a>1. 模式的结构</h4><ul>
+<li><p><strong>抽象中介者（Mediator）角色：</strong> 它是中介者的接口，提供了同事对象注册与转发同事对象信息的抽象方法</p>
+</li>
+<li><p><strong>具体中介者（ConcreteMediator）角色：</strong> 实现中介者接口，定义一个 List 来管理同事对象，协调各个同事角色之间的交互关系，因此它依赖于同事角色</p>
+</li>
+<li><p><strong>抽象同事类（Colleague）角色：</strong> 定义同事类的接口，保存中介者对象，提供同事对象交互的抽象方法，实现所有相互影响的同事类的公共功能</p>
+</li>
+<li><p><strong>具体同事类（Concrete Colleague）角色：</strong> 是抽象同事类的实现者，当需要与其他同事对象交互时，由中介者对象负责后续的交互</p>
+<p><img src="data:image/gif;base64,R0lGODlhsgJ3AcQAAAAAAP///7W1tXNzc0pKSubm5jMzM5mZmdbW1iEhIWZmZoyMjMXFxRkZGff391JSUkJCQq2trRAQEISEhO/v797e3ikpKTo6Omtra1paWszMzL29vaWlpXt7ewgICJSUlCH5BAAHAP8ALAAAAACyAncBAAX/YCCOZGmeaKqubOu+cCzPdG3feK7vfO//wKBwSCwaj8ikcslsOp/QqHRKLU0ICgIEQug+ulzCxQsxXLbmS8LQvVy+hAzY8NjatW3x+Ov+3rVnD3IPghmGD30YBA8KEIYZGAoZhY+PfIyTdQ+KlISEXXKGi5CSlQoYGQqnkJWoGQMDqrGqpYYDpAORkB23qbMKuRkdkQMdqgQYscIYyacYmJipqaWglqKfcXJx1bK9zJETt7HMwK8LHejoExMHVU0HopNxCp6iWltugc/Jh54KvOHSrVvXIdyEcxN4FStoDAM6YAAnJFt3q+CCiws+LODA8UDHCBsOgOQgYMOGkicZ/6hcuRKBBpYIGGzQQLOmzJo1Ebi0yUCnS50VaCKoQKGCUQQFChD1abRpBZ9MKyRNqpMChQIOKGS1itWBg65avYr1arXsV61lyxYIGzarWBFj4wYQe3XuW3cjHjQg5KjLIjsGIMDx8kUQIXl+8Y0BFedTYERg/obJIJiRGC11DAS+oNmABc0WxnjWDCFB6M9uzKgWQxpC6HyvPxtYk0Yz584ERqtGLXuNhd6dRyfw/bvBb88WaGtuYPr3cQPGQZsGndx5AuPDh0vwrdr27deI0oxBA8aOGwicU2uWcDq4bM3KZw93boG5BAp4lTzu5IlvKWeSoCJYbltkkRly9NH23P9s1bn32W/odaYGddYlJ8GFAEjQwIUbXughhh6EKOKIIkpAIokAeABAiiMmoCKKHkiwYokepsiiiDequOKMJ5aYoYk60mjihScCKaSRJjYwIpEgLhmih9d1OGSSDVSZgIYWaGjlfNclNx8GTkDQTn5kNuGACmeekGYLa8JVZgoVNFDBm0YYIACdMtBlll1pWUXUVWv1adRUTBUQ01A+afCToQXkpJJQSuFk1Es6rfSSSiaZtJJJL2mK00sCoJRpqCcJwEEEoZqaaqgknWrqBCShmmoEB9RKawS4csQqqySl2tEHBwggUq4TfBABBx4d8AGwHyTkbK0HfZCBAU5Y8AH/nthmq+0MFSQw57Y/GMABuOSWW24E1DZhwALmtuvum91+++4NF4w57734vnNBmNfm6++/RVQggbwAv2CBvQUnrPANHFjgRL0LRyxxDHESPPEJYl6s8cYlcLBvExcMwPHIGldMcgninqyywhwk4IQB/a4sc74CW0yyBePOrPO8HDTwMsI7Bw0uAnLOnLLQSG8bgctNQDBB0lBji8DAM18Qgc4lkeCABvipOQEDPnQANAo6QX1AukwcPDMFG3QtglUpMLCA2ysg1cJQLXyAQNQmy3y0zNOSIIAHe58wAADtaBBBmyJ0sBGuJZV0AAFXn2DA0yIIUDlcYAfQQQJeccD4/8otv8yuzAUgTsIFYKJAQAN7M2BzCW608AAAhasggcgiYBV03yv/vbIqgjNtggB7KXth5yRYQMAB65yzgLIAYC7ALugkoMACDjUAgAarKxDAAPsuAMDsJ5fe9NgjUwA7CQawP74HsHYAgAF0m3A5Cww0AAsKRSEKAThQgQ8UQAIECBoFEpA7lVlgcydTygAesAC7bcBlWyPB1PSGAAEYYAMcwADdHliCshmgcAUoiU8up4EN9MRuIyBaAOBRAAMQZQM7a1iY5LcxB0BgA7l7wLi0UjwB6AQSCPhAzt62JqvFMH8iuEAGApAxE0jrHxbYhAIaAIE77awADDQaBEm2gP8sOE8AFpiAAiSwgMOxywETaED8PnCBBogtA99bXQSGkYwO/MYBBgDfCCZ4kAQ84AB1WBMFmME9DjTiFWdT3cw4gLYlWOB0EdzEGpjxgAlYIAMHkCN+HLAACSgAelk8wAKy5LYBJCAZCzDkAhLiAQMwbgENKEAACtAATFpuXBO4j9AE1sCTWcCLMjNGAIhGAUoqJQHgu0gHphiAXopAA8YTgQEiMBSpSAUrFhCkCFRhFAh8gAIHAB0JNhABRa2oixt4ilF0pj4mQExlX0GABeaEBQQkoAMVcIQDKnDIAQZAAw0Y5QRJkIELnEQDF+iApi4gPhKk020b8AABNnAmBAD/UVFEExYANlAAAlhAl2sLo8yOqbMDXEADyAuAAFzGzLl4Dme/mYAhstCmdQVgAZETnQOgSQLywUp7EYBARU2wiAVAQANbwGEOfQYyXzqQAxSAGRXHBYEOBIACezNABoL5CwPwbpxLvQAmCXDWAHwgnBm4kwOEeAEAJIAkrADGBNwwgFmmgnkr4yX6NoYzmVGAAQ9IQDwdNtNdFu1tCJDDATRwJgE8tXnXMuUBFJDHcI5AbrhiAAQGwAAODKCBDohAFmc4RQcczqv0zKYSIjozBnyyAgS4VmFHSwKV0OEAXZnAA9xmiBFcYIkPgG0FblEU3O3SuQOIAN20okZdklRo/2AcrMa2uVIJmHWZDTjAACRwAD92zQFn40ANw4mBiKJUm9ciqmi/KgFxCutYDcOAqdiYOzV2zqciYABsJ+mwpmHuZBccDn4Ugc3o/nMEFFjARgUAAA5E9gITcJsCEhA9WTKDfiIgiQimpkv3AZYEGMjS9jDAHCiqTLBilBkHNPCBB4CXAUtTXAJ0GQG2ImAC22xo61AWX/U69atEneH0jiUA1oXKAocbADqjtazqqXJ6EqCmjGWbBKcFVgEQnZMh9NkBqGLuABiY7AAIoE8KMhUDScnqBIKCgFOaoGdnooAETiyCD0hgXGnymNCmpt2LFXZmjQhA/wIQAZ/xUpc04f/AAwZQgGDCasgjSJnzFqCZuSRZA8qCnAEwoJKDMUAADhAWsDjgx3AIC1ZjTF+B7TlgfDYAfARg125555IJmBMBBPCABjIg1RH4LopLRMGR6QtYB3zgcpuIwLIE8IVBPzZ4sSbZLRTtMwFIYJc73qUCJoAAjw2AAxBwQAMIwID3poyoGhDZUMUZgWJMLwFiMl+xS5AKB1yg0COr5xIAvDIH7DMAuQ7AcQPwisyJDQEdsJMQN4C4uujvwK6D7QHFyWhyByASoaLVJAZNNb9le2OG0ulBJTCMBkgkl72jdhcDoIB9VcAAAHjAt+y0y89yNJAjEEsF5noArwDUBAVQgy7/D8DG0alMh+ri4cUMZQBdbgGXGYgl5gb6AR8HQAJ3OoAH/Dc6gp9gAzCnL8dJQIA5G4UCHYCAtQEusQScXGMFuN3TMqoBqSAgAhLQJbXBLFMIVBgu+25AsgOwgQdoiHEOwAAEFH8CCmjgcxhYEwfGbi16fsyeGCdZRoX5yqYwQHtzEW4GsKIXC6SpAPsmQQJiZgJ0Ma8CebQcBIgRy8/rrGYzO3Rg5xaACiTb+CKY5wjGigIHEJ6pi1/+SU8gYY+XoADjLmb6uIwEDM9MiX0mWDvnwoA1RZbuHeDziBVAsLyjj9Qk4IBVZeZPukdMbVFLglfy74KePSz0/BeAUUBo/8EXfQJ4gEzgf01jgAjYgEcAPFflgBKoBAKnH/M3gRgIBERjfwtjdxn4gUKggEywPyBYgj1AgDJzV/mnagJARGTzAR0lXSZIAxWYBPeUNE4nA11jcTMIJ9emMtwFNXVwLHHEQ/aDH+azdj3YAlA3ggw4MxVgDLHGAGOVg3CxRfjhSUuYAjBmckIodyOwAL5XAiZjcEq4hSpQg91Xa0iDe5UURefDAkyHH42SAi4xgxRwcCn4hCrDAADwXiKwAGlSATI4YjC3QLlTAbIDYREAWGwjL1aoKPynhkdwAbSHNFn1Z+v0G3eTUCxAbDOIgisjfEGjALNWe6MFYNiUZ94iAv9oFkfgY1mepAAdRQAdEAcZBlXgU1JXE4URR4tRQ4l1cnczswGOo05fpQCqdSbOlgWY5EgOAToUsA7JJwhs5gB4lAGi41b0UDmsJgDjFoAQeDJBKDQWsFTXd2uKNlKMJ0zuszeXdyZvRUU2BmOWuEse0A4OIAFSlQDsol9IdoGeFyYAGDTXkzqd8wEYkFH4YVpbM3syZQEMEG8N8BWcMRf+E4XU4k8fMCecpjgecCf2Q1FsmDQbODMqiDTniAKJJgJisEwJQIdhRD5tNAAn1XcCgEtzsmciAAFv1ACVAzP+JhEdwDrByH1HQEJRswEJNAZzwWZ45gDPcwAbUEdUJFX/NYVuXzVc0/gxQGeGIuBKIhBuAjiOJOOBSOOUJ6CW4+MwGlBgBXBwFKQUO5hcNzcnt7A1DdA5LBUA4hJQAWSFk0RVaXOJQsOUB/WHGyA+/hcnHMER7fZY/YMfZzMCzSIHImABe7MBEpAmGvA96qZ9UCOKDkSMJ4NLKJBYIyB5jOd6xVdfNLdUa8FWmbk3FXCOlJNpUiUuvOQ2lAU1TbgEXhY1ApBAAfBPHXA1peNPWoOCDCBMR+ZDInRBY3knFCdIuAc+PCmApGlMpkkyB4SOQDRDcRgAJIRQ+IGIjJZHFEBp5xl4DMdnCXAneTguUBZghrkz8xh1+ccAFcUBAEBN/6o1FwZQUc7HS2OCUPJILRrwbQGglea5N6kzJv2TFe/DnSU3inzYh2vgOLaYJq6Uk9S0ebFzeAwHAJzRDuNVDB6QARRQBg/gGQNwJuOljQ1wAY1iV+gBiEJzAGBoT/m5M5PDjB6AQ9PoAXNCYQ+QVNdiP1RJAAAgkq5XAfkYARlgd0M1AEXXATCHBY71nTpzkjKzcMF4CsjkinEVQ/FUfEZkmc9HcyLjEYy2ah5zOg7xoKh2UIbAgQH3hl1WkDqDWD6ZOWfiVHGwNweQHDETS7lmJwhwBnfyARm5P7gEWxhgVpjDaW2Vf915MxuKhiVgWSSwAGCafxxgnEwwqPwnmP8vwKptonw2hYBEw6OeCqov4E+s014C2YCc9jKfaqvAOqtG86vAOhfGUEEmGJxKMJzF2qwm0Kkjk5LOOq2u6KfdB6jUCqrCKjPPk63UWpQPU5LeCqrY5GIcIzzjaquVuT7p2qwFgKQx1q7AegVOMC2SYAy5sA/0ME2h4Bdd0AhhMAqmgBjbYAhcQAiKkBjCcBl44AVeQA/9sQjJ5QrxQA+3EAeKMG5ZcAiQ4BeqIAjH8LHTwApfIAlYMEGSQAvCcAp8pEaqgArMwAoOwa++8A/86hCwoFPDYAjM0BDoEAkvqwoNgbP/8ArfYAyHkLImmwWSUAfSYAl80R8gSxicFAv/fMQQGJAQy8Cy6VAQA7EOCmBLM5MJi7EFhUEZdpC2alsZkpEJhUEOqZAQXqtXPctHM7sJxkAJzsAMVqsKBOG1B/G166AsyJIRqmQqwaI5uEIrw2IqqIIqpcIRsmIqHABCKAESJ1G5uUIS7KQ5IQcSoYVjmWISAiC6LMFOpYISmKIpLIETj/IoO/ESitITT+G6iqIBShEUlCIUPfG6ipK7a9EoQtFNuKuI3xRnapEUf1JpqLoEXRAJ2eAIlFEJ88AMGJsFMWuyWFAIjKAKoUAL3atUqaAL8/CyhYAKgiC+3TsPmJGwCdsIqiC9gyB5BgsJ1uivyCCw2fAIBkIPXBAG/9J7Bmm7GJcxHnSAG4VRB4IhB5zhCaTxr4yRD4KhGLdBB6JhB18QGNqQDdmwCc+rCwaLsdC7CW7bvYZxv2h7Ac4DwPfQUKnhGvnwBhZgrhsjGOSwt6iwt7CgELmQr67wDXAbD4+gB7kRGGEgwEqVG6EAB/bwvw0MCDHqHgjiHPKxBswBHfVxJVWCHVWiISFSHx6yIVzMIFvMHlrsItlRH2DMIR3SxUwiIlt8JR4SIsaRJdvxIXgcxnhMx178JEqiJTESyEwix3isJH8cxkoSI4X8IdfhAXasJRdCyNvBHIb0MLEnr0uoZ3yaMBCgfiuzJ3PRJ3wyFnYBYWjRO2ixf/821Ses3Mrp+VWs/DZo4cqA4spKkbuAQhWEQhU6UbxxNhVrgRRT0RQuMZHCPMy4m7tPARQtFE8qARUFsK72RKyYLIHQyjFkWs1bCKFM4I/ajIbXTFjU/M0HSEm+Ss5LGM4ac4PoXILSvATs3M4fCHxjKnXyjIDKmgTxc88l2IXBM878nDQudc4BnYEIAK9+Y88FbaqnOFsKvdBQQ88rE89wsTiMJ5o1UBTXdIY6wKpssoMejc7m3DTiCtEBqM7/Ioax1q1IB3PMpwMUQABMEwtBQFDDZQId8AAcPQIXdDpaZdIioIUg89BA/TtkGTGilQAZIAEPAIj7XAIOgJjYWHT/O4BGQRc3pZoC5sOGn6llKRDTmANDJ9Bu7SyG1bKrRZ00Ep0w02hKZ4JbbGRcY3M7xmEiADBG6flePNp3JdQon2d+v7lL63JsPYF0a8I4PnrUH5cAbWWup8ACSUfD6frOSqCUaY2hmwwuqwR0FmUa7ZDNI2BaaoVuEwCIPRMBW7R6Mn0B6YkOWsCML+uUwMY7xhC24HM4WKAUWcdbrtVVCJR8DYCOX/NKIxAB51BRyyV5XjSNGOBU7BJvnWOlybVMWXJuX4UOD7A3cFQrPzSty+aEl32AjwZAYoEVZRF0cZHebvEVcOE2ZDFKY9EWLmYWgglsaGkCDsCl7XWmltk6/wTAON0iAIbCcn3nzQsgVV6qTJ6zLy9qYwjwhzRnY355NYD0NO7jVZsnADQB3JhGWn7GjARQAZSxS0fnbXszl8/JLs/ZDoC3FpeEXtCEFWqFThKAABSQAR5QRp68hc/2MEQd3oHlXdmxxUReJTHyI1oixl1M5Mmh5BoCJdfxIVLixlQeJfYBJUluJRtiAQHKAv4GAHw2jROwNS7aJu+YmTkTB37JVgOwBRSAo9cEhjn9VQTkQRLOXciTJnH0VWKrNSUwAKjWANfiSAEgCIz3T+zARgzweZDQk14lACLzll6FdiKwNMaVQBEwhs26StUSpEAeNERTK8AyPUp0EPLnEf/LsrkXgerFsmQYcRC1giynrkrL8piPOT0ZsQ7IcmW4vhG0jizLcmW1UivTMuZ2uB7aBwGTXCVRSgJgVDgp2XAQgBREAV4otQEFtlDLFFeYaZ7jIqmB5gEOUFMqEF0f5zPZXehTJC2ZYuNzLgLCEEVhDejfZVs0ajyoOdLUqu8DB9CfzjFEE9Lm0mThhd9cOqPTbgJUGFdnEwGAqGeCpJTT3QDFphIltwHpMucNujdxh+YPWp4c8G1xItnj04u749/i0+MjUAH0Cu+t41MedOLik+ee05l95jCJ6q3CWAQ//e+j+YMF0zKXVenXsZuXzHBXY6UmcObm6UVetmGbqQD/CwSGZh0AKqc+k4YfheU+mMMIjmXmnUQCEjVOANA1m1B8kgQsD144hyTvhS7htBVTiVk4xYUu3vrdluTvPn8x27owNy4BGKABr2PsY5ltBgA202QCTPc0DUqLRAMBVlFXzrM3RMM6F+AB0lUaA+40CpDjDJdlK8cOrI1e1UMCuPejtiX1jEdNF+RZ5sMX+PEAHlAQtWTjSk1KErAOaxBPLtcOV/p3rTgBwpatA60uWb33G9OgtJowj9qi+WPZzi7LSDdPT1F+wpsmwqJIEyBdLZhCDq9oAzAnFo1OgoQAG8GMuVICuMvT0GMxhWvR4NgBa3KLp3IAlgcLujRNMaEA/7okLYJUkyCABMGBcSOaqivbui8cyzNdf1Cdy9eh+z8wKBwSi8ZjDdGoIJtN0coicFKr1is26zzgtKzLxysek8vmn7JwXq8MUzY8Lp8LO12zoUff8/t8hISan5jboOEh4tXCXZnBQiJkpKQPINOkk8HJ5SbnJtfahWbnKOkgQgJFKZFBhKrrK9sNqB5srS0WoOBtDQTt7i+w0AAj2UVHMHJyDoKHpbJL5rP0tMrAxZojtba0RkPqdgor+DjwAsGaxSP5em33N7mFKPs86fAahDy9/mUFKvtFKxoOHOwrCGfAuTMZDBBoCAHCg4YOM0h8+LDhBQMZLTqEQOChAY8QGP9esAjhwoOLFhma9IgxpIKIH10SkJkhA00CClA+6EmAokSJPm82lBnxQs2gNXtCjKngZ8+oDyjGlHpzwNSbGYZq7XBTgdasRLdmALv1QcyGWzGUvTlVAYaYbIFKnfqRp8yZI5MiDYnRYka9UdVWrbsU4lSxUq+xy5DgwuMEFiZTntyAsoQGmhtInqzxggUDoQ1o3PsQ5VYCFgb/VVmS4ecLr0eSvli3rILcbxVMyB13gIIBE4RPmLCgw4DkxjssaK7cePMOxY0XXwD9w4QPHzBA78C8eXPoCw5oB38A/IfzzQVwaM8he3jwHA5EYH/AfXsB7Dnov8+BQQT56SfABvr/AdhefRtEsIGC7EXwoH8IBigAAwwU+KCFCj5IoX4MArhBhRqIOKIGITLQEygXuEURi2D9tJVZu/kWl24tOtXTTXHhCJVWX+GWG5BgoaUABGVlpRNVKTX1UEpqIYXTVhAtVRNFHuFU5FMT5RiRR0p29FFEKZ01U0UlnRZUlwQY8EBGsp3mJkZIpckmUyvJ+VpIsjGlF5NTJmXWjxDEZCSgQ1bl1ottKvVRRXlxVJM/61wgXFzeVYqccB8wx8EC7ZGH3QAYYBBqcsABWROQPk25Z09gARqXqKL+uNtXWUaUgZwhkSYar5Ml0FlnlYUmmWYWcCaBscb+aixpCWz2bGYW/3jw67KVOWuBBM5mlsC02m5mbAMSiJuZZh6MK+6z2nqwLrvmutsuvB40YK64HgBwb7zyZpbtvvVKAMC6AAfs7r/yAmCBwPcq/K/A00qgAChvGDQxIv28M44BG1AMA0EjdMzxQAF87EIqAxH0zsUmU0DBxyarjPLKFFRQQQE1x0xBzTkXQLPNNq88s84+3+zAzTnzvPPKQeeMQAFMN40A1E4f7cACBmAT0MZZ/yGBM+MkILHWYcexCDpYi332GRpECg/YaLstBgYJmZGAL2/bjYXaF4Njgdl3+02FPWdE8zfhTnSjyzh8F774EYHj0TfjkVPSAOJ7Qy455jM8hY06mf97PkPe7CRwOR8dV6C3ECN/Tkbcs4jRGxIFTKBLBGgNUJ/qKGyQAQMBaKBA23IwkEErCJiQxQEaGLGBBRcjoBMVGgTCjuJWLJDBAHo7kJzyL2wweDxFODCBBgJgsAAUKWzAXO4qTPAAQRw8QMcBGaSywQXtL4M6EB3UXcDtgEAkdARPBQXg3w8iEIYW6A8GA9CEAxbCgQpsAAIe0N8GPNADJRyDDxuQwCO6MYAsFOABBfQBBTgwshIypgmHox7pAiCA7vmAAamgQAYAoLEUTAAAKoQBBRKgDg0gUAcKOAEFBgCABaKgAAAwQPpcsAAJEKQCJwwAzsZwAACoAQETeEH/A1WggQt0LQj+M2ADvviDAZ6BBzAACPI6R4PioOABCRhZKFwAAXU8QI18IIAaeaMFDRggjEKQX/Qoxw5xtAACHWRBFLH4DgQUcgTDYEQFCNCAHXpsBWroBRLqhwIONIAYE5DAI72XABlg4IpUKIAFDBmA9NDgE1UgABN1gAFijIFuMBhcChyAgA1oYAIiQICmdOHFCVTAAQVwQIFGIADjiEAAEjBBKgQgnJMJoAARmADKLGCJCvhQBRXoXgWM44w8jIAAj2SAcTpWzA6kT3YL2IAzEcCBLh4gfSUoYAGwo8zjpM+NAUALChggnY4FdABg40AHpoCzAzDBiun7pi8A/5kCDnTPAQvCpww1ITtjJpQW09RUBqK3NoxdMQP5GEEBCBC3BSoQKb7TzAJ6Z0wP0JCeBHhDBRBCAEEksY8PaIUAHqCxCHQgFek8IPAEQIARMkCm2ksAJycgADCg4JsTkJsGMPAAZyBAOVZL4QKNd8QR9HABb9jdA7qnAY4qgBbQVOECRkiC7KFAA17p3Qg0ECoOFNIBDDhAFQfQgYAcAJUCIIj5JkAQYdrwADvEKgpS+A4GQE1kxBwBArzTMQpoIH3ajEAGcpmD1p1hdDBQ6goICQA2LWgAGxiABZTHAL5NIAEEKG0D5rdb890xAqvhAAU68IEIECB/GYSIOFFwgP9VstUDlUOBAFiBAa6NwAJ6cOcIOrWBhpCgARz4QAJEQAEILLcBBvhAARowwphabXvasUAqfUe8BXhgqXQbgAS6x84ATHUEB5gAavOnhAMcoAFv6OMBMtKBmOKgABigbnY4AJGOTbdjDABAA0bpAU0gJAAIiMcHGtA7CjxAAuGFQAQanFInCMAC87AAYFOAgAgMbwIb2GcKFPAI5gbgvCKbKgU+kNtUZAABghoBBRRAAfNiEQMIGF/zAgAGBwignB/uAQOsGwByMsABBhDyAoI7gDRDTH0SeAf5OmDjEQAvJtJE33SnwAADVCgBVisABFYJCB4LkQQJ6IDGOHABDTT/uHcfAMBW9IrFB3hgARfOQAd2YrUiD0CfKg7ABsyb3VU6oMVYFCLzVIhe7jjgABlTQGE7AOkEzHiXKFDijAOgAAA8GGICgMAGYH0/VLJVAQodMRAw0MIy5JEFVVMNSHIcALKNwKU1e0wADKBXmY6gA+c4QEKaquVHVEABFYAaAHpgAAysACwoUICLW+BdOs/ZAguEwAgRMFYKIECHHWC3AxrQgwkwZgGMgQC7Z3kOAWTggFvs2h7beYIBX3gEg8sAwM2NMw8geNMFtiZop/dVaVrteTXTQDl9Nz2RnbGOHfwAEy6Q8AFQd7cBKIABLNGB+Rluzuvg8wpqh4HVDCAD/11TgAXUkIp1K9eORd50AIy+AQCIQLTIZi6nFqBDDsjtvd1thfSUngDlZUCNrHW1CiKcAoeSs3g4QFEAIDABBmhgMtl+g3FHEAGr/XoEcbG48gIeEFjfnLtiTIAaCiCB3gVcBA/gD/NsDEff3VGGgsYwYy6gMQckALBnLrwIOBxv3yE6s1SmwAJYVj0VtfMYlPyGL39Q4taS7pwaYK+ILmZwmK57SD3Ad7VnbI3CLxoFCfgiB/ArZGNruW7ZTriuqRvbZgSW6gGwdzsfcYNMc+/m3pHACapm4DkDX9fnsMYEuK+LfiCOGYKYuggiruuU1t07wGkFBQ7QAQl88YMEyf/FtHUB2n3ABSwAXGAAYCkeDa0AB7jY7oDeCHyY8nDAKm0VCnwAz7lQ5ZGDA+CYCzgUC8QUsVUABHzI6ZAA1GWA8mgbgR1QA7RC0T1IBDRTgY0APoyAazHAm91cAygPLvndjInf2i1bXUWdjWFAD6DIKUwAeSwAcH1DBITYtLWQdVgAu1GAB37QNzSgA1TAyqVA3lFex6QXFkqHcm1AAUTKiRFEBFBX/oHbjBUCKXXMKY3ZEqSANRXRBNgYB0AMA3iDgXlAKjzACAEHCvzgGslNGUiAK8Xd5aAXTEkfCihBgIxdt3UBAuSQOszbBOQaCnCVCnyegXERC3QZFChe7wz/WIFNAPSNQCadQPhQgLbVWECUX+s8gPOBFvUllJjdHAC0AgHoQW7I0LKJzAN0QKl1UNzcXsKZwwh8gNUkRwjq0Avg2AFMATntUAF4QO/UGAqiwATwUhFsgCSCA+ctoAqAUgvUWMMpUicdwJyV2gQmgHbwYO8ERzCB1whcgBq5VuikoeMFEs8J4bst2wBs0CZJ2UHRH9RFYAN0TBSG1zVQgEaxBRZ9WgTsYr9d23Uln0PeEOJRkgqE2TcwQOW14QigRZIlRCE0WMcIQIhVwB12lSCSDNccQO80YEkCABMg3EFJ2gPI0WqJoxcwkgtUj/skhANIAC0gIwIchwLQkD0I/0KYKQ/2hdo3FBOBCSWB5RoFVJoY8RuvReD0zFvcUdXKlQ+m4WAP5F+o5JgxsNX87ITu0BAFgJDHbEC/vUElxJ0muBvKQQEFbMD77OMXOYCmBBBbzRhhTZv0MYAmBGZm6U0HFOBkSUBaAaLNfdg3HEAGIoHayBIywFIkBdlLBUAE/N8FrQlMjZAtBcCEdVc8dp4MeQAU2BYpCcLkKY70/N/0lJ3f6RVBSlMsoQASVhs1Rt38cJ46ICYqEuczXkNlpuQITZnykJMmeKRMduScmSRBxFczIRsWKUAa7lAFzJkArNJ0PSNLaowphlfJGZ7ePeQkrgBOBATKvUGHERjEyP9ZHXElDXyAIpIBlb3AB5QmbBbntKVbuT2CIxANv/kdDgzAAgWYlnWABhQAZGhABVxA78hfCiyAJHJAukEkOBHYwbVZ+MSdOhhA5znZ7ZFnqEWA7NjPzEBBTwxmSciMBPxW7VxMD3WTAmjMSFRbFzTbAyQc0glAJjIAQhQATC4AlMbSykCBiNbMABjAylgABIhIXI1fxwACMZATLQCYGiRpYJHaSCAACULAdRFBaK6DLCIoDCBcAXhFAHyYFSpOA14jzu1QWQQWXhIYAHhFBgyEBdDNoykA0SBbENXVFkkWP6bkpvWWORleBKlRRIqMbLAhAGiVSx0UVmVSA4jABIT/2HRRUAIMqeBpTAYAYjrk6RdKlxQKQE32mwhEalKFgRKVFgFYKCmhpm2eGO9kWz/JYhe4lgKmgB1I16eKEQDQEJvgoCZw2zZmjw76kQ44Thk4GCVokigMgLl00Km6qLHQqEYwWgPgRAdNEQHgjAEgywl8DxQZEOKB4WRQxWitSW6kwqkO1YmN1ZgZwLT0wAfllmpUgA4magJIwAipTQK8hxSAmrjUazBlwLh6zEO8Tzb5FmlxqRo4AASA2CMAAt10gIN1IGYcahqCUBSewIllCydhDwpUgCiuXdcMg1idTJZOgcg2wFQVXxOk543R6Qug1pp5GJu8QQR1aVjxpXr1/4a4RVkCSBoCQIb+hRDz+Y4VRtkBUMAEaIKlEQ1wVE4wjsB4IeOYacJ4leAzAkznYOxUhU/REQQENMACfAAj6hreVpu2ddBWqRZs1isX9I4GEMAOyRoANGcGSADGRWwAEJwINK5xvGDkOiwWqYg0glqsogAwGZdQRtDHyOJUqZGTuakMicsliSYLTOcZeKsOdCHLpEDTQNkCmIwMISPLfCfdpUAzTeI3HNAz2aek9ZVeroCF1OzOQOjsgtY71IzIZNPumphSQkHLGG1n4WGOJQ3R1MzHsGkTMYEzgVqZmUy9RigW+e4k3asOnFMKlEwTFRGcbuA4WKc2WGAOHJA5Tf8WC1jC8+qY0eZv5fgvJMFUfWJX+vAv2hJlDHyWx0AolKGjD8yeGSDlEUydAMwMUwUwEFBSIyIB58GcFR0PHzAEmz7labaAhX2wH/wh6wIDFkqwMlia/E7M7XHwGlBwGbhWE7TarwAtDgNBQL0wEeyWZBBADLHB7UnGHr0wk3bCbhHxLnRgEO/CE7sNThqCDpPB11jByuxC8xoC0UxDnJJDEFXx6mTOFvdSEqfx6pQxOVisG89xCrAWHrAwHUcO87ADFqJxHheOHZfBxP4xHXvnIvkxEtRwDJwMISfCGnsB5+FxDrRam6EBYnmMpsQFB9CpA3gbZJkQGwzPCbSaItP/ABKrQO0gci3s8TqYmSoXAdoBwQK0gpEVAQbkl6vJcCPTQCCPQcA14vDqAMoCgSwyLVIwaXYRZSdLoRJIcvR07vUYAfmoQJfpsjLAMThg7JsaGCc1Qe3+wNgeWS7WUCSZZBvv8gtsDu39kjNjl8/pAHCm5LJRwAVsM9HuYwqLAQF0jgLkFxIkQBlNg82RAwZwxjbHneC2wBcH0wpIsQu83iRWEhVcQDuj87sxMBb88i9JG5RZiPkwgTZ1mjTRJ9XEs4UI5mPp2A76TrSOZMhejyhQoPHpwfgcpzTlhjMwQFwwgPduwA11UwRmGoIqFAZYAogCoN7Rgojw9M0BGdWU/x5MbbLH9AY8vvIreOM4NBY9G+1ROdsexar54MRtAscAfGdz/BQWIcf4CIcamMMzvQch2mcltxMTLYDA+o6owGwrjSfGQUEFQHW5rRltWrQuDagYRHKdXpkKXC0AZKmCWFkH5Bxqkp8KPpnWBQTzjAzB3dpKq8B6zd2q6p30wZGFLQgLiig8Jd2YWUCBSAAEPBaycd4ITZNCAbQKaJhg2aaWaatZOsC9lKQH2I+JJZ0DTFV66lWXtYLIPtAF9OI2fM84ZBA+lSryuhXCRYCU4qEGRcAw6RVuBQBWyEy6gbfywOTpLISJyZeBpRQHtEI/yNGUdXMAfuJYiowC0Kcsav+AAxRguWkmsWHhJk8ANxK2LmH0FSzlCVmDY8wE4lDwa89MAsxPdokMZm0qKOpHKDIRBLxziG5av7UCSlrcCXgm1GxRAdDslN1jm1HE17XTCAEPmyYAIwSRJTxA70zqIeZaLVvSpjHYLG0ayu1Q+OwcTAEiOHjkNmgAWALkCtg10slUw/mu9OVGcTRuhwpChsrkgWUk8nVBbxEEPWmZcCxCQyJ1Qm0gBUib4onAjxWZ9CVAwsU1nnaXfBN4DNiaGWh0/84M34BvkPHciVmHqEwBTHbMbT0E2u7gAFRO39pgQ4aDpEV4eaEA9vVEb6yZU/WGhW4FWyWEWeJSELHiLZv/zR+ugNylQEq4gOK56grq1VImnC954Jix7zZgtTY0QMKRpgsMKQuEzrhZiA2d58hEAEUzCBpOtsds0p3enBsUiA2lgJJXjq0e9KQEgJUdFPRV3Fkaq/FVNGGrcxkg9gtcAII6owxxOGr2OAEwAP5eHzP5M2aCY02uwKEZ5zXI9D72AEWLEYwFUeClw3QB1iAHpZO5wKamACjaIEbfxLJnWyXD3cT2YATO+zbs2TYguivadgsYZQr84TcYFBYBQo5VwN69Lwn4HHAoiMiotvP21axSbBExDwK02QNAXQdQV7V7HQ6es53/+RkEXJ0Hk8SvAFZAGVO2puXZIWS1kEl2/0BAG4AfOZFqiYACSB/Uu/kntgJdGljdPQLnqcFc3YcuVA8BIFd/wZS2MgNf6rscPRlMldEfJk87tdDV310ANHp8lfIvEJI2EAD9yqTRonVs0ecsEf6ip7qJwZwEBIQA0DLUnQJfERjPVcADoMwmqQBBqrwKPIYlbNE3oCmBHQNOUDpH93w6f6Yv760LQBP/bH3k/qIGgLJMV4AHzOADWED6rAYLEN4oLa4rRpTvINscksDoQS45EcBT2s+6IUBjfS1aWAiP2eBYpecxaF17n3KQbbeHunsKFBqFd7aj9xWy6SDs9UAE8FpynT04sLI04FbXyGRAc0yQeu66FiBLC//KUC1okh7q+KyNATwSCGiehRlCgAaO1aUogaUJwLhBZqTURVBbU0FdFAENAIM4ADi2pvMJjUqn1Kr1ir0qHtnu0yHZdCm4WoDyAEg+KoVB3AEoIo0WahFxahIUV8RiYHDBhMKR4FZTgHGhEbBxMYAiYAFwEcQAkMBwYeDAIJEQuhYgAGCxoQCBggEAwGZTkNZwogERiVLBl/JA4GDT8VqYsPCQV2TwGmfQkdDh6wUdLd20kfA8jZ0tNQFQYFMBhOUgwCGGQjEwl6KBkdGIcvCQEUQxMWAWwOCdgrD17sLhgg0DCFJsmNDHBQJz5+QpMIOAwIOCkwzEs6Mto8aNHKf/bOlIxUEDhlccXOO3T4VCXwnPKDjpgsCCJho2tDwXIaULXycLrgtiMgCHawgy4PJ2s4DObzddKCCSpUDOFDA30AOJNSMDa1m7XonggSSuBEG8apSZYsAEs2zbuvWqgMBbqiPfItCwYOaTCgb+eaUg4YBJAfc2cugxN/FcDhYU2/VA6BtZx9AqPDgxoRflzZw7B4irGMwJtxgk3IKCYGjbCQ0SWLhgLCOCCTA925a2ofHtjg4SrHWSy+fuKQ5sih2OPPm0j4lFjm7rYKltBn6VW1d8IMF1bBQsyN0bbrv48eSzKDDaPMHz8uzbu5/kHssDrl8sCI+PPz/yB6ffgjmu/1+AAibG2IBQZGBBWfXdZ2CDDmJ1XmizPEhhhRoZYmEA3Ej3TQMMmlUbVRQ0JQ0FIWaIIhRPSbheii6+6MQBulG4AQAAwmLfW5O0eAcC9VQXjUU2HHABiTBWmAFUc/13ZJNNYkghAx4EE8UKHxqkYEYFmNDEBHpZlmU0VtnwA4dONphBDM018IEGbr75JnUaMHCXm9RtoEEEAgjAAJ9ywslnTX66uQEDfRqKZ6F9CrqnBnzuGQGeczIQAaIbXHqoAJfW9CcDl97laZ17LmqnnXL+6acAph6qAQIIeGoooXDCKWmrdeL5J5x1zilrqa1u4OqrcBpK7JuBuqmno8QaGv8BB9RFGkGkDBxQqADNcoAtBwdwEK21B0Tb7KUcaJqouJVSam24lyo6bgc5PFiABxhJUUACV6JgQWRNhHniEwS0KIBAKSyAHke9mXnmgA8o6d8FEngAccQPewBAxBI//HAoCTTQgAQee/Cxxx6LYoDIE4PSGscQq8wxKCh/DDLHHbuM8chqSKDGzK2JDEDHHiRQs8kWezDzxhSb3HPREhjQccU4S9AAyCFPDLHTFosM8s0wS70yxEED/XBrYOMccdFgaxyKBWpvHEoDFqS9sQWtqe22xmqvXbcEao8MNMdry00323brfQi8DRQ8Rb33BvAAgGRkUEwhAzzARgETcFD/wFP7OLCAAgO8YQMEeqGwwj+HvaNBBwL0UcEA70yQwQD7zPZO6w8sAIGRCQ+YwW/NKQV88MIrVQHwFBQQlInAV1C8UscjHwBSIz6PvEkmFTA99sdHp8KIxp+hVHQFNI+89s6PeP3wDlA/PALqMy98+gMAoMH6CDRPfvDUV+D+8P4Lzz7/Uc9E68OeAMGnAuuJyAnrq0JQzoACpXTvgSfhCU/6YMEHQeA7VahXmAJQAQFEpE0bOIkCDhCADhgFWyBsQE4g0AAvXQA9GegAAgbgAb8UwEM2sMBpWEGILb2rAAQIgucqoAALeGMDHsjDlg6ggQw0oF+700/sqmiheiWA/wtY7GI03KC7J+zwgxyAQAYSAAF53IQXKGjEBQ7wAQ4IIgAH6AQptBMBVaCASwaZ4i846ID6pUBKBeHATHKxjwZABQJMUICa6oUwL7onTZJ00OcKIIEPVnKTThiABMIIHk2+AEAIeFseEGAASuEpCAsQGHwg8JsVrOcAEoDJAGbkhAvEoAONqOMzJqCdAAhJE2OJJCfHw59jBggMLUhAf5QJzQN4YHFQyIUoAwABHqXgAxJYQHdg0kpJaOcBdpClCxjQgKbcMgp1pIBeDJEQKA0iAAl4RwGUCE38EIBh+WQPHfpASyr2c3eliM0VrAkFPsICBdWgJwqjt0v0wGede//ERxEksJQBFAwBEaigAQbgEw18EgWTw1ceIEG6BBhzoPvhJ0vFM4QIekCbL02YER6aBYSKMUSDcMAEBPIBAAzgA//6jB0P0IDomUYqAMDpGcJgg2GkgAAAaFESqSKRMzTADBZAIQcAkJMJSMCiNb0OLMs6HgTkcBd6ROvuMOm7nE4GC7h7AAYSAswJUaADsgvABx7gjQjo7afOcMEVU1ABC7RkAxhYygb01R0MYOA3FSCAHToggQt0wAKjc6tyHhBXzyKHom30wDVFa6HuuPQKCJhrTsdgplKmhAChtYL7oHA81G4HBrpFDmA6GwDO9hZGEGirF3TKmQMQwBsHeMn/cJ0EgXk9N7keWMoEPCDQ6epHAbqIBnI5Q50COFW7LqoheTvjwyYARl/nHdACujGN77Z3vlPoHX0VgwAJXKkDXLyvfiJAA2wEx78EfgJKC9wWsEAgbRAwgGs4ll0EIweT462MayVc4LNi2CupW0AHFiDWDw9gAR+I8IY9s0PpevfCJ6bvBWrb4qwoNsbloUADOCjg7tJ4vgYA7o47QoF6/himOBawB0g8gSQreckTwEA6niJZJycZAx3wUgcUsOS8TOADH/ASHD+wgAOAmANgzguIk3xmNH+4ymhOMpu3vC1scVkAcdbWBiJArTtvgFywitWqSsW/WbkqV3Ga1bDo/8QA8k1KV25ylQYqwCtDL4tTf4J0BeTkPkg32s+2ahUFgpXpQAeLf46e1Z9eRZ1gja9VzHs0pMfHvFFrYHoVGFGtn0cB0Q05K0E+7a45wwwTW6EAnDAAIAKBbEDwgADL3mBxIXABHlzgNQQgALKNfbe7uS3b3L7btLENbbUZG9vJDoQFiiu3bYsNFHSTm946FrWomexjYGuAseENNZHNzGP7ltq8/c23EVjAax67GdH2zW+uTc1rFksAwBPu74rB22czkzjWvnaymt1M3vOWmceh5nCRAW0GO3uZKHZGpV9rxMZAUnlngrrS7Qg7GtfI4E4waKLpBbB6DqjADy7QAP8NBK9/BSD68MinaKn4rYTiK7rRC/Bo4N0PfhQoXgDhV3RY3+V+U4e1Uu4H9U67in/N43qml8e8qvMveGRPtNSLXjxIg7p4tko0qe9nK+y53GBj3fttAEzWEzvAEA2AogVmPgW+UAADHoBAy/3+Y5ZDvjMiZe+JOdAAAHTAGw8wbjZ67AgIACAD1Jw8hrvja9N3hQIAgLGENXABOQin8BvJAAerAYAHpF719+0175szxxhrgAASeIBFOeABUHoB+TeJQOwHoPzft9f30ndLBjyP4ewQIPAb5AhgKlxHCzy++tNnMfmxItaYz7cB2FfBhDgCmiYUQKjnL3B31F//aAD/uPT+JTZBbCAAtdQRmFcVpoF4+YdW94eAICEClid4GbBWKZABAsMRFTBTLvAB8rKA/kV9G6gl3aRy7/VQImFQG9F9KMAN/OeBqNWBKzgNO7RaNMZNppEPAKCC0LAASeUAxMdDLjh9+OSD0xAILscBmQQOfNV+GQEOG2BsBVCEuxeENQVJURgNDXaA9PVV5uAAsXcjGTE/GOFJ0UeFLBVk+DeGhjVSv4YATeUCFCAYXYEAKQdtZ9hbO3SDdIgCQXWHBAYYrjcXMIiHojWFgTgFBeVyBoA4nBEvKUeIAzWIjfgEledy1jYcRkBTkMhJImWGVAgGPrZjnrSJbAFzmOiI/0BIiilwT0X2YwswTcpxS1d4ii7yiLFYXC4HYOPnGRcAAbAYixkyRr3IOIencvPngLuxAjEIjAkzi5gIiioHGMi4G/GiYsmojCoVi18FhQXmAIhYHphQjNR4JApIioaocpTIHqXQheDoIohEimvoiTTWjO3BGqGojgNyT/SYf4DxTD+mBHu4Gw+AS/UIIwjQAPhYfwbQX7uGCem4HRRgAEkokBbCjo04bbx4XpjEiO0BBmoSkS6SXwZZfaXhj/4VUwJiBN/YkQ3SWiD5ewuAUS6HAw0CeCmJIhpQkIGYhS6HAenkIKwohjQZHzbJkqanVih5YtKUjeXxABQIlA6CTv8/WX9qNY00ZokWwgNN+SCfAJXktwIJOWQ2NpUDQgEewJFYaZI6FoUGoIo71pUpclNmOSBPOYbzsXe16CJSwpBwKR5ayRbiE3dO5yOucjyfNnfMc3eqBmqORie7gisLQSeOoiiGQi6XUimSAiuRtph4oirEAix1Yih3cSx34iiqIkK7oiyNsi7Aoih1EiwDcJMqxw0WyR5BlZR6ORxbsZXSEIB9c3BdAzUqIzVaIzQxUzMERzUzo3DD2XEc0zNYw3FU4zJeI28GBzMVczX5xm8tkwlQQzRDAzQ/A524eGI1EngoMgD0YZvtIZdmUQ2g5mpyZ2mt4mpvQnaHOXWthnX/WCc8VPc/55M/bGeYVqc/hkk8bGegAeQ92lN1CLqgsFY8LicCGZkiJ5ie7LGeXtFQFaof8eKHKCISHaqht4meXSEA7xKi7tEbidgkRXmie8mT7DmiLToeBACRMFIK5Smj05GGXiEAMZqj1lEasjkgmDWSP2oW6CSkViBHRioe71WkFeIGTLobF9oVmCel1nGjm7SN0HilblENSVoFddSlyFEBbMhJ0jimm4GkbBEBwZSmKGYBXLo7a1iCb9oWPwCmVFAgdtoZapmnDzKTfOqlPgoSbSqom8F4uekknvSnhyoFX8oW8OGoiUFLT9okEzipPBqQWdGjmfoW5FlWFqCi/56aEUzYFiVKqmxRpu8ITZjEqqkqJibqFUsKq1mxQ2VZUwtZq6XqR2axALK6qyYIrGXlkkMZrI6wqVgBJceqEdzVqEeCAcLIrNCQG20RENOaEV9lqZKkltjqBZDqq8PqrV1QI3XqWZgUluP6BLnxrFAQAeKqrrblASBaVmVaYfG6roTaEQvgpvh6BZiEq8NVCuLpr+zKFuHkr1hQbfPVAcmXsFBgqmyxpw9LBUFKXwDZrnwasb6arBTbJZnkXwYQsBRbrQcLrx6bAgNLYBSGsinwrqtxsih7kghWI5cYr6h6sB2Lsr2RruelrS1Lq2bxAf3asimAkCfWAUmFsjgbrv9FawM4kLH5dJUe+wht8atOmwLXpajPZWP0yqxiyhYTELP+qqs0RqcUC7ZN67S/NWTY+LDOB7NOuwKj2mKuaaxvCrcHy5QeG3y/BpAJy7ResQA6G68K0Ksq50z++rJ627KjuHfzJ6HHGjBxS7U2MnkC0IrqOrkm67FqFbm7tpO1eahB6xViS7FBJqdDFm2au7dZ8VMUa5e8F2Qju6tpW7pje6zMsLUtplZeO6mB2xWm6696eH41i61XG7ZrOa01kpd+57bM+gGtixUPIIDqGi/3Kn2lcbcyirxe8QcQkLqkmgB0W33mGKzdy2sSIAAOYLneen0reIzH+gG4mw0KIDD/wOStrLG7LlcBEuC7b0q6ICElZdEb/8unmCu6k1eVtYq+IEECLlAK22qkItC85MdN+5ujDcwR/AoTqRCsHHqG3IXBLUokWYEJdQoYnyuoF+CVUVhcUQuUCAsSLvkE9lurSQTDO5YL4Xulrytj+/gJBJumLinBvAfCniq8WCFNTRCnsNqPkFgKNjumGswRZuQCg5vDKcmimPjEk5rEWFGmozF/UpymR0yKODTCtrkAyrsRYuULC5uqogqMzJbF4PjFMjYBG7CjmQrHwLhFjkoMbHFPxFSPCqQDOofI2qOf1UMVDZQW9NsEySPJFVRBKvFrDmnAAsIAGQA5DvEUC2N7/+dhe5xcbZwMkGn0kPJgRhLByZCDAdbWbLpYbTTKycvGbLrIC7MMbZ1nRtfHyrbHC1vwAMPcypADzEkyzE8hEaVMALW8MDTazNFMzPJwfcUlEcP8zIjYDvsUF8ZczHEhyguzBZ/8FKJMymY0zATgSULFy61sRuDLyjQaF/KMzbvceTR6bcxmbA0mboBwbNf2GndjbuJmbslWXNGmlsgGbcami9EmbYGwlAQgxIJ8y9YmCOM20Md2bAmAbX+TbRwdCHCzN61hbvWGb6JwcTDDMRrTMoIDACG9bRotNm8zNzTtGiJD03PjNvC2MRyzYHLjGmuDNtkG0BZdXJ3XeUbZFv9ksE/p3MlxUWwXzcKqfB7FRcoYQM2cvAXFjAHn8RRJUs7CbM5JgtVPsQCsgMxg7dVdrQCdU86jDNbUrEJp8tXnwdatvE/fnCRaDQNbHdZv/deBzdZ85TkDgAH44JLzzAtHXW1OPcuQk0ZJMgADcGWc/MrnkczXTNl29WSQ88uTI85fDdaTPdnFbMqQo8yNbXvLzNrRPMuzLA/XjM107c6ajdpgjcyzndvYHBer/NrM/Nv7tMyxXW1U1snAYNfFzFc1FDvtoFHNrULlTNmU3Q5v9mZMlmXY7SVmBmJiBmZe0mVMJmVm1gHlPQEdMFlupmRVFhi28QPazWRIxt3zbWb/261lcWRmYBZHevIteNYn5NIs1hKZyyKZ4oItenIt42JIXMZl9B1mDG5mByBm2bJn/f1l2SJn43IAW8bdWZZmVZYO0z0Bdn1lhdMZnyBZlJ0m32wPTXbemE3Nk60AV9bUwx3MSJ3Lr71Br03KwS0Rk9PYC7PjNGrNatnUOf7KMHDPq63L2KzO/GHO6SzKqe1s11xt1uzZwzzkz8blo4ACV4a1WQABKuwWeet3GuUZZr53GDA6HVCjYZ5L2JsYfzB58uAZ4Lp3aPHlbw7noSPnc9GpkEdJnWGwfkcAwfDKfW4FQuIZAqC0fpdMJ25Hht7m0qvoTtBVttGjdYxWdk7o/5B8YsiQAh3AxpfuAhDw5zqirz826JwBvCon6ihY6qYuBKnuFpJq6DxcpYS7YxcQDB1g6bRutLZ+qkSbIhXA6dCwMI0urS/yQMkR6wHQDmdaHQhQGx/AEHwiBRUwAfznTgSLABCwvQNiAWR+qtXrFQ7QAfrgPB9QYREAWCjgfCQCdekzPeNwI+iUEkvxDDvABNDTFnZ158EOZGHyIQ5wAD7BORONWFBgxVMg4YkR7dO+SVLSO5SdgUXGvhz0x1GwhmT8VS3cBGrVEhOQwA7C6J2xuCDSAEPgOZilXzZAADMWAIMbIxLgOXGRDnbFhQwlKQuhCa6CuVQSAS8xxvS0j/+WzBECr/K8vhEo7mQqpHk2YAR64QAeUGE7oBZNJmJ/hfXnIKD3FAEL+hTXUAGF9QA5IAC7GMlp/AQJgOgiX0V7MCnUYQGh9QOnbgwccCWJRRwxxEKRvGUcAOwREDvcQMYpkulp7vQacQE2QUBqYQMi8ZgVsMaQZnv7ML9KD0LFMekfgAEbPgEyEkcfYNjAJQEt4CFypHcpq84gwfScsfJHShCp+X4Dg0sG4A0F4E3nIAF8/9+bYgjv8AEzTtqiegAfBm1+8ZAB8PrpZQM56Bo4Gg2HnhbkmzDopC0SjnlkFTubHPqICDsv3QfuVDyBpPsmwQAYACQ7CUJQNfld5mH/gSEACgBWXrT4nbG5bIGQIb5ZeA8CBDWQljV0WbYFwUIUBzcvTcQYbet0QhRdNJEBQhfQLDYYDsUQyWg4noGjxYBkjNott6t7YLziMdkbyZXTZUbiw1nALRSt4fCcTBqEzsOjaFEkIAwWUIwwFFhU6QhsMFxNVESw6FAgFAgQBAxgHCgUDDwUtHxcbCAQNIyqlV186GT8sc7S1tqObSQIfPAKJDBoXVwKMEwAGDgWFFRRAGR0hEqoYCgAyOp8SFS0bEi8elkcWUQEcKzeoqerG9Wtuwf4vpc5WBQZ8nRoKRAsVgBgUDLyosKCAwbhCOAQrlKDCRE+GNDQbYIRAQPc/ywA4GEBsQNwFrnQJM8IgTAjb505OUaAhUYcNhxQZSSRoQ0VCCSYMMjBogIGGCh4oEDBAAMZCiQ4F8DAgw95VkBA0wJBhgFJCFhwFWEBhgdFAgQMkCCfPAvfNmVRqXatFgYWlCFgUAGZEQYAyAaAMIWDFgcJNDiwlMCQobdGPvyaE6BABw8EPmxwwGECiQUdDHCQYIFDh2OK2YJWZ+FAaFYRFpZuYUABBgwdDhigqKNCgqQtMjTssO1wuAqAHSCYs+DCTAkHNiwYd1oDFwcQHlhgMCADMC0v1hKQnXoMB6mpN0R8pAGBYR0ZZTtoYICYlgIN7GnRIFOHhQ5yCXBwoP+ii5QEDzR08FUX+I0EwQI6YCDSdgveMhEeVklQXQAO4HRgAE88cAAESqUnQAsVoEbBeztcRsE+LQilgQUeYEBBBMcJIIAGDDQggG/jRcagjmSMtqMX3TF4AQcajHcTXptw8MBUD3AwAAfXtLAABAFM4McDEuQAhBEULMEAbBsIMIFSLcT0Rz0UdKakEQNMqdYDA/jIhQDELdgNB04VNF8AFWTgRAsd7JNJew1UgEACCrwAgWCfBdBBBxycsQACGJCzBQYSaMCJiRJAsJsWtI2pjgFnxRKnqWNokIBvxIDoYZQCKEAWBBo8IAAfRvgVgTKnFVBBBWxsg0CsqpH1QFr/YzqwSwI3PCHhqc8mQNqzOhyAWmn0TNCaVWZR+4GKLUDwYgYUSBCWlFQSR2E+B9D5Jx4LTJDAAhz0CdKkEACTyyJXMDqBgidlYNK0WtapC5gJzefAABoQ6JNPFRg4kyoalIvAAwYApyceHiVHXbUCOhABAaIEcIG0CDTA1xYEWChPGwimNa3MAbDxYAcLYLoDXxfk08GUy4rlagAUeBAwNRIsQFQ1RbykQ2wtKBBzW87g4agER86842ZZA7mgAYNcUgAEr7DgIQ4huZCFAA1IuEAOE7RpcgClACIjkQhsMCsCH7z5gCWQDqKBAvWASdUF5/i7FhgzC9DmdmzcOcEB/x0k0I+HNpS8QHrKSCA0qKm20NUREqxSwQann24g3hdEgMEoXv6mgQcIOFDIpAJGibU7o8Kc9akIRJDpYL1WQO4HHVywmysabFgyBwJkAMADLNykGALeLRCqLlBLDUhR3gVQq+9xtjNztaVVIEM2GDm0WmdkNV6AAqdgkMECVwIAJ5U5ZHPABMbNjU4VQIGjIjABCyzgCQaghiQwAK8MTMAAEHiMAwegAOZE6V8jKQnj2gUa4G2gA4qICwJkJ7LDteAXB8gCBSwQBQJIrwgVIB0CJOAQCPwhVXMoAAYG8C7E2AciBzwAlxyVHQg04BkdaM0JBAIlefAOak8c34IYEP+wBXwAAijAzIPEF4A9BI8oFsDABR7gH2dxQxFiQNkqSmUEDuwhVQqYwAMe0AEJqIyKDNrezCLgOLZUYGPkUUAxBiAXBhCpBRz4CwVm8ACTeeQAu6FbBixQKG65rRIcMMhDLtCIoHTBARHqQRfoqDjdxYkDHmRLBOZImRMMgGXwmoBuVJME6eAGA1iowyg+5wEZWEBJOtQZMU53AUltAIWAoIAyAhC1CbRMC2HagebKQqru6VFHCpAAOWD1AZCACwJV8BVmWhCqFrAEnFsYQAJgITXJFKGGFeAJBRwgt2wuKAF5nBa7gnSB6pxhAuBcJEg+MEUXEIcBX2kmA9pFgQ3/REBGyWlEBtT0qQRkYQMb2QJVBKGWZ/Txj6nBTRE2oICz0Ed/DqhAAzD4GaQUQHDcYAHKFOMAyhikWgoYggc8ZYQIYIpc0nqjBy4AAQgcaiTlC99B8RkalnilH1caasm0I5ZKmaFyXmCABwJCgKYa6kWcbEBYnAoazJlPpGxRyBMR4AHvIMYIoNxCJrXACQKoVQMysCijFlMD/V0ISz5cxUOe5ybAPotgqWEJDHSAACRiMIVCCwTuPiSByr6hn1qggADEVp3KLiYDnbNCA1oiF0XOawZiGokrdPBVs24HAchDKX3++LQd/HIMEfDAOcvxEyPgsAsbAADHeFEu2JYG/60yU+W1PoABob3RohdCbGu4cJ3NVgO65sQAANS6p1iuoD1I7EBvT3LbaSkkNQiQknYntNEd/MKxs9tCBeZrBGFZYwto8oB9pamABSqlADBMWWqW6kbkfhCrWxjPfT/jAEmOoQLtpZZP4YHG2ezzCH1F8En0ybVVrqW8ZFCnDnjSnPJu4JwUAIzMstNB9UaWow72aQEiQGLgkPhCOb5QhnVmji6wuMBDPTCHi2zkI2vBw+YDH5Kb7IWIyWxOTp6yGHrUAg5SOctalpkFynoqDW05zEt91gasFeYpW9mZTT0zm9vssh6bqmtubnIUpyUAJs+Zw0sVSp777GdbpEfBz//igHfFYOKsMXPDWzi0IfBpAFT6iG5/BgRy/YSiNW+5APCyigZEDBoG3KDCe3qIokts0DlIedKsoMvMzpUGWuEQUV7WEZcg2BraViQ6F+JjaGIAZzGwrI8gFgMPh6IADoBWRwzAAGU+wIAdM2APoaUqWygArwl7wdLhE5ibUzWA0y3gvYDsQgXet4Xa2NjQHWhAFfbmBeCoOsnYjnShOdqA7FmCAHgeyYy8gJQFzOHBpOuCe8iRiFmrJAJJnMU90WtmMSh8AZ3uBrfVIuIsRiAuGOhveyzAQghAeiRuMYAB8qeGaOkAAhU/cw2pugBsjkQJXnDrKne7ci6wtNRGmFz/vI3Q5ay5mgwNQOwXRU0GTzOKAGHxqRb1kce+WrqcXtiwzskQilnUObHD5oKIqHq9HbtDAzdHJwBw10MvGKsFnCjNThUJAKNzYWtXJvqZ47XZoU7mKw6wSQF0UglabmPFg8gezSyzjQgkAAOICMDeOqAYg0A5tHCrxAcMaeoOgGdCCHDVgzuhSAlQag4biMUqCpDiTYIdyUCb2QS2rgUp9DU4E0oaBgIPh5sYYDdoygCBBMAkozJ+chAoAnchSDM+fO1Cb9/sKHjQFQFFvVLFcKMDFjAAIemgSQo4gA8QsLChYR6d/lLwdGaRZq2nAQNMFkAVbnqRHUSUS3nUtAI8/7R3mwToCBO4IM38MySwhAIGGQDRmR46DYWnvJYzoQcHnF0LAEj9vZEDmQ5nfcUj7EDlSYtSKNcYyF1eYNqUBQLdwUInYE4N3QwE5AwFjM0HAMAprAgBRAithIk2nMEDSIp0CID6FcEH5Ak2PAoaUMVD1MiejEophEMBXMmEDCAQvMIBJADLcJYT5EERCID0XEzqHdnqyUzQiQHwDcgAVAAGqAoPeMAm/Re4HMBNAYAD2AWTmMMAzAFiFMD1HMAgfEIAOGEA4IYXEAAV1MBXtEQLBKKwGMIFhIECXAAbysSdUQBL/VxDgAucTEaykJU7mR+1mUoWzYMErBkYaABT1P8OyR3ApbyCgB0HAEwABfRBBMUIeS2AIFwBZuDNBxTAIgWHB1yYIs3Kuq3C4myCSQxABPBJFtDI6XDTbehEKmgOdLTA/wTGTqkI1iAF3G3BenzB2GUZAhBXF5yP8o2CUbQAz+ghWVzAH1xX+HQWBVwAcbhY+OhKImgCZRTANjrAA6RPO22CmDhANeiHhcQDWLRTfY0CbKjGNygZAYhE1oVZILJevbFDoanIIiRVmX0IuzUOIADcF7mKQsxAY5DDb0FE5Q3A7CgAPm7BBjQAfaQFH1mjQdkBP5JSNxRB2rlAm1iAbFRFXsyLL7TLXKnB+X3Zvm0WKnbBnQHCNkZQFUD/hDOZRHWdhg4cm4w0wJQkTl48D0oqgDYanV9QwlFdmSyUHwIEASIBQEK0SXAxgARMhQRUwfW1wFPSi29wwPIhyAcaAcpdGTZSmTZiIrEc5YFg3ziKhd5VAaB8SH24RsAsBUX4hAUNxStwhTO105NQCT4ipB11QCqWB3lUwT+uWLWkBQKBBWqE2xxo4Zn93Mz4TCts3Wr+STulRP+pWV8wJFE0QsYFhgsFQA+BzTyJYRdchg6wUxWwJGlAUEQFz1uigKqgixSFI06mosk4xP9xD8PhWpwMRxmQC6RVVMppwtXhYQ4EpnkIUGzcTAeQQwdoAm1kJi+MhwfEmA6g5CJk/8QoJCBIlYJHHM829N0rwklNLcZg7GabLJIzVYWjOJ4ORFvVaUEDDBWWtZl7iKAo5dEALoWFPEAqwqcWmBLNqJWLfYsWeALj9RQEDkA4OIABKEUg7AaAphOVfIKr3WQ5SID1LN9pLmSyxYkmksEeckGfUEs4pFou7KYGiZKrZCiukAswsAauzKXRlWT2peRSVIqf6NrOJY9Y7MYCsckqiOY4NkEXRI11tppQagFCDojjdKcFRUkOQECGfcBCGIqlTMknDqVVZd/AgcXy+WKpvNxmZeg+ykIpwBFZuKbClUxfUgWDakGaBdec+Wg1xoyHGQCG/kED4AVfdKhbRZZx5v8DuXAeZOpPSZqE3QXAl86NoXzWQsRDWkZJaB6IBpTlW2oVjmqZX8TnqXDhzG3jfc2NByiGYqYX41WOXWDQBxQB25BCAyhGcnpUBAAABmEePXRPEUBrsJqEpZnCgCJIDXkIUnQmsjpLFBFIA3yDtS2C6LACUJrKOY4BC47JHJiR01DEreBhOLhlMzrAUi5GGQICX8RSv1ZH3+nhKhUKp5KCGiUgNFyIByyCHbYJB+3rDEjI5NFMDmRAuywAMAjYQqWBNeZlns3QNVhbEdQAOjHrUnyDtBmDBlAAL1CJRW2Ty8JLXgiUwmCK/ByI9XFD2TUjPrIg+9GLfmjD3GgVkQr/ALBSAAFkQBHcZGGgQQJ24JnFV0OmQWek4RHkXxMoCcoUgRN25nzpBR+IwgxVSopezZtUwQA6XvQEBQZUgXxkQPEgwAS4ygQx3oiQCzmkB1+QCwTQUQc4R60YwwAwxgXgATTNQZ9shcq5yF3AEeepABbSQV/6yK6KgRlRAgN8QLAAUDfMwVxFEOPdBQNkpguQpnGYFF/4TAWAgnFAj/35x24MwRwYgEgoGRbcxh+kaET4nmzJgS8ECEo+AgO4ygHQEARcQCMWjfF2ith8m0WEXJLlkS/OGXmMkQK8qWthxvYKgA3RTAMoQGA8AABIQCLexF8AAgSYr9/goWOMAvtO/wHjXYBuVoAsuMUQ6of5Li+4dNcqKswvoC0GfIAH5APOiIBPIMoDxG1SsZmI5KqpWGwZnIEFEMB4+gQ1qEySjML9fGsqkMWytcwIJNEiKIT9sRNiyY8BWDBWUUhFucoG2CBYZIgVXACmTsUTWsz4Msw+VFIYqKALfcBR0KiDOpax6GgXsOuOatAYXIZRPQBWsQGg2B/vtSUBbENmOEMVKMAQqh0AAMA3UIwlbYL5Pt1/XcBqfIUKBoxsPFYG8ATT8ucFAMA4DE1peUSN0MM6moA4Oce9VQtfsEEdb0MGJAAEmMCV8kj16uWWDYHf7dxqLcY8LcYlLEIjAMIgMMrp/P+UgGDyYoxHvCrDMlgB++2cjc0TcDRayIxCZC0emQxVormZblotK8wIiaWYjzQafVHuiHEbwU7dOiyxjxxAE5PBBuQqZ1FuI1ZCPc1EgJ1D8WwBJuQqg5VBkFWyOdHMPtXeVEwIONHODtiCtiVgz5lzzyUAwvlIVZ5zGrBUMCIBAeSiUlnujmRnO6vBI/XSR4CGHYcsPgN0ntGyzNhrQI/BFSSAISaxPLTWFjqkQU8FTmRFNfXzkDUyRGM0h9VD1qhnRmfNMNvzQ2d0CTGqO/jzF9mlR6t0Ng30tEzwSpvKmH2ZSMN0aHRgOdd0TmdTAVwWR7ueToeGTLfrTwM1W4D/7BdddFEr9YKQy0LriGsu9XaAtI7waFSnBkPqoQha9fj08qKNAUjwxKGZWGCE9TeHdVgTRj0Fxj2YGGGgtTLQU6KxdfuZWPKZDz/QkzIYQkz5igb4SqHElF+PxyC4rusWya8QyY0QySP4CiIRyWLPSPHGSEI8z/NMNjFIxCPEiCNENmQ/9mCXkGMvdvGejvFG1OlgdiM8AuqU9iOQ0GsfbGL3yhy67iiPMj382o6AmVwHhm0Tzxzadj3ptV4ThlmT9VnXzlynNVozQ6Mx0ygTBlyrdcAVwnNXd3QT93XH9XMPzXXfg3YPzTdPyC4jd+0c2oSUmGpIyIn6MO+NDNMi/yTvHRVCSlBUkJwFsHBWKO9R8fdRkVxUmMA6GpVRKW99G0Aa3zdeSVAaC7i+kdx/41WDX8AhzzdeKfh893dUOHgGREX94veDk9w65ndWTDiCG1UCPDiK1y+I3+6Hs/iEg/gESbQFAHgCBHgCqMd9p3Ft4HdpmQCIJ4BmWICPJ7IF4LgHNEAD4HiSK3mQl1YDSIAEQDmTR7kEeECVY3mWR3mQa7lGJLmVa7mUS3mTexqDpGUCXLkEgLEHmK9GsDl/sTkYa4Scuzl/0bmcxzmdRzme5zmd27ma27mcq3mdB/qdG/qhx3kDzDmhgzmg/zmb7/maSzqi2/mbw7mdW8Bxyf/McKG5+Yr5oMP5nFt5mkf5lde5lXM5lJd6lXN5mE+5lSv5qCc5f4G5qXtAqktAbbg5oKs6q5N6lPd6lQNAkCN5qR85q6M5jn/6mH/5mLP6l9dGshtAfw3OAyDktV+7tT8Htg+FUBjbdFCDsXSFtSOksXn7UIR7LESNBak7UfRQCkRNLLA77xGFCli7HdWRuPNevlfUm4y7tavAMwxFRY3MUHCCvJPAtwNKVVCDusdCa8SKsRkbxMdKu0v8EvUQ79lPwhPFErEGJ5CAD2kLZbgGLWVLa0CT9ZEAZdyMBVkFHMC8o/AgzGORU8y85HzAQfACL8jAG8zADDjFBOT8zPP//ARklvrUPC/AgR0gnlMzyHDM/M8fwAf8wAz8wA8cDESdziRAlA9A1CRIhCM0ApEg8w94Nmd/9l83YiEc7CXcTQmBzWd/tg84NgMgc2bPCGj35l8Xj28EDgL4CtgEjkQ8z2OfDpFMAjFEVEJ8/dXPST3rSDH/QELwINNDig9EwPMwAKRUvfFy/s+Dfs6DfmZV/dJn/g8chPpYfkRZ9uQTgw/klBtEFPfFSObfCdNXvQDIwC7MQEJQtufX/uYnRM/PQE5JPRzkPBZx0tTrJy8IPRyccMpB/lZT/1pERNawafWDRuQ9S4dq/1pwC7ik9PeT/y2kxzz7CFSX/0hMNYOM/+76n0QHNh38079JO/2CdHT9v0PDdT9N638agIDFBeSDkWiqrmzrvnAsz3Rt33iu77aTaLygagARGo/IZM1wUOo+Rad0Ss1ZmiTCqcrter/gMMmHEL8GBLN6jbuyVYvoe05XubPbun7P77N8QHodD36FYEx6C2mGjFWIJQqNkpOURz4Mex2LlZw7j3QTm52jNncBBJGkqqucFD97RKyyL59zcbO4KyIoWlwOKBSTDoFGFAjBMBTIyrlirmV6A4TNzRcfehNy1LOmDwNUAgbfDhgWv3QFHx0jKgwNyDwUGA8ZWtctEw0CAQIJHdtfKDSAVkcaQFwJ7oG6cJAbuwAQ8v84KQBh2od32AAQROGggouNLRDso2ABQ7ACEzzAU1EhQYQABQz8q1LgwLlmZGBpa0jKGradPDvtIgEh1ZR5JBgY2COgwU0XNwWIWoEAQ4ImBKZi2DdGhQF2BCakeBqAbNcaFB5cWLBSlgMLIN+gCbqqARZQQOlSMrABRVEdEaSJJSFgQIaHCqYxSHDuwKC+ARAYNlpBgYIMCCLUHLyALcwJGR54DDDBcoebAxakaNo2AIcMvyJkuOyAgQRxcQU8ILCgQIAKHjCNDeaggwICBIc+mFkBNGwSHULf1YBhtgYNVV8iyIBFQOhvJCRHjKsKLqypein5rDOBYfpOBrhClJj/ooB9CvYrrFRaAQGASAJIwIAGEqgWwGUkbMAYaRMUEEEDGlDgwQcI0EOCAb0pAMBpAgAQTAQaOaCAAAV0kAAFG1xQwAYY/QaABzdFIEFb8kgAUwIIFCABiWgwAI8DAsyzwE0fzNgCKhQs0IBvASQAViQVYEZOGgPMaNs+FehTAAEuOQBBEeQ0EIAGDVIEHgkFKIKBcKvkFE1e7zGyHh2DxMnJUPO1MEACBljQpz4pQIAFB00YMBgHGh24yAYWlGVBBAK4QwAFRVAwwVICeEACBRJ4hMCSMC2ZIgMcIPpBBOYE4CMKkaYgY2sINIqABGUg4JFx7UgAwWgopNQaP2Je/ziTkyWccMADAgjwgUYfqBZrEx+49ykJSAXwQaMDdLCBdwAwySoA6HXyDCzT2DkJnnNoYi4leEbUAn4OHIPfWAPVJ0EgEu5jGWFiPtvBBB9AdoBhaRBY64ljYpQlBR1A8O8BBwBxQQMPtfCgWbH+MgEAgwWQQQYrUHCAAQ9AFkAH3bIwwFLQNdrkSwGsdaACB3zwAQe+VbjnS/38soB71S6wFAHrLHCAAOdYesEDbLZpnh4Y0LduIabMkc3UkrR7JloSmOxAAQBw5YAHTSiwRT+qusyRAgNQwIF7CyQQh4EaYKQjSlufoyQEZqHAgY0roE0CBwngGEB1LaRJwAMcUP+gAQDEpKCAU4O7TGzMqmGwNT8WYEIAFhlccIAFgSRGQtwQEaMMAh0YkIHJbr0CdbhY71H1G1fXbshXvMx0A8koYFCABwYOD8RsCSYQgIQGVqBtsAek4cACG2iGAgMuxxrABhIwycECGvg2/EMbbPR3ChqMsJiqwl0AsmEwCAAByBfshAmiTH5MQgMwQyDWASohwQcYAIF7XGAfCFDAtm7CNhLM5QFq6wABB0CeVQikgmqYi+6odpd0GWWDe/CBfAiwORp0SFuMC8ACOhWAB0zDhb9ois8AMAABXCACwBHABjLAFxZtIH0H8I1AIrABBUgAK07igAEq8AGQOQBCJKj/AACUhwIAFsABHbnh9sSkFN/IbAIigB0LglEBCTwAAbUZwEscsDRVeaAMPlCNA1CBxQY4aRAOeABfDiCBATAgAj/QwAcOEAw+RmB0nRueoDIglr65xQAYNIMGQciH27FhAuWiZB1cwSZ35YADfjqTAgxgthhe4AJlWNk9OtCABhhochJMwAS8ZIBa1rIM+ciAUlSzpQagMgARcN3ngJEB322AAMJEwwO+Vo8PFKB+GJgJSZY4gwI8IAEQmNMcM+DHwSHJhgTAUgYSkAEyXqBzl7ril2qJTWp9RTdAQAAEElDCZpQxkmKokyb3cJWf7FMPTzQZBOq5gwLwqiwqeIpC/121EQmeBQYVOOgKsFiWAlCALEnzVg7sY5YKONIGDVrbr94zrmiA7J916Cd7aIfSMDxRPp7swzV1GAEF+K6lp4xABBagAJhhzU0FYWlLwYAu3Al1qF6wgHy8UYgCjLMBBvjAR0FozQZYYACRm9o9M5FJpJrBkmuIjlfXcIneNWKqY63dVgVx0rSKQaWg6Kpbu/AWYgx0rnitQ5bwGQZ95jWpFcNdW/9aBUD4haCETSwVClAvQchVsUq4XFwhSwWB2LVjlM2sE/aaCcRqlgeSTRecPrsDTtnVs6RNbQ3KKFG5jFa1OAitYGFrhLJmAbW0zS0LdNRaNhhEtzwwgE/T9f9Y4NYgAZ1sm32Wex/84Ie5zEUAdhBA3RxB16AFoG52K2Af6+bHoDkKb35slR8GcNeg3O1Pd/MT0eW2twLhK0B8vytd+IYPvv1BAANsFdHqmrcC/9WvdMun3+vA11b1PXCOriNdDQBYutSd7oL1u18B20qHAtbABralQw3rtz8/ZMCGR/zDDTMgUslK1oaTxQGdutjFhBIAB04VgVIR6mY4LpWLUwxjDiSrxjol1Iu39eIaW2CkaohWkHV6gAjcrDMT+NcEBkBlKi+Ayh3owAAmcIAFTCDKHYiaYbhJZc1VOWpRCzOaLfOxDHypHhBYnAtn8zETuNAwGDCbmbGc5TD/L0DLmsvzmrlpGcsQ4GOXMZsLLRPoqE1AzHzOlpcHMLAO2OzSh7zZ38TIhp/VuMkzZnKXR+1liM24yTY7ZJMPWWRQ2xhSAoD10Wocax4X2cavDrKOdfrjIt+M17kGMo1bXeMFvDjWS2Z1i4sMax6n+Nkq1oAArtNYj0lAAh64tge2rW0PJODa2M42uBtw7QaIG9vkDne2PfCibbub3B5o5bYBYG5uaxvcEqA3viWQAHeL29/Yxre4AYDudLMb2/0Gt73jbYF6xzvd5r52AuQt7lZKwALoxncD6B1xdcs73/rOeMTtSHCIazzdEkj3ty2+cX4b3OIpL3fKVY7yiReu/3CtJDfOc77ynI973OS2I89nzu+ZkxsCFtDoHPiI8cI1vJU3twAE+lQ/A0z9S1865TmlXss4Y33q9Vtn2E/59awQYGkfM04GqnOZihDgS/QwO9atns2pG6Dqd79AAsL+9S9lxc2hyUrZBT+/s7/97nk/5wWszqd12nLiVrXA3jGeVTYgKgEWeHrOoc4nPy2+T5m/jeRvvnmTmzzmpi+3uWHOb8hbvHBEX/2+c24Amoce8kRPec8xz3uogxv3Pv826mPP8uK7nE/VJiEDBqThDUt7+czX8HWmj97tXofA08++9rFj4AZPN/sQnn6Es++47Uffwd7nPoOrK34UgT/CaP+0b/URTAH9rM66x8hRe7sb4fWOn//U1x/GwF4R9Vz60VxfE10WZVHPdUVYdB8PeFHKgEUUWIEW+AsXmIEYiEUXRYETeIFlwYEhWIGksweag1BjQIHGJQPCFQ0KcA4ZCANmoYE06FwZ6IAqOIIqqIEdmIM0+IM5mIIeCIQX2IMZqAwTaACdZCAr2IQrwFi9tQZ55oSxJR9zQGVUeAMJAFOYlYVNuFZ1YDpeSAOP4lhjOAO2BRG4dYafxVh8BQbww4YxIFtsgCty+AKmhQIXsIZ3CFlZEoVqsC992AI+MFxvEGaD+C5QRBRdmIikNSuAKElS44gBEB/RUFyDaFmHRYn/sAWJsDBYnPhEgVWHr3WHOkIMRAMGgaEE1kMCGrAAzcIASpcCrNMEzWGIdVAAA3ANutiITqBDR6ABCMMRU7hZDRCJYvBbGeSLJqQBDkAhR6BLKvAaSKYEZVgHYqUGE9A0N8AAw/CGM8AAA6BQEAMGjHVaqvhBCYUDGDBLp2MNh0QARsICCOAPkWEAkzgHZXQCBZAAmIgEFEAAo7hRUqUCGMAySvCHJliKFCUFrZIDNfUhF4BWNIBDKlAksygFrmCFhyhUVzQFNaQDE8BLCmQERfQUFFBL5ngvm/gC69AF4ngDEVAuVpQCc7ICNkUCyOMHa+dA/4gEz1SNPJAiUgCG/3QQhy4QTn4gT/BQGlNQAEf2BdeIFy+ALH4QAXIgTxSpA7fwBafoF0zYAlE1Rh5FIssDMfAgMuxwEvhyABxQBhpQEhHyGyM5BuHFAU+hVJsyISpQPWjyPd5yATOBCtcDMChQAVdGEAzTAfEnX0I0l0kxAbgIEx8wAbySDiGFB9SyCawzAEzSHBgAOx+gRh2hKh5BAeaFAoExJMHTVg5wNNdTPgkCMwjwZ2yyAROADAxgUw1TlCx0iTCghLvlAKhJRqXiLZnxAchQE0azKa0CKRFgnMGgAWHGkR7zQU9EEAUgAMhQG9jxG2+ZFIOEAtvJJGlibAaQkU4gENx4SaCoAv8XMJAWBSRCtGHw4CDDpQGtGBnBcAyjQV2bolMsQACwU0z1gZzy1Z+rwg9BBAy84jYbMEld8JVEEZYskEIqsCUS0AFH5DyyYQAnIZitUzIxsxQV8DkY4BQp4TpJoi1ZMSbYlKLeEgEwQgIHAABRiABfsSfQcAGDsZNXJj9psBgCYCKnGRYcAFW94TrLw0NlMQEyJkss8QARkBKYgD1dtohhQQLHMTg1NABJB5Vu2QCQYRhSITeHwxDFQTkAwwBuhgw0igxS5CEkACJY8DORoVSZskYYYCThIGIWcFQ68CnqqQZRAwMEUHkVcE7XJBIYcACj5BEz6aYeYFFrEkxiQSD/kcAAHvAcCuI4lxpa7AmfHYMyWDBHxxgqfVEd8jMNCxA2MCE6DKBHRMVpayCGR1J5FNEAD+BKlREkCZAzvMFDvsFlewIEG+ABERAmBhILuHksk7IawYICG4CQw0M5riEBJuEaqfovKQoEFaCSYwIBXiYB77lYLJkFCjGND5ANy4EZKVAkzEBpF8IQFnIKqdABjTIyDuQbDrM8u8JdAKAaodGQm4kCKONITHU4BvALhsKlkbAl1CVF3+Me/RQ9p8MyD5AKwbQ9GRBRHRI5D2AgMuEx4GFEv0BCB3sKDiYhIxIsU1g3UWQkQuOKspIB2eUfzRMcflMxh2ajZbCwKfEL/y0RDHzhTVLgiS7YAtGiABewOLuSAmB0UR4TCP4YM0CQR9LmTLWZMip7MosQAZiAARwwIL26Ggsite4RGR1wmQngEdQJoxg4sCRQhhlANy3iC3pZEOcaPRBUERdwUKDkUQ5QQ1gEPFrUJDpkIKx0uFhAMaeDCQowGhuaAh2wtuHxRpvCTSnwtTKmQi5zEYWkPCkJGRhQiklAoQFgAeuaAgxwNAOlUysxOptyAZYhDf/wFycTBZcyJh4wjihQsjaUZ9HRBAW0AhWBAgtQo08oIAkCAJiAIVkQCW/DAVRGpR1RM0cUAHtCGFREmK5RBO1hHJZBEG8BDRdFoY/jOTPRpf/+MmUj4Db6+g0EgoEW4BHRkhRLMTIfkGbCISEDGR7vUBXL47yR4QF98SkogpBvU5SpCpwsQCpYaWx4mQJdqaOA5j/akwL1EGaP5hupGBk4yr1XxLr/cjMpkKRkkaQvcFdQyr1ykAGWsw9JFx4N6wWFCDXqmBQtRq7J8hT8Whak5A3cVI9PkRjGAUMxgwUfoDwVcAJxWRqD0EEupAIUAAC2+ry+oQC+Ib1lAQAj8CCco7yoC5TpWokBjAIZYJ2ukT3mYLB1Uz6X07swKgHsIJgqtMPtugIXkAc32lsMADkz2xde3Asc0FVp0Taiszw+SkCDAb7X4jGtS548iwKPg77/ZHMK7ZsG1ZpQllEiW/AzDLA4NsoyaGOHVuwBbIwCIiASv5GuDiAB2sEYgFRFZYwDCqkHX5uU5EHH8rQ8yNAzgTKKd1WhZAITarMCf0MWF/EC4VC4waAActA6JOASq8skhOoFApHFkvgCyMECB0BFMTGBSYGtWRCdK8EbYyAghwRMacAM8Ekf+fICIhC3ASABCmGPYrwAanO6K0kMvPMCcJUC4bzOPjUkDtBmB70UyLAs0fsPMpI0L8FIK3CvMOEBXbhcAECbHuARXsy53LOcGhCHjwCpasQLW4CxYHo9bMIp9+AAOATGaJKquivNMEErqlmzB7IFHBBNd3EAUdDJ/xcTRVwBNiZzDCoQCtFZFn0URalatFIUCFhZlG+7BzvpAoCyArnDKT4VAbPCFfXXpVGUsr7zIFxct2eSm6zSPSpAzeSJvAMAGRx6DggSAJBbIFGEkF0wlemSj9VsqwVdFshFrQhQycNQ18DkEaZgGNYzK0xCAVaI2JuyIy8A1BFzIUZBLKDED4ADw//MypOc1O0ZALRLAvmwDwPjMapBtdBRBAvADvxTiR2gDFanHwqgGiO7As3sN7Dqip55Cu6RO2PZQo10S5WhAYTJPbm5AOWEH9Dgz7FCAB3hARgAYARwUCmxAfIwAkgHHe7hP1waBb0qiwpQmQwhjNVdN+5Vp//v4FQLYgGotB1cwT3YDAB6DRMb0iuVejjToAEd7TE4UgFqIZQ5oLR1EE0w8AG9hUkIS6YMUzYCUiHURUMIAAW/cLxj4AFGsQE0JBvrajzwmdYA0EHcqyloQjy/4QFW2xcpIQDNgdN0lQDcLAaH6gI4wwIN7EBdQ9qqgUxX1FP+0QTeEQwQ8BA6G7zXzb0Vw88q4N+jEROgeMVnIq/AEgxNsTwNkApfspVGoCMEYc034FR2rIf0Jt2k4QG1Z1U+sngV8DeV+QDBsEKBmyUE9w1QeQFtAYUW3AAktDij8USHAQFlkCUgUwGBmjMJ8CLf0CFycwH3QiApZwCVOyuGMgH//RQgBMdpGUBwqZCSjEMA4mN1BnVKwUABF/AiICMQdlElSIN5T7dMb9EAGCAjLxGuL3IXSEkRerwRGLAWbXs6EAAzjj4bFzDaQWDgdLAcuNyrkOEl/JYKJ8pv93AA5JbkGsCiCCuardSIyg4MhlPK3FgYKcAi0jDt5BTNErAWCSGVq2wGDWQD1gS9fkFvcP4bFhBvqXCjah4ZDVBOwcsmjEVvoJglGpU7+I25REHFUWWJUbLRqjJFPLS9XqC6RVVNDqZRM6aaAlBdBwAb2qUqxXQTB4C+ATMG/WEWBpoCFDCaFQwMX9ad9gET1AUPD8kPL5Fd7JNdxoDnkdE4EcUR/xwQhRumAhADgxxVf6zND0f9Eqj5GxvAgWnRFyiCRQe1XxwhOy9gFtL2Ah5FBcg+B91uA/jBXbTIjTFfH8ORA9d+E8yNA+V5mBy1KcRRq3pgAjcwDKlJrcvKEZCCPjf+Gz8MDBlaKmaB4HpohV2foW1xnGgCKcLxumiERgGxiKs7mUEgjN0pmRMh42Gwt9ND4nXws2XBAWotA8VhoZXw9W8Q9qOwABjwCxoQtbmwt3RQ450QE/swPcyoCqpbC0cQkLw6dcDrBGRC4EgwARf3JS94lX0ydb8+A5mxCgq8B+C9CmXrAEGPE2SqBz1JChG6PaHNCm7IymkcBAxwKshICv/4CY5rUD3pTw3Trwf/yokcsf3Y6NeUwOWcMP7VbPn0n1gggDRFUJonmqorqz5DG8szXds3nqNOs+l/S4EBEovGI9JU8GhMjUgyKp1Sq9brDWFxYG2PSTcs7iaa41ZmeF6ziQUJwmThtOv2O16MSFDyJkiHn2Aej48fhtqgIltBQ1xJAt1UheGPBleJA0eEgAOmCoJhQcRjHYVAE4XZ0QEDCsIHyaJeQ59gRuCaZsfnCYJDgQCSw0QFisaE7CBFmaCCAlvoym9BL5HAQYqG5OLbqkW2VAGBh7XNwIdJhMEAB4YB9AoGAMmBBJidRgOYQ0f6EYRwmQYAqDQLiwhbh3L/neknQaGJD/8O4Cvi4MGqEhwAGFPUqBSeDBl0EUig4kOgCgNAAlkQz4QDAgYOvikVKcYAVzg2NDBHI8IDdRJWRUjgM0CFESUeCKzzItMFKFWaHewioqOfpy0GYE1SgQ8KBg8+QdA5hYKjbmn9dIDBAgPLIxEspNhAAFMEAlY46J1V04SBpioSCH6FSUMpnpgoMJDVx5aDCspKGDBEQcICFBMeFWCgcA8mAxVDQWSQ0YFpEwoLKESd8dgqCG4DbNhyQiEFBxT6FKiAiRJETyYoVbAQt+oUBBIm49HKgmoKBp6VcKhkzIGwExwObDBg7QK3ABxsl0BgVnfuErtLaDiQ/3F9CQECtHQVZOG1nQwvVVgwe2y6egzUFwBzGmggwEwoWJBdCQQ0dVQKCLzWiwAVCAABTWsFMEcMBBhU3gPwABABBc8YMBJtPQUQgWwGpDOAaCUwkACDAcwYkQfMmXAAARhwSJtJJVyQywT6JeAKAhcMAEEGmOiXgWwLMGAAHRpcAAYCA7xzFwoFYLAAARD0oeQJCUjlgAHLlVAUAXEI0IArYL6THQcNhDMAAQoQAAdyCJGXFUMrXDBgAAMo0IFxAQgwgQIJBBKBBB80CgEXFBCwwAIW/BmAcl0tYZYFAOi0R5NCCsPjARbk8gFVzyxgQAI64oHWcW1gsF8KBBC6QP8GA/QXADITJJBZdwIskMADtiggkgUomvAmCgcYpZ4FF2DCAQSSfIAiBhkQkEEfFTyAYgHPfEBAUH55YJNUKQjwwXgTcNCBMv304NkHOiUAwwYScAFAZtBS4IEkyKCQQboBKHDBChrwKQAATWiBSbacusXBQxkkKIEwHyT4gAXGWIBPGgF0oJMBiTSYzcB0QFBRAN9mArJCCLMHDQNqHhAxgYSJ5x2nfPZpxR4QhTQbChFM8MGQA0zwSQHTYtDYWMAW5ECz1STwIooIouBxChZkVsICHSiUaQkFNBl1HAgAwDKNP5fAk6x3oOXfHbioEAE6Fgzwd70WkDDBBg5g0If/2xtQYAFGFUQawLklKJCgCRgkXN666iVAqXoNjD1BNq+WAIFeFzEcgN4BPNCXWuyucAAEjX6bwWQHpIs1IgMgmyIXB1ACZQkdBPnBhzFKLsEKCiQswUgzYnJBOgtP0EEGElRgIAL2+CCzeH1ZIFWvaGrZgQGXR40JawEEdsLCLDgexwDC3OqEW+tDkJ0DCdQ69BF71N0GAQJ1ggN0IFMD6MCDEgAujagKAwO4gDAMIJVLBeBI5VGKCWCUK2elgBnCAJ3JTheACyTIAE0AT3ms17pbIE0dHRDWCxcAkfLZYgP7WoCvoBCVEmQADIlaEYZOcCUUXOY8KFgAw0rkibiJ/4cjJsMQAoAWANjRRGgVDI8K2qSCDqQrSRIS0NxqEQAKZGABYAtA/gRAAV6gIAEV6YC/VHAiE0wOWHQRUmYgsAAE8NEW23qTK3hSAQoY70e4KA5iEMCcflnDAIHKgAhVELuLcMECiXhAEPVYwex4g39V0MC0BAGIGIhJBRowQAOiRy9FAkYqAQnAUGQkRjre8QTla8EEGDaAPmjMBMeiTBMsGDRC3QFreLODcyRJKARAADMBYFQFommCHY7wAI2wxXhQsA8ieuBDJ2iEhbLhNs544IMY8loJPhDEbggNazXizzELlSDlKCOQPXEABNKhBRN0wENYVF8iIPahMa1Tef/iacA0A+GcCmQJRSaU3OrGpj5JXAotCimcCcZpAle87AQPiGR0XBQOCKyTAH0xQGaGlQn9eZIKRRsEAWCWAh7gRx0j4osSmrC+agbAAzoBZS86ANIAdFQ9zEnKB6QirAwG8XsVlMriiGmHTvohgCy4TE3XRDAOUC4yT23QBC4ji3WgwHiqkYA32acADsRhCeF4Q5zOiTyNDNUP78tEA96ZAgPoNQBgkkOpjGUj5DmuHgzjwhu4hAJMelRFaYPCBwDQBwcQDFhBImpmIlAQyZ0yG40gAabQWKZsFCcbELhAHw7QQgP0BSVEhRk7MogBaySAPBzIUQk4tjKTgeUqLZ3/AiiNdochtcABCoiLBsBHOwDQoR8RzI6DVCe4Z27KHkZ7wh/UdIIMONZt4fDZhnwwAaWIYH91SIp5z0CAFmpGR8EowQDA5YGxdQAK9+NhZlKWznXy8HJIaUBHyChTDbxtmn3J5jP10ojP+VcQjutIGmMgXAIZAACPcFgCJseaCUQMa4CAAAB2GTyVmQDB6iGAqhgQXxKgyQAMMKgDDuBTYElAAbwEAAEuMAThOU0CBCjABDxgUpMaQ3gZUGcZHCcBkhqNAQAwwAXGIoIFQkInlJUsCp4hxAswQD9z87HWEoABAgDAxr+Nwj5hKlMa5Kw6D10AABJwE4dhKcPAkADz/x5QYNUkwCAa+NMDElAfDuwHYziMh+PS4YDqPUDPEnWwhvAQUxw04gMauO9GLmDJ/waCGXfZgJCF1c0TRAChJ/gAedx2WcCYRR8dOKUwKBDoPmwAABCIQAZGrRZlYBcHyGCrEgxlDAQs4ADC0ED8+mEWS6vAnSjgQBropYQJDGBsBTjAAegQAUx1BNcCaQt20rGBBSyN0EPoxwAcsAEOIK4tstKAA7nAADPK4kIn0MAxEdAVBywAAwKJALbjoJJdciCeZwbCjdScAwfgWgFmEYACpEKJJnSGAYg9QAQccAkUdGA/X5IBBZjDgPqqBjG+TIbiFnHXqgqQBgLQUiU0oP+Af4wCChZSI7ACmD3mQFCITQEjCgb5TQycTD0bANAGsqWBBUjVDknhdbvOgIBSqcDeY6BAJF8uBaxH/eBDS7ggJi2ImBgCdhDyOg0+EvaW1yHpeOEc2oHwFcjkdQ0LWJ15O8D2KhCSHZbLQHopTYB/xH1oQB3EKAdRAHoVYAH/K7wMVp6HxPuhbDaCwOMhH4OvyCLCZxAABrLqi4bcPQNdP0JnND+0uSiiqIo4u+o3b0U8UN6uSJlw7COPwU3mvve+/3wt/TDE30Ne8pLeO/FbOne89jX5zn9+Dv6sCOJC/+DGv0Ptq+9JejJf+97/fgwEEPzJrxn8B7m+HSho/q//O5YHzV8//JNfG0VYNf5VQa8oy29/P4DGBBI4/f4FYOxxwKrlQTIJoF3NHvYhHwK2gT5ABlo1oARqHtj5gSZ5kifAnupdRuCJwRdMoB9cBlaIjWkwgABIhwkaSAmaoHzIh2lwAAcIQATE4Aa04AbUYAtigwBsQgREwLq1YAzmoHz0IMC1YA8aIScMobFl2xAmISrIxwbMoBAKYbZxAg1iQxXuYFL1IA/OIBfq4Ax+wLs0IRFygBjKYBmiYQ9i2xLC4CZsYRguwCaw4QxmW7a54Q6u4QHI4QwuAMAtzQF8ALlJBKZ8gLz4A7U5TVs4TSIuIrUtopYgggL8Ta/8zd+8/9DfLIslRuIBTcD0vFAHfInuKAKUPKKhbKKhjNkk6smy5IlIQMkLPMMDTOKQrY5IWA6UyYQFGAAvnhYv/iKsGIAFJEADyBkxagqUkZAwDiMvKmOOXQA0mhRJnRY0QiMvasouLmMCBOM2ZuM1IiMECCMJQeM0ks6QmSO6zGKe5AkiIAIBzFIeKICqaMmytGO3NFqjzY5IPMMAjIt+3IoDLWI7CoGWRGJbEGQqWiIi6N3f3MoqCsE/PgM/bmIaIMIstmMa4IJCPkMoOlA7xle3WCJBAqTlRKJDLqLyUJsDKSQkeqInEpBEzFL+AABN1iRNeoAH2CQA5GRN4qRP3iRP9v/kTuLkTtKkBOhkTUpAUB7lUQIAnjHlT/pkVOLZUN5kUxqlVALlUDYAUyqlBDSAVHrAUYolWIrlTnKlUvpkAoQlTn7lWT5lWoolnmXlXI4lVTqlV3IlV7alXHpAA/zlX8LlUwKmUgJmYA4mYPIiMRajnO1ibWWjpsjZN8KKY2bjNnLlLkZmbV1AbckZZkbmHA3CBAijnFkjaAqjL7KWAZDUNZJOOApjmFxAmJxjOOaJnuCCfijPRc4iR+qdJxLdAWHABHQLLvDjM+TmK7biBSzL6pgUPt5KGkwAbz6DA03irRxQtCFCcYpEjmFS7AyZbEpjOUJAtUDjNq6mrgjCBLzt5mqGowWEI3yOZy+SkEmREDJi4+aspjheAAQ8Jn5WSzc6pn9Wyy9qmmKSYy86pjLq5zIaaIhIJgkZY4Mqo6aNY4EmKH+2Z2ZWSwNEKDZqGjYOo2b+5XTJCAPwEYryEUOlqL6tKIoWAIxGUzSxqIz2howOUgGgqAZIhmTAqL6FHIwGKYwCA44KaW8o0m7YaI8qkr6xRm/YKIyGXMh5gm9QgGSgx5BOqSfshpXmRm9YqW6MEZAGqSdkaQZGaW6gR8gN0plWg264aQbG6ZbmRprKqZ1mYJ3eKQjuKZ/26UF8gnD4qaAOKqEWqqHWQQgAADs=" alt="中介者模式结构图" title="中介者模式结构图"></p>
+</li>
+</ul>
+<h4 id="2-模式的实现"><a href="#2-模式的实现" class="headerlink" title="2. 模式的实现"></a>2. 模式的实现</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//抽象中介者</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Mediator</span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">register</span><span class="token punctuation">(</span>Colleague colleague<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">relay</span><span class="token punctuation">(</span>Colleague colleague<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//转发</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//具体中介者</span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteMediator</span> <span class="token keyword">extends</span> <span class="token class-name">Mediator</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> List<span class="token operator">&lt;</span>Colleague<span class="token operator">></span> colleagues <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">register</span><span class="token punctuation">(</span>Colleague colleague<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>colleagues<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>colleague<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            colleagues<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>colleague<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            colleague<span class="token punctuation">.</span><span class="token function">setMediator</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">relay</span><span class="token punctuation">(</span>Colleague colleague<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        colleagues<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">></span> <span class="token operator">!</span>e<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>colleague<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>Colleague<span class="token operator">:</span><span class="token operator">:</span>receive<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//抽象同事类</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Colleague</span><span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> Mediator mediator<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setMediator</span><span class="token punctuation">(</span>Mediator mediator<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>mediator <span class="token operator">=</span> mediator<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">receive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//具体同事类1</span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteColleague1</span> <span class="token keyword">extends</span> <span class="token class-name">Colleague</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">receive</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体同事类1收到请求!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体同事类1发出请求!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mediator<span class="token punctuation">.</span><span class="token function">relay</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//请中介者转发</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//具体同事类1</span>
+<span class="token keyword">class</span> <span class="token class-name">ConcreteColleague2</span> <span class="token keyword">extends</span> <span class="token class-name">Colleague</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">receive</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体同事类2收到请求!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体同事类2发出请求!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        mediator<span class="token punctuation">.</span><span class="token function">relay</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//请中介者转发</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//测试</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MediatorPattern</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Mediator md<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">ConcreteMediator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Colleague c1<span class="token punctuation">,</span>c2<span class="token punctuation">;</span>
+        c1<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">ConcreteColleague1</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c2<span class="token operator">=</span><span class="token keyword">new</span> <span class="token class-name">ConcreteColleague2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        md<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>c1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        md<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>c2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c1<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"-------------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        c2<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement"  style="word-break: break-all">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io/2020/05/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/">https://brysonbs.github.io/2020/05/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">设计模式</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2020-05-08T15-14-55',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<script src="/customJs/random_img.js"></script>
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/05/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%B8%AD%E4%BB%8B%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_71588930604671" src="" class="responsive-img" alt="设计模式-中介者模式">
+
+                            
+                                <script>
+                                    (function(){
+                                        var randomImg = {}
+                                        randomImg.enable = true;
+                                        randomImg.count = 50;
+                                        randomImg.pageCount = 8;
+                                        randomImg.second = 10;
+                                        randomImg.title = '设计模式-中介者模式';
+                                        var len = 24
+                                        var idn = "id_71588930604671";
+                                        var $node = $('#'+idn);
+                                        getImgInfo(randomImg,$node);
+                                    })();
+                                </script>
+                            
+
+                        <span class="card-title">设计模式-中介者模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            中介者模式的定义
+*中介者(Mediator)模式: * 定义一个中介对象来封装一系列对象之间的交互,使原有对象之间的耦合松散,且可以独立地改变他们之间的交互,中介者模式又叫调停模式,是迪米特法则的典型应用
+
+特点1. 优点
+降低了对象之间
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_61588930604675" src="" class="responsive-img" alt="设计模式-观察者模式">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = '设计模式-观察者模式';
+                                    var len = 24
+                                    var idn = "id_61588930604675";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+
+                        <span class="card-title">设计模式-观察者模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            观察者模式的定义
+观察者(Observer)模式: ** 指多个对象间存在一对多的依赖关系,当一个对象的状态发生改变时,所有依赖于他的对象都得到通知并被自动更新,这种模式又称为发布-订阅模式丶模型-视图模式**,它是对象行为模式
+
+在Jav
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7529469123"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">121.5k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>

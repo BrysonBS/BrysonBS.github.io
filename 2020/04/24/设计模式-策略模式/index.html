@@ -475,21 +475,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-04
+                    2020-05-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    679
+                    768
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    2 分
+                    3 分
                 </div>
                 
 
@@ -534,6 +534,7 @@
 </li>
 </ul>
 <h4 id="2-模式的实现"><a href="#2-模式的实现" class="headerlink" title="2. 模式的实现"></a>2. 模式的实现</h4><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//抽象策略接口</span>
+<span class="token annotation punctuation">@FunctionalInterface</span> <span class="token comment" spellcheck="true">//定义成函数式接口,可以使用Lambda表达式简化具体策略实现</span>
 <span class="token keyword">interface</span> <span class="token class-name">Strategy</span><span class="token punctuation">{</span>
     <span class="token keyword">void</span> <span class="token function">strategyMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//策略方法</span>
 <span class="token punctuation">}</span>
@@ -572,8 +573,18 @@
         System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"----------------------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         context<span class="token punctuation">.</span><span class="token function">setStrategy</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ConcreteStrategyB</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         context<span class="token punctuation">.</span><span class="token function">strategyMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"----------------------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//使用Lambda表达式简化具体策略类实现</span>
+        Strategy strategyC <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体策略C的策略方法被访问!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">setStrategy</span><span class="token punctuation">(</span>strategyC<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">strategyMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Strategy strategyD <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"具体策略D的策略方法被访问!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">setStrategy</span><span class="token punctuation">(</span>strategyD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        context<span class="token punctuation">.</span><span class="token function">strategyMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -736,7 +747,7 @@
 
 
 
-                        <img id="id_181588843911397" src="" class="responsive-img" alt="Jackson-注解使用">
+                        <img id="id_181588930582080" src="" class="responsive-img" alt="Jackson-注解使用">
 
                         
                             <script>
@@ -748,7 +759,7 @@
                                     randomImg.second = 10;
                                     randomImg.title = 'Jackson-注解使用';
                                     var len = 24
-                                    var idn = "id_181588843911397";
+                                    var idn = "id_181588930582080";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -814,7 +825,7 @@ public class ExtendableBean {
                             
                         
 
-                        <img id="id_61588843911403" src="" class="responsive-img" alt="设计模式-组合模式">
+                        <img id="id_61588930582085" src="" class="responsive-img" alt="设计模式-组合模式">
 
                         
                             <script>
@@ -826,7 +837,7 @@ public class ExtendableBean {
                                     randomImg.second = 10;
                                     randomImg.title = '设计模式-组合模式';
                                     var len = 24
-                                    var idn = "id_61588843911403";
+                                    var idn = "id_61588930582085";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -1063,7 +1074,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">120.7k</span>&nbsp;字
+                class="white-color">121.5k</span>&nbsp;字
             
             
             
