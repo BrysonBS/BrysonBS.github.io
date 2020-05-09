@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-05-08T09:14:45.005Z</updated>
+  <updated>2020-05-09T09:13:53.851Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式-迭代器模式</title>
+    <link href="https://brysonbs.github.io/2020/05/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://brysonbs.github.io/2020/05/09/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-05-09T00:58:46.000Z</published>
+    <updated>2020-05-09T09:13:53.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;迭代器模式的定义&quot;&gt;&lt;a href=&quot;#迭代器模式的定义&quot; class=&quot;headerlink&quot; title=&quot;迭代器模式的定义&quot;&gt;&lt;/a&gt;迭代器模式的定义&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;*&lt;em&gt;迭代器(Iterator)模式: *&lt;/em&gt;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-中介者模式</title>
@@ -535,34 +563,6 @@
         
           &lt;h4 id=&quot;工厂方法模式的定义&quot;&gt;&lt;a href=&quot;#工厂方法模式的定义&quot; class=&quot;headerlink&quot; title=&quot;工厂方法模式的定义&quot;&gt;&lt;/a&gt;工厂方法模式的定义&lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;工厂方法(Factory Method)模式:
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-原型模式</title>
-    <link href="https://brysonbs.github.io/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/03/26/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-03-26T05:05:20.000Z</published>
-    <updated>2020-05-04T10:22:29.494Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;原型模式的定义与特点&quot;&gt;&lt;a href=&quot;#原型模式的定义与特点&quot; class=&quot;headerlink&quot; title=&quot;原型模式的定义与特点&quot;&gt;&lt;/a&gt;原型模式的定义与特点&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;原型(Prototype)模式:
         
       
     
