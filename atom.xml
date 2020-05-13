@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-05-11T09:53:05.606Z</updated>
+  <updated>2020-05-13T09:15:07.382Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式-备忘录模式</title>
+    <link href="https://brysonbs.github.io/2020/05/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://brysonbs.github.io/2020/05/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-05-13T07:12:12.000Z</published>
+    <updated>2020-05-13T09:15:07.382Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;备忘录模式的定义&quot;&gt;&lt;a href=&quot;#备忘录模式的定义&quot; class=&quot;headerlink&quot; title=&quot;备忘录模式的定义&quot;&gt;&lt;/a&gt;备忘录模式的定义&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;*&lt;em&gt;备忘录(Memento)模式: *&lt;/em&gt;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-访问者模式</title>
@@ -535,34 +563,6 @@
         
           &lt;h4 id=&quot;建造者模式的定义&quot;&gt;&lt;a href=&quot;#建造者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;建造者模式的定义&quot;&gt;&lt;/a&gt;建造者模式的定义&lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;建造者(Builder)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-抽象工厂模式</title>
-    <link href="https://brysonbs.github.io/2020/03/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/03/28/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-03-28T03:26:13.000Z</published>
-    <updated>2020-05-04T10:18:12.314Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;抽象工厂模式的定义&quot;&gt;&lt;a href=&quot;#抽象工厂模式的定义&quot; class=&quot;headerlink&quot; title=&quot;抽象工厂模式的定义&quot;&gt;&lt;/a&gt;抽象工厂模式的定义&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;抽象工厂(Abstract
         
       
     
