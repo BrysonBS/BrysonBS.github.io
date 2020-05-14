@@ -1,0 +1,1396 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="设计模式-解释器模式, java,web">
+    <meta name="description" content="解释器模式的定义
+*解释器(Interpreter)模式: * 提供了评估语言的语法或表达式的方式，它属于行为型模式。这种模式实现了一个表达式接口，该接口解释一个特定的上下文。这种模式被用在 SQL 解析、符号处理引擎等
+
+是一种不常用的设">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>设计模式-解释器模式 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div id="bgc-post-cover" class="bg-cover pd-header post-cover" style="background-image: url('')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">设计模式-解释器模式</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+    <script src="/customJs/random_img.js"></script>
+    <script>
+        var randomImg = {}
+        randomImg.enable = true;
+        randomImg.count = 50;
+        randomImg.pageCount = 8;
+        randomImg.second = 10;
+        randomImg.title = '设计模式-解释器模式';
+        var $node = $("#bgc-post-cover");
+        getImgInfo(randomImg,$node);
+    </script>
+
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                <span class="chip bg-color">设计模式</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                设计模式
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-14
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-05-14
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.6k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    7 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="解释器模式的定义"><a href="#解释器模式的定义" class="headerlink" title="解释器模式的定义"></a>解释器模式的定义</h3><blockquote>
+<p>*<em>解释器(Interpreter)模式: *</em> 提供了评估语言的语法或表达式的方式，它属于行为型模式。这种模式实现了一个表达式接口，该接口解释一个特定的上下文。这种模式被用在 SQL 解析、符号处理引擎等</p>
+<ul>
+<li>是一种不常用的设计模式 – 用于描述如何构成一个简单的语言解释器，主要用于使用面向对象语言开发的 编译器和解释器设计。</li>
+<li>当我们需要开发一种新的语言时，可以考虑使用解释器模式。</li>
+<li>尽量不要使用解释器模式，后期维护会有很大麻烦。在项目中，可以使用 Jruby，Groovy、java的js引擎来替代解释器的作用，弥补java语言的不足</li>
+</ul>
+</blockquote>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><h4 id="1-优点"><a href="#1-优点" class="headerlink" title="1.优点"></a>1.优点</h4><ul>
+<li>扩展性好。由于在解释器模式中使用类来表示语言的文法规则，因此可以通过继承等机制来改变或扩展文法。</li>
+<li>容易实现。在语法树中的每个表达式节点类都是相似的，所以实现其文法较为容易。</li>
+</ul>
+<h4 id="2-缺点"><a href="#2-缺点" class="headerlink" title="2. 缺点"></a>2. 缺点</h4><ul>
+<li><p>可利用场景比较少</p>
+</li>
+<li><p>执行效率较低。解释器模式中通常使用大量的循环和递归调用，当要解释的句子较复杂时，其运行速度很慢，且代码的调试过程也比较麻烦。</p>
+</li>
+<li><p>会引起类膨胀。解释器模式中的每条规则至少需要定义一个类，当包含的文法规则很多时，类的个数将急剧增加，导致系统难以管理与维护。</p>
+</li>
+<li><p>可应用的场景比较少。在软件开发中，需要定义语言文法的应用实例非常少，所以这种模式很少被使用到。</p>
+</li>
+</ul>
+<h3 id="模式的结构与实现"><a href="#模式的结构与实现" class="headerlink" title="模式的结构与实现"></a>模式的结构与实现</h3><h4 id="1-模式的结构"><a href="#1-模式的结构" class="headerlink" title="1. 模式的结构"></a>1. 模式的结构</h4><ul>
+<li><p><strong>象表达式（Abstract Expression）角色：</strong> 定义解释器的接口，约定解释器的解释操作，主要包含解释方法 interpret()。</p>
+</li>
+<li><p><strong>终结符表达式（Terminal  Expression）角色：</strong> 是抽象表达式的子类，用来实现文法中与终结符相关的操作，文法中的每一个终结符都有一个具体终结表达式与之相对应。</p>
+</li>
+<li><p><strong>非终结符表达式（Nonterminal Expression）角色：</strong> 也是抽象表达式的子类，用来实现文法中与非终结符相关的操作，文法中的每条规则都对应于一个非终结符表达式。</p>
+</li>
+<li><p><strong>环境（Context）角色：</strong> 通常包含各个解释器需要的数据或是公共的功能，一般用来传递被所有解释器共享的数据，后面的解释器可以从这里获取这些值。</p>
+</li>
+<li><p><strong>客户端（Client）：</strong> 主要任务是将需要分析的句子或表达式转换成使用解释器对象描述的抽象语法树，然后调用解释器的解释方法，当然也可以通过环境角色间接访问解释器的解释方法</p>
+<p><img src="data:image/gif;base64,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" alt="解释器模式结构图" title="解释器模式结构图"></p>
+</li>
+</ul>
+<h4 id="2-模式的实现"><a href="#2-模式的实现" class="headerlink" title="2. 模式的实现"></a>2. 模式的实现</h4><h5 id="2-1-简单结构"><a href="#2-1-简单结构" class="headerlink" title="2.1 简单结构"></a>2.1 简单结构</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//抽象表达式类</span>
+<span class="token keyword">interface</span>  <span class="token class-name">AbstractExpression</span><span class="token punctuation">{</span>
+    Object <span class="token function">interpret</span><span class="token punctuation">(</span>String info<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//终结符表达式类</span>
+<span class="token keyword">class</span> <span class="token class-name">TerminalExpression</span> <span class="token keyword">implements</span> <span class="token class-name">AbstractExpression</span><span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Object <span class="token function">interpret</span><span class="token punctuation">(</span>String info<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//对终结符表达式进行处理</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//非终结符表达式类</span>
+<span class="token keyword">class</span> <span class="token class-name">NonterminalExpression</span> <span class="token keyword">implements</span> <span class="token class-name">AbstractExpression</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> AbstractExpression exp1<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> AbstractExpression exp2<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Object <span class="token function">interpret</span><span class="token punctuation">(</span>String info<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//非对终结符表达式的处理</span>
+        <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//环境类</span>
+<span class="token keyword">class</span> <span class="token class-name">Context</span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> AbstractExpression exp<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">Context</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//数据初始化</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">operation</span><span class="token punctuation">(</span>String info<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">//调用相关表达式类的解释方法</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-2-实例-算术表达式"><a href="#2-2-实例-算术表达式" class="headerlink" title="2.2.实例: 算术表达式"></a>2.2.实例: 算术表达式</h5><pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">/**
+ * 使用解释器模式创建简单的算术表达式求值
+ * 包含 + - * / ( )
+ * jdk12+ 
+ * @param &lt;T> 终结符: 输入参数
+ * @param &lt;R> 终结符执行返回结果
+ */</span>
+<span class="token comment" spellcheck="true">//抽象表达式类:(Function表示Context环境类,用来将变量解析为数字)</span>
+<span class="token keyword">interface</span> <span class="token class-name">Expression</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span><span class="token punctuation">{</span>
+    R <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span> function<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//终结表达式类: (本例用来表示表达式中的数字字符)</span>
+<span class="token keyword">class</span> <span class="token class-name">TerminalExpression</span> <span class="token keyword">implements</span> <span class="token class-name">Expression</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String variable<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">TerminalExpression</span><span class="token punctuation">(</span>String variable<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>variable <span class="token operator">=</span> variable<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Double <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> function<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> function<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span>variable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//抽象非终结表达式: (表示运算操作)</span>
+<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">NonTerminalExpression</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">Expression</span><span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> Expression<span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span> e1<span class="token punctuation">;</span>
+    <span class="token keyword">protected</span> Expression<span class="token operator">&lt;</span>T<span class="token punctuation">,</span>R<span class="token operator">></span> e2<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">NonTerminalExpression</span><span class="token punctuation">(</span>Expression<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> R<span class="token operator">></span> e1<span class="token punctuation">,</span> Expression<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> R<span class="token operator">></span> e2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>e1 <span class="token operator">=</span> e1<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>e2 <span class="token operator">=</span> e2<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//具体非终结表达式: (+ - * /)</span>
+<span class="token keyword">class</span> <span class="token class-name">OperationAdd</span> <span class="token keyword">extends</span> <span class="token class-name">NonTerminalExpression</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">OperationAdd</span><span class="token punctuation">(</span>Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e1<span class="token punctuation">,</span> Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Double <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> function<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> e1<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span> <span class="token operator">+</span> e2<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">OperationSub</span> <span class="token keyword">extends</span> <span class="token class-name">NonTerminalExpression</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">OperationSub</span><span class="token punctuation">(</span>Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e1<span class="token punctuation">,</span> Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Double <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> function<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> e1<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span> <span class="token operator">-</span> e2<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">OperationMul</span> <span class="token keyword">extends</span> <span class="token class-name">NonTerminalExpression</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">OperationMul</span><span class="token punctuation">(</span>Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e1<span class="token punctuation">,</span> Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Double <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> function<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> e1<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span> <span class="token operator">*</span> e2<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">class</span> <span class="token class-name">OperationDiv</span> <span class="token keyword">extends</span> <span class="token class-name">NonTerminalExpression</span><span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">></span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token function">OperationDiv</span><span class="token punctuation">(</span>Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e1<span class="token punctuation">,</span> Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> e2<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>e1<span class="token punctuation">,</span> e2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Double <span class="token function">interpreter</span><span class="token punctuation">(</span>Function<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Double<span class="token operator">></span> function<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> e1<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span> <span class="token operator">/</span> e2<span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>function<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">InterpreterPattern</span><span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        String<span class="token punctuation">[</span><span class="token punctuation">]</span> exp <span class="token operator">=</span> <span class="token punctuation">{</span>
+                <span class="token string">"( ( 1 + 2 ) * ( ( 3 - 4 ) * ( 5 - 6 ) ) )"</span><span class="token punctuation">,</span>
+                <span class="token string">"2 + 3 * 4 + 5"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 )"</span><span class="token punctuation">,</span>
+                <span class="token string">"100 * ( 2 + 12 ) / 14"</span><span class="token punctuation">,</span>
+                <span class="token string">"(100/(3+7)+10)*(10-2)"</span><span class="token punctuation">,</span>
+                <span class="token string">"5+(3+5)/4*12"</span><span class="token punctuation">,</span>
+                <span class="token string">"5-2+3"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//测试</span>
+        Stream<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span>exp<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span> e <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            <span class="token keyword">double</span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">InterpreterPattern</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">preOrderExpression</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">//转前缀表达式</span>
+    <span class="token keyword">public</span> Double <span class="token function">preOrderExpression</span><span class="token punctuation">(</span>String exp<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">char</span><span class="token punctuation">[</span><span class="token punctuation">]</span> ch <span class="token operator">=</span> exp<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toCharArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Deque<span class="token operator">&lt;</span>Character<span class="token operator">></span> optStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Deque<span class="token operator">&lt;</span>String<span class="token operator">></span> resultStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span>ch<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">char</span> cur <span class="token operator">=</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">')'</span> <span class="token operator">==</span> cur <span class="token operator">||</span> <span class="token string">"/*"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>cur<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"+-"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"/*"</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">"0123456789."</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>Character<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                String temp <span class="token operator">=</span> cur<span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">;</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">--</span>i <span class="token operator">>=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token string">"0123456789."</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    temp <span class="token operator">+=</span> ch<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span>temp<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reverse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token operator">++</span>i<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token string">'('</span> <span class="token operator">==</span> cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token string">')'</span> <span class="token operator">!=</span> optStack<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                    resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">}</span>
+                optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span><span class="token punctuation">{</span>
+                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">RuntimeException</span><span class="token punctuation">(</span><span class="token string">"未知运算符"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>optStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            resultStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>optStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Deque<span class="token operator">&lt;</span>String<span class="token operator">></span> preOrder <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>resultStack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            preOrder<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>resultStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token function">calcPreOrder</span><span class="token punctuation">(</span>preOrder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//前缀表达式计算: (使用解释器模式构建的对象)</span>
+    <span class="token keyword">private</span> Double <span class="token function">calcPreOrder</span><span class="token punctuation">(</span>Deque<span class="token operator">&lt;</span>String<span class="token operator">></span> stack<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Deque<span class="token operator">&lt;</span>Expression<span class="token operator">&lt;</span>String<span class="token punctuation">,</span>Double<span class="token operator">>></span> dataStack <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayDeque</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>stack<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String cur <span class="token operator">=</span> stack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            dataStack<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+                    <span class="token keyword">switch</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                        <span class="token keyword">case</span> <span class="token string">"+"</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">OperationAdd</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">case</span> <span class="token string">"-"</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">OperationSub</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">case</span> <span class="token string">"*"</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">OperationMul</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">case</span> <span class="token string">"/"</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">OperationDiv</span><span class="token punctuation">(</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">default</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token keyword">new</span> <span class="token class-name">TerminalExpression</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">}</span>
+            <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> dataStack<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">interpreter</span><span class="token punctuation">(</span>Double<span class="token operator">:</span><span class="token operator">:</span>parseDouble<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//参数为Context环境类</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement"  style="word-break: break-all">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io/2020/05/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/">https://brysonbs.github.io/2020/05/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                                    <span class="chip bg-color">设计模式</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2020-05-14T08-46-12',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<script src="/customJs/random_img.js"></script>
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/05/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_211589447512573" src="" class="responsive-img" alt="设计模式-解释器模式">
+
+                            
+                                <script>
+                                    (function(){
+                                        var randomImg = {}
+                                        randomImg.enable = true;
+                                        randomImg.count = 50;
+                                        randomImg.pageCount = 8;
+                                        randomImg.second = 10;
+                                        randomImg.title = '设计模式-解释器模式';
+                                        var len = 24
+                                        var idn = "id_211589447512573";
+                                        var $node = $('#'+idn);
+                                        getImgInfo(randomImg,$node);
+                                    })();
+                                </script>
+                            
+
+                        <span class="card-title">设计模式-解释器模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            解释器模式的定义
+*解释器(Interpreter)模式: * 提供了评估语言的语法或表达式的方式，它属于行为型模式。这种模式实现了一个表达式接口，该接口解释一个特定的上下文。这种模式被用在 SQL 解析、符号处理引擎等
+
+是一种不常用的设
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/05/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_221589447512577" src="" class="responsive-img" alt="设计模式-备忘录模式">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = '设计模式-备忘录模式';
+                                    var len = 24
+                                    var idn = "id_221589447512577";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+
+                        <span class="card-title">设计模式-备忘录模式</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            备忘录模式的定义
+*备忘录(Memento)模式: * 在不破坏封装性的前提下,捕获一个对象的内部状态,并在该对象之外保存这个状态,以便以后当需要时能将该对象恢复到原先保存的状态,该模式又叫快照模式
+
+特点1.优点
+提供了一种可以恢复状态的
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-05-13
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
+                                    设计模式
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+                        <span class="chip bg-color">设计模式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7529469123"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">125.4k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>
