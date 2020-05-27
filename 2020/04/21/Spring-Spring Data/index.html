@@ -484,7 +484,7 @@ JDBC
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-05-06
+                    2020-05-25
                 </div>
                 
 
@@ -949,6 +949,18 @@ JDBC
         <span class="token keyword">this</span><span class="token punctuation">.</span>applyDate <span class="token operator">=</span> LocalDate<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@Entity</span>
+<span class="token annotation punctuation">@Table</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"POP_APPLY_SON"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PopDetail</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Id</span>
+    <span class="token annotation punctuation">@GeneratedValue</span><span class="token punctuation">(</span>strategy <span class="token operator">=</span> GenerationType<span class="token punctuation">.</span>IDENTITY<span class="token punctuation">)</span>
+    <span class="token keyword">private</span> Integer id<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> String goodsCode<span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@JsonProperty</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"totalAmount"</span><span class="token punctuation">)</span>
+    <span class="token annotation punctuation">@Column</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"totalAmount"</span><span class="token punctuation">)</span>
+    <span class="token keyword">private</span> Integer amount<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 <li><p>*<em>Thymeleaf: *</em> popForm.html</p>
 <pre class="line-numbers language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html></span>
@@ -1256,7 +1268,7 @@ JDBC
 
 
 
-                        <img id="id_61589967827118" src="" class="responsive-img" alt="设计模式-组合模式">
+                        <img id="id_61590570852189" src="" class="responsive-img" alt="设计模式-组合模式">
 
                         
                             <script>
@@ -1268,7 +1280,7 @@ JDBC
                                     randomImg.second = 10;
                                     randomImg.title = '设计模式-组合模式';
                                     var len = 24
-                                    var idn = "id_61589967827118";
+                                    var idn = "id_61590570852189";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -1326,7 +1338,7 @@ JDBC
                             
                         
 
-                        <img id="id_231589967827121" src="" class="responsive-img" alt="Spring-开发web应用">
+                        <img id="id_231590570852192" src="" class="responsive-img" alt="Spring-开发web应用">
 
                         
                             <script>
@@ -1338,7 +1350,7 @@ JDBC
                                     randomImg.second = 10;
                                     randomImg.title = 'Spring-开发web应用';
                                     var len = 24
-                                    var idn = "id_231589967827121";
+                                    var idn = "id_231590570852192";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -1577,7 +1589,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">129.6k</span>&nbsp;字
+                class="white-color">132.2k</span>&nbsp;字
             
             
             

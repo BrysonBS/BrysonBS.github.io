@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-05-20T09:43:13.338Z</updated>
+  <updated>2020-05-27T09:13:38.632Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-使用配置属性</title>
+    <link href="https://brysonbs.github.io/2020/05/21/Spring-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/"/>
+    <id>https://brysonbs.github.io/2020/05/21/Spring-%E4%BD%BF%E7%94%A8%E9%85%8D%E7%BD%AE%E5%B1%9E%E6%80%A7/</id>
+    <published>2020-05-21T05:54:05.000Z</published>
+    <updated>2020-05-27T09:13:38.632Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;微调自动配置的beans&lt;/li&gt;
+&lt;li&gt;应用程序组件配置&lt;/li&gt;
+&lt;li&gt;使用Spring
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Spring Security</title>
@@ -358,7 +389,7 @@
     <link href="https://brysonbs.github.io/2020/04/21/Spring-Spring%20Data/"/>
     <id>https://brysonbs.github.io/2020/04/21/Spring-Spring%20Data/</id>
     <published>2020-04-21T03:07:05.000Z</published>
-    <updated>2020-05-06T09:17:18.424Z</updated>
+    <updated>2020-05-25T12:26:48.922Z</updated>
     
     <summary type="html">
     
@@ -535,34 +566,6 @@
         
           &lt;h4 id=&quot;桥接模式的定义&quot;&gt;&lt;a href=&quot;#桥接模式的定义&quot; class=&quot;headerlink&quot; title=&quot;桥接模式的定义&quot;&gt;&lt;/a&gt;桥接模式的定义&lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;桥接(Bridge)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-适配器模式</title>
-    <link href="https://brysonbs.github.io/2020/04/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/04/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-04-07T02:25:55.000Z</published>
-    <updated>2020-05-04T10:21:10.895Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;适配器模式定义&quot;&gt;&lt;a href=&quot;#适配器模式定义&quot; class=&quot;headerlink&quot; title=&quot;适配器模式定义&quot;&gt;&lt;/a&gt;适配器模式定义&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;适配器模式(Adapter): **
         
       
     
