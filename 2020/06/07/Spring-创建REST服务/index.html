@@ -482,7 +482,7 @@ REST (REpresentational State Transfer),是一个标">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-06-07
+                    2020-06-09
                 </div>
                 
 
@@ -1066,7 +1066,7 @@ Link link <span class="token operator">=</span> links<span class="token punctuat
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HypermediaConfiguration</span><span class="token punctuation">{</span>
     <span class="token comment" spellcheck="true">//为PopInStock对象添加额外链接(自定义的处理/recent请求的Controller注册到Spring Data REST中去)</span>
     <span class="token comment" spellcheck="true">//使Spring Data REST自动生成的API中可以导航到自定义Controller的连接</span>
-    <span class="token annotation punctuation">@Bean</span>
+    <span class="token comment" spellcheck="true">//@Bean //对EntityModel&lt;PopInStock>对象类型添加额外连接recents</span>
     <span class="token keyword">public</span> RepresentationModelProcessor<span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>></span> <span class="token function">popInStockProcessor</span><span class="token punctuation">(</span>EntityLinks links<span class="token punctuation">)</span><span class="token punctuation">{</span>
         <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RepresentationModelProcessor</span><span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
             <span class="token annotation punctuation">@Override</span>
@@ -1076,7 +1076,17 @@ Link link <span class="token operator">=</span> links<span class="token punctuat
             <span class="token punctuation">}</span>
         <span class="token punctuation">}</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token annotation punctuation">@Bean</span> <span class="token comment" spellcheck="true">//对CollectionModel&lt;EntityModel&lt;PopInStock>>对象添加额外连接</span>
+    <span class="token keyword">public</span> RepresentationModelProcessor<span class="token operator">&lt;</span>CollectionModel<span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>>></span> <span class="token function">popInStocksProcessor</span><span class="token punctuation">(</span>EntityLinks links<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">RepresentationModelProcessor</span><span class="token operator">&lt;</span>CollectionModel<span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>>></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> CollectionModel<span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>></span> <span class="token function">process</span><span class="token punctuation">(</span>CollectionModel<span class="token operator">&lt;</span>EntityModel<span class="token operator">&lt;</span>PopInStock<span class="token operator">>></span> model<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                model<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>links<span class="token punctuation">.</span><span class="token function">linkFor</span><span class="token punctuation">(</span>PopInStock<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slash</span><span class="token punctuation">(</span><span class="token string">"recent"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">withRel</span><span class="token punctuation">(</span><span class="token string">"recents"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> model<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 <h4 id="2-完整实例-自定义Controller并添加到Spring-Data-REST自动生成的API中"><a href="#2-完整实例-自定义Controller并添加到Spring-Data-REST自动生成的API中" class="headerlink" title="2. 完整实例: 自定义Controller并添加到Spring Data REST自动生成的API中"></a>2. 完整实例: 自定义Controller并添加到Spring Data REST自动生成的API中</h4><ul>
@@ -1297,58 +1307,56 @@ Link link <span class="token operator">=</span> links<span class="token punctuat
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/06/07/Spring-%E5%88%9B%E5%BB%BAREST%E6%9C%8D%E5%8A%A1/">
+                <a href="/2020/06/09/Spring-%E4%BD%BF%E7%94%A8REST%E6%9C%8D%E5%8A%A1/">
                     <div class="card-image">
                         
                             
                             
                         
 
-                        <img id="id_231591530487374" src="" class="responsive-img" alt="Spring-创建REST服务">
 
-                            
-                                <script>
-                                    (function(){
-                                        var randomImg = {}
-                                        randomImg.enable = true;
-                                        randomImg.count = 50;
-                                        randomImg.pageCount = 8;
-                                        randomImg.second = 10;
-                                        randomImg.title = 'Spring-创建REST服务';
-                                        var len = 24
-                                        var idn = "id_231591530487374";
-                                        var $node = $('#'+idn);
-                                        getImgInfo(randomImg,$node);
-                                    })();
-                                </script>
-                            
 
-                        <span class="card-title">Spring-创建REST服务</span>
+                        <img id="id_71591700295788" src="" class="responsive-img" alt="Spring-使用REST服务">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = 'Spring-使用REST服务';
+                                    var len = 24
+                                    var idn = "id_71591700295788";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+                        <span class="card-title">Spring-使用REST服务</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            概述1. 摘要
+                            概述
+对于RESTful API,返回的一般是json字符串,如果后台想调用别人的RESTful API则需要解析json
+Spring提供了更简单的方式可以自动将数据封装为对象使用
 
-在Spring MVC中实现RESTful API
-Spring HATEOAS
-Spring Data REST
+1. 摘要
 
-
-2. REST
-REST (REpresentational State Transfer),是一个标
+通过RestTemplate调用REST
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-07
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1361,7 +1369,6 @@ REST (REpresentational State Transfer),是一个标
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -1387,7 +1394,7 @@ REST (REpresentational State Transfer),是一个标
                             
                         
 
-                        <img id="id_31591530487378" src="" class="responsive-img" alt="Spring-使用配置属性">
+                        <img id="id_31591700295790" src="" class="responsive-img" alt="Spring-使用配置属性">
 
                         
                             <script>
@@ -1399,7 +1406,7 @@ REST (REpresentational State Transfer),是一个标
                                     randomImg.second = 10;
                                     randomImg.title = 'Spring-使用配置属性';
                                     var len = 24
-                                    var idn = "id_31591530487378";
+                                    var idn = "id_31591700295790";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
@@ -1642,7 +1649,7 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">135.5k</span>&nbsp;字
+                class="white-color">136.8k</span>&nbsp;字
             
             
             

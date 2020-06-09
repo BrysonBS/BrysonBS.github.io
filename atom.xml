@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-06-07T11:46:42.998Z</updated>
+  <updated>2020-06-09T10:55:03.541Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -17,11 +17,39 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Spring-使用REST服务</title>
+    <link href="https://brysonbs.github.io/2020/06/09/Spring-%E4%BD%BF%E7%94%A8REST%E6%9C%8D%E5%8A%A1/"/>
+    <id>https://brysonbs.github.io/2020/06/09/Spring-%E4%BD%BF%E7%94%A8REST%E6%9C%8D%E5%8A%A1/</id>
+    <published>2020-06-09T05:50:15.000Z</published>
+    <updated>2020-06-09T10:55:03.541Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;对于RESTful API,返回的一般是json字符串,如果后台想调用别人的RESTful
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Spring-创建REST服务</title>
     <link href="https://brysonbs.github.io/2020/06/07/Spring-%E5%88%9B%E5%BB%BAREST%E6%9C%8D%E5%8A%A1/"/>
     <id>https://brysonbs.github.io/2020/06/07/Spring-%E5%88%9B%E5%BB%BAREST%E6%9C%8D%E5%8A%A1/</id>
     <published>2020-06-07T02:14:15.000Z</published>
-    <updated>2020-06-07T11:46:42.998Z</updated>
+    <updated>2020-06-09T09:24:00.055Z</updated>
     
     <summary type="html">
     
@@ -537,34 +565,6 @@
         
           &lt;h4 id=&quot;外观模式的定义&quot;&gt;&lt;a href=&quot;#外观模式的定义&quot; class=&quot;headerlink&quot; title=&quot;外观模式的定义&quot;&gt;&lt;/a&gt;外观模式的定义&lt;/h4&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;外观(Facade)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-装饰模式</title>
-    <link href="https://brysonbs.github.io/2020/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-04-13T05:44:30.000Z</published>
-    <updated>2020-05-04T10:22:57.696Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;装饰模式的定义&quot;&gt;&lt;a href=&quot;#装饰模式的定义&quot; class=&quot;headerlink&quot; title=&quot;装饰模式的定义&quot;&gt;&lt;/a&gt;装饰模式的定义&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;装饰(Decorator)模式: *&lt;/em&gt;
         
       
     
