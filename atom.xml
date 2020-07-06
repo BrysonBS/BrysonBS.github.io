@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-06-19T12:01:15.764Z</updated>
+  <updated>2020-07-06T09:20:42.866Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-Integration-flow</title>
+    <link href="https://brysonbs.github.io/2020/07/06/Spring-Integration/"/>
+    <id>https://brysonbs.github.io/2020/07/06/Spring-Integration/</id>
+    <published>2020-07-06T05:50:15.000Z</published>
+    <updated>2020-07-06T09:20:42.866Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;Integration flow&lt;/code&gt;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Message</title>
@@ -553,33 +582,6 @@
     
     
       <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring-Spring概述</title>
-    <link href="https://brysonbs.github.io/2020/04/16/Spring-Spring%E6%A6%82%E8%BF%B0/"/>
-    <id>https://brysonbs.github.io/2020/04/16/Spring-Spring%E6%A6%82%E8%BF%B0/</id>
-    <published>2020-04-16T01:01:55.000Z</published>
-    <updated>2020-05-06T09:14:11.721Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h4 id=&quot;Spring-和-Spring-Boot-概要&quot;&gt;&lt;a href=&quot;#Spring-和-Spring-Boot-概要&quot; class=&quot;headerlink&quot; title=&quot;Spring 和 Spring Boot 概要&quot;&gt;&lt;/a&gt;Spring 和 Spring
-        
-      
-    
-    </summary>
-    
-    
-      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
-    
-    
-      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
     
   </entry>
   
