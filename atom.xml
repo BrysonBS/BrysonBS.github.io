@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-08-23T11:24:28.970Z</updated>
+  <updated>2020-09-08T10:58:26.472Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-Cloud:Circuit Breaker</title>
+    <link href="https://brysonbs.github.io/2020/09/08/Spring-Cloud%20Circuit%20Breaker/"/>
+    <id>https://brysonbs.github.io/2020/09/08/Spring-Cloud%20Circuit%20Breaker/</id>
+    <published>2020-09-08T02:01:02.000Z</published>
+    <updated>2020-09-08T10:58:26.472Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;认识circuit breaker&lt;/li&gt;
+&lt;li&gt;使用circuit
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Cloud:Config</title>
@@ -553,35 +582,6 @@
     
     
       <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Jackson-注解使用</title>
-    <link href="https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/"/>
-    <id>https://brysonbs.github.io/2020/04/27/Jackson-%E6%B3%A8%E8%A7%A3%E4%BD%BF%E7%94%A8/</id>
-    <published>2020-04-27T02:11:11.000Z</published>
-    <updated>2020-05-04T10:08:56.785Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;1-Jackson序列化注解-java-gt-json&quot;&gt;&lt;a href=&quot;#1-Jackson序列化注解-java-gt-json&quot; class=&quot;headerlink&quot; title=&quot;1. Jackson序列化注解(java -&gt; json)&quot;&gt;&lt;/a&gt;1.
-        
-      
-    
-    </summary>
-    
-    
-      <category term="json" scheme="https://brysonbs.github.io/categories/json/"/>
-    
-    
-      <category term="Jackson" scheme="https://brysonbs.github.io/tags/Jackson/"/>
-    
-      <category term="json" scheme="https://brysonbs.github.io/tags/json/"/>
     
   </entry>
   
