@@ -1,0 +1,1905 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Spring-Boot:Actuator, java,web">
+    <meta name="description" content="概述
+引入Actuator
+使用 Actuator endpoints
+自定义 Actuator endpoints
+Securing Actuator
+
+引入Actuator1. 概述
+Actuator 可以实现对程序内部运行情况监控,比">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Spring-Boot:Actuator | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div id="bgc-post-cover" class="bg-cover pd-header post-cover" style="background-image: url('')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Spring-Boot:Actuator</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+    <script src="/customJs/random_img.js"></script>
+    <script>
+        var randomImg = {}
+        randomImg.enable = true;
+        randomImg.count = 50;
+        randomImg.pageCount = 8;
+        randomImg.second = 10;
+        randomImg.title = 'Spring-Boot:Actuator';
+        var $node = $("#bgc-post-cover");
+        getImgInfo(randomImg,$node);
+    </script>
+
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Spring/">
+                                <span class="chip bg-color">Spring</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Spring/" class="post-category">
+                                Spring
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-09-10
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-09-10
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    13 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>引入Actuator</li>
+<li>使用 Actuator endpoints</li>
+<li>自定义 Actuator endpoints</li>
+<li>Securing Actuator</li>
+</ul>
+<h3 id="引入Actuator"><a href="#引入Actuator" class="headerlink" title="引入Actuator"></a>引入Actuator</h3><h4 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h4><ul>
+<li><code>Actuator</code> 可以实现对程序内部运行情况监控,比如监控状况,Bean加载情况,环境变量,日志信息,线程信息等</li>
+<li>通过<code>Actuator</code>公开的端点,我们可以获取到Spring Boot应用运行时的一些状态信息<ul>
+<li>应用环境中哪些配置属性可用</li>
+<li>应用中各个包的日志环境级别</li>
+<li>应用正在消耗多少内存</li>
+<li>HTTP端点被请求了多少次</li>
+<li>应用与其协调的外部服务的运行状况如何</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-开始"><a href="#2-开始" class="headerlink" title="2. 开始"></a>2. 开始</h4><ul>
+<li><p>*<em>依赖: *</em> pom.xml中添加<code>Actuator</code>的Maven依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-actuator<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>端点: ** <code>Actuator</code>一旦引入,应用将会提供几个端点以供查询应用信息(</strong>默认base-path为/actuator,即端点需要加此前缀使用**,如使用<code>/actuator/health</code>),大多端点默认都是关闭的,需要通过配置开启,以下除了<code>/heapdump</code>之外,其他所有HTTP端点也作为<code>JMX MBeans</code>公开</p>
+<table>
+<thead>
+<tr>
+<th>请求方式</th>
+<th>path(端点)</th>
+<th>描述</th>
+<th>默认是否开启</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td>/auditevents</td>
+<td>生成任何已经触发的audit events的报告</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/beans</td>
+<td>显示Spring应用上下文中的所有bean</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/conditions</td>
+<td>生成通过和失败的autoconfiguration conditions,<br>并指向应用上下文创建的bean</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/configprops</td>
+<td>显示所有配置属性及其当前的值</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET,POST<br>,DELETE</td>
+<td>/env</td>
+<td>生成应用可用的所有属性源及其属性报告</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/env/{toMatch}</td>
+<td>显示指定的单个环境变量的值</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/health</td>
+<td>返回应用程序及其外部依赖应用的总的运行状况</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/heapdump</td>
+<td>下载heap dump</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/httptrace</td>
+<td>生成最近100个请求的信息</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/info</td>
+<td>返回应用的任何developer-defined信息</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/loggers</td>
+<td>生成包的列表及其对应的配置的日志级别</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET,POST</td>
+<td>/loggers/{name}</td>
+<td>返回给定的日志记录器的已配置且有效的日志级别,<br>可以通过POST请求设置有效日志级别</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/mappings</td>
+<td>生成报告,包含所有HTTP映射及其相应的处理方法</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/metrics</td>
+<td>返回所有metrics(度量)类别的列表</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/metrics/{name}</td>
+<td>返回给定的metrics的多维set值集</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/scheduledtasks</td>
+<td>列出所有计划任务(scheduled tasks)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/threaddump</td>
+<td>返回所有应用线程的报告</td>
+<td>No</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h4 id="3-配置Actuator-endpoints"><a href="#3-配置Actuator-endpoints" class="headerlink" title="3. 配置Actuator endpoints"></a>3. 配置Actuator endpoints</h4><h5 id="3-1-base-path配置"><a href="#3-1-base-path配置" class="headerlink" title="3.1 base-path配置"></a>3.1 base-path配置</h5><ul>
+<li><p>*<em>base-path: *</em> 默认情况下所有端点的根路径为<code>/actuator</code>,如<code>/health</code>端点应使用<code>/actuator/health</code>,如果想自定义(如<code>/management</code>)则需要以下配置</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">web</span><span class="token punctuation">:</span>
+      <span class="token key atrule">base-path</span><span class="token punctuation">:</span> /management<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h5 id="3-2-启用或关闭端点"><a href="#3-2-启用或关闭端点" class="headerlink" title="3.2 启用或关闭端点"></a>3.2 启用或关闭端点</h5><ul>
+<li><p>通过<strong>2</strong>的表格可以发现,除了<code>/health</code>和<code>/info</code>两个端点默认开启之外,其他的(由于涉及到敏感信息)默认都是关闭的,如果要开启这些端点则需要配置,考虑安全需求,可以配合<code>Spring Security</code>使用</p>
+</li>
+<li><p>*<em>开启指定端点: *</em> </p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">web</span><span class="token punctuation">:</span>
+      <span class="token key atrule">exposure</span><span class="token punctuation">:</span>
+        <span class="token key atrule">include</span><span class="token punctuation">:</span> health<span class="token punctuation">,</span>info<span class="token punctuation">,</span>beans<span class="token punctuation">,</span>conditions<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><em>*通配符(</em>)开启所有端点: **</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">web</span><span class="token punctuation">:</span>
+      <span class="token key atrule">exposure</span><span class="token punctuation">:</span>
+        <span class="token key atrule">include</span><span class="token punctuation">:</span> <span class="token string">'*'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>*<em>排除指定端点: *</em></p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">web</span><span class="token punctuation">:</span>
+      <span class="token key atrule">exposure</span><span class="token punctuation">:</span>
+        <span class="token key atrule">include</span><span class="token punctuation">:</span> <span class="token string">'*'</span>
+        <span class="token key atrule">exclude</span><span class="token punctuation">:</span> threaddump<span class="token punctuation">,</span>heapdump <span class="token comment" spellcheck="true">#排除此端点</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h3 id="使用Actuator-endpoints"><a href="#使用Actuator-endpoints" class="headerlink" title="使用Actuator endpoints"></a>使用Actuator endpoints</h3><ul>
+<li><p>*<em>/actuator *</em> 通过<code>http://localhost:8762/actuator</code>获取到以下信息,可以查看目前开启的HTTP端点</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"_links"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"self"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"href"</span><span class="token operator">:</span> <span class="token string">"http://localhost:8762/actuator"</span><span class="token punctuation">,</span>
+            <span class="token property">"templated"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"health"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"href"</span><span class="token operator">:</span> <span class="token string">"http://localhost:8762/actuator/health"</span><span class="token punctuation">,</span>
+            <span class="token property">"templated"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"health-path"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"href"</span><span class="token operator">:</span> <span class="token string">"http://localhost:8762/actuator/health/{*path}"</span><span class="token punctuation">,</span>
+            <span class="token property">"templated"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"info"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"href"</span><span class="token operator">:</span> <span class="token string">"http://localhost:8762/actuator/info"</span><span class="token punctuation">,</span>
+            <span class="token property">"templated"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"refresh"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"href"</span><span class="token operator">:</span> <span class="token string">"http://localhost:8762/actuator/refresh"</span><span class="token punctuation">,</span>
+            <span class="token property">"templated"</span><span class="token operator">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>/info</strong> 通过<code>http://localhost:8762/actuator/info</code>可以获取到<code>application.yml</code>中配置的info信息(或者实现了<code>InfoContributor</code>接口定义的info信息)</p>
+<ul>
+<li><p><code>application.yml</code>配置以下info信息</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">info</span><span class="token punctuation">:</span>
+  <span class="token key atrule">contact</span><span class="token punctuation">:</span>
+    <span class="token key atrule">email</span><span class="token punctuation">:</span> 123@taco.com
+    <span class="token key atrule">phone</span><span class="token punctuation">:</span> <span class="token number">123</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>通过<code>/info</code>获取</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"contact"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"email"</span><span class="token operator">:</span><span class="token string">"123@taco.com"</span><span class="token punctuation">,</span><span class="token property">"phone"</span><span class="token operator">:</span><span class="token number">123</span><span class="token punctuation">}</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li><p><strong>/health</strong> 通过<code>http://localhost:8762/actuator/health</code>可以获取到系统的状态</p>
+<ul>
+<li><p>一共有4种状态</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UP</td>
+<td>外部系统启动并可访问,所有都满足时为此状态</td>
+</tr>
+<tr>
+<td>DOWN</td>
+<td>外部系统已关闭或无法访问,存在一个即为此状态</td>
+</tr>
+<tr>
+<td>UNKNOWN</td>
+<td>外部系统状态不清楚,存在时将被忽略</td>
+</tr>
+<tr>
+<td>OUT_OF_SERVICE</td>
+<td>外部系统可访问,单目前不可用,存在一个即为此状态</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>默认情况下仅仅返回状态信息</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"status"</span><span class="token operator">:</span><span class="token string">"UP"</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>如果要返回详细信息则需要在配置文件中配置</p>
+<ul>
+<li><p>配置</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoint</span><span class="token punctuation">:</span>
+    <span class="token key atrule">health</span><span class="token punctuation">:</span>
+      <span class="token key atrule">show-details</span><span class="token punctuation">:</span> always<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>返回详细信息,可以看到<code>diskSpace</code>属性,所有应用程序的都会有此属性它表示磁盘运行状况,如果可用磁盘空间低于阈值,则状态会变为<code>DOWN</code></p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+    <span class="token property">"components"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"db"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+            <span class="token property">"details"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"database"</span><span class="token operator">:</span> <span class="token string">"H2"</span><span class="token punctuation">,</span>
+                <span class="token property">"validationQuery"</span><span class="token operator">:</span> <span class="token string">"isValid()"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"discoveryComposite"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+            <span class="token property">"components"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"discoveryClient"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+                    <span class="token property">"details"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                        <span class="token property">"services"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"eureka"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"description"</span><span class="token operator">:</span> <span class="token string">"Eureka discovery client has not yet successfully connected to a Eureka server"</span><span class="token punctuation">,</span>
+                    <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+                    <span class="token property">"details"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                        <span class="token property">"applications"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+                    <span class="token punctuation">}</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"diskSpace"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span><span class="token punctuation">,</span>
+            <span class="token property">"details"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"total"</span><span class="token operator">:</span> <span class="token number">499839078400</span><span class="token punctuation">,</span>
+                <span class="token property">"free"</span><span class="token operator">:</span> <span class="token number">450688933888</span><span class="token punctuation">,</span>
+                <span class="token property">"threshold"</span><span class="token operator">:</span> <span class="token number">10485760</span><span class="token punctuation">,</span>
+                <span class="token property">"exists"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"hystrix"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"ping"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"refreshScope"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"status"</span><span class="token operator">:</span> <span class="token string">"UP"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>/beans</strong> 查看系统的bean信息,以下展示部分片段,可以看到<code>discoveryClientHealthIndicator</code>和其注入的依赖</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"contexts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"application-1"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"beans"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                ...
+                <span class="token property">"discoveryClientHealthIndicator"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"aliases"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    <span class="token property">"scope"</span><span class="token operator">:</span> <span class="token string">"singleton"</span><span class="token punctuation">,</span>
+                    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"org.springframework.cloud.client.discovery.health.DiscoveryClientHealthIndicator"</span><span class="token punctuation">,</span>
+                    <span class="token property">"resource"</span><span class="token operator">:</span> <span class="token string">"class path resource [org/springframework/cloud/client/CommonsClientAutoConfiguration$DiscoveryLoadBalancerConfiguration.class]"</span><span class="token punctuation">,</span>
+                    <span class="token property">"dependencies"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"spring.cloud.discovery.client.health-indicator-org.springframework.cloud.client.discovery.health.DiscoveryClientHealthIndicatorProperties"</span><span class="token punctuation">]</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                ...
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"parentId"</span><span class="token operator">:</span> <span class="token null">null</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>/conditions</strong> 返回自动配置报告,包含了<code>positiveMatches</code>(通过的条件配置),<code>negativeMatches</code>(失败的条件配置),<code>unconditionalClasses</code>(无条件类),如以下片段</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"contexts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"application-1"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"positiveMatches"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                ...
+                <span class="token property">"MongoDataAutoConfiguration#mongoTemplate"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                    <span class="token property">"condition"</span><span class="token operator">:</span> <span class="token string">"OnBeanCondition"</span><span class="token punctuation">,</span>
+                    <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"@ConditionalOnMissingBean (types:org.springframework.data.mongodb.core.MongoTemplate;SearchStrategy: all) did not find any beans "</span>
+                <span class="token punctuation">}</span><span class="token punctuation">]</span>
+                ...
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"negativeMatches"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                ...
+                <span class="token property">"DispatcherServletAutoConfiguration"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"notMatched"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+                        <span class="token property">"condition"</span><span class="token operator">:</span> <span class="token string">"OnClassCondition"</span><span class="token punctuation">,</span>
+                        <span class="token property">"message"</span><span class="token operator">:</span> <span class="token string">"@ConditionalOnClass did not find required class 'org.springframework.web.servlet.DispatcherServlet '"</span>
+                    <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    <span class="token property">"matched"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+                <span class="token punctuation">}</span>
+                ...
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"unconditionalClasses"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+                ...
+                <span class="token string">"org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration "</span>
+                ...
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>/env</strong> 可以查看环境变量丶JVM系统属性丶application.properties丶application.yml丶甚至<code>Spring Cloud Config Server</code></p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"activeProfiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"development"</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"propertySources"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"systemEnvironment"</span><span class="token punctuation">,</span>
+            <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"PATH"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token string">"/usr/bin:/bin:/usr/sbin:/sbin"</span><span class="token punctuation">,</span>
+                    <span class="token property">"origin"</span><span class="token operator">:</span> <span class="token string">"System Environment Property \"PATH\""</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"HOME"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token string">"/Users/habuma"</span><span class="token punctuation">,</span>
+                    <span class="token property">"origin"</span><span class="token operator">:</span> <span class="token string">"System Environment Property \"HOME\""</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"applicationConfig: [classpath:/application.yml]"</span><span class="token punctuation">,</span>
+            <span class="token property">"properties"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"spring.application.name"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token string">"ingredient-service"</span><span class="token punctuation">,</span>
+                    <span class="token property">"origin"</span><span class="token operator">:</span> <span class="token string">"class path resource [application.yml]:3:11"</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"server.port"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"value"</span><span class="token operator">:</span> <span class="token number">8081</span><span class="token punctuation">,</span>
+                    <span class="token property">"origin"</span><span class="token operator">:</span> <span class="token string">"class path resource [application.yml]:9:9"</span>
+                <span class="token punctuation">}</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h3 id="自定义-Actuator-endpoints"><a href="#自定义-Actuator-endpoints" class="headerlink" title="自定义 Actuator endpoints"></a>自定义 Actuator endpoints</h3><h4 id="1-概述-1"><a href="#1-概述-1" class="headerlink" title="1. 概述"></a>1. 概述</h4><ul>
+<li>一些<code>Actuator endpoints</code>允许定制,同时也允许创建自定义<code>Actuator endpoints</code></li>
+</ul>
+<h4 id="2-info端点"><a href="#2-info端点" class="headerlink" title="2. /info端点"></a>2. <code>/info</code>端点</h4><h5 id="2-1-一般信息添加"><a href="#2-1-一般信息添加" class="headerlink" title="2.1 一般信息添加"></a>2.1 一般信息添加</h5><ul>
+<li><p>*<em>方式一: *</em>可以通过在<code>application.yml</code>中配置添加自定义信息</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">info</span><span class="token punctuation">:</span>
+  <span class="token key atrule">contact</span><span class="token punctuation">:</span>
+    <span class="token key atrule">email</span><span class="token punctuation">:</span> 123@taco.com
+    <span class="token key atrule">phone</span><span class="token punctuation">:</span> <span class="token number">123</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>*<em>方式二: *</em>实现<code>InfoContributor</code>接口,并使用<code>@Component</code>注解,添加自定义信息</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TacoInfoContributor</span> <span class="token keyword">implements</span> <span class="token class-name">InfoContributor</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">contribute</span><span class="token punctuation">(</span>Info<span class="token punctuation">.</span>Builder builder<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        builder<span class="token punctuation">.</span><span class="token function">withDetail</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">,</span><span class="token string">"taco"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h5 id="2-2-build-info信息添加"><a href="#2-2-build-info信息添加" class="headerlink" title="2.2 build-info信息添加"></a>2.2 <strong>build-info信息添加</strong></h5><ul>
+<li><p>Spring boot提供了一些内置的<code>InfoContributor</code>实现,如<code>BuildInfoContributor</code>可以将项目构建信息<code>build-info.properties</code>文件内容添加到<code>/info</code>端点中(如版本信息丶主机丶用户丶时间戳),需要在<code>pom.xml</code>的<code>build</code>标签中配置启用</p>
+<ul>
+<li><p>配置启用<code>build-info</code></p>
+<pre class="line-numbers language-xml"><code class="language-xml">   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-maven-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>executions</span><span class="token punctuation">></span></span>
+                   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>execution</span><span class="token punctuation">></span></span>
+                       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goals</span><span class="token punctuation">></span></span>
+                           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>goal</span><span class="token punctuation">></span></span>build-info<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goal</span><span class="token punctuation">></span></span> <span class="token comment" spellcheck="true">&lt;!--启用--></span>
+                       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>goals</span><span class="token punctuation">></span></span>
+                   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>execution</span><span class="token punctuation">></span></span>
+               <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>executions</span><span class="token punctuation">></span></span>
+           <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
+       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用IDEA自动生成<code>build-info.properties</code>文件,打开<code>Maven project</code>找到<code>spring-boot</code> -&gt; <code>spring-boot:build-info</code>执行即可自动生成,文件会发布到<code>/META-INF/</code>目录下</p>
+<pre class="line-numbers language-properties"><code class="language-properties"><span class="token attr-name">build.artifact</span><span class="token punctuation">=</span><span class="token attr-value">taco</span>
+<span class="token attr-name">build.group</span><span class="token punctuation">=</span><span class="token attr-value">cn.com.taco</span>
+<span class="token attr-name">build.name</span><span class="token punctuation">=</span><span class="token attr-value">taco</span>
+<span class="token attr-name">build.time</span><span class="token punctuation">=</span><span class="token attr-value">2020-09-10T05\:49\:52.959Z</span>
+<span class="token attr-name">build.version</span><span class="token punctuation">=</span><span class="token attr-value">0.0.1-SNAPSHOT</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-3-GIT提交信息添加"><a href="#2-3-GIT提交信息添加" class="headerlink" title="2.3 GIT提交信息添加"></a>2.3 <strong>GIT提交信息添加</strong></h5><ul>
+<li><p><strong>pom.xml</strong>中添加插件</p>
+<pre class="line-numbers language-xml"><code class="language-xml">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">></span></span>
+            ...
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>pl.project13.maven<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>git-commit-id-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">></span></span>
+            ...
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用IDEA自动生成<code>git.properties</code>文件,打开<code>Maven project</code>找到<code>Plugins</code> -&gt; <code>git-commit-id</code> -&gt; <code>git-commit-id:version</code>执行即可自动生成,文件会发布到<code>/classes/</code>目录下</p>
+<pre class="line-numbers language-properties"><code class="language-properties"><span class="token comment" spellcheck="true">#Generated by Git-Commit-Id-Plugin</span>
+<span class="token comment" spellcheck="true">#Thu Sep 10 14:10:58 CST 2020</span>
+<span class="token attr-name">git.branch</span><span class="token punctuation">=</span><span class="token attr-value">cloud</span>
+<span class="token attr-name">git.build.host</span><span class="token punctuation">=</span><span class="token attr-value">DESKTOP-B2MV9TT</span>
+<span class="token attr-name">git.build.time</span><span class="token punctuation">=</span><span class="token attr-value">2020-09-10T14\:10\:58+0800</span>
+<span class="token attr-name">git.build.user.email</span><span class="token punctuation">=</span><span class="token attr-value">284540831@qq.com</span>
+<span class="token attr-name">git.build.user.name</span><span class="token punctuation">=</span><span class="token attr-value">bryson</span>
+<span class="token attr-name">git.build.version</span><span class="token punctuation">=</span><span class="token attr-value">0.0.1-SNAPSHOT</span>
+<span class="token attr-name">git.closest.tag.commit.count</span><span class="token punctuation">=</span>
+<span class="token attr-name">git.closest.tag.name</span><span class="token punctuation">=</span>
+<span class="token attr-name">git.commit.id</span><span class="token punctuation">=</span><span class="token attr-value">a7baf19e542bbd24c8511cd8c202176db637e693</span>
+<span class="token attr-name">git.commit.id.abbrev</span><span class="token punctuation">=</span><span class="token attr-value">a7baf19</span>
+<span class="token attr-name">git.commit.id.describe</span><span class="token punctuation">=</span><span class="token attr-value">a7baf19-dirty</span>
+<span class="token attr-name">git.commit.id.describe-short</span><span class="token punctuation">=</span><span class="token attr-value">a7baf19-dirty</span>
+<span class="token attr-name">git.commit.message.full</span><span class="token punctuation">=</span><span class="token attr-value">work cloud</span>
+<span class="token attr-name">git.commit.message.short</span><span class="token punctuation">=</span><span class="token attr-value">work cloud</span>
+<span class="token attr-name">git.commit.time</span><span class="token punctuation">=</span><span class="token attr-value">2020-09-10T10\:28\:19+0800</span>
+<span class="token attr-name">git.commit.user.email</span><span class="token punctuation">=</span><span class="token attr-value">284540831@qq.com</span>
+<span class="token attr-name">git.commit.user.name</span><span class="token punctuation">=</span><span class="token attr-value">bryson</span>
+<span class="token attr-name">git.dirty</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">git.local.branch.ahead</span><span class="token punctuation">=</span><span class="token attr-value">0</span>
+<span class="token attr-name">git.local.branch.behind</span><span class="token punctuation">=</span><span class="token attr-value">0</span>
+<span class="token attr-name">git.remote.origin.url</span><span class="token punctuation">=</span><span class="token attr-value">git@github.com\:BrysonBS/learning.git</span>
+<span class="token attr-name">git.tags</span><span class="token punctuation">=</span>
+<span class="token attr-name">git.total.commit.count</span><span class="token punctuation">=</span><span class="token attr-value">64</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用<code>http://localhost:8762/actuator/info</code>可以发现只有简略信息(分支和commit时间戳),如果想要显示详细信息则需要在<code>application.yml</code>中配置</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"git"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"branch"</span><span class="token operator">:</span> <span class="token string">"cloud"</span><span class="token punctuation">,</span>
+        <span class="token property">"commit"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token string">"a7baf19"</span><span class="token punctuation">,</span>
+            <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"2020-09-10T02:28:19Z"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"build"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"artifact"</span><span class="token operator">:</span> <span class="token string">"taco"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"taco"</span><span class="token punctuation">,</span>
+        <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"2020-09-10T05:49:52.959Z"</span><span class="token punctuation">,</span>
+        <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.0.1-SNAPSHOT"</span><span class="token punctuation">,</span>
+        <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"cn.com.taco"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><code>application.yml</code>中配置,使其显示相信信息</p>
+<ul>
+<li><p><code>application.yml</code>配置</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">info</span><span class="token punctuation">:</span>
+    <span class="token key atrule">git</span><span class="token punctuation">:</span>
+      <span class="token key atrule">mode</span><span class="token punctuation">:</span> full<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用<code>http://localhost:8762/actuator/info</code>结果</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"git"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"local"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"branch"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"ahead"</span><span class="token operator">:</span> <span class="token string">"0"</span><span class="token punctuation">,</span>
+                <span class="token property">"behind"</span><span class="token operator">:</span> <span class="token string">"0"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"commit"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"id"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"describe-short"</span><span class="token operator">:</span> <span class="token string">"a7baf19-dirty"</span><span class="token punctuation">,</span>
+                <span class="token property">"abbrev"</span><span class="token operator">:</span> <span class="token string">"a7baf19"</span><span class="token punctuation">,</span>
+                <span class="token property">"full"</span><span class="token operator">:</span> <span class="token string">"a7baf19e542bbd24c8511cd8c202176db637e693"</span><span class="token punctuation">,</span>
+                <span class="token property">"describe"</span><span class="token operator">:</span> <span class="token string">"a7baf19-dirty"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"message"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"short"</span><span class="token operator">:</span> <span class="token string">"work cloud"</span><span class="token punctuation">,</span>
+                <span class="token property">"full"</span><span class="token operator">:</span> <span class="token string">"work cloud"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"user"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"bryson"</span><span class="token punctuation">,</span>
+                <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"284540831@qq.com"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">,</span>
+            <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"2020-09-10T02:28:19Z"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"branch"</span><span class="token operator">:</span> <span class="token string">"cloud"</span><span class="token punctuation">,</span>
+        <span class="token property">"build"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"2020-09-10T06:10:58Z"</span><span class="token punctuation">,</span>
+            <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.0.1-SNAPSHOT"</span><span class="token punctuation">,</span>
+            <span class="token property">"host"</span><span class="token operator">:</span> <span class="token string">"DESKTOP-B2MV9TT"</span><span class="token punctuation">,</span>
+            <span class="token property">"user"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"bryson"</span><span class="token punctuation">,</span>
+                <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"284540831@qq.com"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"tags"</span><span class="token operator">:</span> <span class="token string">""</span><span class="token punctuation">,</span>
+        <span class="token property">"total"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"commit"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"count"</span><span class="token operator">:</span> <span class="token string">"64"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"closest"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"commit"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                    <span class="token property">"count"</span><span class="token operator">:</span> <span class="token string">""</span>
+                <span class="token punctuation">}</span><span class="token punctuation">,</span>
+                <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">""</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"remote"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+            <span class="token property">"origin"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                <span class="token property">"url"</span><span class="token operator">:</span> <span class="token string">"git@github.com:BrysonBS/learning.git"</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token property">"dirty"</span><span class="token operator">:</span> <span class="token string">"true"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">"build"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"artifact"</span><span class="token operator">:</span> <span class="token string">"taco"</span><span class="token punctuation">,</span>
+        <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"taco"</span><span class="token punctuation">,</span>
+        <span class="token property">"time"</span><span class="token operator">:</span> <span class="token string">"2020-09-10T05:49:52.959Z"</span><span class="token punctuation">,</span>
+        <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.0.1-SNAPSHOT"</span><span class="token punctuation">,</span>
+        <span class="token property">"group"</span><span class="token operator">:</span> <span class="token string">"cn.com.taco"</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-health端点"><a href="#3-health端点" class="headerlink" title="3. /health端点"></a>3. <strong>/health</strong>端点</h4><ul>
+<li><p>Spring Boot默认提供了多个<code>health indicators</code>运行状况指示器,可以用于许多集成的外部系统,但是如果没有的情况,可以通过实现<code>HealthIndicator</code>接口自定义指示器</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WackoHealthIndicator</span> <span class="token keyword">implements</span> <span class="token class-name">HealthIndicator</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> Health <span class="token function">health</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">int</span> hour <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>HOUR_OF_DAY<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>hour <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Health
+                    <span class="token punctuation">.</span><span class="token function">outOfService</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">withDetail</span><span class="token punctuation">(</span><span class="token string">"reason"</span><span class="token punctuation">,</span>
+                            <span class="token string">"I'm out of service after lunchtime"</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">withDetail</span><span class="token punctuation">(</span><span class="token string">"hour"</span><span class="token punctuation">,</span> hour<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0.1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> Health
+                    <span class="token punctuation">.</span><span class="token function">down</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">withDetail</span><span class="token punctuation">(</span><span class="token string">"reason"</span><span class="token punctuation">,</span> <span class="token string">"I break 10% of the time"</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> Health
+                <span class="token punctuation">.</span><span class="token function">up</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">withDetail</span><span class="token punctuation">(</span><span class="token string">"reason"</span><span class="token punctuation">,</span> <span class="token string">"All is good!"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="4-注册自定义metrics-指标"><a href="#4-注册自定义metrics-指标" class="headerlink" title="4. 注册自定义metrics(指标)"></a>4. 注册自定义<code>metrics</code>(指标)</h4><ul>
+<li><p>可以通过<code>MeterRegistry</code>进行度量,在类中注入,并使用</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TacoMetrics</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> MeterRegistry meterRegistry<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//spring4.X以后构造函数参数可以自动注入,无需@Autowired</span>
+    <span class="token keyword">public</span> <span class="token function">TacoMetrics</span><span class="token punctuation">(</span>MeterRegistry meterRegistry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>meterRegistry <span class="token operator">=</span> meterRegistry<span class="token punctuation">;</span>
+        meterRegistry<span class="token punctuation">.</span><span class="token function">counter</span><span class="token punctuation">(</span><span class="token string">"taco"</span><span class="token punctuation">,</span><span class="token string">"test1"</span><span class="token punctuation">,</span><span class="token string">"test2"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//统计,只有一次</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用<code>http://localhost:8762/actuator/metrics/taco</code>查看结果</p>
+<pre class="line-numbers language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"taco"</span><span class="token punctuation">,</span>
+    <span class="token property">"description"</span><span class="token operator">:</span> <span class="token null">null</span><span class="token punctuation">,</span>
+    <span class="token property">"baseUnit"</span><span class="token operator">:</span> <span class="token null">null</span><span class="token punctuation">,</span>
+    <span class="token property">"measurements"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        <span class="token property">"statistic"</span><span class="token operator">:</span> <span class="token string">"COUNT"</span><span class="token punctuation">,</span>
+        <span class="token property">"value"</span><span class="token operator">:</span> <span class="token number">0.0</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"availableTags"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+        <span class="token property">"tag"</span><span class="token operator">:</span> <span class="token string">"test1"</span><span class="token punctuation">,</span>
+        <span class="token property">"values"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"test2"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="5-创建自定义端点-endpoints"><a href="#5-创建自定义端点-endpoints" class="headerlink" title="5. 创建自定义端点(endpoints)"></a>5. 创建自定义端点(endpoints)</h4><ul>
+<li><p>与创建Controller类似,但是因为支持<code>JMX MBeans</code>所以有额外的内容</p>
+</li>
+<li><p>使用到的注解<code>@Endpoint</code>(类似<code>@Controller</code>)丶<code>@ReadOperation</code>丶<code>@WriteOperation</code>丶<code>@DeleteOperation</code>,这些注解并不代表通信机制,因为支持<code>HTTP</code>与<code>JMX</code></p>
+</li>
+<li><p>使用<code>@Endpoint</code>会公开HTTP端点和JMX,如果只想公开HTTP端点则可以使用<code>@WebEndpoint</code>,如果只想公开JMX则可以使用<code>@JmxEndpoint</code>注解</p>
+</li>
+<li><p>实例</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Component</span>
+<span class="token annotation punctuation">@Endpoint</span><span class="token punctuation">(</span>id <span class="token operator">=</span> <span class="token string">"notes"</span><span class="token punctuation">,</span>enableByDefault <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">//默认为true,如果为false,则可以通过配置属性management.web.endpoints.web.exposure.include开启</span>
+<span class="token comment" spellcheck="true">//即使为true,如果已经配置management.web.endpoints.web.exposure.include属性,则需要额外开启才行</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">NotesEndpoints</span> <span class="token punctuation">{</span>
+    <span class="token annotation punctuation">@ReadOperation</span> <span class="token comment" spellcheck="true">//读操作: HTTP中对应GET请求</span>
+    <span class="token keyword">public</span> String <span class="token function">notes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"读: "</span><span class="token operator">+</span> LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>DateTimeFormatter<span class="token punctuation">.</span><span class="token function">ofPattern</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd hh:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@WriteOperation</span> <span class="token comment" spellcheck="true">//写操作: HTTP中对应POST请求</span>
+    <span class="token keyword">public</span> String <span class="token function">addNotes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"写: "</span><span class="token operator">+</span> LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>DateTimeFormatter<span class="token punctuation">.</span><span class="token function">ofPattern</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd hh:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@DeleteOperation</span><span class="token comment" spellcheck="true">//删除操作: HTTP中对应DELETE请求</span>
+    <span class="token keyword">public</span> String <span class="token function">deleteNotes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"删除: "</span><span class="token operator">+</span> LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>DateTimeFormatter<span class="token punctuation">.</span><span class="token function">ofPattern</span><span class="token punctuation">(</span><span class="token string">"yyyy-MM-dd hh:mm:ss"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h3 id="Securing-Actuator"><a href="#Securing-Actuator" class="headerlink" title="Securing Actuator"></a>Securing Actuator</h3><h4 id="1-概述-2"><a href="#1-概述-2" class="headerlink" title="1. 概述"></a>1. 概述</h4><ul>
+<li><code>Actuator</code>提供的信息可能不希望任何人都能看到,或者有些端点可以修改配置属性(如日志级别),这些更需要控制权限, 因此需要配合<code>Spring Security</code>使用</li>
+</ul>
+<h4 id="2-使用Spring-Security控制权限"><a href="#2-使用Spring-Security控制权限" class="headerlink" title="2. 使用Spring Security控制权限"></a>2. 使用Spring Security控制权限</h4><ul>
+<li><p>*<em>不推荐: *</em>由于所有端点的根路径为<code>/actuator</code>,因此可以直接控制根路径权限</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>HttpSecurity http<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+ http
+ <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token comment" spellcheck="true">//使用/actuator/**根路径的缺点是根路径是可以配置的,如果更改了,安全配置就会失效</span>
+ <span class="token punctuation">.</span><span class="token function">antMatchers</span><span class="token punctuation">(</span><span class="token string">"/actuator/**"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hasRole</span><span class="token punctuation">(</span><span class="token string">"ADMIN"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//只有ADMIN角色可以访问</span>
+ <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">httpBasic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>使用<code>EndpointRequest</code>替代硬编码路径</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>HttpSecurity http<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+ http
+ <span class="token punctuation">.</span><span class="token function">requestMatcher</span><span class="token punctuation">(</span>EndpointRequest<span class="token punctuation">.</span><span class="token function">toAnyEndpoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token comment" spellcheck="true">//替换掉硬编码路径,即使更改配置根路径也不会受到影响</span>
+ <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">anyRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hasRole</span><span class="token punctuation">(</span><span class="token string">"ADMIN"</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">httpBasic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>排除部分端点不设置身份验证:</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>HttpSecurity http<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+ http
+ <span class="token punctuation">.</span><span class="token function">requestMatcher</span><span class="token punctuation">(</span>
+ EndpointRequest<span class="token punctuation">.</span><span class="token function">toAnyEndpoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">excluding</span><span class="token punctuation">(</span><span class="token string">"health"</span><span class="token punctuation">,</span> <span class="token string">"info"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//排除端点/health和/info不做身份验证</span>
+ <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">anyRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hasRole</span><span class="token punctuation">(</span><span class="token string">"ADMIN"</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">httpBasic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><strong>指定验证的端点</strong></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Override</span>
+<span class="token keyword">protected</span> <span class="token keyword">void</span> <span class="token function">configure</span><span class="token punctuation">(</span>HttpSecurity http<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
+ http
+ <span class="token punctuation">.</span><span class="token function">requestMatcher</span><span class="token punctuation">(</span>EndpointRequest<span class="token punctuation">.</span><span class="token function">to</span><span class="token punctuation">(</span><span class="token string">"beans"</span><span class="token punctuation">,</span> <span class="token string">"threaddump"</span><span class="token punctuation">,</span> <span class="token string">"loggers"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//指定要验证的端点</span>
+ <span class="token punctuation">.</span><span class="token function">authorizeRequests</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">anyRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hasRole</span><span class="token punctuation">(</span><span class="token string">"ADMIN"</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+ <span class="token punctuation">.</span><span class="token function">httpBasic</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement"  style="word-break: break-all">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io/2020/09/10/Spring-Boot%20Actuator/">https://brysonbs.github.io/2020/09/10/Spring-Boot%20Actuator/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2020-09-10T16-42-20',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<script src="/customJs/random_img.js"></script>
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/09/10/Spring-Boot%20Actuator/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_231599729581158" src="" class="responsive-img" alt="Spring-Boot:Actuator">
+
+                            
+                                <script>
+                                    (function(){
+                                        var randomImg = {}
+                                        randomImg.enable = true;
+                                        randomImg.count = 50;
+                                        randomImg.pageCount = 8;
+                                        randomImg.second = 10;
+                                        randomImg.title = 'Spring-Boot:Actuator';
+                                        var len = 24
+                                        var idn = "id_231599729581158";
+                                        var $node = $('#'+idn);
+                                        getImgInfo(randomImg,$node);
+                                    })();
+                                </script>
+                            
+
+                        <span class="card-title">Spring-Boot:Actuator</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述
+引入Actuator
+使用 Actuator endpoints
+自定义 Actuator endpoints
+Securing Actuator
+
+引入Actuator1. 概述
+Actuator 可以实现对程序内部运行情况监控,比
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/08/Spring-Cloud%20Circuit%20Breaker/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_161599729581162" src="" class="responsive-img" alt="Spring-Cloud:Circuit Breaker">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = 'Spring-Cloud:Circuit Breaker';
+                                    var len = 24
+                                    var idn = "id_161599729581162";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+
+                        <span class="card-title">Spring-Cloud:Circuit Breaker</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述
+认识circuit breaker
+使用circuit breaker
+监控
+聚合多个 Hystrix streams
+
+认识circuit breaker(断路器)1.1 简介
+在微服务架构中,根据业务拆分成一个个的服务,服务于服务
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7529469123"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">162.9k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>
