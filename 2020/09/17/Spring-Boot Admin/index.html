@@ -4,12 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="并发-取消与关闭, java,web">
-    <meta name="description" content="任务取消
-取消
+    <meta name="keywords" content="Spring-Boot:Admin, java,web">
+    <meta name="description" content="概述
+引入Spring Boot Admin
+Securing the Admin Server
 
-java中没有安全的将占方式来停止线程,只有一些协作式的机制
-其中一种协作机制,设置某个”已请求取消标志”,而任务将定期的查看该标志,如果设置了这个标志,任务将提前结束,(对于存在阻塞方法的任务,可能永远不会检查到取消标志">
+引入Spring Boot Admin1. 认识
+Actuator提供了很多端点可以查看应用的运行信息,即公开了REST API,但是调用时">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +18,7 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>并发-取消与关闭 | Bryson</title>
+    <title>Spring-Boot:Admin | Bryson</title>
     <link rel="icon" type="image/png" href="/medias/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -314,7 +315,7 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">并发-取消与关闭</h1>
+                    <h1 class="description center-align post-title">Spring-Boot:Admin</h1>
                 </div>
             </div>
         </div>
@@ -330,7 +331,7 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
         randomImg.count = 50;
         randomImg.pageCount = 8;
         randomImg.second = 10;
-        randomImg.title = '并发-取消与关闭';
+        randomImg.title = 'Spring-Boot:Admin';
         var $node = $("#bgc-post-cover");
         getImgInfo(randomImg,$node);
     </script>
@@ -446,8 +447,8 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E5%B9%B6%E5%8F%91/">
-                                <span class="chip bg-color">并发</span>
+                            <a href="/tags/Spring/">
+                                <span class="chip bg-color">Spring</span>
                             </a>
                         
                     </div>
@@ -458,8 +459,8 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E5%B9%B6%E5%8F%91/" class="post-category">
-                                并发
+                            <a href="/categories/Spring/" class="post-category">
+                                Spring
                             </a>
                         
                     </div>
@@ -471,28 +472,28 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-08-22
+                    2020-09-17
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-20
+                    2020-09-21
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    1.2k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    6 分
+                    5 分
                 </div>
                 
 
@@ -508,182 +509,164 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h4 id="任务取消"><a href="#任务取消" class="headerlink" title="任务取消"></a><strong>任务取消</strong></h4><ol>
-<li><p><strong>取消</strong></p>
+                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>引入Spring Boot Admin</li>
+<li>Securing the Admin Server</li>
+</ul>
+<h3 id="引入Spring-Boot-Admin"><a href="#引入Spring-Boot-Admin" class="headerlink" title="引入Spring Boot Admin"></a>引入Spring Boot Admin</h3><h4 id="1-认识"><a href="#1-认识" class="headerlink" title="1. 认识"></a>1. 认识</h4><ul>
+<li><code>Actuator</code>提供了很多端点可以查看应用的运行信息,即公开了<code>REST API</code>,但是调用时返回的是json数据,如果有一个专门的UI界面来展示这些数据可以更容易查看</li>
+<li><code>Spring Boot Admin</code>是一种前端web应用,通过它可以更简单使用<code>Actuator</code>端点并且提供了UI界面的展示</li>
+<li><code>Spring Boot Admin</code>分为<code>server</code>和<code>client</code>,其中<code>Admin Server</code>负责收集并展示<code>Actuator</code>的数据,而<code>client</code>即为其他应用(需要将其注册为<code>Admin Client</code>)</li>
+</ul>
+<h4 id="2-开始"><a href="#2-开始" class="headerlink" title="2. 开始"></a>2. 开始</h4><ul>
+<li><p><strong>依赖: ** **(Admin Server)</strong>一般情况<code>Spring Boot Admin</code>会作为单独的一个应用,因此可以直接创建项目时通过<code>Spring Boot Initializr</code>添加,或者在<code>pom.xml</code>直接添加Maven依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>de.codecentric<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-admin-starter-server<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>*<em>启用: *</em> 添加完依赖之后需要在启动类使用<code>@EnableAdminServer</code>注解启用,这样应用启动时才会启用</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token annotation punctuation">@EnableAdminServer</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AdminApplication</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>AdminApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>*<em>注册: *</em> 打开链接<code>http://localhost:9999/</code>可以发现application为0,此时需要将应用注册到<code>Admin Server</code>才可以</p>
+</li>
+</ul>
+<h4 id="3-注册Admin-client"><a href="#3-注册Admin-client" class="headerlink" title="3. 注册Admin client"></a>3. 注册<code>Admin client</code></h4><h5 id="3-1-注册方式"><a href="#3-1-注册方式" class="headerlink" title="3.1 注册方式"></a>3.1 注册方式</h5><ul>
+<li><p>有了<code>Admin Server</code>但是没有将应用作为<code>Admin client</code>注册进去,因此需要注册,有两种实现方式</p>
 <ul>
-<li>java中没有安全的将占方式来停止线程,只有一些协作式的机制</li>
-<li>其中一种协作机制,设置某个”已请求取消标志”,而任务将定期的查看该标志,如果设置了这个标志,任务将提前结束,(对于存在阻塞方法的任务,可能永远不会检查到取消标志,导致永远不会结束)<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token operator">!</span>cancelled<span class="token punctuation">)</span> <span class="token comment" spellcheck="true">//因为put为可阻塞方法,可能导致一直阻塞,导致无法检查取消标志</span>
-  blockQueue<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<li><p>*<em>方式一: *</em> 每个应用显示注册到<code>Admin Server</code>中</p>
+</li>
+<li><p>*<em>方式二: *</em> <code>Admin Server</code>通过<code>Eureka service registry</code>(Eureka服务注册中心)发现其他应用(将<code>admin server</code>作为<code>Eureka Client</code>注册到<code>Eureka Server registry</code>中去,然后就会自动发现其他的应用)</p>
 </li>
 </ul>
 </li>
-<li><p><strong>中断</strong></p>
+<li><p>*<em>方式一: *</em>每个应用作为显示的<code>Admin Client</code>注册到<code>Admin Server</code>中</p>
 <ul>
-<li>每个线程都有一个boolean类型的中断状态,当中断线程时,这个线程的中断状态将被设为true(仅设置状态)<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Thread</span><span class="token punctuation">{</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">//设置中断</span>
-  <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isInterrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">//检查是否中断</span>
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">boolean</span> <span class="token function">interrupted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token comment" spellcheck="true">//清除当前线程的中断状态</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li><p>作为<code>Admin Client</code>的应用添加<code>admin-starter-client</code>依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml">        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>de.codecentric<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-admin-starter-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li>阻塞库方法,如Thread.sleep和Object.wait等方法都会检查线程何时中断,并且在发现中断时提前返回,它们在响应中断时执行的操作包括:清除中断状态,抛出InterruptedException,表示阻塞操作由于中断而提前结束,JVM不能保证阻塞方法检测到中断的速度,但实际情况中响应速度还是非常快的</li>
-<li>调用interrupt并不意味着立即停止目标线程正在执行的任务,而只是传递了请求中断的消息</li>
-</ul>
-</li>
-<li><p><strong>中断策略</strong></p>
-<ul>
-<li>最合理的中断策略是某种形式的线程级(Thread_Level)取消操作或服务级(Service-Level)取消操作;尽快退出,在必要时进行清理,通知某个所有者该线程已经退出</li>
-</ul>
-</li>
-<li><p><strong>响应中断</strong></p>
-<blockquote>
-<p>当调用可中断的阻塞函数时(中断后会抛出InterruptedException),有两种使用策略用于处理该异常</p>
-</blockquote>
-<ul>
-<li>传递(声明抛出)异常,从而使你的方法也成为可中断的阻塞方法<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> Task <span class="token function">getNextTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//传递异常</span>
-  <span class="token keyword">return</span> blockingQueue<span class="token punctuation">.</span><span class="token function">take</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li>恢复中断状态,从而使调用栈中的上层代码能够对其进行处理</li>
-</ul>
-</li>
-<li><p><strong>通过Future来实现取消</strong></p>
-<ul>
-<li>Future作为一种抽象机制来管理任务的生命周期,处理异常,以及实现取消.通常使用现有库中的类比自行编写更好</li>
-<li>boolean cancel(boolean mayInterruptRunning)方法参数为false时只能取消还没有开始的任务,对于已经开始的任务,就任由其运行下去;参数为true时,会中断正在执行的任务<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过Future取消任务</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">timedRun</span><span class="token punctuation">(</span>Runnable r<span class="token punctuation">,</span><span class="token keyword">long</span> timeout<span class="token punctuation">,</span>TimeUnit unit<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException<span class="token punctuation">{</span>
-  <span class="token comment" spellcheck="true">//交给Future取消任务</span>
-  Future<span class="token operator">&lt;</span><span class="token operator">?</span><span class="token operator">></span> task <span class="token operator">=</span> taskExec<span class="token punctuation">.</span><span class="token function">submit</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//taskExec 为ExecutorService</span>
-  <span class="token keyword">try</span> <span class="token punctuation">{</span>
-      task<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>timeout<span class="token punctuation">,</span>unit<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ExecutionException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">//可对异常进行处理,抛出详细异常</span>
-  <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">TimeoutException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">//取消任务</span>
-  <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">//如果任务已经结束,cancel方法不会有任何影响;如果任务正在运行,将被中断</span>
-      task<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li><p><code>application.yml</code>中配置<code>Admin Client</code>将自己注册到<code>Admin Server</code>中去</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">boot</span><span class="token punctuation">:</span>
+    <span class="token key atrule">admin</span><span class="token punctuation">:</span>
+      <span class="token key atrule">client</span><span class="token punctuation">:</span>
+        <span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span><span class="token number">9999</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 </li>
-<li><p><strong>处理不可中断的阻塞</strong></p>
+<li><p>*<em>方式二: *</em><code>Admin Server</code>通过<code>Eureka service registry</code>发现其他应用(将<code>admin server</code>作为<code>Eureka Client</code>注册到<code>Eureka Server registry</code>中去,然后就会自动发现其他的应用)</p>
 <ul>
-<li><p>重写interrupt方法将非标准的取消操作封装在Thread中</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//重写interrupt方法将非标准的取消操作封装在Thread中</span>
-<span class="token keyword">class</span> <span class="token class-name">ReaderThread</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span><span class="token punctuation">{</span>
-  <span class="token keyword">private</span> <span class="token keyword">final</span> Socket socket<span class="token punctuation">;</span>
+<li><p><code>Admin Server</code>中引入<code>eureka-client</code>依赖</p>
+<ul>
+<li><p>依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.cloud<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-cloud-starter-netflix-eureka-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p><code>eureka-client</code>是基于spring cloud的,如果不是spring cloud项目则需要添加额外配置spring cloud</p>
+<pre class="line-numbers language-xml"><code class="language-xml">    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>java.version</span><span class="token punctuation">></span></span>11<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>java.version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>spring-boot-admin.version</span><span class="token punctuation">></span></span>2.3.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>spring-boot-admin.version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>spring-cloud.version</span><span class="token punctuation">></span></span>Hoxton.SR8<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>spring-cloud.version</span><span class="token punctuation">></span></span> <span class="token comment" spellcheck="true">&lt;!--配置spring cloud--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
 
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//重写interrupt方法</span>
-      <span class="token keyword">try</span> <span class="token punctuation">{</span>
-          socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-
-      <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-          <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">interrupt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token comment" spellcheck="true">//任务</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>将非标准的取消操作封装在一个任务(Future)中</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//扩展Callable接口</span>
-<span class="token keyword">interface</span> <span class="token class-name">CancellableTask</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">extends</span> <span class="token class-name">Callable</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">{</span>
-  <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  RunnableFuture<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">newTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//将非标准的取消操作封装到(Future)任务中</span>
-<span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">SocketUsingTask</span><span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token keyword">implements</span> <span class="token class-name">CancellableTask</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">{</span>
-  <span class="token keyword">private</span> Socket socket<span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">//...</span>
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">void</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//重写取消操作</span>
-      <span class="token keyword">try</span> <span class="token punctuation">{</span>
-          <span class="token keyword">if</span><span class="token punctuation">(</span>socket <span class="token operator">!=</span> null<span class="token punctuation">)</span>
-              socket<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token punctuation">}</span>
-
-  <span class="token annotation punctuation">@Override</span>
-  <span class="token keyword">public</span> RunnableFuture<span class="token operator">&lt;</span>T<span class="token operator">></span> <span class="token function">newTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">//将此Callable封装为任务返回</span>
-      <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">FutureTask</span><span class="token operator">&lt;</span>T<span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment" spellcheck="true">//封装为FutureTask</span>
-          <span class="token comment" spellcheck="true">//重写取消方法</span>
-          <span class="token annotation punctuation">@Override</span>
-          <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">cancel</span><span class="token punctuation">(</span><span class="token keyword">boolean</span> mayInterruptIfRunning<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-              <span class="token keyword">try</span> <span class="token punctuation">{</span>
-                  SocketUsingTask<span class="token punctuation">.</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//调用Callable重写的cancel方法</span>
-              <span class="token punctuation">}</span> <span class="token keyword">finally</span> <span class="token punctuation">{</span>
-                  <span class="token keyword">return</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span>mayInterruptIfRunning<span class="token punctuation">)</span><span class="token punctuation">;</span>
-              <span class="token punctuation">}</span>
-          <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 </li>
-<li><p><strong>停止基于线程的服务</strong></p>
+</ul>
+</li>
+</ul>
+<pre><code>      &lt;dependencyManagement&gt;
+          &lt;dependencies&gt;
+              &lt;dependency&gt;
+                  &lt;groupId&gt;de.codecentric&lt;/groupId&gt;
+                  &lt;artifactId&gt;spring-boot-admin-dependencies&lt;/artifactId&gt;
+                  &lt;version&gt;${spring-boot-admin.version}&lt;/version&gt;
+                  &lt;type&gt;pom&lt;/type&gt;
+                  &lt;scope&gt;import&lt;/scope&gt;
+              &lt;/dependency&gt;
+              &lt;dependency&gt;  &lt;!--配置spring cloud--&gt;
+                  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+                  &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+                  &lt;version&gt;${spring-cloud.version}&lt;/version&gt;
+                  &lt;type&gt;pom&lt;/type&gt;
+                  &lt;scope&gt;import&lt;/scope&gt;
+              &lt;/dependency&gt;
+          &lt;/dependencies&gt;
+      &lt;/dependencyManagement&gt;
+  ~~~</code></pre><ul>
+<li><p><code>Admin server</code>中配置<code>Eureka server</code>地址</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">application</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> admin<span class="token punctuation">-</span>server
+<span class="token key atrule">eureka</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true">#默认eureka server 地址为localhost,如果本地测试可以不配置</span>
+  <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">hostname</span><span class="token punctuation">:</span> localhost
+  <span class="token key atrule">client</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service-url</span><span class="token punctuation">:</span> 
+      <span class="token key atrule">defaultZone</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//$<span class="token punctuation">{</span>eureka.instance.hostname<span class="token punctuation">}</span><span class="token punctuation">:</span>8761/eureka<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>默认情况下<code>Admin server</code>会将自己注册为一个<code>Eureka</code>服务,可以通过配置禁止</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+ <span class="token key atrule">client</span><span class="token punctuation">:</span>
+  <span class="token key atrule">register-with-eureka</span><span class="token punctuation">:</span> <span class="token boolean important">false</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="3-使用Admin-server"><a href="#3-使用Admin-server" class="headerlink" title="3.使用Admin server"></a>3.使用<code>Admin server</code></h4><ul>
+<li>注册完成之后启动<code>Admin server</code>,通过地址(如: <code>http://localhost:9999</code>) 进入UI界面,可以查询或设置各个应用的详细信息</li>
+</ul>
+<h3 id="Securing-the-Admin-Server"><a href="#Securing-the-Admin-Server" class="headerlink" title="Securing the Admin Server"></a>Securing the Admin Server</h3><h4 id="1-Admin-server增加登录认证"><a href="#1-Admin-server增加登录认证" class="headerlink" title="1. Admin server增加登录认证"></a>1. <code>Admin server</code>增加登录认证</h4><ul>
+<li><p>由于<code>Admin Server</code>是基于Spring boot的,因此可以直接引入<code>Spring Boot Security</code>来增加登录验证</p>
 <ul>
-<li>服务应该提供生命周期方法(Lifecycle Method)来关闭它自己以及它所拥有的线程,这样服务关闭时,就可以关闭所有线程了,如ExecutorService中提供了shutdown和shutdownNow方法</li>
-</ul>
+<li><p>引入<code>Spring Boot Security</code>依赖</p>
+<pre class="line-numbers language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-security<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p><strong>关闭ExecutorService</strong></p>
-<ul>
-<li>shutdown正常关闭:等待队列中所有任务执行完成后才关闭</li>
-<li>shutdownNow强制关闭:首先关闭当前正在执行的任务,然后返回所有尚未启动的任务清单(无法获知正在执行而被关闭的任务)</li>
-</ul>
-</li>
-<li><p><strong>毒丸(Poison Pill)对象</strong></p>
-<ul>
-<li>毒丸是指一个放在队列上的对象,当得到这个对象时,立即停止</li>
-<li>在FIFO队列中,毒丸对象将确保消费者在关闭之前首先完成队列中的所有工作,在提交毒丸对象之前提交的所有任务都会被处理,而之后的不会再处理<h4 id="处理非正常的线程终止"><a href="#处理非正常的线程终止" class="headerlink" title="处理非正常的线程终止"></a>处理非正常的线程终止</h4></li>
-</ul>
-</li>
-<li><p><strong>未捕获异常的处理</strong></p>
-<ul>
-<li>Thread中提供了UncaughtExceptionHandler,它能检测出某个线程由于未捕获的异常而终结的情况,当一个线程由于未捕获的异常退出时,JVM会把这个事件报告给应用程序提供的UncaughtExceptionHandler异常处理器,如果没有提供,那默认将栈追踪信息输出到System.err</li>
-<li>可以实现该接口,主动的处理异常并写入日志中</li>
-<li>Thread.setUncaughtExceptionHandler为线程设置异常处理器</li>
-<li>Thread.setDefaultUncaughtExceptionHandler设置默认的异常处理器</li>
-<li>ThreadPoolExecutor在构造函数中传入ThreadFactory,就会为线程池所有线程设置一个异常处理器</li>
-<li>在Executor中由submit提交的任务,不会交UncaughtExceptionHandler,而是被Future.get封装在ExecutionException中重新抛出<h4 id="JVM关闭"><a href="#JVM关闭" class="headerlink" title="JVM关闭"></a>JVM关闭</h4></li>
-</ul>
-</li>
-<li><p><strong>关闭钩子</strong></p>
-<ul>
-<li>在JVM正常关闭中,JVM首先会调用所有已注册的关闭钩子(Shutdown Hook),关闭钩子并发执行,JVM并不保证关闭钩子的执行顺序,,当所有关闭钩子执行结束,如果runFinalizersOnExit为true,那么JVM将运行终结器,然后在停止,编写的关闭钩子必须要尽快退出,因为它们会延迟JVM的结束时间</li>
-<li>Runtime.getRuntime().addShutdownHook(Threa thread); 注册关闭钩子<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//通过注册一个关闭钩子来停止日志服务</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-  Runtime<span class="token punctuation">.</span><span class="token function">getRuntime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addShutdownHook</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-      <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-          <span class="token comment" spellcheck="true">//停止日志服务</span>
-      <span class="token punctuation">}</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="守护线程-Daemon-Thread"><a href="#守护线程-Daemon-Thread" class="headerlink" title="守护线程(Daemon Thread)"></a>守护线程(Daemon Thread)</h4><blockquote>
-<p>当JVM中不存在任何一个正在运行的非守护线程时,则JVM进程即会退出,此时会丢弃掉所有现存的守护线程</p>
-</blockquote>
+<li><p>配置登录帐号密码</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">security</span><span class="token punctuation">:</span>
+    <span class="token key atrule">user</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> admin
+      <span class="token key atrule">password</span><span class="token punctuation">:</span> 53cr3t<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
 </li>
-</ol>
-<blockquote>
-<p>当JVM停止时,所有仍然存在的守护线程都将被丢弃,既不执行finally块,也不会执行回卷栈,应该尽可能少的私用守护线程</p>
-</blockquote>
-<blockquote>
-<p>创建一个守护线程,需要在调用thread.start()方法之前调用thread.setDeamon()方法.</p>
-</blockquote>
-<h4 id="终结器"><a href="#终结器" class="headerlink" title="终结器"></a>终结器</h4><blockquote>
-<p>GC回收器对那些定义了finalize方法的对象会进行特殊处理: 在回收器释放他们后,会调用他们的finalize方法,从而保证一些持久化的资源被释放</p>
-</blockquote>
-<blockquote>
-<p>尽量避免使用终结器(当需要管理对象且该对象持有的资源是通过本地方法获得时才使用)</p>
-</blockquote>
+</ul>
+<h4 id="2-Actuator认证处理"><a href="#2-Actuator认证处理" class="headerlink" title="2.Actuator认证处理"></a>2.<code>Actuator</code>认证处理</h4><ul>
+<li><p>由于<code>Actuator</code>可能配置了<code>Security</code>的认证<code>HTTP Basic authentication</code>,(对于不同的请求端点,有不同的权限认证),因此<code>Admin server</code>获取<code>Actuator</code>信息时需要携带认证信息</p>
+</li>
+<li><p>*<em>情况一: *</em> 对于应用(<code>Admin client</code>)自己注册到<code>Admin server</code>的情况,只需要在<code>admin client</code>中配置认证信息即可,职业应用注册到<code>Admin server</code>中时会携带认证信息一起注册</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">spring</span><span class="token punctuation">:</span>
+  <span class="token key atrule">boot</span><span class="token punctuation">:</span>
+    <span class="token key atrule">admin</span><span class="token punctuation">:</span>
+      <span class="token key atrule">client</span><span class="token punctuation">:</span>
+        <span class="token key atrule">url</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//localhost<span class="token punctuation">:</span><span class="token number">9090</span>
+        <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+          <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+            <span class="token key atrule">user.name</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.security.user.name<span class="token punctuation">}</span>
+            <span class="token key atrule">user.password</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span>spring.security.user.password<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>*<em>情况二: *</em> 对于<code>Admin server</code>通过<code>Eureka</code>服务中心发现其他应用的情况,需要对其他应用配置,使其注册到<code>Eureka</code>服务注册中心时就携带认证信息,这样<code>Admin server</code>从<code>Eureka</code>服务注册中心即可获取到认证信息</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">eureka</span><span class="token punctuation">:</span>
+  <span class="token key atrule">instance</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata-map</span><span class="token punctuation">:</span>
+      <span class="token key atrule">user.name</span><span class="token punctuation">:</span> admin
+      <span class="token key atrule">user.password</span><span class="token punctuation">:</span> password<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -727,7 +710,7 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://brysonbs.github.io/2019/08/22/CancellationAndShutdown/">https://brysonbs.github.io/2019/08/22/CancellationAndShutdown/</a>
+                    <a href="https://brysonbs.github.io/2020/09/17/Spring-Boot%20Admin/">https://brysonbs.github.io/2020/09/17/Spring-Boot%20Admin/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -765,8 +748,8 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E5%B9%B6%E5%8F%91/">
-                                    <span class="chip bg-color">并发</span>
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
                                 </a>
                             
                         </div>
@@ -812,7 +795,7 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
         repo: 'blog-comments',
         owner: 'BrysonBS',
         admin: "BrysonBS",
-        id: '2019-08-22T19-22-20',
+        id: '2020-09-17T14-55-10',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -833,71 +816,73 @@ java中没有安全的将占方式来停止线程,只有一些协作式的机制
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/08/24/TaskExecution/">
+                <a href="/2020/09/17/Spring-Boot%20Admin/">
                     <div class="card-image">
                         
                             
                             
                         
 
+                        <img id="id_11600680411642" src="" class="responsive-img" alt="Spring-Boot:Admin">
 
+                            
+                                <script>
+                                    (function(){
+                                        var randomImg = {}
+                                        randomImg.enable = true;
+                                        randomImg.count = 50;
+                                        randomImg.pageCount = 8;
+                                        randomImg.second = 10;
+                                        randomImg.title = 'Spring-Boot:Admin';
+                                        var len = 24
+                                        var idn = "id_11600680411642";
+                                        var $node = $('#'+idn);
+                                        getImgInfo(randomImg,$node);
+                                    })();
+                                </script>
+                            
 
-                        <img id="id_211600680412656" src="" class="responsive-img" alt="并发-任务执行">
-
-                        
-                            <script>
-                                (function(){
-                                    var randomImg = {}
-                                    randomImg.enable = true;
-                                    randomImg.count = 50;
-                                    randomImg.pageCount = 8;
-                                    randomImg.second = 10;
-                                    randomImg.title = '并发-任务执行';
-                                    var len = 24
-                                    var idn = "id_211600680412656";
-                                    var $node = $('#'+idn);
-                                    getImgInfo(randomImg,$node);
-                                })();
-                            </script>
-                        
-                        <span class="card-title">并发-任务执行</span>
+                        <span class="card-title">Spring-Boot:Admin</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Executor框架
-Executors工厂类
+                            概述
+引入Spring Boot Admin
+Securing the Admin Server
 
-newFixedThreadPool创建一个可重用的固定线程数的线程池,以共享的无界队列方式来运行这些线程,当活动线程到达固定数量时,再次加入任务会加入队列等待其他活动线程运行结束,再执行
-
+引入Spring Boot Admin1. 认识
+Actuator提供了很多端点可以查看应用的运行信息,即公开了REST API,但是调用时
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-08-24
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B9%B6%E5%8F%91/" class="post-category">
-                                    并发
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B9%B6%E5%8F%91/">
-                        <span class="chip bg-color">并发</span>
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
                     </a>
                     
                 </div>
@@ -911,14 +896,14 @@ newFixedThreadPool创建一个可重用的固定线程数的线程池,以共享�
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/08/20/BuildingBlocks/">
+                <a href="/2020/09/10/Spring-Boot%20Actuator/">
                     <div class="card-image">
                         
                             
                             
                         
 
-                        <img id="id_201600680412660" src="" class="responsive-img" alt="并发-构建基础模块">
+                        <img id="id_231600680411643" src="" class="responsive-img" alt="Spring-Boot:Actuator">
 
                         
                             <script>
@@ -928,39 +913,41 @@ newFixedThreadPool创建一个可重用的固定线程数的线程池,以共享�
                                     randomImg.count = 50;
                                     randomImg.pageCount = 8;
                                     randomImg.second = 10;
-                                    randomImg.title = '并发-构建基础模块';
+                                    randomImg.title = 'Spring-Boot:Actuator';
                                     var len = 24
-                                    var idn = "id_201600680412660";
+                                    var idn = "id_231600680411643";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
                             </script>
                         
 
-                        <span class="card-title">并发-构建基础模块</span>
+                        <span class="card-title">Spring-Boot:Actuator</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            同步容器类
-Vector , Hashtable , Collections.synchronizedXxx等工厂方法创建
+                            概述
+引入Actuator
+使用 Actuator endpoints
+自定义 Actuator endpoints
+Securing Actuator
 
-
-这些类实现线程安全方式: 将它们的状态封装起来,并对每个共有方法都进行同步,是的每次只有一个线程能方法容器状态
-
+引入Actuator1. 概述
+Actuator 可以实现对程序内部运行情况监控,比
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E5%B9%B6%E5%8F%91/" class="post-category">
-                                    并发
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
                                 </a>
                             
                             
@@ -970,8 +957,8 @@ Vector , Hashtable , Collections.synchronizedXxx等工厂方法创建
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%B9%B6%E5%8F%91/">
-                        <span class="chip bg-color">并发</span>
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
                     </a>
                     
                 </div>

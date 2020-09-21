@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-09-10T09:18:56.075Z</updated>
+  <updated>2020-09-21T09:25:48.374Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-Boot:Admin</title>
+    <link href="https://brysonbs.github.io/2020/09/17/Spring-Boot%20Admin/"/>
+    <id>https://brysonbs.github.io/2020/09/17/Spring-Boot%20Admin/</id>
+    <published>2020-09-17T06:55:10.000Z</published>
+    <updated>2020-09-21T09:25:48.374Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;引入Spring Boot Admin&lt;/li&gt;
+&lt;li&gt;Securing the Admin
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Boot:Actuator</title>
@@ -546,34 +575,6 @@
         
           &lt;h3 id=&quot;观察者模式的定义&quot;&gt;&lt;a href=&quot;#观察者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;观察者模式的定义&quot;&gt;&lt;/a&gt;观察者模式的定义&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;观察者(Observer)模式: **
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-状态模式</title>
-    <link href="https://brysonbs.github.io/2020/05/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/05/05/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-05-05T09:32:10.000Z</published>
-    <updated>2020-05-05T10:55:30.744Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;状态模式的定义&quot;&gt;&lt;a href=&quot;#状态模式的定义&quot; class=&quot;headerlink&quot; title=&quot;状态模式的定义&quot;&gt;&lt;/a&gt;状态模式的定义&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;状态(State)模式: *&lt;/em&gt;
         
       
     
