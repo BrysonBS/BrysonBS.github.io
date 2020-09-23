@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2020-09-21T09:25:48.374Z</updated>
+  <updated>2020-09-23T13:25:50.287Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-Boot:使用JMX监控</title>
+    <link href="https://brysonbs.github.io/2020/09/23/Spring-Boot%20%E4%BD%BF%E7%94%A8JMX%E7%9B%91%E6%8E%A7/"/>
+    <id>https://brysonbs.github.io/2020/09/23/Spring-Boot%20%E4%BD%BF%E7%94%A8JMX%E7%9B%91%E6%8E%A7/</id>
+    <published>2020-09-23T06:15:20.000Z</published>
+    <updated>2020-09-23T13:25:50.287Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Actuator&lt;/code&gt;可以使用&lt;code&gt;http
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/categories/Spring/"/>
+    
+    
+      <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Boot:Admin</title>
@@ -547,34 +576,6 @@
         
           &lt;h3 id=&quot;中介者模式的定义&quot;&gt;&lt;a href=&quot;#中介者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;中介者模式的定义&quot;&gt;&lt;/a&gt;中介者模式的定义&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;中介者(Mediator)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-观察者模式</title>
-    <link href="https://brysonbs.github.io/2020/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/05/07/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-05-07T00:45:12.000Z</published>
-    <updated>2020-05-08T09:28:55.964Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;观察者模式的定义&quot;&gt;&lt;a href=&quot;#观察者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;观察者模式的定义&quot;&gt;&lt;/a&gt;观察者模式的定义&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;观察者(Observer)模式: **
         
       
     

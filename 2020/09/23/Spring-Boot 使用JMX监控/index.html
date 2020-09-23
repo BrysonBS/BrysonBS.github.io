@@ -4,13 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="java中创建线程的几种方式, java,web">
-    <meta name="description" content="1.方式一: 继承Thread类
-实现: 自定义类继承Thread类,重写其run方法,将需要执行的代码放到run方法中去
+    <meta name="keywords" content="Spring-Boot:使用JMX监控, java,web">
+    <meta name="description" content="
 
-class ThreadTest extends Thread{
-    @Override
-    public">
+Actuator可以使用http base方式或者JMX方式公布开端点,从而提供spring应用的运行信息,以下会介绍JMX的使用
+Spring Boot 引用中默认是启用JMX(Java Management Extensions)的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +16,7 @@ class ThreadTest extends Thread{
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>java中创建线程的几种方式 | Bryson</title>
+    <title>Spring-Boot:使用JMX监控 | Bryson</title>
     <link rel="icon" type="image/png" href="/medias/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -315,7 +313,7 @@ class ThreadTest extends Thread{
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">java中创建线程的几种方式</h1>
+                    <h1 class="description center-align post-title">Spring-Boot:使用JMX监控</h1>
                 </div>
             </div>
         </div>
@@ -331,7 +329,7 @@ class ThreadTest extends Thread{
         randomImg.count = 50;
         randomImg.pageCount = 8;
         randomImg.second = 10;
-        randomImg.title = 'java中创建线程的几种方式';
+        randomImg.title = 'Spring-Boot:使用JMX监控';
         var $node = $("#bgc-post-cover");
         getImgInfo(randomImg,$node);
     </script>
@@ -447,8 +445,8 @@ class ThreadTest extends Thread{
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E7%BA%BF%E7%A8%8B/">
-                                <span class="chip bg-color">线程</span>
+                            <a href="/tags/Spring/">
+                                <span class="chip bg-color">Spring</span>
                             </a>
                         
                     </div>
@@ -459,8 +457,8 @@ class ThreadTest extends Thread{
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/java/" class="post-category">
-                                java
+                            <a href="/categories/Spring/" class="post-category">
+                                Spring
                             </a>
                         
                     </div>
@@ -472,28 +470,28 @@ class ThreadTest extends Thread{
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2018-05-15
+                    2020-09-23
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2020-04-20
+                    2020-09-23
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    759
+                    650
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    3 分
+                    2 分
                 </div>
                 
 
@@ -509,139 +507,104 @@ class ThreadTest extends Thread{
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h3 id="1-方式一-继承Thread类"><a href="#1-方式一-继承Thread类" class="headerlink" title="1.方式一: 继承Thread类"></a>1.方式一: 继承Thread类</h3><blockquote>
-<p><strong>实现:</strong> 自定义类继承Thread类,重写其run方法,将需要执行的代码放到run方法中去<a id="more"></a></p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">ThreadTest</span> <span class="token keyword">extends</span> <span class="token class-name">Thread</span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//线程代码</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><strong>使用:</strong> 创建对象并调用其start方法</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">new</span> <span class="token class-name">ThreadTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="2-方式二-实现Runnable接口"><a href="#2-方式二-实现Runnable接口" class="headerlink" title="2.方式二: 实现Runnable接口"></a>2.方式二: 实现Runnable接口</h3><blockquote>
-<p><strong>实现:</strong> 自定义类实现Runnable接口,实现其run方法,将需要执行代码放到run方法中去</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">ThreadTest</span> <span class="token keyword">implements</span> <span class="token class-name">Runnable</span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token comment" spellcheck="true">//线程代码</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"线程执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><strong>使用:</strong> 将自定义类对象作为参数传入Thread类对象中去,然后调用Thread类对象的start方法</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ThreadTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="3-方式三-匿名内部类"><a href="#3-方式三-匿名内部类" class="headerlink" title="3.方式三: 匿名内部类"></a>3.方式三: 匿名内部类</h3><blockquote>
-<p><strong>实现:</strong> 本质同1,2</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//1.继承Thread方式</span>
-<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-          System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Thread Success!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//2.实现Runnable接口方式</span>
-<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Runnable Success!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="4-方式四-带返回值的线程"><a href="#4-方式四-带返回值的线程" class="headerlink" title="4.方式四: 带返回值的线程"></a>4.方式四: 带返回值的线程</h3><blockquote>
-<p><strong>实现:</strong> 自定义类实现Callable接口,实现其call方法,可带返回值</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">CallableTask</span> <span class="token keyword">implements</span> <span class="token class-name">Callable</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">{</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> Integer <span class="token function">call</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"正在计算..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p><strong>使用:</strong> 将自定义类对象作为参数传递</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java">CallableTask ct <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CallableTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-FutureTask<span class="token operator">&lt;</span>Integer<span class="token operator">></span> ft <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FutureTask</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span>ct<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">new</span> <span class="token class-name">Thread</span><span class="token punctuation">(</span>ft<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//执行线程</span>
-Integer result <span class="token operator">=</span> null<span class="token punctuation">;</span>
-<span class="token keyword">try</span> <span class="token punctuation">{</span>
-     result <span class="token operator">=</span> ft<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment" spellcheck="true">//获取线程执行的返回值</span>
-<span class="token punctuation">}</span><span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span><span class="token punctuation">{</span>
-<span class="token punctuation">}</span>
-System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"计算结果为: "</span><span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="5-方式五-Timer-定时器"><a href="#5-方式五-Timer-定时器" class="headerlink" title="5.方式五: Timer(定时器)"></a>5.方式五: Timer(定时器)</h3><blockquote>
-<p><strong>使用:</strong> 创建Timer对象,然后执行其schedule(时刻表)方法</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">TimerTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    Timer timer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Timer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//创建一个定时器对象</span>
-    timer<span class="token punctuation">.</span><span class="token function">schedule</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">TimerTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>     <span class="token comment" spellcheck="true">//线程任务</span>
-            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"TImerTask is run ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token comment" spellcheck="true">//0秒后执行,毎1000毫秒执行一次线程任务</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="6-方式六-线程池"><a href="#6-方式六-线程池" class="headerlink" title="6.方式六: 线程池"></a>6.方式六: 线程池</h3><blockquote>
-<p><strong>使用:</strong> 根据不同需求创建不同的线程池对象, 例如:</p>
+                <blockquote>
 <ul>
-<li><code>Executors.newFixedThreadPool(10)</code>创建固定线程数的线程池</li>
-<li><code>Executors.newCachedThreadPool()</code>创建一个运行时自动扩充线程数的线程池</li>
+<li><code>Actuator</code>可以使用<code>http base</code>方式或者<code>JMX</code>方式公布开端点,从而提供spring应用的运行信息,以下会介绍<code>JMX</code>的使用</li>
+<li>Spring Boot 引用中默认是启用<code>JMX</code>(Java Management Extensions)的,并且默认是公开的<code>MBeans</code>,可以直接使用jdk自带的<code>jconsole</code>(shell窗口使用命令<code>jconsole</code>即可)客户端查看<code>Mbeans</code></li>
+<li>使用<code>JMX</code>,那么所有的<code>Actuator</code>端点(除了<code>/heapdump</code>)会通过<code>MBeans</code>进行公开的</li>
 </ul>
 </blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ThreadPoolTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    Executor threadPool <span class="token operator">=</span> Executors<span class="token punctuation">.</span><span class="token function">newCachedThreadPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//创建一个线程池(自动分配线程个数,不够用时自动创建)</span>
-    <span class="token comment" spellcheck="true">//Executor threadPools = Executors.newFixedThreadPool(10);  //创建一个线程数固定大小(10)的线程池</span>
-    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">100</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-        threadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>         <span class="token comment" spellcheck="true">//将线程任务分配给线程池中的线程执行</span>
-            <span class="token annotation punctuation">@Override</span>
-            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"执行了..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<h4 id="1-使用Actuator-MBeans"><a href="#1-使用Actuator-MBeans" class="headerlink" title="1. 使用Actuator MBeans"></a>1. 使用<code>Actuator MBeans</code></h4><ul>
+<li><p>默认情况下是启用<code>JMX</code>的,因此只需要通过<code>JMX</code>客户端使用其公开的端点即可,可以自由选择<code>JMX</code>客户端查看其端点,此处使用JDK自带的<code>JConsole</code></p>
+</li>
+<li><p>打开<code>shell</code>窗口出入命令<code>jconsole</code>即可打开界面然后连接运行的应用,查看<code>MBean</code>信息,可以发现<code>org.springframework.boot</code>下面已经公开了<code>MBeans</code>信息</p>
+</li>
+<li><p>展开目录树可以看到具体端点下面有具体操作,然后点击按钮即可获取到端点信息</p>
+</li>
+<li><p>与<code>HTTP bease</code>方式不同,<code>JMX</code>默认情况下是公开<code>MBeans</code>的,可以通过配置设置需要公开的端点</p>
+<ul>
+<li><p>设置公开的端点</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">jmx</span><span class="token punctuation">:</span>
+      <span class="token key atrule">exposure</span><span class="token punctuation">:</span>
+        <span class="token key atrule">include</span><span class="token punctuation">:</span> health<span class="token punctuation">,</span>info<span class="token punctuation">,</span>bean<span class="token punctuation">,</span>conditions<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>设置排除某些端点</p>
+<pre class="line-numbers language-yaml"><code class="language-yaml"><span class="token key atrule">management</span><span class="token punctuation">:</span>
+  <span class="token key atrule">endpoints</span><span class="token punctuation">:</span>
+    <span class="token key atrule">jmx</span><span class="token punctuation">:</span>
+      <span class="token key atrule">exposure</span><span class="token punctuation">:</span>
+        <span class="token key atrule">exclude</span><span class="token punctuation">:</span> env<span class="token punctuation">,</span>metrics<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-创建自定义的MBeans"><a href="#2-创建自定义的MBeans" class="headerlink" title="2. 创建自定义的MBeans"></a>2. 创建自定义的<code>MBeans</code></h4><ul>
+<li><p>Spring 可以很容易的将任何<code>Bean</code>作为<code>JMX MBean</code>进行公开,只需要在<code>Bean</code>类使用<code>@ManagedResource</code>注解,在方法上使用<code>@ManagedOperation</code>或者<code>@ManagedAttribute</code>注解即可</p>
+</li>
+<li><p>实例</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span> <span class="token comment" spellcheck="true">//以便component scanning获取</span>
+<span class="token annotation punctuation">@ManagedResource</span> <span class="token comment" spellcheck="true">//暴露端点</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TacoMBean</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> AtomicInteger count<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">TacoMBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="7-方式七-spring对多线程的支持"><a href="#7-方式七-spring对多线程的支持" class="headerlink" title="7.方式七: spring对多线程的支持"></a>7.方式七: spring对多线程的支持</h3><blockquote>
-<p><a href="/2018/05/16/ThreadSpring/index.html"><strong>连接地址</strong></a></p>
-</blockquote>
-<h3 id="8-方式八-lambda表达式-jdk8"><a href="#8-方式八-lambda表达式-jdk8" class="headerlink" title="8.方式八: lambda表达式(jdk8)"></a>8.方式八: lambda表达式(jdk8)</h3><blockquote>
-<p>简单介绍</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//并行计算</span>
-<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">lambdaAdd</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
-    <span class="token comment" spellcheck="true">//并行计算集合nums进行求和</span>
-    <span class="token keyword">return</span> nums<span class="token punctuation">.</span><span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>i <span class="token operator">-</span><span class="token operator">></span> i<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">//parallelStream为并发流</span>
+    <span class="token annotation punctuation">@ManagedAttribute</span> <span class="token comment" spellcheck="true">//操作</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@ManagedOperation</span> <span class="token comment" spellcheck="true">//操作</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">.</span><span class="token function">getAndAdd</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="3-Sending-notifications-推送通知"><a href="#3-Sending-notifications-推送通知" class="headerlink" title="3. Sending notifications(推送通知)"></a>3. Sending notifications(推送通知)</h4><ul>
+<li><p>通过使用<code>Spring</code>的<code>NotificationPublisher</code>可以让<code>MBeans</code>将消息推送到<code>JMX clents</code></p>
+</li>
+<li><p><code>NotificationPublisher</code>有一个<code>sendNotification()</code>方法可以实现发布通知到任何一个订阅了<code>Mbean</code>的<code>JMX clients</code>上</p>
+</li>
+<li><p>推送通知是一种服务端直接想客户端发送数据或者警告信息的很好方式,无需客户端通过轮询方式查询</p>
+</li>
+<li><p><code>MBean</code>只要实现<code>NotificationPublisherAware</code>接口并实现其<code>setNotificationPublisher()</code>方法即可</p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Service</span> <span class="token comment" spellcheck="true">//以便component scanning获取</span>
+<span class="token annotation punctuation">@ManagedResource</span> <span class="token comment" spellcheck="true">//暴露端点</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TacoMBean</span> <span class="token keyword">implements</span> <span class="token class-name">NotificationPublisherAware</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> AtomicInteger count<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> NotificationPublisher np<span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">TacoMBean</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>count <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicInteger</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@ManagedAttribute</span> <span class="token comment" spellcheck="true">//操作</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token annotation punctuation">@ManagedOperation</span> <span class="token comment" spellcheck="true">//操作</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">></span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            np<span class="token punctuation">.</span><span class="token function">sendNotification</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Notification</span><span class="token punctuation">(</span>
+                   <span class="token string">"taco.count"</span><span class="token punctuation">,</span>
+                    <span class="token keyword">this</span><span class="token punctuation">,</span>
+                    count<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                    <span class="token string">"输入参数大于10"</span>
+            <span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> count<span class="token punctuation">.</span><span class="token function">getAndAdd</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setNotificationPublisher</span><span class="token punctuation">(</span>NotificationPublisher notificationPublisher<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>np <span class="token operator">=</span> notificationPublisher<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//并行输出</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lambdPrint</span><span class="token punctuation">(</span>ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> nums<span class="token punctuation">)</span><span class="token punctuation">{</span>
-   <span class="token comment" spellcheck="true">//并行输出集合nums的值</span>
-   nums<span class="token punctuation">.</span><span class="token function">parallelStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>System<span class="token punctuation">.</span>out<span class="token operator">:</span><span class="token operator">:</span>println<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<blockquote>
-<p>测试</p>
-</blockquote>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token annotation punctuation">@Test</span>
-<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-    ArrayList<span class="token operator">&lt;</span>Integer<span class="token operator">></span> values <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span>Integer<span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">40</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    values<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">lambdPrint</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"result: "</span><span class="token operator">+</span> <span class="token function">lambdaAdd</span><span class="token punctuation">(</span>values<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -685,7 +648,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://brysonbs.github.io/2018/05/15/Threads/">https://brysonbs.github.io/2018/05/15/Threads/</a>
+                    <a href="https://brysonbs.github.io/2020/09/23/Spring-Boot%20%E4%BD%BF%E7%94%A8JMX%E7%9B%91%E6%8E%A7/">https://brysonbs.github.io/2020/09/23/Spring-Boot%20%E4%BD%BF%E7%94%A8JMX%E7%9B%91%E6%8E%A7/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -723,8 +686,8 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E7%BA%BF%E7%A8%8B/">
-                                    <span class="chip bg-color">线程</span>
+                                <a href="/tags/Spring/">
+                                    <span class="chip bg-color">Spring</span>
                                 </a>
                             
                         </div>
@@ -770,7 +733,7 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
         repo: 'blog-comments',
         owner: 'BrysonBS',
         admin: "BrysonBS",
-        id: '2018-05-15T18-58-41',
+        id: '2020-09-23T14-15-20',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -791,20 +754,92 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2018/05/16/ThreadSpring/">
+                <a href="/2020/09/23/Spring-Boot%20%E4%BD%BF%E7%94%A8JMX%E7%9B%91%E6%8E%A7/">
                     <div class="card-image">
                         
                             
                             
                         
 
+                        <img id="id_61600867642529" src="" class="responsive-img" alt="Spring-Boot:使用JMX监控">
 
+                            
+                                <script>
+                                    (function(){
+                                        var randomImg = {}
+                                        randomImg.enable = true;
+                                        randomImg.count = 50;
+                                        randomImg.pageCount = 8;
+                                        randomImg.second = 10;
+                                        randomImg.title = 'Spring-Boot:使用JMX监控';
+                                        var len = 24
+                                        var idn = "id_61600867642529";
+                                        var $node = $('#'+idn);
+                                        getImgInfo(randomImg,$node);
+                                    })();
+                                </script>
+                            
 
-                        <img id="id_41600867578269" src="" class="responsive-img" alt="spring对多线程的支持">
+                        <span class="card-title">Spring-Boot:使用JMX监控</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+
+Actuator可以使用http base方式或者JMX方式公布开端点,从而提供spring应用的运行信息,以下会介绍JMX的使用
+Spring Boot 引用中默认是启用JMX(Java Management Extensions)的
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Spring/" class="post-category">
+                                    Spring
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/09/17/Spring-Boot%20Admin/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_11600867642530" src="" class="responsive-img" alt="Spring-Boot:Admin">
 
                         
                             <script>
@@ -814,35 +849,33 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
                                     randomImg.count = 50;
                                     randomImg.pageCount = 8;
                                     randomImg.second = 10;
-                                    randomImg.title = 'spring对多线程的支持';
+                                    randomImg.title = 'Spring-Boot:Admin';
                                     var len = 24
-                                    var idn = "id_41600867578269";
+                                    var idn = "id_11600867642530";
                                     var $node = $('#'+idn);
                                     getImgInfo(randomImg,$node);
                                 })();
                             </script>
                         
-                        <span class="card-title">spring对多线程的支持</span>
+
+                        <span class="card-title">Spring-Boot:Admin</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            1.准备
+                            概述
+引入Spring Boot Admin
+Securing the Admin Server
 
-spring3以上版本.
-配置(采用java配置方式)
-
-
-@Configuration            //java方式配置
-@ComponentScan("cn.com")  //指定注解扫描的包
-@EnableAsy
+引入Spring Boot Admin1. 认识
+Actuator提供了很多端点可以查看应用的运行信息,即公开了REST API,但是调用时
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2018-05-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-09-17
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -858,85 +891,8 @@ spring3以上版本.
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%BA%BF%E7%A8%8B/">
-                        <span class="chip bg-color">线程</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2018/05/15/Threads/">
-                    <div class="card-image">
-                        
-
-                            
-                            
-                        
-
-                        <img id="id_151600867578271" src="" class="responsive-img" alt="java中创建线程的几种方式">
-
-
-                        
-                            <script>
-                                (function(){
-                                    var randomImg = {}
-                                    randomImg.enable = true;
-                                    randomImg.count = 50;
-                                    randomImg.pageCount = 8;
-                                    randomImg.second = 10;
-                                    randomImg.title = 'java中创建线程的几种方式';
-                                    var len = 24
-                                    var idn = "id_151600867578271";
-                                    var $node = $('#'+idn);
-                                    getImgInfo(randomImg,$node);
-                                })();
-                            </script>
-                        
-
-                        <span class="card-title">java中创建线程的几种方式</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            1.方式一: 继承Thread类
-实现: 自定义类继承Thread类,重写其run方法,将需要执行的代码放到run方法中去
-
-class ThreadTest extends Thread{
-    @Override
-    public
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2018-05-15
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java/" class="post-category">
-                                    java
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E7%BA%BF%E7%A8%8B/">
-                        <span class="chip bg-color">线程</span>
+                    <a href="/tags/Spring/">
+                        <span class="chip bg-color">Spring</span>
                     </a>
                     
                 </div>
