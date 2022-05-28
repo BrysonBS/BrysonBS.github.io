@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2022-05-28T15:23:49.209Z</updated>
+  <updated>2022-05-28T15:32:35.829Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/"/>
     <id>https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/</id>
     <published>2022-05-28T13:29:32.000Z</published>
-    <updated>2022-05-28T15:23:49.209Z</updated>
+    <updated>2022-05-28T15:32:35.829Z</updated>
     
     <summary type="html">
     
@@ -41,6 +41,8 @@
     
     
       <category term="JavaFX" scheme="https://brysonbs.github.io/tags/JavaFX/"/>
+    
+      <category term="GUI" scheme="https://brysonbs.github.io/tags/GUI/"/>
     
   </entry>
   
