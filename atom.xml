@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2022-05-23T14:39:59.265Z</updated>
+  <updated>2022-05-28T15:23:49.209Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JavaFX初识</title>
+    <link href="https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/"/>
+    <id>https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/</id>
+    <published>2022-05-28T13:29:32.000Z</published>
+    <updated>2022-05-28T15:23:49.209Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;JavaFX是一个基于Java的开源框架,用于Java平台的图形用户界面(GUI)开发技术领域,是Java
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/categories/JavaFX/"/>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/tags/JavaFX/"/>
+    
+  </entry>
   
   <entry>
     <title>ES6 ~ ES11新特性</title>
@@ -547,34 +575,6 @@
         
           &lt;h3 id=&quot;备忘录模式的定义&quot;&gt;&lt;a href=&quot;#备忘录模式的定义&quot; class=&quot;headerlink&quot; title=&quot;备忘录模式的定义&quot;&gt;&lt;/a&gt;备忘录模式的定义&lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;*&lt;em&gt;备忘录(Memento)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-访问者模式</title>
-    <link href="https://brysonbs.github.io/2020/05/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/05/11/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-05-11T00:37:32.000Z</published>
-    <updated>2020-05-11T09:53:05.606Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;访问者模式的定义&quot;&gt;&lt;a href=&quot;#访问者模式的定义&quot; class=&quot;headerlink&quot; title=&quot;访问者模式的定义&quot;&gt;&lt;/a&gt;访问者模式的定义&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;访问者(Visitor)模式: *&lt;/em&gt;
         
       
     
