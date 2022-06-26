@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://brysonbs.github.io/"/>
-  <updated>2022-05-28T15:32:35.829Z</updated>
+  <updated>2022-06-26T09:03:10.481Z</updated>
   <id>https://brysonbs.github.io/</id>
   
   <author>
@@ -17,11 +17,70 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>JavaFX初识</title>
-    <link href="https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/"/>
-    <id>https://brysonbs.github.io/2022/05/28/JavaFX%E5%88%9D%E8%AF%86/</id>
+    <title>JavaFX-可观察集合(Observable Collections)</title>
+    <link href="https://brysonbs.github.io/2022/06/26/JavaFx-%E5%8F%AF%E8%A7%82%E5%AF%9F%E9%9B%86%E5%90%88/"/>
+    <id>https://brysonbs.github.io/2022/06/26/JavaFx-%E5%8F%AF%E8%A7%82%E5%AF%9F%E9%9B%86%E5%90%88/</id>
+    <published>2022-06-26T09:02:32.000Z</published>
+    <updated>2022-06-26T09:03:10.481Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;Observable
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/categories/JavaFX/"/>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/tags/JavaFX/"/>
+    
+      <category term="GUI" scheme="https://brysonbs.github.io/tags/GUI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaFX-属性和绑定</title>
+    <link href="https://brysonbs.github.io/2022/06/10/JavaFX-%E5%B1%9E%E6%80%A7%E5%92%8C%E7%BB%91%E5%AE%9A/"/>
+    <id>https://brysonbs.github.io/2022/06/10/JavaFX-%E5%B1%9E%E6%80%A7%E5%92%8C%E7%BB%91%E5%AE%9A/</id>
+    <published>2022-06-10T12:44:32.000Z</published>
+    <updated>2022-06-26T09:10:49.824Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h4 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/categories/JavaFX/"/>
+    
+    
+      <category term="JavaFX" scheme="https://brysonbs.github.io/tags/JavaFX/"/>
+    
+      <category term="GUI" scheme="https://brysonbs.github.io/tags/GUI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaFX-初识</title>
+    <link href="https://brysonbs.github.io/2022/05/28/JavaFX-%E5%88%9D%E8%AF%86/"/>
+    <id>https://brysonbs.github.io/2022/05/28/JavaFX-%E5%88%9D%E8%AF%86/</id>
     <published>2022-05-28T13:29:32.000Z</published>
-    <updated>2022-05-28T15:32:35.829Z</updated>
+    <updated>2022-06-10T12:44:58.335Z</updated>
     
     <summary type="html">
     
@@ -531,62 +590,6 @@
     
     
       <category term="Spring" scheme="https://brysonbs.github.io/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-解释器模式</title>
-    <link href="https://brysonbs.github.io/2020/05/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/05/14/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A7%A3%E9%87%8A%E5%99%A8%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-05-14T00:46:12.000Z</published>
-    <updated>2020-05-14T09:10:59.968Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;解释器模式的定义&quot;&gt;&lt;a href=&quot;#解释器模式的定义&quot; class=&quot;headerlink&quot; title=&quot;解释器模式的定义&quot;&gt;&lt;/a&gt;解释器模式的定义&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;解释器(Interpreter)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式-备忘录模式</title>
-    <link href="https://brysonbs.github.io/2020/05/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://brysonbs.github.io/2020/05/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F/</id>
-    <published>2020-05-13T07:12:12.000Z</published>
-    <updated>2020-05-13T09:15:07.382Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h3 id=&quot;备忘录模式的定义&quot;&gt;&lt;a href=&quot;#备忘录模式的定义&quot; class=&quot;headerlink&quot; title=&quot;备忘录模式的定义&quot;&gt;&lt;/a&gt;备忘录模式的定义&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;*&lt;em&gt;备忘录(Memento)模式: *&lt;/em&gt;
-        
-      
-    
-    </summary>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="https://brysonbs.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   

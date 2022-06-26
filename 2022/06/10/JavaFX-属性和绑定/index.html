@@ -1,0 +1,1683 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JavaFX-属性和绑定, java,web">
+    <meta name="description" content="概述
+Java中的基本数据类型和对象不是可观察的(observable),即不支持监听属性的失效和变化,同时也支持数据绑定
+
+JavaFX中对Java的数据类型和对象进行了封装,使用JavaFX提供的属性,则支持监听属性的失效和变化,同时还">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>JavaFX-属性和绑定 | Bryson</title>
+    <link rel="icon" type="image/png" href="/medias/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Bryson" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-hopscotch.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Bryson</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Bryson</div>
+        <div class="logo-desc">
+            
+            Bryson
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/BrysonBS" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/BrysonBS" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div id="bgc-post-cover" class="bg-cover pd-header post-cover" style="background-image: url('')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JavaFX-属性和绑定</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
+    <script src="/customJs/random_img.js"></script>
+    <script>
+        var randomImg = {}
+        randomImg.enable = true;
+        randomImg.count = 50;
+        randomImg.pageCount = 8;
+        randomImg.second = 10;
+        randomImg.title = 'JavaFX-属性和绑定';
+        var $node = $("#bgc-post-cover");
+        getImgInfo(randomImg,$node);
+    </script>
+
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 146px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/JavaFX/">
+                                <span class="chip bg-color">JavaFX</span>
+                            </a>
+                        
+                            <a href="/tags/GUI/">
+                                <span class="chip bg-color">GUI</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/JavaFX/" class="post-category">
+                                JavaFX
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-06-10
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2022-06-26
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><ul>
+<li><p>Java中的基本数据类型和对象不是可观察的(<code>observable</code>),即不支持监听属性的失效和变化,同时也支持数据绑定</p>
+</li>
+<li><p>JavaFX中对Java的数据类型和对象进行了封装,使用JavaFX提供的属性,则支持监听属性的失效和变化,同时还支持数据绑定</p>
+</li>
+</ul>
+<h5 id="1-java-bean简介"><a href="#1-java-bean简介" class="headerlink" title="1. java bean简介"></a>1. java bean简介</h5><ul>
+<li><p>一个java类包含: <code>fields</code>(字段)和<code>methods</code>(方法),字段代表对象的状态,通常为<code>private</code>(私有的),然后通过<code>public</code>(公共的)方法,称为<code>accessors</code>(访问器),或<code>getters</code>和<code>setters</code>方法,用于读取或者修改对象的属性,</p>
+<p>对于使用公共的访问器去访问类中全部或者部分私有字段的类称为<code>java bean</code></p>
+</li>
+<li><p><code>java bean</code>是一个可观察对象,它支持属性变化通知(变化时发送通知给监听器)</p>
+</li>
+<li><p>本质上通过<code>java bean</code>定义了可重用组件,可以实现属性的<code>read</code>丶<code>read/write</code>丶<code>write</code>,通过此给第三方使用</p>
+</li>
+</ul>
+<h5 id="2-属性-property"><a href="#2-属性-property" class="headerlink" title="2. 属性(property)"></a>2. 属性(property)</h5><ul>
+<li>即类的可公开访问的属性,它影响类的状态和行为,可以通过公开的方法去访问或者修改, 同时是可以观察的,当属性发生改变时,相关方会受到通知</li>
+</ul>
+<h5 id="3-绑定-binding"><a href="#3-绑定-binding" class="headerlink" title="3. 绑定(binding)"></a>3. 绑定(binding)</h5><ul>
+<li><code>unidirectional</code>(单向绑定): 如 x = y + z 关系, 当y和z发生变化时x跟着变化</li>
+<li><code>bidirectional</code>(双向绑定): 如 x = y 关系,当y变化是x跟着变化,同时x变化是y跟着变化</li>
+<li><code>eager binding</code> (实时绑定): 绑定对象在其依赖项改变时,立刻重新计算</li>
+<li><code>lazy binding</code>(懒加载形式绑定): 绑定对象在其依赖项改变时,不会立刻重新计算,而是绑定对象被使用时才会重新计算,<strong>对于非必须实时绑定的情况,JavaFx中采用了此种方式进行性能优化</strong></li>
+</ul>
+<h5 id="4-JavaBeans对绑定的支持"><a href="#4-JavaBeans对绑定的支持" class="headerlink" title="4. JavaBeans对绑定的支持"></a>4. JavaBeans对绑定的支持</h5><blockquote>
+<p>实例: 当员工(<code>Employee</code>)的薪水(<code>salary</code>)发生改变时实现通知</p>
+</blockquote>
+<ul>
+<li><p><code>Employee.java</code></p>
+<pre class="line-numbers language-java"><code class="language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>PropertyChangeListener<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>beans<span class="token punctuation">.</span>PropertyChangeSupport<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Employee</span> <span class="token punctuation">{</span>
+    <span class="token keyword">private</span> String name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">double</span> salary<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">//JavaBeans对绑定的支持,通过此对象实现salary变化时执行监听器</span>
+    <span class="token comment" spellcheck="true">//requires java.desktop; 需添加此模块</span>
+    <span class="token keyword">private</span> PropertyChangeSupport pcs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">PropertyChangeSupport</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token function">Employee</span><span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">double</span> salary<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>salary <span class="token operator">=</span> salary<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> String <span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setName</span><span class="token punctuation">(</span>String name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">getSalary</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> salary<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">setSalary</span><span class="token punctuation">(</span><span class="token keyword">double</span> salary<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">double</span> oldSalary <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>salary<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>salary <span class="token operator">=</span> salary<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//将改变通知给注册的监听器</span>
+        pcs<span class="token punctuation">.</span><span class="token function">firePropertyChange</span><span class="token punctuation">(</span><span class="token string">"salary"</span><span class="token punctuation">,</span>oldSalary<span class="token punctuation">,</span>salary<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//注册监听器</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">addPropertyChangeListener</span><span class="token punctuation">(</span>
+            PropertyChangeListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        pcs<span class="token punctuation">.</span><span class="token function">addPropertyChangeListener</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment" spellcheck="true">//移除监听器</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">removePropertyChangeListener</span><span class="token punctuation">(</span>
+            PropertyChangeListener listener<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        pcs<span class="token punctuation">.</span><span class="token function">removePropertyChangeListener</span><span class="token punctuation">(</span>listener<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>测试</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">changeSupportTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        Employee employee <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Employee</span><span class="token punctuation">(</span><span class="token string">"Tom"</span><span class="token punctuation">,</span><span class="token number">10D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        employee<span class="token punctuation">.</span><span class="token function">setSalary</span><span class="token punctuation">(</span><span class="token number">100D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//添加监听器</span>
+        employee<span class="token punctuation">.</span><span class="token function">addPropertyChangeListener</span><span class="token punctuation">(</span><span class="token punctuation">(</span>PropertyChangeEvent evt<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s发生变化,oldValue: %s,newValue: %s"</span><span class="token punctuation">,</span>evt<span class="token punctuation">.</span><span class="token function">getPropertyName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>evt<span class="token punctuation">.</span><span class="token function">getOldValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>evt<span class="token punctuation">.</span><span class="token function">getNewValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment" spellcheck="true">//输出结果:   salary发生变化,oldValue: 100.0,newValue: 123.0</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//改变salary,则监听器触发</span>
+        employee<span class="token punctuation">.</span><span class="token function">setSalary</span><span class="token punctuation">(</span><span class="token number">123D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="JavaFX中的属性"><a href="#JavaFX中的属性" class="headerlink" title="JavaFX中的属性"></a>JavaFX中的属性</h4><ul>
+<li>JavaFX中的所有属性都是可观察的(<code>observable</code>),即可以监听属性失效(<code>invalidation</code>)和变化(<code>change</code>),同时可以是读/写(<code>read/write</code>)或只读(<code>read-only</code>)的</li>
+<li>JavaFX中属性可以表示为一个值(<strong>单值属性</strong>),或者包含值的集合(<strong>集合属性</strong>: 后续介绍)</li>
+</ul>
+<h5 id="1-属性"><a href="#1-属性" class="headerlink" title="1.属性"></a>1.属性</h5><blockquote>
+<p><strong>JavaFX提供的属性</strong>: 其实就是对Java数据类型和JavaBean的封装,增加了可观察(<code>observable</code>)和绑定特性,即</p>
+<ul>
+<li><p>支持属性<code>读/写</code>丶<code>只读</code>特性</p>
+</li>
+<li><p>支持监听属性失效和变化</p>
+</li>
+<li><p>支持属性绑定</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>使用JavaFX提供的属性替换Java提供的数据类型: <strong>可以实现对象属性的监听和绑定</strong>,以下列举部分,其他类似</li>
+<li><strong>单值属性</strong><ul>
+<li><code>IntegerProperty</code> 接口: 对应<code>int</code>和<code>Integer</code>,常用<code>SimpleIntegerProperty</code>创建对象</li>
+<li><code>DoubleProperty</code>接口: 对应<code>double</code>和<code>Double</code>,常用<code>SimpleDoubleProperty</code>创建对象</li>
+<li><code>StringProperty</code>接口: 对应<code>String</code>,常用<code>SimpleStringProperty</code>创建对象</li>
+<li><code>BooleanProperty</code>接口: 对应<code>boolean</code>和<code>Boolean</code>,常用<code>SimpleBooleanProperty</code>创建对象</li>
+<li><code>ObjectProperty</code>接口: 对应对象类型,通过泛型指定具体类型,常用<code>SimpleObjectProperty&lt;T&gt;</code>创建</li>
+</ul>
+</li>
+<li><strong>集合属性</strong><ul>
+<li><code>ListProperty</code>接口: 对应<code>List</code>,常用<code>SimpleListProperty</code>创建对象</li>
+<li><code>MapProperty</code>接口: 对应<code>Map</code>,常用<code>SimpleMapProperty</code>创建对象</li>
+<li><code>SetProperty</code>接口: 对应<code>Set</code>,常用<code>SimpleSetProperty</code>创建对象</li>
+</ul>
+</li>
+<li><strong>只读属性</strong>: 使用对应的<code>ReadOnlyXXXWrapper</code>创建<code>wrapper对象</code>,该对象是<code>可读/写</code>的,然后使用<code>wrapper对象</code>的<code>getReadOnlyProperty()</code>方法获取只读属性对象,如:<ul>
+<li><code>ReadOnlyIntegerWrapper</code> </li>
+<li><code>ReadOnlyStringWrapper</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="2-方法"><a href="#2-方法" class="headerlink" title="2.方法"></a>2.方法</h5><blockquote>
+<p>JavaFX的属性都有以下方法</p>
+</blockquote>
+<ul>
+<li><p><code>get</code>/<code>set</code>: 通过<strong>基本类型</strong>获取或者设置属性的值(<strong>无法拆箱为基本类型的还为引用类型,此时与getValue/setValue相同</strong>)</p>
+</li>
+<li><p><code>getValue/setValue</code>: 通过<strong>包装类型/引用类型</strong>获取或设置属性的值</p>
+</li>
+</ul>
+<h5 id="3-创建"><a href="#3-创建" class="headerlink" title="3.创建"></a>3.创建</h5><blockquote>
+<p>JavaFX的属性包含以下三个部分</p>
+</blockquote>
+<ul>
+<li>一个<code>bean</code>对象的引用,必须在构造函数指定,不指定则为<code>null</code>,可通过<code>getBean</code>方法获取</li>
+<li><code>name</code>: 名称,必须在构造函数中指定,不指定则为<code>null</code>,可通过<code>getName</code>方法获取</li>
+<li><code>value</code>: 值,可通过<code>get/set</code>丶<code>getValue/setValue</code>获取和设置</li>
+</ul>
+<blockquote>
+<p>构造函数</p>
+</blockquote>
+<ul>
+<li><code>SimpleIntegerProperty()</code></li>
+<li><code>SimpleIntegerProperty(int initialValue)</code>: 创建时指定值</li>
+<li><code>SimpleIntegerProperty(Object bean, String name)</code>: 创建时指定<code>bean</code>对象和值</li>
+<li><code>SimpleIntegerProperty(Object bean, String name, int initialValue)</code>: 创建是指定<code>bean</code>对象丶名称和值</li>
+</ul>
+<h4 id="JavaFX属性类的层次结构"><a href="#JavaFX属性类的层次结构" class="headerlink" title="JavaFX属性类的层次结构"></a>JavaFX属性类的层次结构</h4><h5 id="1-都实现了Observable接口-属性失效接口-即支持失效监听"><a href="#1-都实现了Observable接口-属性失效接口-即支持失效监听" class="headerlink" title="1.都实现了Observable接口: 属性失效接口(即支持失效监听)"></a>1.都实现了<code>Observable</code>接口: 属性失效接口(即支持失效监听)</h5><ul>
+<li>实现该接口则实现了属性失效监听</li>
+<li>接口中抽象方法<ul>
+<li><code>void addListener(InvalidationListener)</code>: 添加失效监听器</li>
+<li><code>void removeListener(InvalidationListener)</code>: 移除失效监听器</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-都实现了ObservableValue接口-属性变化接口-即支持变化监听"><a href="#2-都实现了ObservableValue接口-属性变化接口-即支持变化监听" class="headerlink" title="2.都实现了ObservableValue接口: 属性变化接口(即支持变化监听)"></a>2.都实现了<code>ObservableValue</code>接口: 属性变化接口(即支持变化监听)</h5><ul>
+<li>实现该接口则实现了属性变化监听</li>
+<li>接口中抽象方法<ul>
+<li><code>void addListener(ChangeListener&lt;? super T&gt;)</code>: 添加变化监听器</li>
+<li><code>void removeListener(ChangeListener&lt;? super T&gt;)</code>: 移除变化监听器</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-都实现了Property-lt-T-gt-接口-属性绑定接口-即支持单向双向绑定"><a href="#3-都实现了Property-lt-T-gt-接口-属性绑定接口-即支持单向双向绑定" class="headerlink" title="3.都实现了Property<T>接口: 属性绑定接口(即支持单向双向绑定)"></a>3.都实现了<code>Property&lt;T&gt;</code>接口: 属性绑定接口(即支持单向双向绑定)</h5><ul>
+<li>该接口定义了单向绑定和双向绑定</li>
+<li>接口中的抽象方法<ul>
+<li><code>void bind(ObservableValue&lt;? extends T&gt; observable)</code>: <code>Property</code>类型对象单向绑定到<code>ObservableValue</code>对象</li>
+<li><code>void unbind()</code>: 解绑单向绑定</li>
+<li><code>void bindBidirectional(Property&lt;T&gt; other)</code>: <code>Property</code>类型对象双向绑定到<code>Property</code>类型对象</li>
+<li><code>void unbindBidirectional(Property&lt;T&gt; other)</code>: 解绑双向绑定</li>
+<li><code>boolean isBound()</code>: 是否绑定</li>
+</ul>
+</li>
+</ul>
+<h4 id="JavaFX属性的事件监听"><a href="#JavaFX属性的事件监听" class="headerlink" title="JavaFX属性的事件监听"></a>JavaFX属性的事件监听</h4><h5 id="1-属性无效事件"><a href="#1-属性无效事件" class="headerlink" title="1.属性无效事件"></a>1.属性无效事件</h5><pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">invalidationTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        SimpleIntegerProperty sip <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//添加属性失效监听器</span>
+        sip<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span>observable <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"invalidation"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//触发失效事件</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//不触发失效事件: 失效后再次改变值不触发</span>
+
+        <span class="token comment" spellcheck="true">//获取值后,变为有效,下次再改变值则触发失效事件</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"get: "</span> <span class="token operator">+</span> sip<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">/** 输出
+         * invalidation
+         * get: 3
+         * invalidation
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-属性变化事件"><a href="#2-属性变化事件" class="headerlink" title="2.属性变化事件"></a>2.属性变化事件</h5><pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">changeTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        SimpleIntegerProperty sip <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//添加属性变化事件</span>
+        sip<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token punctuation">(</span>observableValue<span class="token punctuation">,</span> oldValue<span class="token punctuation">,</span> newValue<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> <span class="token punctuation">{</span>
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"changed: "</span> <span class="token operator">+</span> oldValue <span class="token operator">+</span> <span class="token string">"->"</span> <span class="token operator">+</span> newValue<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//触发</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//设置相同的值不触发</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"set 2 begin: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//触发</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"set 3 begin: "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        sip<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/** 输出结果
+         * changed: 1->2
+         * set 2 begin: 
+         * set 3 begin: 
+         * changed: 2->3
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="3-无效事件和变化事件选择"><a href="#3-无效事件和变化事件选择" class="headerlink" title="3.无效事件和变化事件选择"></a>3.无效事件和变化事件选择</h5><ul>
+<li>对于通过两种事件监听都能实现的功能,优先考虑使用无效事件监听,因为其基于懒加载模式</li>
+<li>通常不获取属性的值时只需要使用无效事件监听即可,如果要获取属性的值则需要使用变化事件监听</li>
+</ul>
+<h4 id="JavaFX属性的绑定"><a href="#JavaFX属性的绑定" class="headerlink" title="JavaFX属性的绑定"></a>JavaFX属性的绑定</h4><blockquote>
+<ul>
+<li><code>unidirectional binding</code>(单向绑定)</li>
+<li><code>bidirectional binding</code>(双向绑定)</li>
+</ul>
+</blockquote>
+<h5 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h5><ul>
+<li><p>绑定表达式规则后,一个属性的依赖属性值改变时,其属性也会跟着改变</p>
+</li>
+<li><p>JavaFX的绑定时懒加载形式的,当使用时才会去重新计算值</p>
+</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">bindTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        IntegerProperty x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        IntegerProperty y <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//创建绑定: sum = x + y</span>
+        NumberBinding sum <span class="token operator">=</span> x<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//无效: 懒加载: 未使用时,当使用时才会重新计算</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"bind begin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"invalid: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sum: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"invalid: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//懒加载: 依赖属性改变时失效,当使用时重新计算变为有效</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"x set 101 begin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">101</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"invalid: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"sum: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"invalid: "</span> <span class="token operator">+</span> sum<span class="token punctuation">.</span><span class="token function">isValid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/** 输出结果
+         * bind begin
+         * invalid: false
+         * sum: 300
+         * invalid: true
+         * x set 101 begin
+         * invalid: false
+         * sum: 301
+         * invalid: true
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="2-单向绑定"><a href="#2-单向绑定" class="headerlink" title="2.单向绑定"></a>2.单向绑定</h5><ul>
+<li>单向传播: 依赖属性的改变会传播到绑定属性,但是反之则不行</li>
+<li>单向绑定之后,只需要改变依赖属性,则绑定属性会跟着改变,通常逻辑上不要直接修改绑定属性的值</li>
+<li>单向绑定只能有一个,绑定多次会取消前面的绑定</li>
+<li>方法: <ul>
+<li><code>void bind(ObservableValue&lt;? extends T&gt;)</code>: 单向绑定,注意单向绑定的参数<code>ObservableValue</code>类型,和绑定属性类型可以不同: 即此方式调用<code>Property&lt;T&gt;.bind(ObservableValue)</code></li>
+<li><code>unbind()</code>: 解绑单向绑定</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">unidirectionalTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        IntegerProperty x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        IntegerProperty y <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"bind before x="</span> <span class="token operator">+</span> x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>  <span class="token string">",y="</span> <span class="token operator">+</span> y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//单向绑定: 此时y = 1</span>
+        y<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"bind after x="</span> <span class="token operator">+</span> x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>  <span class="token string">",y="</span> <span class="token operator">+</span> y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//改变x的值,则y跟着改变</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"x set 10,y="</span> <span class="token operator">+</span> y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//解绑</span>
+        y<span class="token punctuation">.</span><span class="token function">unbind</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"unbind after and x set 100: x="</span> <span class="token operator">+</span> x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">",y="</span> <span class="token operator">+</span> y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/**输出结果
+         * bind before x=1,y=0
+         * bind after x=1,y=1
+         * x set 10,y=10
+         * unbind after and x set 100: x=100,y=10
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="3-双向绑定"><a href="#3-双向绑定" class="headerlink" title="3.双向绑定"></a>3.双向绑定</h5><ul>
+<li>双向绑定: 依赖属性或者绑定属性的改变均会传播到另一方</li>
+<li>双向绑定可以有多个,因此解绑时需要指定解绑的依赖属性对象</li>
+<li>方法: <ul>
+<li><code>bindBidirectional(Property)</code>: 双向绑定,注意双向绑定的参数和绑定属性类型相同,即此方式调用<code>Property.bindBidirectional(Property)</code></li>
+<li><code>void unbindBidirectional(Property&lt;Number&gt;)</code>: 解绑双向绑定</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">bidirectionalTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        SimpleIntegerProperty x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        SimpleIntegerProperty y <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"bind before: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//双向绑定</span>
+        x<span class="token punctuation">.</span><span class="token function">bindBidirectional</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"bind after: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//改变x值</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"x set 3 after: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//改变y值</span>
+        y<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"y set 4 after: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/**输出结果
+         * bind before: x=1,y=2
+         * bind after: x=2,y=2
+         * x set 3 after: x=3,y=3
+         * y set 4 after: x=4,y=4
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="绑定相关的API"><a href="#绑定相关的API" class="headerlink" title="绑定相关的API"></a>绑定相关的API</h4><h5 id="1-High-Level绑定-JavaFX类库提供的绑定"><a href="#1-High-Level绑定-JavaFX类库提供的绑定" class="headerlink" title="1.High-Level绑定: JavaFX类库提供的绑定"></a>1.High-Level绑定: JavaFX类库提供的绑定</h5><ul>
+<li><p><strong>Ternary</strong>: <code>when-then-otherwise</code>三元运算符可在绑定api中使用,直接返回绑定对象,即<code>XXXBinding</code>对象</p>
+<ul>
+<li><code>new When(condition).then(value1).otherwise(value2)</code></li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">   <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">ternaryTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        IntegerProperty x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        StringBinding desc <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">When</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span><span class="token function">divide</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">multiply</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isEqualTo</span><span class="token punctuation">(</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token string">"偶数:even"</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">otherwise</span><span class="token punctuation">(</span><span class="token string">"奇数:odd"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"x="</span><span class="token operator">+</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">": "</span> <span class="token operator">+</span> desc<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">13</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"x="</span><span class="token operator">+</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">": "</span> <span class="token operator">+</span> desc<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/**输出结果
+         * x=10: 偶数:even
+         * x=13: 奇数:odd
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>有两种形式: <code>Fluent API</code>和<code>Bindings</code>类,可以单独使用也可以混合使用</p>
+</li>
+<li><p><code>Fluent API</code>: 即使用绑定属性对象的绑定相关方法(实现了绑定表达式接口的方法),如<code>x.add(y)</code></p>
+<ul>
+<li>一般<code>XXXProperty</code>都实现了绑定表达式接口如<code>NumberExpression</code>,<code>StringExpression</code>,<code>ObjectExpression</code>,<code>BooleanExpression</code>等</li>
+<li><code>NumberExpression</code>的方法<ul>
+<li><code>NumberBinding add()</code>: 加</li>
+<li><code>NumberBinding subtract()</code>: 减</li>
+<li><code>NumberBinding multiply()</code>: 乘</li>
+<li><code>NumberBinding divide()</code>: 除</li>
+<li><code>BooleanBinding greaterThan()</code>: 大于</li>
+<li><code>BooleanBinding greaterThanOrEqualTo()</code>: 大于等于</li>
+<li><code>BooleanBinding isEqualTo()</code>: 等于</li>
+<li><code>BooleanBinding isNotEqualTo()</code>: 不等于</li>
+<li><code>BooleanBinding lessThan()</code>: 小于</li>
+<li><code>BooleanBinding lessThanOrEqualTo()</code>: 小于等于</li>
+<li><code>NumberBinding negate()</code>: 否定</li>
+<li><code>StringBinding asString()</code>: 转字符串</li>
+</ul>
+</li>
+<li><code>StringExpression</code>的方法<ul>
+<li><code>StringExpression concat()</code>: 拼接字符串</li>
+</ul>
+</li>
+<li><code>ObjectExpression</code>的方法<ul>
+<li><code>BooleanBinding isEqualTo()</code>:是否相等</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>Bindings</code>类: 即使用该类的方法绑定两个属性对象</p>
+<ul>
+<li><p><code>NumberBinding add()</code>:加</p>
+</li>
+<li><p><code>NumberBinding subtract()</code>: 减</p>
+</li>
+<li><p><code>NumberBinding multiply()</code>:乘</p>
+</li>
+<li><p><code>NumberBinding divide()</code>:除</p>
+</li>
+<li><p><code>BooleanBinding and()</code>:与</p>
+</li>
+<li><p><code>void bindBidirectional()</code>:双向绑定</p>
+</li>
+<li><p><code>void unbindBidirectional()</code>:解绑双向绑定</p>
+</li>
+<li><p><code>StringExpression concat()</code>:拼接字符串</p>
+</li>
+<li><p><code>StringExpression convert()</code>:字符串反转</p>
+</li>
+<li><p><code>XXXBinding createXXXBinding()</code>: 创建<code>XXXBinding</code>对象</p>
+</li>
+<li><p><code>BooleanBinding equal()</code>:相等</p>
+</li>
+<li><p><code>BooleanBinding notEqual()</code>:不等</p>
+</li>
+<li><p><code>BooleanBinding equalIgnoreCase()</code>:字符串相等忽略大小写</p>
+</li>
+<li><p><code>BooleanBinding notEqualIgnoreCase()</code>:字符串不等忽略大小写</p>
+</li>
+<li><p><code>StringExpression format()</code>: 格式化字符串</p>
+</li>
+<li><p><code>BooleanBinding greaterThan()</code>:大于</p>
+</li>
+<li><p><code>BooleanBinding greaterThanOrEqual()</code>:大于等于</p>
+</li>
+<li><p><code>BooleanBinding lessThan()</code>:小于</p>
+</li>
+<li><p><code>BooleanBinding lessThanOrEqual()</code>:小于等于</p>
+</li>
+<li><p><code>BooleanBinding isNotNull</code>:不为null</p>
+</li>
+<li><p><code>BooleanBinding isNull</code>:为null</p>
+</li>
+<li><p><code>NumberBinding max()</code>:最大值,其中一个参数必须为<code>ObservableNumberValue</code>类型</p>
+</li>
+<li><p><code>NumberBinding min()</code>:最小值</p>
+</li>
+<li><p><code>NumberBinding negate()</code>:否定</p>
+</li>
+<li><p><code>NumberBinding not()</code>:非</p>
+</li>
+<li><p><code>NumberBinding or()</code>:或</p>
+</li>
+<li><p><code>XXXBinding selectXXX()</code>:用于选择嵌套属性,如<code>Bindings.selectString(school,student,name)</code>表示<code>school</code>对象内部的<code>student</code>对象的<code>name</code>属性</p>
+</li>
+<li><p><code>when()</code>:创建<code>When</code>实例</p>
+</li>
+</ul>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">bindingsTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        IntegerProperty x <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleIntegerProperty</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//创建绑定y = x + 1</span>
+        NumberBinding y <span class="token operator">=</span> Bindings<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"bind after: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        x<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"x set 10: x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>y<span class="token punctuation">.</span><span class="token function">intValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        StringExpression desc <span class="token operator">=</span> Bindings<span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span>Locale<span class="token punctuation">.</span>US<span class="token punctuation">,</span> <span class="token string">"x=%d,y=%d%n"</span><span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"desc: "</span> <span class="token operator">+</span> desc<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">/**输出结果
+         * bind after: x=2,y=3
+         * x set 10: x=10,y=11
+         * desc: x=10,y=11
+         */</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>混合使用<code>Fluent API</code>和<code>Bindings</code>类</p>
+<pre class="line-numbers language-java"><code class="language-java">DoubleProperty radius <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDoubleProperty</span><span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+DoubleProperty area <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDoubleProperty</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment" spellcheck="true">//混合使用</span>
+area<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>Bindings<span class="token punctuation">.</span><span class="token function">multiply</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span>PI<span class="token punctuation">,</span> radius<span class="token punctuation">.</span><span class="token function">multiply</span><span class="token punctuation">(</span>radius<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h5 id="2-Low-Level绑定-自定义绑定"><a href="#2-Low-Level绑定-自定义绑定" class="headerlink" title="2.Low-Level绑定: 自定义绑定"></a>2.Low-Level绑定: 自定义绑定</h5><ul>
+<li><p>基本步骤</p>
+<ul>
+<li>自定义一个类继承绑定类<code>XXXBinding</code>,如<code>DoubleBinding</code></li>
+<li>调用父类的<code>bind()</code>方法来绑定所有依赖(将依赖项作为参数传递给此方法即可)</li>
+<li>重写父类的<code>computeValue()</code>方法,用于实现自定义绑定计算规则</li>
+</ul>
+</li>
+<li><p>实例:圆面积<code>area</code>(绑定属性)与半径<code>radius</code>(依赖项)绑定</p>
+<pre class="line-numbers language-java"><code class="language-java">    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lowLevelBindTest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">final</span> DoubleProperty radius <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDoubleProperty</span><span class="token punctuation">(</span><span class="token number">1D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        DoubleProperty area <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleDoubleProperty</span><span class="token punctuation">(</span><span class="token number">0D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">//使用匿名类方式</span>
+        DoubleBinding areaBinding <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DoubleBinding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">//调用父类bind方法,并传入依赖项</span>
+            <span class="token punctuation">{</span>
+                <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>radius<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//依赖项为圆的半径</span>
+            <span class="token punctuation">}</span>
+            <span class="token comment" spellcheck="true">//重写computeValue方法</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">protected</span> <span class="token keyword">double</span> <span class="token function">computeValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token keyword">double</span> r <span class="token operator">=</span> radius<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">return</span> Math<span class="token punctuation">.</span>PI <span class="token operator">*</span> r <span class="token operator">*</span> r<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//面积</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        area<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>areaBinding<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//绑定</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"radius=%.2f,area=%.2f%n"</span><span class="token punctuation">,</span>radius<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>area<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"set radius=3"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        radius<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token number">3D</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"radius=%.2f,area=%.2f%n"</span><span class="token punctuation">,</span>radius<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>area<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement"  style="word-break: break-all">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io" rel="external nofollow noreferrer">Bryson</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://brysonbs.github.io/2022/06/10/JavaFX-%E5%B1%9E%E6%80%A7%E5%92%8C%E7%BB%91%E5%AE%9A/">https://brysonbs.github.io/2022/06/10/JavaFX-%E5%B1%9E%E6%80%A7%E5%92%8C%E7%BB%91%E5%AE%9A/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/JavaFX/">
+                                    <span class="chip bg-color">JavaFX</span>
+                                </a>
+                            
+                                <a href="/tags/GUI/">
+                                    <span class="chip bg-color">GUI</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+        <link rel="stylesheet" href="/libs/gitalk/gitalk.css">
+<link rel="stylesheet" href="/css/my-gitalk.css">
+
+<div class="card gitalk-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="gitalk-container" class="card-content"></div>
+</div>
+
+<script src="/libs/gitalk/gitalk.min.js"></script>
+<script>
+    let gitalk = new Gitalk({
+        clientID: 'a436f93cff9c74671c6e',
+        clientSecret: '672d1057301664c8f34cd3f70accdfe73822a84e',
+        repo: 'blog-comments',
+        owner: 'BrysonBS',
+        admin: "BrysonBS",
+        id: '2022-06-10T20-44-32',
+        distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+
+    gitalk.render('gitalk-container');
+</script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+<script src="/customJs/random_img.js"></script>
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/06/26/JavaFx-%E5%8F%AF%E8%A7%82%E5%AF%9F%E9%9B%86%E5%90%88/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+
+
+                        <img id="id_221656234690243" src="" class="responsive-img" alt="JavaFX-可观察集合(Observable Collections)">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = 'JavaFX-可观察集合(Observable Collections)';
+                                    var len = 24
+                                    var idn = "id_221656234690243";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+                        <span class="card-title">JavaFX-可观察集合(Observable Collections)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述
+Observable Collections(可观察集合)是JavaFX对Java集合的扩展
+JavaFX提供了三种类型的可观察集合,(可以观察到集合变化),主要通过以下三个接口进行支持
+ObservableList : 继承List
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-06-26
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JavaFX/" class="post-category">
+                                    JavaFX
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaFX/">
+                        <span class="chip bg-color">JavaFX</span>
+                    </a>
+                    
+                    <a href="/tags/GUI/">
+                        <span class="chip bg-color">GUI</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/05/28/JavaFX-%E5%88%9D%E8%AF%86/">
+                    <div class="card-image">
+                        
+                            
+                            
+                        
+
+                        <img id="id_181656234690247" src="" class="responsive-img" alt="JavaFX-初识">
+
+                        
+                            <script>
+                                (function(){
+                                    var randomImg = {}
+                                    randomImg.enable = true;
+                                    randomImg.count = 50;
+                                    randomImg.pageCount = 8;
+                                    randomImg.second = 10;
+                                    randomImg.title = 'JavaFX-初识';
+                                    var len = 24
+                                    var idn = "id_181656234690247";
+                                    var $node = $('#'+idn);
+                                    getImgInfo(randomImg,$node);
+                                })();
+                            </script>
+                        
+
+                        <span class="card-title">JavaFX-初识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            概述
+JavaFX是一个基于Java的开源框架,用于Java平台的图形用户界面(GUI)开发技术领域,是Java swing的继承者
+
+JavaFX还可以使用任何支持Java虚拟机(JVM)的脚本语言编写,如Kotlin丶Groovy和Sc
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-05-28
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JavaFX/" class="post-category">
+                                    JavaFX
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/JavaFX/">
+                        <span class="chip bg-color">JavaFX</span>
+                    </a>
+                    
+                    <a href="/tags/GUI/">
+                        <span class="chip bg-color">GUI</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4, h5'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4, h5').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-list ol li .aplayer-list-title {
+        color: rgb(0,0,0);
+    }
+    .aplayer .aplayer-lrc p {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        font-size: 15px;
+        color: #42b983;
+    }
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="tencent"
+                   type="playlist"
+                   id="7529469123"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2018</span>
+            <a href="https://brysonbs.github.io" target="_blank">Bryson</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">178.7k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2018";
+                    var startMonth = "7";
+                    var startDate = "5";
+                    var startHour = "17";
+                    var startMinute = "30";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/BrysonBS" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:b284540831@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=284540831" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 284540831" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
+    <script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+    <script type="text/javascript">
+        //只在桌面版网页启用特效
+        var windowWidth = $(window).width();
+        if (windowWidth > 768) {
+            document.write('<script type="text/javascript" src="/js/sakura.js"><\/script>'); }
+    </script>
+
+<script type="text/javascript">
+    //只在桌面版网页启用天气
+    WIDGET = {FID: 'vwB3EHDqWF'}
+    var windowWidth = $(window).width();
+    if (windowWidth > 768) {
+        document.write('<script type="text/javascript" src="https://apip.weatherdt.com/float/static/js/r.js?v=1111"><\/script>'); }
+</script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+    <script type="text/javascript" color="0,0,255"
+        pointColor="0,0,255" opacity='0.7'
+        zIndex="-1" count="99"
+        src="/libs/background/canvas-nest.js"></script>
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+</body>
+
+</html>
